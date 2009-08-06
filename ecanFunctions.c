@@ -47,6 +47,23 @@ void ecan1_init(uint16_t* parameters) {
     
   C1CTRL1bits.WIN = 0; // Restore the WIN bit to re-enable interrupts and access to other registers
   
+  // Deal with DMA setup
+  C1FCTRL.DMABS = 0; // Use 4 buffers in DMA RAM
+  switch ((parameters[0] & 0x0060) >> 5) {
+    case 0:
+      init_DMA0();
+      break;
+    case 1:
+      init_DMA1();
+      break;
+    case 2:
+      init_DMA2();
+      break;
+    case 3:
+      init_DMA3();
+      break;
+  }
+  
   // Return the modules to specified operating mode.
   // 0 normal, 1 disable, 2 loopback, 3 listen-only, 4 configuration, 7 listen all messages
   uint8_t desired_mode = (parameters[0] & 0x000C) >> 2;
@@ -169,4 +186,17 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 	}
 	
 	IFS2bits.C1IF = 0;
+}
+
+void init_DMA0(uint16_t* parameters) {
+	DMACS0=0; // Clear the status register
+  DMA0CONbits.DIR = parameters[0] & 0x40; // Write to peripheral
+  DMA0CONbits.AMODE = parameters[0] & 0xC; // Peripheral indirect addressing mode	
+  
+	DMA0PAD = parameters[1]; // ECAN 1 (C1TXD)
+ 	DMA0CNT = parameters[2]; // Read 8 words at a time (an entire CAN packet)
+	DMA0REQbits.IRQSEL = (parameters[0] >> 8) & 0x7F;	// Tie DMA transfer for ECAN1TX interrupt
+	DMA0STA =  parameters[3]; // Set primary DPSRAM start address bits
+  
+	DMA0CONbits.CHEN = 1; // Enable DMA
 }
