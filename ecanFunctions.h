@@ -44,10 +44,18 @@ typedef unsigned char uint8_t;
   * parameters[6] = mask 0
   * parameters[7] = mask 1
   * parameters[8] = mask 2
-  * parameters[9] = filter 0
-  * parameters[10] = filter 1
-  * parameters[11] = filter 2
-  * parameters[12] = filter 3
+  * parameters[9] = CiTRmnCON01
+  * parameters[10] = CiTRmnCON23
+  * parameters[11] = CiTRmnCON34
+  * parameters[12] = CiTRmnCON56
+  * parameters[13] = Buffer pointer for filters 0-3
+  * parameters[14] = Buffer pointer for filters 4-7
+  * parameters[15] = Buffer pointer for filters 8-11
+  * parameters[16] = Buffer pointer for filters 12-15
+  * parameters[17] = filter 0
+  * parameters[18] = filter 1
+  * parameters[19] = filter 2
+  * parameters[20] = filter 3
   */
 void ecan1_init(uint16_t* parameters);
 
