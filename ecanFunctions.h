@@ -15,6 +15,7 @@
 #include <stdio.h>
 #else
 #include <p33Fxxxx.h>
+#include "ecanDefinitions.h"
 #endif
 #include <stdint.h>
 

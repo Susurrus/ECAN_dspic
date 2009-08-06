@@ -1,5 +1,8 @@
 #include "ecanFunctions.h"
 
+unsigned int ecan1MsgBuf[4][8] __attribute__(space(dma));
+tCanMessage canMsg;
+
 void ecan1_init(uint16_t* parameters) {
 
   // Make sure the ECAN module is in configuration mode.
@@ -55,6 +58,11 @@ void ecan1_init(uint16_t* parameters) {
   // Setup our interrupts as our last step and clear all interrupt bits
   C1RXFUL1=0;
   C1INTFbits.RBIF=0;
+
+
+	// Configfure the DMA here Need two DMAs. Choose 7 and 8
+	
+	// Need to configure which buffer for receive and which to send
 }
 
 #ifdef SIM
@@ -83,3 +91,82 @@ int main(int argc, char* const argv[]) {
   return 0;
 }
 #endif
+
+void rxECAN1(tCanMessage* message)
+{
+	unsigned int ide=0;
+	unsigned int srr=0;
+	unsigned long id=0,d;
+			
+	// read word 0 to see the message type 
+	ide=ecan1msgBuf[message->buffer][0] & 0x0001;	
+	srr=ecan1msgBuf[message->buffer][0] & 0x0002;	
+	
+	/* check to see what type of message it is */
+	/* message is standard identifier */
+	if(0==ide)
+	{
+		message->id=(ecan1msgBuf[message->buffer][0] & 0x1FFC) >> 2;		
+		message->frame_type=CAN_FRAME_STD;
+	}
+	/* mesage is extended identifier */
+	else
+	{
+		// If extended compute the extended ID
+		id = ecan1msgBuf[message->buffer][0] & 0x1FFC;		
+		message->id = id << 16;
+		id = ecan1msgBuf[message->buffer][1] & 0x0FFF;
+		message->id = message->id+(id << 6);
+		id = (ecan1msgBuf[message->buffer][2] & 0xFC00) >> 10;
+		message->id = message->id + id;
+		
+		// Se the frame type to extended
+		message->frame_type = CAN_FRAME_EXT;
+	}
+	/* check to see what type of message it is */
+	/* RTR message */
+	if(1==srr)
+	{
+		message->message_type=CAN_MSG_RTR;	
+	}
+	/* normal message */
+	else
+	{
+		// set the data type
+		message->message_type=CAN_MSG_DATA;
+		
+		message->payload[0]=(unsigned char)ecan1msgBuf[message->buffer][3];
+		message->payload[1]=(unsigned char)((ecan1msgBuf[message->buffer][3] & 0xFF00) >> 8);
+		message->payload[2]=(unsigned char)ecan1msgBuf[message->buffer][4];
+		message->payload[3]=(unsigned char)((ecan1msgBuf[message->buffer][4] & 0xFF00) >> 8);
+		message->payload[4]=(unsigned char)ecan1msgBuf[message->buffer][5];
+		message->payload[5]=(unsigned char)((ecan1msgBuf[message->buffer][5] & 0xFF00) >> 8);
+		message->payload[6]=(unsigned char)ecan1msgBuf[message->buffer][6];
+		message->payload[7]=(unsigned char)((ecan1msgBuf[message->buffer][6] & 0xFF00) >> 8);
+		message->validBytes=(unsigned char)(ecan1msgBuf[message->buffer][2] & 0x000F);
+	}	
+}
+
+
+void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)  
+{    
+	// If the interrupt was set because of a transmit
+	if(C1INTFbits.TBIF){ 
+    	C1INTFbits.TBIF = 0;
+  } 
+ 
+	// if the interrupt was fired because of a received message
+  if(C1INTFbits.RBIF){      
+		// read the message 
+	  if(C1RXFUL1bits.RXFUL1==1)
+	    {
+	    	rx_ecan1message.buffer=1;
+	    	C1RXFUL1bits.RXFUL1=0;
+	    }
+		   //  Move the message from the DMA buffer to a data structure.
+	    rxECAN1(&canMsg);
+		C1INTFbits.RBIF = 0;
+	}
+	
+	IFS2bits.C1IF = 0;
+}
