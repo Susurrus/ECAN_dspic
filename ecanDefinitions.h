@@ -1,8 +1,6 @@
 // This file contains the constant definitions as well as the required
 // data structures to work with on the ECAN module
 
-// This defines the size of the circular buffers
-#define BSIZE  40
 
 // Message Types
 #define CAN_MSG_DATA	0x01 // message type 
@@ -27,12 +25,12 @@ typedef union{
 
 typedef union{
 	unsigned char   	chData[4];
- 	unsigned long   	uiData;
+ 	unsigned long   	ulData;
 } tUnsignedLongToChar; 
 
 typedef union{
 	unsigned char   chData[4];
- 	long   					inData;
+ 	long   					loData;
 } tLongToChar; 
 
 typedef union{
@@ -45,7 +43,7 @@ typedef union{
 // Data structures
 
 typedef struct tCanMessage{
-	tUnsingedLongToChar 		id;
+	tUnsignedLongToChar 		id;
 	unsigned char						message_type;
 	unsigned char						frame_type;
 	unsigned char						payload [8];

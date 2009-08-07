@@ -1,7 +1,10 @@
 // ==============================================================
 // circBuffer.c
-// This is the implementation file for the circular buffer. T
-// Convemtion Notes
+// This is the implementation file for the circular buffer used in
+// the ECAN module. The buffer is BSIZE long and the enqued members
+// are tCanMessage type.
+//
+// Convention Notes
 //
 // The HEAD, as in any queue points to the next available byte to be READ
 // The TAIL, points to the next available position to be written
@@ -10,14 +13,9 @@
 // First Revision: Aug 16 2008 @ 00:36
 // Second Revision: Dec 2 2008 @ 12:11
 // Third Revision: July 29 2009 @ 21:19
+// Fourth Revision: August 6 2009 @ 21:57
 // ===============================================================
-#include <stdlib.h>
 #include "circBuffer.h"
-
-
-// TODO: For the ecan module, have the circular buffer
-//       hold, instead of an array of chars, hold an 
-//       array of a CAN message structure
 
 // Constructors - Destructors
 // ==========================
@@ -28,7 +26,8 @@
 		// initialize to zero
 		int i;
 		for (i=0; i<BSIZE; i++){
-			cB->buffer[i] = 0;
+			// cB->buffer[i] = 0;
+			memset(&(cB->buffer[i]), 0, sizeof(tCanMessage));
 		}
 				
 		// initialize the data members
@@ -45,7 +44,6 @@
 		if (cB == NULL || *cB == NULL) {return;}
 				
 		// free and nil the pointer
-		//free(*cB);
 		*cB = NULL;
 	}
 	
@@ -72,7 +70,7 @@ unsigned int getLength (CBRef cB){
 }
 
 // returns the actual index of the head
-int readHead (CBRef cB){
+unsigned int readHead (CBRef cB){
 	// if the circular buffer is not null
 	if (cB != NULL){
 		return (cB->head);
@@ -84,7 +82,7 @@ int readHead (CBRef cB){
 }
 
 // returns the actual index of the tail
-int readTail (CBRef cB){
+unsigned int readTail (CBRef cB){
 	// if the circular buffer is not null
 	if (cB != NULL){
 		return (cB->tail);
@@ -95,10 +93,11 @@ int readTail (CBRef cB){
 
 }
 
-// returns the byte (actual value) that the head points to. this
+// returns the structure that the head points to. this
 // does not mark the byte as read, so succesive calls to peak will
 // always return the same value
-unsigned char peak(CBRef cB){
+tCanMessage peek(CBRef cB){
+	tCanMessage retVal;
 	// if the circular buffer is not null
 	if (cB != NULL)
 	{	
@@ -107,56 +106,51 @@ unsigned char peak(CBRef cB){
 			return cB->buffer[cB->head];
 		}
 	}
-	return 0;	
+	return retVal;
 }
 
 
 // Manipulation Procedures
 // ======================
 // returns the front of the circular buffer and marks the byte as read
-unsigned char readFront (CBRef cB){
+tCanMessage readFront (CBRef cB){
 	// if the circular buffer is not null
+	tCanMessage retVal;
 	if (cB != NULL)
 	{	
-		char retVal;
 		// if there are bytes in the buffer
 		if (getLength(cB) > 0){
 			retVal = cB->buffer[cB->head];
 			cB->head = cB->head < (cB->size -1)? cB->head+1: 0;
 			return retVal;
 		}
-		return 128;
 	}
-	return 254;
+	retVal.validBytes = 0;
+	return retVal;
 }
 
-// writes one byte at the end of the circular buffer, 
+// writes one tCanMessage at the end of the circular buffer, 
 // increments overflow count if overflow occurs
-unsigned char writeBack (CBRef cB, unsigned char data){
+void writeBack (CBRef cB, tCanMessage data){
 	// if the circular buffer is not null
 	if (cB != NULL){			
 		if (getLength (cB) == (cB->size -1)){
 			cB->overflowCount ++;
-			//return 1;
 		} else {		
 			cB->buffer[cB->tail] = data;
 			cB->tail = cB->tail < (cB->size -1)? cB->tail+1: 0;
-			//return 0;
 		}
-		//return 0;
-	}
-	else{
-		return 1;
 	}
 }
 
-// empties the circular buffer. It does not change the size. use with caution!!
+// empties the circular buffer. It does not change the capacity
+// Use with caution!!
 void makeEmpty(CBRef cB){
 	if (cB != NULL){
 		int i;
 		for(i = 0; i < cB->size; ++i)
 		{
-			cB->buffer[i]= 0;
+			memset(&cB->buffer[i], 0, sizeof(tCanMessage));
 		}
 		cB->head = 0;
 		cB->tail = 0;
@@ -169,6 +163,7 @@ unsigned char getOverflow(CBRef cB){
 	if (cB != NULL){
 		return cB->overflowCount;
 	}
+	return 0;
 }
 
 #if DEBUG
@@ -176,22 +171,30 @@ unsigned char getOverflow(CBRef cB){
 // ===============
 // prints the circular buffer, used for debug
 void printCircBuf(CBRef cB){
+	int i,j;
 	// if the circular buffer is not null
 	if (cB != NULL){
-		printf("[");
-		int i;
+		printf("Buffer Size: \t%d\n", cB->size );
+		printf("Head at: \t%d\n", cB->head );
+		printf("Tail at: \t%d\n\n", cB->tail );
 		for(i = 0; i < cB->size; ++i)
 		{
-			printf("%d ", cB->buffer[i]);
-		}
-		printf("]\n");
-		printf("Size of: %d\n", cB->size );
-		printf("Head at: %d\n", cB->head );
-		printf("Tail at: %d\n\n", cB->tail );
-
+			printf("===== ELEMENT %d =====\n", i);
+			printf("Message ID:\t%li\n", cB->buffer[i].id.ulData);
+			printf("Message Type:\t%d\n", cB->buffer[i].message_type);
+			printf("Frame Type:\t%d\n", cB->buffer[i].frame_type);
+			printf("Valid Bytes:\t%d\n", cB->buffer[i].validBytes);
+			printf("Buffer:\t\t%d\n", cB->buffer[i].buffer);
+			printf("Data Bytes: ");
+			printf("[");
+			for(j=0; j < 8; j++){
+				printf("%d ", cB->buffer[i].payload[j]);
+			}
+			printf("]\n");			
+		}		
 	}
 	else{
-		printf("Calling Print on an empty Circular Buffer");
+		printf("Calling Print on an unintialized Circular Buffer");
 	}
 }
 #endif
