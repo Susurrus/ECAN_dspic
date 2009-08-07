@@ -33,7 +33,9 @@ typedef unsigned char uint8_t;
   * This code is only being developed to work for filters 0 through 3 for simplicity's sake.
   *
   * The parameters array is used as follows:
-  * parameters[0] = bits 0-1 specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), bits 2-4 specify module mode (loopback, disabled, etc.)
+  * parameters[0] = bits 0-1 specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), 
+                    bits 2-4 specify module mode (loopback, disabled, etc.),
+                    bits 5-6 specify which DMA channel to use
   * parameters[1] = baud rate
   * parameters[2] = bits 0-2 are phase segment 1, bits 3-6 are propagation delay, bits 7-9 are phase segment 2
   * parameters[3] = filters 0 through 15 enable
@@ -42,12 +44,30 @@ typedef unsigned char uint8_t;
   * parameters[6] = mask 0
   * parameters[7] = mask 1
   * parameters[8] = mask 2
-  * parameters[9] = filter 0
-  * parameters[10] = filter 1
-  * parameters[11] = filter 2
-  * parameters[12] = filter 3
+  * parameters[9] = CiTRmnCON01
+  * parameters[10] = CiTRmnCON23
+  * parameters[11] = CiTRmnCON34
+  * parameters[12] = CiTRmnCON56
+  * parameters[13] = Buffer pointer for filters 0-3
+  * parameters[14] = Buffer pointer for filters 4-7
+  * parameters[15] = Buffer pointer for filters 8-11
+  * parameters[16] = Buffer pointer for filters 12-15
+  * parameters[17] = filter 0
+  * parameters[18] = filter 1
+  * parameters[19] = filter 2
+  * parameters[20] = filter 3
   */
 void ecan1_init(uint16_t* parameters);
+
+/**
+ * This function provides a general way to initialize the DMA peripheral.
+ *
+ * parameters[0] = IRQ address & squeezed version of DMAxCON minus CHEN bit
+ * parameters[1] = address of peripheral (DMAxPAD)
+ * parameters[2] = Number of memory units per DMA packet, starting at 1(DMAxCNT)
+ * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
+ */
+void init_DMA0(uint16_t* parameters);
 
 #ifdef SIM
 int main(int argc, char* const argv[]);
