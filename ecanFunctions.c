@@ -201,14 +201,14 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 }
 
 void init_DMA0(uint16_t* parameters) {
-	DMACS0=0; // Clear the status register
-  DMA0CONbits.DIR = parameters[0] & 0x40; // Write to peripheral
-  DMA0CONbits.AMODE = parameters[0] & 0xC; // Peripheral indirect addressing mode	
-  
-	DMA0PAD = parameters[1]; // ECAN 1 (C1TXD)
- 	DMA0CNT = parameters[2]; // Read 8 words at a time (an entire CAN packet)
-	DMA0REQbits.IRQSEL = (parameters[0] >> 8) & 0x7F;	// Tie DMA transfer for ECAN1TX interrupt
-	DMA0STA =  parameters[3]; // Set primary DPSRAM start address bits
+	DMACS0 = 0; // Clear the status register
+  DMA0CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
+  DMA0CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
+
+	DMA0PAD = parameters[1]; // Set the peripheral address that will be using DMA
+ 	DMA0CNT = parameters[2]; // Set data units to words or bytes
+	DMA0REQbits.IRQSEL = (parameters[0] & 0x7F00) >> 8;	// Set the IRQ priority for the DMA transfer
+	DMA0STA =  parameters[3]; // Set start address bits
   
 	DMA0CONbits.CHEN = 1; // Enable DMA
 }
