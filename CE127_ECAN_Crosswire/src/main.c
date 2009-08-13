@@ -86,8 +86,6 @@ void clearIntrflags(void);
 void ecan1WriteMessage(void);
 void ecan2WriteMessage(void);
 
-
-
 int main(void)
 {
 
@@ -101,8 +99,8 @@ int main(void)
 /* ECAN1 Initialisation 		
    Configure DMA Channel 0 for ECAN1 Transmit
    Configure DMA Channel 2 for ECAN1 Receive */
-  //ecan1Init();
   
+  //Initialize ECAN1
   uint16_t parameters[28];
   parameters[0] = 0x0000; // Normal mode, standard frames
   parameters[1] = 10000; // Set to 1Mbps
@@ -130,8 +128,21 @@ int main(void)
   parameters[23] = 0xFFFF; // Set remaining extended filter bits
   ecan1_init(parameters);
   
-	dma0init();	
-	dma2init();
+  // Initialize DMA0
+  uint16_t d0_parameters[4];
+  d0_parameters[0] = 0x4648;
+  d0_parameters[1] = (uint16_t)&C1TXD;
+  d0_parameters[2] = 7;
+  d0_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
+  init_DMA0(d0_parameters);
+  
+  // Initialize DMA2
+  uint16_t d2_parameters[4];
+  d2_parameters[0] = 0x2208;
+  d2_parameters[1] = (uint16_t)&C1RXD;
+  d2_parameters[2] = 7;
+  d2_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
+  init_DMA2(d2_parameters);
 
 /* Enable ECAN1 Interrupt */ 				
     	

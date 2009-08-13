@@ -50,9 +50,6 @@ void ecan1_init(uint16_t* parameters) {
 
   C1CTRL1bits.WIN = 0;
   
-	//ecan1WriteRxAcptMask(1,0x1FFFFFFF,1,1);
-	ecan1WriteRxAcptFilter(1,0x1FFEFFFF,1,1,0);
-  
   C1CTRL1bits.WIN=1;
   C1FEN1 = parameters[3]; // Enable desired filters
 
@@ -170,4 +167,17 @@ void init_DMA0(uint16_t* parameters) {
 	DMA0STA =  parameters[3]; // Set start address bits
   
 	DMA0CONbits.CHEN = 1; // Enable DMA
+}
+
+void init_DMA2(uint16_t* parameters) {
+	DMACS0 = 0; // Clear the status register
+  DMA2CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
+  DMA2CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
+
+	DMA2PAD = parameters[1]; // Set the peripheral address that will be using DMA
+ 	DMA2CNT = parameters[2]; // Set data units to words or bytes
+	DMA2REQbits.IRQSEL = (parameters[0] & 0x7F00) >> 8;	// Set the IRQ priority for the DMA transfer
+	DMA2STA =  parameters[3]; // Set start address bits
+  
+	DMA2CONbits.CHEN = 1; // Enable DMA
 }
