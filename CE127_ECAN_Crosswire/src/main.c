@@ -55,7 +55,7 @@
 #include "p24hxxxx.h"
 #endif
 
-#include <ECAN1Config.h>
+#include <ECAN1Drv.h>
 #include <ECAN2Config.h>
 #include <common.h>
 #include "ecanFunctions.h"

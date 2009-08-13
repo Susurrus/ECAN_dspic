@@ -54,9 +54,7 @@
 #include "p24hxxxx.h"
 #endif
 
-
-#include <ECAN1Config.h>
-
+#include "ECAN1Drv.h"
 
 /* ECAN Transmit Message Buffer Configuration
 
