@@ -82,16 +82,17 @@ maskSel -> Optinal Masking of identifier bits [0-3]
 void ecan1WriteRxAcptFilter(int n, long identifier, unsigned int exide, unsigned int bufPnt,unsigned int maskSel) {
 
 unsigned long sid10_0=0, eid15_0=0, eid17_16=0;
-unsigned int *sidRegAddr,*bufPntRegAddr,*maskSelRegAddr, *fltEnRegAddr;
+//unsigned int *sidRegAddr,*bufPntRegAddr,*maskSelRegAddr, *fltEnRegAddr;
 
 
 	C1CTRL1bits.WIN=1;
 
 	// Obtain the Address of CiRXFnSID, CiBUFPNTn, CiFMSKSELn and CiFEN register for a given filter number "n"
-	sidRegAddr = (unsigned int *)(&C1RXF0SID + (n << 1));
-	bufPntRegAddr = (unsigned int *)(&C1BUFPNT1 + (n >> 2));
-	maskSelRegAddr = (unsigned int *)(&C1FMSKSEL1 + (n >> 3));
-	fltEnRegAddr = (unsigned int *)(&C1FEN1);
+	//sidRegAddr = (unsigned int *)(&C1RXF0SID + (n << 1));
+  unsigned int sidRegAddr = 0;
+	//bufPntRegAddr = (unsigned int *)(&C1BUFPNT1 + (n >> 2));
+	//maskSelRegAddr = (unsigned int *)(&C1FMSKSEL1 + (n >> 3));
+	//fltEnRegAddr = (unsigned int *)(&C1FEN1);
 
 
 	// Bit-filed manupulation to write to Filter identifier register
@@ -100,23 +101,25 @@ unsigned int *sidRegAddr,*bufPntRegAddr,*maskSelRegAddr, *fltEnRegAddr;
 		eid17_16= (identifier>>16) & 0x3;
 		sid10_0 = (identifier>>18) & 0x7FF;
 
-		*sidRegAddr=(((sid10_0)<<5) + 0x8) + eid17_16;	// Write to CiRXFnSID Register
-	    *(sidRegAddr+1)= eid15_0;					// Write to CiRXFnEID Register
+		//*sidRegAddr=(((sid10_0)<<5) + 0x8) + eid17_16;	// Write to CiRXFnSID Register
+	  //  *(sidRegAddr+1)= eid15_0;					// Write to CiRXFnEID Register
+
+		sidRegAddr=(((sid10_0)<<5) + 0x8) + eid17_16;	// Write to CiRXFnSID Register
 
 	}else{			// Filter Standard Identifier
 		sid10_0 = (identifier & 0x7FF);			
-		*sidRegAddr=(sid10_0)<<5;					// Write to CiRXFnSID Register
-		*(sidRegAddr+1)=0;							// Write to CiRXFnEID Register
+		//*sidRegAddr=(sid10_0)<<5;					// Write to CiRXFnSID Register
+		//*(sidRegAddr+1)=0;							// Write to CiRXFnEID Register
 	}
 
 
-   *bufPntRegAddr = (*bufPntRegAddr) & (0xFFFF - (0xF << (4 *(n & 3)))); // clear nibble
-   *bufPntRegAddr = ((bufPnt << (4 *(n & 3))) | (*bufPntRegAddr));       // Write to C1BUFPNTn Register
+   //*bufPntRegAddr = (*bufPntRegAddr) & (0xFFFF - (0xF << (4 *(n & 3)))); // clear nibble
+   //*bufPntRegAddr = ((bufPnt << (4 *(n & 3))) | (*bufPntRegAddr));       // Write to C1BUFPNTn Register
 
-   *maskSelRegAddr = (*maskSelRegAddr) & (0xFFFF - (0x3 << ((n & 7) * 2))); // clear 2 bits
-   *maskSelRegAddr = ((maskSel << (2 * (n & 7))) | (*maskSelRegAddr));      // Write to C1FMSKSELn Register
+   //*maskSelRegAddr = (*maskSelRegAddr) & (0xFFFF - (0x3 << ((n & 7) * 2))); // clear 2 bits
+   //*maskSelRegAddr = ((maskSel << (2 * (n & 7))) | (*maskSelRegAddr));      // Write to C1FMSKSELn Register
 
-   *fltEnRegAddr = ((0x1 << n) | (*fltEnRegAddr)); // Write to C1FEN1 Register
+   //*fltEnRegAddr = ((0x1 << n) | (*fltEnRegAddr)); // Write to C1FEN1 Register
 
    C1CTRL1bits.WIN=0;
 

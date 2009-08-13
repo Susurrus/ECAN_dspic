@@ -120,12 +120,12 @@ int main(void)
   parameters[13] = 0;
   parameters[14] = 0;
   parameters[15] = 0;
-  parameters[16] = 0x0001; // Points to buffer 1
+  parameters[16] = 0x0010; // Points to buffer 1
   parameters[17] = 0;
   parameters[18] = 0;
   parameters[19] = 0;
-  parameters[20] = 0xFFEB;
-  parameters[21] = 0xFFFF;
+  parameters[20] = 0;
+  parameters[21] = 0;
   parameters[22] = 0xFFEA; // EXIDE bit set, standard filter, two bits of extended filter
   parameters[23] = 0xFFFF; // Set remaining extended filter bits
   ecan1_init(parameters);

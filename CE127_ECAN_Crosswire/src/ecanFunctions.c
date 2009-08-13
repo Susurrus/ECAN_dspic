@@ -36,12 +36,6 @@ void ecan1_init(uint16_t* parameters) {
   
   // Setup message filters and masks.
   C1CTRL1bits.WIN = 1; // Allow configuration of masks and filters
-    
-  //C1FEN1 = parameters[3]; // Enable desired filters
-  C1FEN1 = 0xFFFF;
-    
-  C1FMSKSEL1 = parameters[4]; // Set filter mask selection bits for filters 0-7
-  C1FMSKSEL2 = parameters[5]; // Set filter mask selection bits for filters 8-15
   
   // Set our filter mask parameters
   C1RXM0SIDbits.SID = parameters[6] >> 5; // Set filter 0
@@ -53,31 +47,38 @@ void ecan1_init(uint16_t* parameters) {
   C1RXM2SIDbits.SID = parameters[10] >> 5; // Set filter 2
   C1RXM2SIDbits.MIDE = (parameters[10] & 0x0008) >> 3;
   C1RXM2EID = parameters[11];
+
+  C1CTRL1bits.WIN = 0;
   
+	//ecan1WriteRxAcptMask(1,0x1FFFFFFF,1,1);
+	ecan1WriteRxAcptFilter(1,0x1FFEFFFF,1,1,0);
+  
+  C1CTRL1bits.WIN=1;
+  C1FEN1 = parameters[3]; // Enable desired filters
+
+  C1FMSKSEL1 = parameters[4]; // Set filter mask selection bits for filters 0-7
+  C1FMSKSEL2 = parameters[5]; // Set filter mask selection bits for filters 8-15
+
   C1BUFPNT1 = parameters[16]; // Buffer pointer for filters 0-3
   C1BUFPNT2 = parameters[17]; // Buffer pointer for filters 4-7
   C1BUFPNT3 = parameters[18]; // Buffer pointer for filters 8-11
-  C1BUFPNT4 = parameters[19]; // Buffer pointer for filters 12-15
+  C1BUFPNT4 = parameters[19]; // Buffer pointer for filters 12-15x
   
   // Set our filter parameters
   C1RXF0SIDbits.SID = parameters[20] >> 5; // Set the actual filter bits for filter 0
   C1RXF0SIDbits.EXIDE = (parameters[20] & 0x0008) >> 3;
   C1RXF0EID = parameters[21];
-  C1RXF1SIDbits.SID = parameters[22] >> 5; // Set the actual filter bits for filter 0
-  C1RXF1SIDbits.EXIDE = (parameters[22] & 0x0008) >> 3;
-  C1RXF0EID = parameters[23];
+  C1RXF1SID = parameters[22];
+  C1RXF1EID = parameters[23];
   C1RXF2SIDbits.SID = parameters[24] >> 5; // Set the actual filter bits for filter 0
   C1RXF2SIDbits.EXIDE = (parameters[24] & 0x0008) >> 3;
-  C1RXF0EID = parameters[25];
+  C1RXF2EID = parameters[25];
   C1RXF3SIDbits.SID = parameters[26] >> 5; // Set the actual filter bits for filter 0
   C1RXF3SIDbits.EXIDE = (parameters[26] & 0x0008) >> 3;
-  C1RXF0EID = parameters[27];
+  C1RXF3EID = parameters[27];
    
-  C1CTRL1bits.WIN = 0; // Restore the WIN bit to re-enable interrupts and access to other registers
+  C1CTRL1bits.WIN=0;
   
-  
-	//ecan1WriteRxAcptFilter(1,0x1FFEFFFF,1,1,0);
-	//ecan1WriteRxAcptMask(1,0x1FFFFFFF,1,1);
   
   /*
   // Deal with DMA setup
