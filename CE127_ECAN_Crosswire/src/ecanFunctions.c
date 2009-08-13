@@ -117,8 +117,13 @@ void ecan1_init(uint16_t* parameters) {
   while(C1CTRL1bits.OPMODE != desired_mode);
 #endif
   
-  // Setup our interrupts as our last step and clear all interrupt bits
+  // Clear all interrupt bits
   C1RXFUL1=C1RXFUL2=C1RXOVF1=C1RXOVF2=0x0000;
+  
+  // Enable interrupts for ECAN1
+	IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
+	C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
+	C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
   
   // Configure buffer settings.
   // Must be done after mode setting for some reason

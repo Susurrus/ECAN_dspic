@@ -144,12 +144,6 @@ int main(void)
   d2_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
   init_DMA2(d2_parameters);
 
-/* Enable ECAN1 Interrupt */ 				
-    	
-	IEC2bits.C1IE = 1;
-	C1INTEbits.TBIE = 1;	
-	C1INTEbits.RBIE = 1;
-
 /* ECAN2 Initialisation 		
    Configure DMA Channel 1 for ECAN2 Transmit
    Configure DMA Channel 3 for ECAN2 Receive */
