@@ -135,10 +135,10 @@ e. h
         This folder contains include files for the code example.
 	The following files are used in this project
 
-	ECAN1Config.h	
+	ecanFunctions.h <- Library code. Defines all ECAN1 functions
+  ecanDefinitions.h <- Library code. defines unions and structs used by the ECAN code
+  circBuffer.c <- Library code. Defines a circular buffer that we use for storing CAN messages
 	ECAN2Config.h	
-	ECAN1Drv.h	
-	ECAN2Drv.h
 
 
 f. src
@@ -149,15 +149,15 @@ f. src
 
 	The following files are used in this project
 
-	ECAN1Config.c
+	ecanFunctions.c <- Library code.
+  circBuffer.c <- Library code.
 	ECAN2Config.c
-	ECAN1Drv.c
 	ECAN2Drv.c
 	
 
 4. Suggested Development Resources:
 -----------------------------------
-        a. Explorer 16 Demo board with dsPIC33FJ256GP710 controller
+  a. Explorer 16 Demo board with dsPIC33FJ256GP710 controller
 	b. ECAN PicTail Card 
 
 5. Reconfiguring the project for a different dsPIC33F device:
@@ -190,7 +190,12 @@ Please use the following general guidelines:
         MPLAB IDE>>Project>>Build All
 
         f. Download the hex file into the device and run.
-
+        
+        g. To confirm that transmission has occured, ecan1msgBuf & ecan2msgBuf should both contain two non-identical messages.
+           This program transmits a single message from each CAN to the other one. Messages received by ECAN1 end up in ecanBuffer,
+           messages received by ecan2 end up in rx_ecan2message.
+ 
 6. Revision History :
 ---------------------
         10/05/2006 - Initial Release of the Code Example
+        
