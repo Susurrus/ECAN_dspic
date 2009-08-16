@@ -4,6 +4,10 @@
  *
  */
  
+#ifndef _ECANFUNCTIONS_H_
+#define _ECANFUNCTIONS_H_
+
+ 
 // The SIM variable declares that this code is running in simulation mode on an x86 processor. It cuts or modifies code
 // that won't work or is unneccesary for simulation. This is useful for validating the settings the code makes.
 //#define SIM
@@ -16,6 +20,7 @@
 #else
 #include <p33Fxxxx.h>
 #include "ecanDefinitions.h"
+#include "circBuffer.h"
 #endif
 
 #ifdef SIM
@@ -75,7 +80,18 @@ void ecan1_init(uint16_t* parameters);
  * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
  */
 void init_DMA0(uint16_t* parameters);
+void init_DMA2(uint16_t* parameters);
+
+/**
+ * This function copies a can message into the global
+ * reception CAN circular buffer
+ */
+void rxECAN1(tCanMessage* message);
+
+extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 #ifdef SIM
 int main(int argc, char* const argv[]);
 #endif
+
+#endif /* _ECANFUNCTIONS_H_ */

@@ -1,7 +1,13 @@
 #include "ecanFunctions.h"
 
-unsigned int ecan1MsgBuf[4][8] __attribute__((space(dma)));
+// Declare space for our message buffer in DMA
+unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 tCanMessage canMsg;
+
+// Initialize our circular buffer for receiving CAN messages
+struct CircBuffer testBuffer;
+
+CBRef ecanBuffer; // A pointer to our circular buffer
 
 void ecan1_init(uint16_t* parameters) {
 
@@ -12,6 +18,10 @@ void ecan1_init(uint16_t* parameters) {
 #ifndef SIM
   while(C1CTRL1bits.OPMODE != 4);
 #endif
+
+  // Initialize our circular buffers.
+	ecanBuffer = (struct CircBuffer* )&testBuffer;
+	newCircBuffer(ecanBuffer);
  
   // Initialize our time quanta (assume 20 total)
   unsigned long int ftq = 400000/(parameters[1]);
@@ -185,4 +195,83 @@ void init_DMA2(uint16_t* parameters) {
 	DMA2STA =  parameters[3]; // Set start address bits
   
 	DMA2CONbits.CHEN = 1; // Enable DMA
+}
+
+void rxECAN1(tCanMessage* message)
+{
+	unsigned int ide=0;
+	unsigned int srr=0;
+	unsigned long id=0,d;
+			
+	// read word 0 to see the message type 
+	ide=ecan1msgBuf[message->buffer][0] & 0x0001;	
+	srr=ecan1msgBuf[message->buffer][0] & 0x0002;	
+	
+	/* check to see what type of message it is */
+	/* message is standard identifier */
+	if(0==ide)
+	{
+		message->id = (tUnsignedLongToChar)(unsigned long)((ecan1msgBuf[message->buffer][0] & 0x1FFC) >> 2);		
+		message->frame_type = CAN_FRAME_STD;
+	}
+	/* mesage is extended identifier */
+	else
+	{
+		// If extended compute the extended ID
+		id = ecan1msgBuf[message->buffer][0] & 0x1FFC;		
+		message->id.ulData = (id << 16);
+		id = ecan1msgBuf[message->buffer][1] & 0x0FFF;
+		message->id.ulData = (message->id.ulData + (id << 6));
+		id = (ecan1msgBuf[message->buffer][2] & 0xFC00) >> 10;
+		message->id.ulData = (message->id.ulData + id);
+		
+		// Se the frame type to extended
+		message->frame_type = CAN_FRAME_EXT;
+	}
+	/* check to see what type of message it is */
+	/* RTR message */
+	if(1==srr)
+	{
+		message->message_type=CAN_MSG_RTR;	
+	}
+	/* normal message */
+	else
+	{
+		// set the data type
+		message->message_type=CAN_MSG_DATA;
+		
+		message->payload[0]=(unsigned char)ecan1msgBuf[message->buffer][3];
+		message->payload[1]=(unsigned char)((ecan1msgBuf[message->buffer][3] & 0xFF00) >> 8);
+		message->payload[2]=(unsigned char)ecan1msgBuf[message->buffer][4];
+		message->payload[3]=(unsigned char)((ecan1msgBuf[message->buffer][4] & 0xFF00) >> 8);
+		message->payload[4]=(unsigned char)ecan1msgBuf[message->buffer][5];
+		message->payload[5]=(unsigned char)((ecan1msgBuf[message->buffer][5] & 0xFF00) >> 8);
+		message->payload[6]=(unsigned char)ecan1msgBuf[message->buffer][6];
+		message->payload[7]=(unsigned char)((ecan1msgBuf[message->buffer][6] & 0xFF00) >> 8);
+		message->validBytes=(unsigned char)(ecan1msgBuf[message->buffer][2] & 0x000F);
+	}	
+}
+
+void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)  
+{    
+	// If the interrupt was set because of a transmit
+	if(C1INTFbits.TBIF){ 
+    	C1INTFbits.TBIF = 0;
+  } 
+ 
+	// if the interrupt was fired because of a received message
+  if(C1INTFbits.RBIF){      
+		// read the message 
+	  if(C1RXFUL1bits.RXFUL1==1)
+	    {
+	    	canMsg.buffer=1; // Set which buffer the message is in
+	    	C1RXFUL1bits.RXFUL1=0;
+	    }
+		   //  Move the message from the DMA buffer to a data structure.
+	    rxECAN1(&canMsg);
+      writeBack(ecanBuffer, canMsg);
+		C1INTFbits.RBIF = 0;
+	}
+	
+	IFS2bits.C1IF = 0;
 }

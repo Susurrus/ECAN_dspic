@@ -1,6 +1,11 @@
 // This file contains the constant definitions as well as the required
 // data structures to work with on the ECAN module
+#ifndef _ECANDEFINITIONS_H_
+#define _ECANDEFINITIONS_H_
 
+#ifdef __cplusplus
+       extern "C"{
+#endif
 
 // Message Types
 #define CAN_MSG_DATA	0x01 // message type 
@@ -50,3 +55,10 @@ typedef struct tCanMessage{
 	unsigned char 					validBytes;
 	unsigned char						buffer;
 }tCanMessage;
+
+
+#ifdef __cplusplus
+       }
+#endif
+
+#endif /* _ECANDEFINITIONS_H_ */

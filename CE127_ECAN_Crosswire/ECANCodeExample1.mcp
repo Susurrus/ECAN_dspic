@@ -36,6 +36,8 @@ file_008=.
 file_009=.
 file_010=.
 file_011=.
+file_012=.
+file_013=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -49,6 +51,8 @@ file_008=no
 file_009=no
 file_010=no
 file_011=no
+file_012=no
+file_013=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -62,6 +66,8 @@ file_008=no
 file_009=no
 file_010=no
 file_011=no
+file_012=no
+file_013=no
 [FILE_INFO]
 file_000=src\ECAN2Config.C
 file_001=src\traps.c
@@ -69,12 +75,14 @@ file_002=src\ECAN1Drv.c
 file_003=src\ECAN2Drv.c
 file_004=src\main.c
 file_005=src\ecanFunctions.c
-file_006=h\ECAN1Drv.h
-file_007=h\ECAN2Drv.h
-file_008=h\ECAN2Config.h
-file_009=h\common.h
-file_010=h\ecanDefinitions.h
-file_011=h\ecanFunctions.h
+file_006=src\circBuffer.c
+file_007=h\ECAN1Drv.h
+file_008=h\ECAN2Drv.h
+file_009=h\ECAN2Config.h
+file_010=h\common.h
+file_011=h\ecanDefinitions.h
+file_012=h\ecanFunctions.h
+file_013=h\circBuffer.h
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}
 suite_state=

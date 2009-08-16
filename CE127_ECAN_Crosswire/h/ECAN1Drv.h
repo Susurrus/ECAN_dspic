@@ -51,9 +51,7 @@
 #ifndef __ECAN1_DRV_H__
 #define __ECAN1_DRV_H__ 
 
-#define ECAN1_MSG_BUF_LENGTH 4
-typedef unsigned int ECAN1MSGBUF [4][8];	
-extern ECAN1MSGBUF  ecan1msgBuf __attribute__((space(dma)));
+#include "ecanFunctions.h"
 
 extern void ecan1WriteTxMsgBufId(unsigned int buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit);
 extern void ecan1WriteTxMsgBufData(unsigned int buf, unsigned int dataLength, unsigned int data1, unsigned int data2, unsigned int data3, unsigned int data4);

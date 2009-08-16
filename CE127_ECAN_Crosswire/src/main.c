@@ -73,11 +73,10 @@ _FWDT(FWDTEN_OFF);              // Watchdog Timer Enabled/disabled by user softw
 
 
 // Define ECAN Message Buffers
-ECAN1MSGBUF ecan1msgBuf __attribute__((space(dma),aligned(ECAN1_MSG_BUF_LENGTH*16)));
 ECAN2MSGBUF ecan2msgBuf __attribute__((space(dma),aligned(ECAN2_MSG_BUF_LENGTH*16)));
 
 // CAN Messages in RAM
-mID rx_ecan1message;
+tCanMessage rx_ecan1message;
 mID rx_ecan2message;
 
 // Prototype Declaration
@@ -240,96 +239,6 @@ ecan2WriteTxMsgBufData(0,8,0xaaaa,0xbbbb,0xcccc,0xdddd);
 
 }
 
-
-
-/******************************************************************************
-*                                                                             
-*    Function:			rxECAN1
-*    Description:       moves the message from the DMA memory to RAM
-*                                                                             
-*    Arguments:			*message: a pointer to the message structure in RAM 
-*						that will store the message. 
-*	 Author:            Jatinder Gharoo                                                      
-*	                                                                 
-*                                                                              
-******************************************************************************/
-void rxECAN1(mID *message)
-{
-	unsigned int ide=0;
-	unsigned int srr=0;
-	unsigned long id=0,d;
-			
-	/*
-	Standard Message Format: 
-	Word0 : 0bUUUx xxxx xxxx xxxx
-			     |____________|||
- 					SID10:0   SRR IDE(bit 0)     
-	Word1 : 0bUUUU xxxx xxxx xxxx
-			   	   |____________|
-						EID17:6
-	Word2 : 0bxxxx xxx0 UUU0 xxxx
-			  |_____||	     |__|
-			  EID5:0 RTR   	  DLC
-	word3-word6: data bytes
-	word7: filter hit code bits
-	
-	Substitute Remote Request Bit
-	SRR->	"0"	 Normal Message 
-			"1"  Message will request remote transmission
-	
-	Extended  Identifier Bit			
-	IDE-> 	"0"  Message will transmit standard identifier
-	   		"1"  Message will transmit extended identifier
-	
-	Remote Transmission Request Bit
-	RTR-> 	"0"  Message transmitted is a normal message
-			"1"  Message transmitted is a remote message
-	*/
-	/* read word 0 to see the message type */
-	ide=ecan1msgBuf[message->buffer][0] & 0x0001;	
-	srr=ecan1msgBuf[message->buffer][0] & 0x0002;	
-	
-	/* check to see what type of message it is */
-	/* message is standard identifier */
-	if(ide==0)
-	{
-		message->id=(ecan1msgBuf[message->buffer][0] & 0x1FFC) >> 2;		
-		message->frame_type=CAN_FRAME_STD;
-	}
-	/* mesage is extended identifier */
-	else
-	{
-		id=ecan1msgBuf[message->buffer][0] & 0x1FFC;		
-		message->id=id << 16;
-		id=ecan1msgBuf[message->buffer][1] & 0x0FFF;
-		message->id=message->id+(id << 6);
-		id=(ecan1msgBuf[message->buffer][2] & 0xFC00) >> 10;
-		message->id=message->id+id;		
-		message->frame_type=CAN_FRAME_EXT;
-	}
-	/* check to see what type of message it is */
-	/* RTR message */
-	if(srr==1)
-	{
-		message->message_type=CAN_MSG_RTR;	
-	}
-	/* normal message */
-	else
-	{
-		message->message_type=CAN_MSG_DATA;
-		message->data[0]=(unsigned char)ecan1msgBuf[message->buffer][3];
-		message->data[1]=(unsigned char)((ecan1msgBuf[message->buffer][3] & 0xFF00) >> 8);
-		message->data[2]=(unsigned char)ecan1msgBuf[message->buffer][4];
-		message->data[3]=(unsigned char)((ecan1msgBuf[message->buffer][4] & 0xFF00) >> 8);
-		message->data[4]=(unsigned char)ecan1msgBuf[message->buffer][5];
-		message->data[5]=(unsigned char)((ecan1msgBuf[message->buffer][5] & 0xFF00) >> 8);
-		message->data[6]=(unsigned char)ecan1msgBuf[message->buffer][6];
-		message->data[7]=(unsigned char)((ecan1msgBuf[message->buffer][6] & 0xFF00) >> 8);
-		message->data_length=(unsigned char)(ecan1msgBuf[message->buffer][2] & 0x000F);
-	}	
-}
-
-
 /******************************************************************************
 *                                                                             
 *    Function:			rxECAN2
@@ -458,29 +367,6 @@ void oscConfig(void){
 
 	while(OSCCONbits.LOCK!=1) {};
 }
-
-
-void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)  
-{    
-	IFS2bits.C1IF = 0;        // clear interrupt flag
-	if(C1INTFbits.TBIF)
-    { 
-    	C1INTFbits.TBIF = 0;
-    } 
- 
-    if(C1INTFbits.RBIF)
-    {      
-		// read the message 
-	    if(C1RXFUL1bits.RXFUL1==1)
-	    {
-	    	rx_ecan1message.buffer=1;
-	    	C1RXFUL1bits.RXFUL1=0;
-	    }	    
-	    rxECAN1(&rx_ecan1message); 	    	    
-		C1INTFbits.RBIF = 0;
-	}
-}
-
 
 void __attribute__((interrupt, no_auto_psv))_C2Interrupt(void)  
 {
