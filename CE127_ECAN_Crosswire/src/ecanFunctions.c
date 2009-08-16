@@ -2,7 +2,6 @@
 
 // Declare space for our message buffer in DMA
 unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
-tCanMessage canMsg;
 
 // Initialize our circular buffer for receiving CAN messages
 struct CircBuffer testBuffer;
@@ -252,24 +251,68 @@ void rxECAN1(tCanMessage* message)
 	}	
 }
 
-void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)  
-{    
-	// If the interrupt was set because of a transmit
+void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit, unsigned char dataLength, unsigned char* data){
+
+  unsigned long word0=0, word1=0, word2=0;
+  unsigned long sid10_0=0, eid5_0=0, eid17_6=0,a;
+
+
+  if(ide) {
+		eid5_0  = (txIdentifier & 0x3F);
+		eid17_6 = (txIdentifier>>6) & 0xFFF;
+		sid10_0 = (txIdentifier>>18) & 0x7FF;
+		word1 = eid17_6;
+	}	else {
+		sid10_0 = (txIdentifier & 0x7FF);
+	}
+	
+	
+	if(remoteTransmit==1) { 	// Transmit Remote Frame
+		word0 = ((sid10_0 << 2) | ide | 0x2);
+		word2 = ((eid5_0 << 10)| 0x0200);
+  }	else {
+	  word0 = ((sid10_0 << 2) | ide);
+	  word2 = (eid5_0 << 10);
+	}
+
+  if(ide) {
+	  ecan1msgBuf[buf][0] = (word0 | 0x0002);
+  } else {
+	  ecan1msgBuf[buf][0] = word0;
+  }
+  
+	ecan1msgBuf[buf][1] = word1;
+	ecan1msgBuf[buf][2] = ((word2 & 0xFFF0) + dataLength) ;
+	ecan1msgBuf[buf][3] = ((unsigned short*)data)[0];
+	ecan1msgBuf[buf][4] = ((unsigned short*)data)[1];
+	ecan1msgBuf[buf][5] = ((unsigned short*)data)[2];
+	ecan1msgBuf[buf][6] = ((unsigned short*)data)[3];
+
+}
+
+
+void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
+  
+  tCanMessage canMsg; // Give us a CAN message struct to populate and use
+	
+  // If the interrupt was set because of a transmit
 	if(C1INTFbits.TBIF){ 
     	C1INTFbits.TBIF = 0;
   } 
  
 	// if the interrupt was fired because of a received message
-  if(C1INTFbits.RBIF){      
+  if (C1INTFbits.RBIF) {      
 		// read the message 
-	  if(C1RXFUL1bits.RXFUL1==1)
-	    {
-	    	canMsg.buffer=1; // Set which buffer the message is in
-	    	C1RXFUL1bits.RXFUL1=0;
-	    }
-		   //  Move the message from the DMA buffer to a data structure.
-	    rxECAN1(&canMsg);
-      writeBack(ecanBuffer, canMsg);
+	  if (C1RXFUL1bits.RXFUL1==1) {
+	    canMsg.buffer=1; // Set which buffer the message is in
+	    C1RXFUL1bits.RXFUL1=0;
+	  }
+		
+    //  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
+	  rxECAN1(&canMsg);
+    writeBack(ecanBuffer, canMsg);
+    
+    // Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
 	}
 	

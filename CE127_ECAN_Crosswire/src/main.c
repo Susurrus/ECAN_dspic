@@ -55,7 +55,6 @@
 #include "p24hxxxx.h"
 #endif
 
-#include <ECAN1Drv.h>
 #include <ECAN2Config.h>
 #include <common.h>
 #include "ecanFunctions.h"
@@ -76,7 +75,6 @@ _FWDT(FWDTEN_OFF);              // Watchdog Timer Enabled/disabled by user softw
 ECAN2MSGBUF ecan2msgBuf __attribute__((space(dma),aligned(ECAN2_MSG_BUF_LENGTH*16)));
 
 // CAN Messages in RAM
-tCanMessage rx_ecan1message;
 mID rx_ecan2message;
 
 // Prototype Declaration
@@ -202,8 +200,14 @@ data1, data2, data3, data4 -> Data words (2 bytes) each
 
 */
 
-	ecan1WriteTxMsgBufId(0,0x1FFEFFFF,1,0);
-	ecan1WriteTxMsgBufData(0,8,0x1111,0x2222,0x3333,0x4444);
+  unsigned short payload[4];
+
+  payload[0] = 0x1111;
+  payload[1] = 0x2222;
+  payload[2] = 0x3333;
+  payload[3] = 0x4444;
+  
+	txECAN1(0,0x1FFEFFFF,1,0,8,(unsigned char*)payload);
 
 }
 

@@ -88,6 +88,11 @@ void init_DMA2(uint16_t* parameters);
  */
 void rxECAN1(tCanMessage* message);
 
+/**
+ * This function transmits a CAN message on the ECAN1 CAN bus.
+ */
+void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit, unsigned char dataLength, unsigned char* data);
+
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 #ifdef SIM
