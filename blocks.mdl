@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.9"
+    ComputedModelVersion    "1.10"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Oct 09 14:37:41 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:9>"
+  LastModifiedDate	  "Mon Oct 12 12:27:48 2009"
+  ModelVersionFormat	  "1.%<AutoIncrement:10>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -608,6 +608,11 @@ Model {
   }
   BlockParameterDefaults {
     Block {
+      BlockType		      ArithShift
+      nBitShiftRight	      "0"
+      nBinPtShiftRight	      "0"
+    }
+    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -657,6 +662,17 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchByCopyingInsideSignal off
       Interpolate	      on
+    }
+    Block {
+      BlockType		      Logic
+      Operator		      "AND"
+      Inputs		      "2"
+      IconShape		      "rectangular"
+      AllPortsSameDT	      on
+      OutDataTypeMode	      "Logical (see Configuration Parameters: Optimiza"
+"tion)"
+      LogicDataType	      "uint(8)"
+      SampleTime	      "-1"
     }
     Block {
       BlockType		      Outport
@@ -775,8 +791,8 @@ Model {
       MaskTabNameString	      ",,,,,,,,"
       System {
 	Name			"Initialize ECAN 1"
-	Location		[661, 292, 1657, 837]
-	Open			off
+	Location		[662, 326, 1658, 871]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -823,7 +839,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
-	  Position		  [20, 185, 130, 215]
+	  Position		  [20, 150, 130, 180]
 	  ShowName		  off
 	  Value			  "frame_setting"
 	  OutDataTypeMode	  "uint16"
@@ -831,7 +847,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant1"
-	  Position		  [20, 235, 50, 265]
+	  Position		  [20, 180, 50, 200]
 	  ShowName		  off
 	  Value			  "mode"
 	  OutDataTypeMode	  "uint16"
@@ -839,7 +855,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant2"
-	  Position		  [20, 279, 90, 311]
+	  Position		  [20, 244, 90, 276]
 	  ShowName		  off
 	  Value			  "dma_rx_chan"
 	  OutDataTypeMode	  "uint16"
@@ -847,7 +863,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant3"
-	  Position		  [20, 340, 105, 370]
+	  Position		  [20, 315, 105, 345]
 	  ShowName		  off
 	  Value			  "dma_tx_chan"
 	  OutDataTypeMode	  "uint16"
@@ -869,6 +885,74 @@ Model {
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Logic
+	  Name			  "Logical\nOperator"
+	  Ports			  [4, 1]
+	  Position		  [370, 152, 405, 223]
+	  ShowName		  off
+	  Operator		  "OR"
+	  Inputs		  "4"
+	  AllPortsSameDT	  off
+	  OutDataTypeMode	  "Boolean"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Shift\nArithmetic1"
+	  Ports			  [1, 1]
+	  Position		  [170, 170, 250, 210]
+	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
+"rithmetic"
+	  SourceType		  "Shift Arithmetic"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
+	  FunctionWithSeparateData off
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  nBitShiftRight	  "-2"
+	  nBinPtShiftRight	  "0"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Shift\nArithmetic2"
+	  Ports			  [1, 1]
+	  Position		  [170, 240, 250, 280]
+	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
+"rithmetic"
+	  SourceType		  "Shift Arithmetic"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
+	  FunctionWithSeparateData off
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  nBitShiftRight	  "-5"
+	  nBinPtShiftRight	  "0"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Shift\nArithmetic3"
+	  Ports			  [1, 1]
+	  Position		  [170, 310, 250, 350]
+	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
+"rithmetic"
+	  SourceType		  "Shift Arithmetic"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
+	  FunctionWithSeparateData off
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  nBitShiftRight	  "-8"
+	  nBinPtShiftRight	  "0"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -1027,33 +1111,6 @@ Model {
 	  }
 	}
 	Line {
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  Points		  [55, 0; 0, 65]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  Points		  [95, 0; 0, 30]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant2"
-	  SrcPort		  1
-	  DstBlock		  "myMux Fun"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "Constant3"
-	  SrcPort		  1
-	  Points		  [80, 0; 0, -45]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  4
-	}
-	Line {
 	  SrcBlock		  "Constant4"
 	  SrcPort		  1
 	  DstBlock		  "Gain"
@@ -1066,11 +1123,63 @@ Model {
 	  DstPort		  1
 	}
 	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "Logical\nOperator"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Shift\nArithmetic1"
+	  SrcPort		  1
+	  Points		  [50, 0; 0, -10]
+	  DstBlock		  "Logical\nOperator"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  DstBlock		  "Shift\nArithmetic1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant2"
+	  SrcPort		  1
+	  DstBlock		  "Shift\nArithmetic2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Shift\nArithmetic2"
+	  SrcPort		  1
+	  Points		  [50, 0; 0, -65]
+	  DstBlock		  "Logical\nOperator"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Shift\nArithmetic3"
+	  SrcPort		  1
+	  Points		  [100, 0]
+	  DstBlock		  "Logical\nOperator"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "Constant3"
+	  SrcPort		  1
+	  DstBlock		  "Shift\nArithmetic3"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Logical\nOperator"
+	  SrcPort		  1
+	  Points		  [5, 0; 0, 75]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  1
+	}
+	Line {
 	  SrcBlock		  "Gain"
 	  SrcPort		  1
-	  Points		  [270, 0]
+	  Points		  [210, 0; 0, -140]
 	  DstBlock		  "myMux Fun"
-	  DstPort		  5
+	  DstPort		  2
 	}
       }
     }
@@ -1105,8 +1214,6 @@ Stateflow {
 		firstJunction                             		4
 		viewObj                                   		2
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		6
