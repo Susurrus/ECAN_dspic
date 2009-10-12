@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.10"
+    ComputedModelVersion    "1.18"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Oct 12 12:27:48 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:10>"
+  LastModifiedDate	  "Mon Oct 12 15:05:07 2009"
+  ModelVersionFormat	  "1.%<AutoIncrement:18>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -608,11 +608,6 @@ Model {
   }
   BlockParameterDefaults {
     Block {
-      BlockType		      ArithShift
-      nBitShiftRight	      "0"
-      nBinPtShiftRight	      "0"
-    }
-    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -691,6 +686,9 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
+      BlockType		      Reference
+    }
+    Block {
       BlockType		      "S-Function"
       FunctionName	      "system"
       SFunctionModules	      "''"
@@ -738,7 +736,7 @@ Model {
   }
   System {
     Name		    "blocks"
-    Location		    [616, 189, 1636, 931]
+    Location		    [1162, 137, 1649, 419]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -756,7 +754,8 @@ Model {
       BlockType		      SubSystem
       Name		      "Initialize ECAN 1"
       Ports		      []
-      Position		      [270, 270, 310, 330]
+      Position		      [45, 40, 160, 87]
+      ShowName		      off
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
@@ -767,32 +766,48 @@ Model {
 "m."
       MaskPromptString	      "Extended Frames (Standard if unchecked)|Mode|DM"
 "A Reception Channel|DMA Transmission Channel|Baud Rate|Phase Segment 1|Propag"
-"ation Delay|Phase Segment 2|Time Quanta"
+"ation Delay|Phase Segment 2|Time Quanta|Filters (array of numbers)|Mask 0|Mas"
+"k 1|Mask 2|Filter 0|Filter 0 Mask|Filter 1|Filter 1 Mask"
       MaskStyleString	      "checkbox,popup(--|Normal|Loopback|Listen only|C"
-"onfiguration|Listen all),edit,edit,edit,edit,edit,edit,edit"
-      MaskTunableValueString  "on,on,on,on,on,on,on,on,off"
+"onfiguration|Listen all),edit,edit,edit,edit,edit,edit,edit,edit,edit,edit,ed"
+"it,edit,popup(--|0|1|2),edit,popup(--|0|1|2)"
+      MaskTunableValueString  "on,on,on,on,on,on,on,on,off,on,on,on,on,on,on,o"
+"n,on"
       MaskCallbackString      "|||||tq = str2num(get_param(gcb, 'ps1')) + str2"
 "num(get_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, '"
 "tq', int2str(tq));|tq = str2num(get_param(gcb, 'ps1')) + str2num(get_param(gc"
 "b, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq)"
 ");|tq = str2num(get_param(gcb, 'ps1')) + str2num(get_param(gcb, 'pd')) + str2"
-"num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));|"
-      MaskEnableString	      "on,on,on,on,on,on,on,on,off"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on,on,on,on"
-      MaskVarAliasString      ",,,,,,,,"
+"num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));||filters = ev"
+"al(get_param(gcb,'filters'));\nmVisibilities = get_param(gcb,'MaskVisibilitie"
+"s');\nmNames = get_param(gcb,'MaskNames');\nfor i = 1:size(mNames);\n	"
+"n = mNames{i};\n    if size(n,2) > 7 && strcmp(n(1:7), 'filter_') == 1\n     "
+"   filterNumber = sscanf(n, 'filter_%d');\n        if isempty(find(filters =="
+" filterNumber, 1)) == 0\n             mVisibilities{i} = 'on';\n        else"
+"\n             mVisibilities{i} = 'off';\n        end\n    end\nend\nset_para"
+"m(gcb, 'MaskVisibilities', mVisibilities);|||||||"
+      MaskEnableString	      "on,on,on,on,on,on,on,on,off,on,on,on,on,on,on,o"
+"n,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+",on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+",on"
+      MaskVarAliasString      ",,,,,,,,,,,,,,,,"
       MaskVariables	      "frame_setting=@1;mode=@2;dma_rx_chan=@3;dma_tx_"
-"chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;tq=&9;"
+"chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;tq=&9;filters=@10;mask_0=@11;mask_1=@12;m"
+"ask_2=@13;filter_0=@14;filter_0_mask=@15;filter_1=@16;filter_1_mask=@17;"
+      MaskDisplay	      "text(0.5,0.5,'Configure ECAN1','horizontalAlign"
+"ment','center','verticalAlignment','middle');\n"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
-      MaskIconUnits	      "autoscale"
-      MaskValueString	      "off|--|0|0|0|1|3|7|11"
-      MaskTabNameString	      ",,,,,,,,"
+      MaskIconUnits	      "normalized"
+      MaskValueString	      "off|--|0|0|0|1|3|7|11|[0 1]|0|0|0|0|0|0|0"
+      MaskTabNameString	      ",,,,,,,,,,,,,,,,"
       System {
 	Name			"Initialize ECAN 1"
 	Location		[662, 326, 1658, 871]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -809,7 +824,7 @@ Model {
 	  Name			  "C Function Call"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [1]
-	  Position		  [575, 275, 700, 315]
+	  Position		  [855, 220, 980, 260]
 	  List {
 	    ListType		    RTWdata
 	    FctDeclaration	    "extern void ecan1_init(uint16_T* u1);"
@@ -839,7 +854,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
-	  Position		  [20, 150, 130, 180]
+	  Position		  [20, 173, 100, 187]
 	  ShowName		  off
 	  Value			  "frame_setting"
 	  OutDataTypeMode	  "uint16"
@@ -847,7 +862,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant1"
-	  Position		  [20, 180, 50, 200]
+	  Position		  [20, 188, 50, 202]
 	  ShowName		  off
 	  Value			  "mode"
 	  OutDataTypeMode	  "uint16"
@@ -855,7 +870,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant2"
-	  Position		  [20, 244, 90, 276]
+	  Position		  [20, 201, 85, 219]
 	  ShowName		  off
 	  Value			  "dma_rx_chan"
 	  OutDataTypeMode	  "uint16"
@@ -863,7 +878,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant3"
-	  Position		  [20, 315, 105, 345]
+	  Position		  [20, 217, 85, 233]
 	  ShowName		  off
 	  Value			  "dma_tx_chan"
 	  OutDataTypeMode	  "uint16"
@@ -871,15 +886,39 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  Position		  [20, 405, 50, 435]
+	  Position		  [20, 254, 50, 276]
 	  ShowName		  off
 	  Value			  "baud"
 	  OutDataTypeMode	  "uint16"
 	}
 	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  Position		  [20, 285, 105, 305]
+	  ShowName		  off
+	  Value			  "ps1"
+	  OutDataTypeMode	  "uint16"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant6"
+	  Position		  [20, 305, 50, 325]
+	  ShowName		  off
+	  Value			  "pd"
+	  OutDataTypeMode	  "uint16"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant7"
+	  Position		  [20, 325, 85, 345]
+	  ShowName		  off
+	  Value			  "ps2"
+	  OutDataTypeMode	  "uint16"
+	}
+	Block {
 	  BlockType		  Gain
 	  Name			  "Gain"
-	  Position		  [105, 405, 150, 435]
+	  Position		  [105, 250, 150, 280]
 	  ShowName		  off
 	  Gain			  ".01"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
@@ -887,78 +926,332 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  Logic
-	  Name			  "Logical\nOperator"
+	  BlockType		  SubSystem
+	  Name			  "Subsystem"
 	  Ports			  [4, 1]
-	  Position		  [370, 152, 405, 223]
-	  ShowName		  off
-	  Operator		  "OR"
-	  Inputs		  "4"
-	  AllPortsSameDT	  off
-	  OutDataTypeMode	  "Boolean"
+	  Position		  [275, 172, 315, 233]
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  System {
+	    Name		    "Subsystem"
+	    Location		    [752, 453, 1147, 703]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In1"
+	      Position		      [225, 33, 255, 47]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In2"
+	      Position		      [25, 58, 55, 72]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In3"
+	      Position		      [25, 128, 55, 142]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In4"
+	      Position		      [25, 198, 55, 212]
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Logic
+	      Name		      "Logical\nOperator"
+	      Ports		      [4, 1]
+	      Position		      [280, 27, 315, 98]
+	      ShowName		      off
+	      Operator		      "OR"
+	      Inputs		      "4"
+	      AllPortsSameDT	      off
+	      OutDataTypeMode	      "Boolean"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [80, 45, 160, 85]
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData "off"
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-2"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [80, 115, 160, 155]
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData "off"
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic3"
+	      Ports		      [1, 1]
+	      Position		      [80, 185, 160, 225]
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData "off"
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Out1"
+	      Position		      [340, 58, 370, 72]
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [50, 0; 0, -10]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [50, 0; 0, -65]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic3"
+	      SrcPort		      1
+	      Points		      [100, 0]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "In1"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Logical\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "Out1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "In2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "In3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "In4"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic3"
+	      DstPort		      1
+	    }
+	  }
 	}
 	Block {
-	  BlockType		  Reference
-	  Name			  "Shift\nArithmetic1"
-	  Ports			  [1, 1]
-	  Position		  [170, 170, 250, 210]
-	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
-"rithmetic"
-	  SourceType		  "Shift Arithmetic"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
+	  BlockType		  SubSystem
+	  Name			  "Subsystem1"
+	  Ports			  [3, 1]
+	  Position		  [275, 284, 315, 346]
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
-	  nBitShiftRight	  "-2"
-	  nBinPtShiftRight	  "0"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Shift\nArithmetic2"
-	  Ports			  [1, 1]
-	  Position		  [170, 240, 250, 280]
-	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
-"rithmetic"
-	  SourceType		  "Shift Arithmetic"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
-	  nBitShiftRight	  "-5"
-	  nBinPtShiftRight	  "0"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Shift\nArithmetic3"
-	  Ports			  [1, 1]
-	  Position		  [170, 310, 250, 350]
-	  SourceBlock		  "simulink/Logic and Bit\nOperations/Shift\nA"
-"rithmetic"
-	  SourceType		  "Shift Arithmetic"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
-	  nBitShiftRight	  "-8"
-	  nBinPtShiftRight	  "0"
+	  MaskHideContents	  off
+	  System {
+	    Name		    "Subsystem1"
+	    Location		    [752, 453, 1164, 703]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In1"
+	      Position		      [225, 33, 255, 47]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In2"
+	      Position		      [25, 58, 55, 72]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In3"
+	      Position		      [25, 128, 55, 142]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Logic
+	      Name		      "Logical\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [280, 29, 315, 101]
+	      ShowName		      off
+	      Operator		      "OR"
+	      Inputs		      "3"
+	      AllPortsSameDT	      off
+	      OutDataTypeMode	      "Boolean"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [80, 45, 160, 85]
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData "off"
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [80, 115, 160, 155]
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData "off"
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-6"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Out1"
+	      Position		      [340, 58, 370, 72]
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [50, 0; 0, -45]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "In1"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Logical\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "Out1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "In2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "In3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	  }
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "myMux Fun"
 	  Ports			  [5, 1]
-	  Position		  [440, 259, 445, 331]
+	  Position		  [680, 224, 685, 296]
 	  BackgroundColor	  "black"
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
@@ -1119,67 +1412,72 @@ Model {
 	Line {
 	  SrcBlock		  "myMux Fun"
 	  SrcPort		  1
+	  Points		  [150, 0]
 	  DstBlock		  "C Function Call"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Constant"
 	  SrcPort		  1
-	  DstBlock		  "Logical\nOperator"
+	  DstBlock		  "Subsystem"
 	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Shift\nArithmetic1"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, -10]
-	  DstBlock		  "Logical\nOperator"
-	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Constant1"
 	  SrcPort		  1
-	  DstBlock		  "Shift\nArithmetic1"
-	  DstPort		  1
+	  DstBlock		  "Subsystem"
+	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Constant2"
 	  SrcPort		  1
-	  DstBlock		  "Shift\nArithmetic2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Shift\nArithmetic2"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, -65]
-	  DstBlock		  "Logical\nOperator"
+	  DstBlock		  "Subsystem"
 	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "Shift\nArithmetic3"
-	  SrcPort		  1
-	  Points		  [100, 0]
-	  DstBlock		  "Logical\nOperator"
-	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "Constant3"
 	  SrcPort		  1
-	  DstBlock		  "Shift\nArithmetic3"
-	  DstPort		  1
+	  DstBlock		  "Subsystem"
+	  DstPort		  4
 	}
 	Line {
-	  SrcBlock		  "Logical\nOperator"
+	  SrcBlock		  "Subsystem"
 	  SrcPort		  1
-	  Points		  [5, 0; 0, 75]
+	  Points		  [95, 0; 0, 25]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Gain"
 	  SrcPort		  1
-	  Points		  [210, 0; 0, -140]
+	  Points		  [415, 0; 0, -20]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "Subsystem1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant6"
+	  SrcPort		  1
+	  DstBlock		  "Subsystem1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Constant7"
+	  SrcPort		  1
+	  DstBlock		  "Subsystem1"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Subsystem1"
+	  SrcPort		  1
+	  Points		  [260, 0; 0, -55]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  3
 	}
       }
     }
