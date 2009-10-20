@@ -78,9 +78,9 @@ void ecan1_init(uint16_t* parameters);
  * parameters[1] = address of peripheral (DMAxPAD)
  * parameters[2] = Number of memory units per DMA packet, starting at 1(DMAxCNT)
  * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
+ * parameters[4] = Which DMA channel to configure
  */
-void init_DMA0(uint16_t* parameters);
-void init_DMA2(uint16_t* parameters);
+void init_DMA(uint16_t* parameters);
 
 /**
  * This function copies a can message into the global

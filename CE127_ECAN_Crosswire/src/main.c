@@ -132,20 +132,22 @@ int main(void)
   ecan1_init(parameters);
   
   // Initialize DMA0
-  uint16_t d0_parameters[4];
+  uint16_t d0_parameters[5];
   d0_parameters[0] = 0x4648;
   d0_parameters[1] = (uint16_t)&C1TXD;
   d0_parameters[2] = 7;
   d0_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
-  init_DMA0(d0_parameters);
+  d0_parameters[4] = 0;
+  init_DMA(d0_parameters);
   
   // Initialize DMA2
-  uint16_t d2_parameters[4];
+  uint16_t d2_parameters[5];
   d2_parameters[0] = 0x2208;
   d2_parameters[1] = (uint16_t)&C1RXD;
   d2_parameters[2] = 7;
   d2_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
-  init_DMA2(d2_parameters);
+  d2_parameters[4] = 2;
+  init_DMA(d2_parameters);
 
 /* ECAN2 Initialisation 		
    Configure DMA Channel 1 for ECAN2 Transmit
@@ -163,23 +165,23 @@ int main(void)
  
 /* Write a Message in ECAN1 Transmit Buffer	
    Request Message Transmission			*/
-//ecan1WriteMessage();
+ecan1WriteMessage();
 
 
 /* Write a Message in ECAN2 Transmit Buffer
    Request Message Transmission			*/
-	//ecan2WriteMessage();
-	//C2TR01CONbits.TXREQ0=1;
+	ecan2WriteMessage();
+	C2TR01CONbits.TXREQ0=1;
 	
 
 // Turn on the drive, set to max forward speed, and disable it
-  enableDrive();
+  //enableDrive();
 
   //setSpeed(1024);
-  unsigned long i;
-  for (i=0;i<40000000;i++);
+  //unsigned long i;
+  //for (i=0;i<40000000;i++);
   
-  disableDrive();
+  //disableDrive();
 	
   while(1);
 }

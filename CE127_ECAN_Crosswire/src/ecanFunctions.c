@@ -131,30 +131,25 @@ int main(int argc, char* const argv[]) {
 }
 #endif
 
-void init_DMA0(uint16_t* parameters) {
+void init_DMA(uint16_t* parameters) {
+    
+    // Determine the correct addresses for all needed registers
+    unsigned int offset = (parameters[4]*6);
+	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
+	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
+	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
+	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
+	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
+    
 	DMACS0 = 0; // Clear the status register
-	DMA0CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
-	DMA0CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
 
-	DMA0PAD = parameters[1]; // Set the peripheral address that will be using DMA
- 	DMA0CNT = parameters[2]; // Set data units to words or bytes
-	DMA0REQbits.IRQSEL = (parameters[0] & 0x7F00) >> 8;	// Set the IRQ priority for the DMA transfer
-	DMA0STA =  parameters[3]; // Set start address bits
-  
-	DMA0CONbits.CHEN = 1; // Enable DMA
-}
-
-void init_DMA2(uint16_t* parameters) {
-	DMACS0 = 0; // Clear the status register
-	DMA2CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
-	DMA2CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
-
-	DMA2PAD = parameters[1]; // Set the peripheral address that will be using DMA
- 	DMA2CNT = parameters[2]; // Set data units to words or bytes
-	DMA2REQbits.IRQSEL = (parameters[0] & 0x7F00) >> 8;	// Set the IRQ priority for the DMA transfer
-	DMA2STA =  parameters[3]; // Set start address bits
-  
-	DMA2CONbits.CHEN = 1; // Enable DMA
+	*periAddrRegAddr = (unsigned int *)parameters[1]; // Set the peripheral address that will be using DMA
+ 	*transCountRegAddr = (unsigned int *)parameters[2]; // Set data units to words or bytes
+	*irqSelRegAddr = (unsigned int *)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
+	*addrOffsetRegAddr =  (unsigned int *)parameters[3]; // Set start address bits
+	
+	// Setup the configuration register & enable DMA
+	*chanCtrlRegAddr = (unsigned int *)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
 }
 
 void rxECAN1(tCanMessage* message)
