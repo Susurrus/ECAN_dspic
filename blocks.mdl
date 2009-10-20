@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.46"
+    ComputedModelVersion    "1.47"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Oct 20 16:08:28 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:46>"
+  LastModifiedDate	  "Tue Oct 20 16:25:15 2009"
+  ModelVersionFormat	  "1.%<AutoIncrement:47>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -608,11 +608,6 @@ Model {
   }
   BlockParameterDefaults {
     Block {
-      BlockType		      ArithShift
-      nBitShiftRight	      "0"
-      nBinPtShiftRight	      "0"
-    }
-    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -741,7 +736,7 @@ Model {
   }
   System {
     Name		    "blocks"
-    Location		    [554, 407, 1324, 996]
+    Location		    [817, 296, 1587, 885]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -764,7 +759,12 @@ Model {
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
       MaskHideContents	      off
-      MaskDescription	      "CURRENTLY HARDWIRED TO CONFIGURE DMA0!"
+      MaskType		      "Configure dsPIC33f DMA"
+      MaskDescription	      "This block allows for the configuration of the "
+"DMA peripheral on the dsPIC33f. All options for configuring it are allowed wi"
+"thin the block though they are not all currently implemented in the software "
+"supporting this block. Please check that source before trying anything beyond"
+" the very basics of configuration."
       MaskHelp		      "Batch size - This refers to the DMAxCNT registe"
 "r. It consists of a 10-bit number that is 1 less than the number of requests "
 "the channel must service before the data block transfer is considered complet"
@@ -972,7 +972,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -992,7 +992,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1012,7 +1012,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1032,7 +1032,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1052,7 +1052,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1072,7 +1072,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1643,7 +1643,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1662,7 +1662,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1681,7 +1681,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -2375,8 +2375,6 @@ Stateflow {
 		firstJunction                             		15
 		viewObj                                   		13
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		17
