@@ -57,9 +57,6 @@ void ecan1_init(uint16_t* parameters) {
   C1RXM2SIDbits.MIDE = (parameters[10] & 0x0008) >> 3;
   C1RXM2EID = parameters[11];
 
-  C1CTRL1bits.WIN = 0;
-  
-  C1CTRL1bits.WIN=1;
   C1FEN1 = parameters[3]; // Enable desired filters
 
   C1FMSKSEL1 = parameters[4]; // Set filter mask selection bits for filters 0-7
@@ -71,52 +68,16 @@ void ecan1_init(uint16_t* parameters) {
   C1BUFPNT4 = parameters[19]; // Buffer pointer for filters 12-15x
   
   // Set our filter parameters
-  C1RXF0SIDbits.SID = parameters[20] >> 5; // Set the actual filter bits for filter 0
-  C1RXF0SIDbits.EXIDE = (parameters[20] & 0x0008) >> 3;
+  C1RXF0SID = parameters[20];
   C1RXF0EID = parameters[21];
   C1RXF1SID = parameters[22];
   C1RXF1EID = parameters[23];
-  C1RXF2SIDbits.SID = parameters[24] >> 5; // Set the actual filter bits for filter 0
-  C1RXF2SIDbits.EXIDE = (parameters[24] & 0x0008) >> 3;
+  C1RXF2SID = parameters[24];
   C1RXF2EID = parameters[25];
-  C1RXF3SIDbits.SID = parameters[26] >> 5; // Set the actual filter bits for filter 0
-  C1RXF3SIDbits.EXIDE = (parameters[26] & 0x0008) >> 3;
+  C1RXF3SID = parameters[26];
   C1RXF3EID = parameters[27];
    
   C1CTRL1bits.WIN=0;
-  
-  
-  /*
-  // Deal with DMA setup
-  uint16_t dma_params[4];
-  dma_params[0] =
-  switch ((parameters[0] & 0x00E0) >> 5) {
-    case 0:
-      init_DMA0(dma_params);
-      break;
-    case 1:
-      init_DMA1(dma_params);
-      break;
-    case 2:
-      init_DMA2(dma_params);
-      break;
-    case 3:
-      init_DMA3(dma_params);
-      break;
-    case 3:
-      init_DMA4(dma_params);
-      break;
-    case 3:
-      init_DMA5(dma_params);
-      break;
-    case 3:
-      init_DMA6(dma_params);
-      break;
-    case 3:
-      init_DMA7(dma_params);
-      break;
-  }
-  */
   
   // Return the modules to specified operating mode.
   // 0 normal, 1 disable, 2 loopback, 3 listen-only, 4 configuration, 7 listen all messages
@@ -172,8 +133,8 @@ int main(int argc, char* const argv[]) {
 
 void init_DMA0(uint16_t* parameters) {
 	DMACS0 = 0; // Clear the status register
-  DMA0CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
-  DMA0CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
+	DMA0CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
+	DMA0CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
 
 	DMA0PAD = parameters[1]; // Set the peripheral address that will be using DMA
  	DMA0CNT = parameters[2]; // Set data units to words or bytes
@@ -185,8 +146,8 @@ void init_DMA0(uint16_t* parameters) {
 
 void init_DMA2(uint16_t* parameters) {
 	DMACS0 = 0; // Clear the status register
-  DMA2CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
-  DMA2CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
+	DMA2CONbits.DIR = (parameters[0] & 0x40) >> 6; // Set DMA direction
+	DMA2CONbits.AMODE = (parameters[0] & 0xC) >> 2; // Set addressing mode
 
 	DMA2PAD = parameters[1]; // Set the peripheral address that will be using DMA
  	DMA2CNT = parameters[2]; // Set data units to words or bytes
@@ -288,6 +249,8 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned in
 	ecan1msgBuf[buf][5] = ((unsigned short*)data)[2];
 	ecan1msgBuf[buf][6] = ((unsigned short*)data)[3];
 
+  // TODO: Allow this to automatically set bit for correct buffer
+	C1TR01CONbits.TXREQ0=1;	
 }
 
 

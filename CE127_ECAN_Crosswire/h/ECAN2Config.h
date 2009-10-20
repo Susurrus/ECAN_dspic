@@ -55,7 +55,7 @@
 
 /* CAN Baud Rate Configuration 		*/
 #define FCAN  	40000000 
-#define BITRATE 1000000  
+#define BITRATE 250000  
 #define NTQ 	20		// 20 Time Quanta in a Bit Time
 #define BRP_VAL		((FCAN/(2*NTQ*BITRATE))-1)
 

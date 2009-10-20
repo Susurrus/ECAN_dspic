@@ -82,6 +82,9 @@ void oscConfig(void);
 void clearIntrflags(void);
 void ecan1WriteMessage(void);
 void ecan2WriteMessage(void);
+void setSpeed(short speed);
+void enableDrive();
+void disableDrive();
 
 int main(void)
 {
@@ -100,29 +103,32 @@ int main(void)
   //Initialize ECAN1
   uint16_t parameters[28];
   parameters[0] = 0x0000; // Normal mode, standard frames
-  parameters[1] = 10000; // Set to 1Mbps
+  parameters[1] = 2500; // Set to 250kbps
   parameters[2] = 0x0167; // phase segment 1: 8, phase segment 2: 6, propagation: 5
-  parameters[3] = 0x0002; // Enable filter 1
-  parameters[4] = 0x0000; // Select filter mask 0 for filter 1
+  parameters[3] = 0x0007; // Enable filters 0,1,2
+  parameters[4] = 0x0000; // Select filter mask 1 for filters 0,1,2
   parameters[5] = 0x0000;
-  parameters[6] = 0xFFEB; // Filter mask 1 standard all 1s, exide on, ei17-16 are 10
-  parameters[7] = 0xFFFF; // ei15-0
-  parameters[8] = 0xFFEB;
-  parameters[9] = 0xFFFF;
+  parameters[6] = 0;
+  //parameters[7] = 0xFFE0; // Set filter mask 1 to check all bits
+  parameters[7] = 0; // Set filter mask 1 to ignore all bits
+  parameters[8] = 0;
+  parameters[9] = 0;
   parameters[10] = 0;
   parameters[11] = 0;
-  parameters[12] = 0x0383; // Buffer 0/1 highest priority and transmit/receive setting
+  parameters[12] = 0x0383; // Buffer 0/1 highest priority and 0 set to receive, 1 set to receive
   parameters[13] = 0;
   parameters[14] = 0;
   parameters[15] = 0;
-  parameters[16] = 0x0010; // Points to buffer 1
+  parameters[16] = 0x0111; // Filters 0 through 2 direct messages to buffer 1
   parameters[17] = 0;
   parameters[18] = 0;
   parameters[19] = 0;
-  parameters[20] = 0;
+  parameters[20] = 0x8000; // Catch 0x400 messages
   parameters[21] = 0;
-  parameters[22] = 0xFFEA; // EXIDE bit set, standard filter, two bits of extended filter
-  parameters[23] = 0xFFFF; // Set remaining extended filter bits
+  parameters[22] = 0x8020; // Catch 0x401 messages
+  parameters[23] = 0;
+  parameters[22] = 0x8040; // Catch 0x402 messages
+  parameters[23] = 0;
   ecan1_init(parameters);
   
   // Initialize DMA0
@@ -157,24 +163,60 @@ int main(void)
  
 /* Write a Message in ECAN1 Transmit Buffer	
    Request Message Transmission			*/
-	ecan1WriteMessage();
-	C1TR01CONbits.TXREQ0=1;	
-	
+//ecan1WriteMessage();
 
 
 /* Write a Message in ECAN2 Transmit Buffer
    Request Message Transmission			*/
-	ecan2WriteMessage();
-	C2TR01CONbits.TXREQ0=1;
+	//ecan2WriteMessage();
+	//C2TR01CONbits.TXREQ0=1;
 	
 
-/* Loop infinitely */
+// Turn on the drive, set to max forward speed, and disable it
+  enableDrive();
 
-	while (1); 
+  //setSpeed(1024);
+  unsigned long i;
+  for (i=0;i<40000000;i++);
+  
+  disableDrive();
 	
+  while(1);
 }
 
+void setSpeed(short speed) {
+  unsigned char payload[4];
+  payload[0] = 0x01;
+  payload[1] = 0x05;
+  payload[2] = speed << 4;
+  payload[3] = speed;
+  
+  txECAN1(0,0x301,0,0,4,payload);
+}
 
+void enableDrive() {
+  unsigned char payload[6];
+  payload[0] = 0;
+  payload[1] = 0;
+  payload[2] = 0;
+  payload[3] = 0;
+  payload[4] = 0x20;
+  payload[5] = 0;
+  
+	txECAN1(0,0x300,0,0,6,payload);
+}
+
+void disableDrive() {
+  unsigned char payload[6];
+  payload[0] = 0;
+  payload[1] = 0;
+  payload[2] = 0;
+  payload[3] = 0;
+  payload[4] = 0x40;
+  payload[5] = 0;
+  
+	txECAN1(0,0x300,0,0,6,payload);
+}
 
 
 /* ECAN1 buffer loaded with Identifiers and Data */
@@ -202,12 +244,12 @@ data1, data2, data3, data4 -> Data words (2 bytes) each
 
   unsigned short payload[4];
 
-  payload[0] = 0x1111;
-  payload[1] = 0x2222;
-  payload[2] = 0x3333;
-  payload[3] = 0x4444;
+  payload[0] = 0x1234;
+  payload[1] = 0x5678;
+  payload[2] = 0x1234;
+  payload[3] = 0x5678;
   
-	txECAN1(0,0x1FFEFFFF,1,0,8,(unsigned char*)payload);
+	txECAN1(0,0x300,0,0,8,(unsigned char*)payload);
 
 }
 
@@ -238,8 +280,8 @@ data1, data2, data3, data4 -> Data words (2 bytes) each
 
 */
 
-ecan2WriteTxMsgBufId(0,0x1FFEFFFF,1,0);
-ecan2WriteTxMsgBufData(0,8,0xaaaa,0xbbbb,0xcccc,0xdddd);
+ecan2WriteTxMsgBufId(0,0x402,0,0);
+ecan2WriteTxMsgBufData(0,8,0xabcd,0xef12,0x3456,0x789a);
 
 }
 

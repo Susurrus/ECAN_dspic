@@ -154,25 +154,9 @@ void ecan2Init(void){
 	
 */
 
-	ecan2WriteRxAcptFilter(1,0x1FFEFFFF,1,1,0);
-
-/*	Mask Configuration
-
-	ecan2WriteRxAcptMask(int m, long identifierMask, unsigned int mide, unsigned int exide)
-
-	m = 0 to 2 -> Mask Number
-
-	identifier -> SID <10:0> : EID <17:0> 
-
-	mide = 0 -> Match either standard or extended address message if filters match 
-	mide = 1 -> Match only message types that correpond to 'exide' bit in filter
-
-	exide = 0 -> Match messages with standard identifier addresses 
-	exide = 1 -> Match messages with extended identifier addresses
-	
-*/
-
-	ecan2WriteRxAcptMask(1,0x1FFFFFFF,1,1);
+	ecan2WriteRxAcptFilter(0,0x300,0,1,3);
+	ecan2WriteRxAcptFilter(1,0x301,0,1,3);
+	ecan2WriteRxAcptFilter(2,0x302,0,1,3);
 	
 /* Enter Normal Mode */
 
