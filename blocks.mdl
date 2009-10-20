@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.25"
+    ComputedModelVersion    "1.42"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Oct 20 12:40:28 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:25>"
+  LastModifiedDate	  "Tue Oct 20 13:43:17 2009"
+  ModelVersionFormat	  "1.%<AutoIncrement:42>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -741,7 +741,7 @@ Model {
   }
   System {
     Name		    "blocks"
-    Location		    [694, 145, 1464, 734]
+    Location		    [515, 577, 1285, 1166]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -758,21 +758,35 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "Configure DMA"
-      Ports		      []
-      Position		      [224, 43, 320, 91]
+      Ports		      [1]
+      Position		      [225, 41, 320, 89]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
       MaskHideContents	      off
-      MaskPromptString	      "Direction|DMA channel"
-      MaskStyleString	      "popup(Read|Write),popup(0|1|2|3|4|5|6|7)"
-      MaskTunableValueString  "on,on"
-      MaskCallbackString      "|"
-      MaskEnableString	      "on,on"
-      MaskVisibilityString    "on,on"
-      MaskToolTipString	      "on,on"
-      MaskVarAliasString      ","
-      MaskVariables	      "direction=@1;channel=@2;"
+      MaskDescription	      "CURRENTLY HARDWIRED TO CONFIGURE DMA0!"
+      MaskHelp		      "Batch size - This refers to the DMAxCNT registe"
+"r. It consists of a 10-bit number that is 1 less than the number of requests "
+"the channel must service before the data block transfer is considered complet"
+"e."
+      MaskPromptString	      "DMA Channel|Direction|IRQ|Peripheral|Addressing"
+" Mode|Mode|Trigger Block Transfer Interrupt|Null Data Peripheral Write Mode|D"
+"ata Size|Batch Size"
+      MaskStyleString	      "popup(0|1|2|3|4|5|6|7),popup(Read|Write),popup("
+"INT0|IC1|OC1|IC2|OC2|TMR2|TMR3|SPI1|UART1RX|UART1TX|ADC1|ADC2|UART2RX|UART2TX"
+"|SPI2|ECAN1|ECAN2|DCI|ECAN1|ECAN2),edit,popup(Peripheral Indirect|Register In"
+"direct|Register Indirect: Post-Increment),popup(Continuous|One-Shot|Continuou"
+"s w/ Ping-Pong|One-Shot w/ Ping-Pong),popup(when half of data has been moved|"
+"when all the data has been moved),popup(Null data write to peripheral|Normal "
+"operation),popup(Word|Byte),edit"
+      MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on"
+      MaskCallbackString      "|||||||||"
+      MaskEnableString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,,,,,"
+      MaskVariables	      "channel=@1;direction=@2;irqsel=@3;peripheral=@4"
+";a_mode=@5;mode=@6;half=@7;nullw=@8;data_size=@9;batch_size=@10;"
       MaskDisplay	      "text(0.5,0.5,sprintf('Configure DMA%d',str2num("
 "get_param(gcb,'channel'))),'horizontalAlignment','center','verticalAlignment'"
 ",'middle');"
@@ -780,12 +794,13 @@ Model {
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskIconUnits	      "normalized"
-      MaskValueString	      "Read|0"
-      MaskTabNameString	      ","
+      MaskValueString	      "0|Read|INT0|0|Peripheral Indirect|Continuous|wh"
+"en half of data has been moved|Null data write to peripheral|Word|0"
+      MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Configure DMA"
-	Location		[989, 194, 1319, 321]
-	Open			off
+	Location		[534, 139, 1304, 462]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -798,26 +813,32 @@ Model {
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
 	Block {
+	  BlockType		  Inport
+	  Name			  "Address"
+	  Position		  [25, 131, 55, 149]
+	  IconDisplay		  "Port number"
+	}
+	Block {
 	  BlockType		  Reference
 	  Name			  "C Function Call"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [1]
-	  Position		  [180, 45, 305, 85]
+	  Position		  [305, 110, 430, 150]
 	  ShowName		  off
 	  List {
 	    ListType		    RTWdata
-	    FctDeclaration	    "extern void dma1_init(uint16_T* u1);"
-	    FctCall		    "dma1_init(*%u1);"
-	    fctName		    "dma1_init"
-	    INPUT_SIZE		    "5"
+	    FctDeclaration	    "extern void init_DMA0(uint16_T* u1);"
+	    FctCall		    "init_DMA0(*%u1);"
+	    fctName		    "init_DMA0"
+	    INPUT_SIZE		    "4"
 	    OUTPUT_SIZE		    "1"
 	    NBR_INPUT		    "1"
 	    NBR_OUTPUT		    "0"
 	  }
 	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
 	  SourceType		  "C Function Call"
-	  fctName		  "'dma1_init'"
-	  INPUT_SIZE		  "5"
+	  fctName		  "'init_DMA0'"
+	  INPUT_SIZE		  "4"
 	  INPUT1		  "uint16"
 	  INPUT2		  "--"
 	  INPUT3		  "--"
@@ -826,15 +847,377 @@ Model {
 	  SampleTime		  "inf"
 	  InputType		  "[ 4 ]"
 	  OutputType		  "[ ]"
-	  FctDeclaration	  "extern void dma1_init(uint16_T* u1);"
-	  FctCall		  "dma1_init(*%u1);"
+	  FctDeclaration	  "extern void init_DMA0(uint16_T* u1);"
+	  FctCall		  "init_DMA0(*%u1);"
 	  OrderingInOutPopup	  "None"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "C Function Call1"
+	  Tag			  "dsPIC_dsPIC_CFunctionCall"
+	  Ports			  [1]
+	  Position		  [305, 170, 430, 210]
+	  ShowName		  off
+	  List {
+	    ListType		    RTWdata
+	    FctDeclaration	    "extern void init_DMA2(uint16_T* u1);"
+	    FctCall		    "init_DMA2(*%u1);"
+	    fctName		    "init_DMA2"
+	    INPUT_SIZE		    "4"
+	    OUTPUT_SIZE		    "1"
+	    NBR_INPUT		    "1"
+	    NBR_OUTPUT		    "0"
+	  }
+	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
+	  SourceType		  "C Function Call"
+	  fctName		  "'init_DMA2'"
+	  INPUT_SIZE		  "4"
+	  INPUT1		  "uint16"
+	  INPUT2		  "--"
+	  INPUT3		  "--"
+	  OUTPUT_SIZE		  "1"
+	  OUTPUT1		  "--"
+	  SampleTime		  "inf"
+	  InputType		  "[ 4 ]"
+	  OutputType		  "[ ]"
+	  FctDeclaration	  "extern void init_DMA2(uint16_T* u1);"
+	  FctCall		  "init_DMA2(*%u1);"
+	  OrderingInOutPopup	  "None"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  Position		  [230, 67, 295, 83]
+	  ShowName		  off
+	  Value			  "channel"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant1"
+	  Position		  [70, 152, 135, 168]
+	  ShowName		  off
+	  Value			  "batch_size"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  Position		  [70, 112, 135, 128]
+	  ShowName		  off
+	  Value			  "peripheral"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Subsystem"
+	  Ports			  [0, 1]
+	  Position		  [75, 91, 135, 109]
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  System {
+	    Name		    "Subsystem"
+	    Location		    [864, 578, 1381, 908]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant1"
+	      Position		      [70, 127, 135, 143]
+	      ShowName		      off
+	      Value		      "direction"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [70, 47, 135, 63]
+	      ShowName		      off
+	      Value		      "irqsel"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [70, 247, 135, 263]
+	      ShowName		      off
+	      Value		      "a_mode"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant4"
+	      Position		      [70, 87, 135, 103]
+	      ShowName		      off
+	      Value		      "data_size"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [70, 167, 135, 183]
+	      ShowName		      off
+	      Value		      "half"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant6"
+	      Position		      [70, 282, 135, 298]
+	      ShowName		      off
+	      Value		      "mode"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant7"
+	      Position		      [70, 207, 135, 223]
+	      ShowName		      off
+	      Value		      "nullw"
+	    }
+	    Block {
+	      BlockType		      Logic
+	      Name		      "Logical\nOperator"
+	      Ports		      [7, 1]
+	      Position		      [415, 199, 450, 271]
+	      ShowName		      off
+	      Operator		      "OR"
+	      Inputs		      "7"
+	      AllPortsSameDT	      off
+	      OutDataTypeMode	      "Boolean"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [160, 195, 240, 235]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [160, 235, 240, 275]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-2"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic3"
+	      Ports		      [1, 1]
+	      Position		      [160, 155, 240, 195]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic4"
+	      Ports		      [1, 1]
+	      Position		      [160, 115, 240, 155]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-6"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic5"
+	      Ports		      [1, 1]
+	      Position		      [160, 75, 240, 115]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-7"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic6"
+	      Ports		      [1, 1]
+	      Position		      [160, 35, 240, 75]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "parameter0"
+	      Position		      [470, 228, 500, 242]
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Line {
+	      SrcBlock		      "Constant6"
+	      SrcPort		      1
+	      Points		      [260, 0]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      7
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant7"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Logical\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "parameter0"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      6
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [50, 0; 0, 30]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      5
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic5"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic4"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic3"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic3"
+	      SrcPort		      1
+	      Points		      [55, 0; 0, 60]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic4"
+	      SrcPort		      1
+	      Points		      [60, 0; 0, 90]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic5"
+	      SrcPort		      1
+	      Points		      [65, 0; 0, 120]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic6"
+	      SrcPort		      1
+	      Points		      [70, 0; 0, 150]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic6"
+	      DstPort		      1
+	    }
+	  }
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "myMux Fun"
-	  Ports			  [5, 1]
-	  Position		  [125, 29, 130, 101]
+	  Ports			  [4, 1]
+	  Position		  [190, 94, 195, 166]
 	  BackgroundColor	  "black"
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
@@ -892,13 +1275,6 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
-	      BlockType		      Inport
-	      Name		      "u5"
-	      Position		      [20, 246, 40, 264]
-	      Port		      "5"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
 	      BlockType		      Demux
 	      Name		      " Demux "
 	      Ports		      [1, 1]
@@ -909,10 +1285,10 @@ Model {
 	      BlockType		      "S-Function"
 	      Name		      " SFunction "
 	      Tag		      "Stateflow S-Function blocks 2"
-	      Ports		      [5, 2]
+	      Ports		      [4, 2]
 	      Position		      [180, 100, 230, 220]
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[5 2]"
+	      PortCounts	      "[4 2]"
 	      Port {
 		PortNumber		2
 		Name			"y"
@@ -941,7 +1317,6 @@ Model {
 	    Line {
 	      SrcBlock		      "u2"
 	      SrcPort		      1
-	      Points		      [120, 0]
 	      DstBlock		      " SFunction "
 	      DstPort		      2
 	    }
@@ -956,6 +1331,7 @@ Model {
 	    Line {
 	      SrcBlock		      "u1"
 	      SrcPort		      1
+	      Points		      [120, 0]
 	      DstBlock		      " SFunction "
 	      DstPort		      1
 	    }
@@ -978,44 +1354,37 @@ Model {
 	      DstBlock		      " SFunction "
 	      DstPort		      4
 	    }
-	    Line {
-	      SrcBlock		      "u5"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      5
-	    }
 	  }
+	}
+	Line {
+	  SrcBlock		  "Address"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Subsystem"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "myMux Fun"
 	  SrcPort		  1
 	  DstBlock		  "C Function Call"
 	  DstPort		  1
-	}
-	Line {
-	  Points		  [60, 35]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  1
-	}
-	Line {
-	  Points		  [60, 50]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  2
-	}
-	Line {
-	  Points		  [60, 65]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  3
-	}
-	Line {
-	  Points		  [60, 80]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  4
-	}
-	Line {
-	  Points		  [60, 95]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  5
 	}
       }
     }
@@ -1092,7 +1461,7 @@ Model {
       MaskTabNameString	      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[662, 326, 1658, 871]
+	Location		[91, 160, 546, 613]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1784,7 +2153,7 @@ Stateflow {
 		name                 		"blocks"
 		created              		"09-Oct-2009 13:28:24"
 		isLibrary            		0
-		firstTarget          		24
+		firstTarget          		23
 		sfVersion            		66014000
 	}
 
@@ -2045,13 +2414,13 @@ Stateflow {
 		decomposition                		CLUSTER_STATE
 		eml {
 			isEML                    		1
-			script                   		"function y = myMux3(u1, u2, u3, u4, u5)\n"
+			script                   		"function y = myMux3(u1, u2, u3, u4)\n"
 						"% This block supports an embeddable subset of the MATLAB la"
 						"nguage.\n"
 						"% See the help menu for details. \n"
 						"\n"
-						"y = [u1(1); u2(1); u3(1); u4(1); u5(1)];"
-			editorLayout             		"100 M4x1[677 261 671 364]"
+						"y = [u1(1); u2(1); u3(1); u4(1)];"
+			editorLayout             		"100 M4x1[623 427 671 364]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -2182,30 +2551,7 @@ Stateflow {
 	data {
 		id                            		21
 		name                          		"u4"
-		linkNode                      		[13 20 22]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		22
-		name                          		"u5"
-		linkNode                      		[13 21 0]
+		linkNode                      		[13 20 0]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -2226,14 +2572,14 @@ Stateflow {
 	}
 
 	instance {
-		id     		23
+		id     		22
 		name   		"Configure DMA/myMux Fun"
 		machine		1
 		chart  		13
 	}
 
 	target {
-		id                        		24
+		id                        		23
 		name                      		"sfun"
 		description               		"Default Simulink S-Function Target."
 		machine                   		1
