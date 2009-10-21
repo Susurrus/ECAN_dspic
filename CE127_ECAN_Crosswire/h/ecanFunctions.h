@@ -14,20 +14,11 @@
 
 // Include various helpful header files
 // Only include dsPIC33f header if not simulating
-#ifdef SIM
-#include "p33F.h"
-#include <stdio.h>
-#else
 #include <p33Fxxxx.h>
 #include "ecanDefinitions.h"
 #include "circBuffer.h"
-#endif
 
-#ifdef SIM
-typedef unsigned short int uint16_t; // Redefine a uint16_t to be 16-bits
-#else
 typedef unsigned int uint16_t;
-#endif
 typedef unsigned char uint8_t;
 
  /**
@@ -95,9 +86,5 @@ void rxECAN1(tCanMessage* message);
 void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit, unsigned char dataLength, unsigned char* data);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
-
-#ifdef SIM
-int main(int argc, char* const argv[]);
-#endif
 
 #endif /* _ECANFUNCTIONS_H_ */

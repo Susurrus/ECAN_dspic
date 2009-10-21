@@ -14,9 +14,7 @@ void ecan1_init(uint16_t* parameters) {
   // It should be this way after a hardware reset, but
   // we make sure anyways.
   C1CTRL1bits.REQOP=4;
-#ifndef SIM
   while(C1CTRL1bits.OPMODE != 4);
-#endif
 
   // Initialize our circular buffers.
 	ecanBuffer = (struct CircBuffer* )&testBuffer;
@@ -83,9 +81,7 @@ void ecan1_init(uint16_t* parameters) {
   // 0 normal, 1 disable, 2 loopback, 3 listen-only, 4 configuration, 7 listen all messages
   uint8_t desired_mode = (parameters[0] & 0x001C) >> 2;
   C1CTRL1bits.REQOP = desired_mode;
-#ifndef SIM  
   while(C1CTRL1bits.OPMODE != desired_mode);
-#endif
   
   // Clear all interrupt bits
   C1RXFUL1=C1RXFUL2=C1RXOVF1=C1RXOVF2=0x0000;
@@ -103,33 +99,6 @@ void ecan1_init(uint16_t* parameters) {
   C1TR45CON = parameters[14];
   C1TR67CON = parameters[15];
 }
-
-#ifdef SIM
-/**
- * This is a main used for testing the validity of all of the functions contained within this file. It is meant to be executed on 32-bit machines.
- * It therefore redefines a uint16_t as a short int.
- */
-int main(int argc, char* const argv[]) {
-  
-  printf("Testing code...\n");
-  
-  // Test 1: Check on enabling a single ECAN only.
-  uint16_t parameters[34];
-  
-  parameters[0] = 1;
-  parameters[1] = 10000;
-  parameters[3] = 0x01FF;
-  parameters[4] = 0x0001;
-  parameters[6] = 0;
-  parameters[7] = 1;
-  parameters[8] = 2;
-  parameters[13] = 0x03FF;
-  
-  ecan1_init(parameters);
-  
-  return 0;
-}
-#endif
 
 void init_DMA(uint16_t* parameters) {
     
