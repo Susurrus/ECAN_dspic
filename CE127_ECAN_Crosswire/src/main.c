@@ -132,21 +132,23 @@ int main(void)
   ecan1_init(parameters);
   
   // Initialize DMA0
-  uint16_t d0_parameters[5];
+  uint16_t d0_parameters[6];
   d0_parameters[0] = 0x4648;
   d0_parameters[1] = (uint16_t)&C1TXD;
   d0_parameters[2] = 7;
   d0_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
   d0_parameters[4] = 0;
+  d0_parameters[5] = 0;
   init_DMA(d0_parameters);
   
   // Initialize DMA2
-  uint16_t d2_parameters[5];
+  uint16_t d2_parameters[6];
   d2_parameters[0] = 0x2208;
   d2_parameters[1] = (uint16_t)&C1RXD;
   d2_parameters[2] = 7;
   d2_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
   d2_parameters[4] = 2;
+  d2_parameters[5] = 0;
   init_DMA(d2_parameters);
 
 /* ECAN2 Initialisation 		

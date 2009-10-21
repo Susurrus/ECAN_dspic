@@ -79,6 +79,7 @@ void ecan1_init(uint16_t* parameters);
  * parameters[2] = Number of memory units per DMA packet, starting at 1(DMAxCNT)
  * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
  * parameters[4] = Which DMA channel to configure
+ * parameters[5] = Secondary DPSRAM start address offset bits (DMAxSTB)
  */
 void init_DMA(uint16_t* parameters);
 

@@ -138,6 +138,7 @@ void init_DMA(uint16_t* parameters) {
 	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
 	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
 	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
+	unsigned int* secAddrOffsetRegAddr = (unsigned int *)(&DMA0STB + offset);
 	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
 	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
     
@@ -146,7 +147,8 @@ void init_DMA(uint16_t* parameters) {
 	*periAddrRegAddr = (unsigned int *)parameters[1]; // Set the peripheral address that will be using DMA
  	*transCountRegAddr = (unsigned int *)parameters[2]; // Set data units to words or bytes
 	*irqSelRegAddr = (unsigned int *)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
-	*addrOffsetRegAddr =  (unsigned int *)parameters[3]; // Set start address bits
+	*addrOffsetRegAddr = (unsigned int *)parameters[3]; // Set primary DPSRAM start address bits
+	*secAddrOffsetRegAddr(unsigned int *)parameters[5]; // Set secondary DPSRAM start address bits
 	
 	// Setup the configuration register & enable DMA
 	*chanCtrlRegAddr = (unsigned int *)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
