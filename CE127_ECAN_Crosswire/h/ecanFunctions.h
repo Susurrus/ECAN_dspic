@@ -33,7 +33,7 @@ typedef unsigned char uint8_t;
                     bits 5-7 specify which DMA channel to use for receiving,
                     bits 8-10 specify which DMA channel to use for transmitting
   * parameters[1] = baud rate in units of hundreds of bits per second
-  * parameters[2] = bits 0-2 are phase segment 1, bits 3-5 are propagation delay, bits 6-8 are phase segment 2
+  * parameters[2] = bits 0-2 are phase segment 1, bits 3-5 are propagation delay, bits 6-8 are phase segment 2, bits 9-10 are sync jump width, bits 11 specifies triple sample at sampling point
   * parameters[3] = filters 0 through 15 enable
   * parameters[4] = filters 0 through 7 mask select
   * parameters[5] = filters 8 through 15 mask select

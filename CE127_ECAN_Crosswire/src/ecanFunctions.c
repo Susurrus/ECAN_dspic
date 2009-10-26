@@ -17,26 +17,26 @@ void ecan1_init(uint16_t* parameters) {
   while(C1CTRL1bits.OPMODE != 4);
 
   // Initialize our circular buffers.
-	ecanBuffer = (struct CircBuffer* )&testBuffer;
-	newCircBuffer(ecanBuffer);
+  ecanBuffer = (struct CircBuffer* )&testBuffer;
+  newCircBuffer(ecanBuffer);
  
   // Initialize our time quanta (assume 20 total)
-  unsigned long int ftq = 400000/(parameters[1]);
-  ftq = ftq / (2 * 20);
-  C1CFG1bits.BRP = ftq - 1; //TODO: Determine frequency of chip by using existing variable or checking registers somehow (frequency should be used here as itself divided by 100 because of how desired bps is passed in)
-  C1CFG1bits.SJW = 0x3; // Set jump width to 4TQ.
+  C1CFG1bits.SJW = (parameters[2] & 0x0600) >> 9; // Set jump width
   uint16_t a = parameters[2] & 0x0007;
   uint16_t b = (parameters[2] & 0x0038) >> 3;
   uint16_t c = (parameters[2] & 0x01C0) >> 6;
-  C1CFG2bits.SEG1PH = a;//(parameters[2] & 0x0007); // Set segment 1 time
-  C1CFG2bits.PRSEG = b;//(parameters[2] & 0x0038) >> 3; // Set propagation segment time
+  
+  unsigned long int ftq = 400000/(parameters[1]);
+  ftq = ftq / (2 * (a+b+c+C1CFG1bits.SJW)); // Divide by the 2*number of time quanta
+  C1CFG1bits.BRP = ftq - 1;
+  C1CFG2bits.SEG1PH = a; // Set segment 1 time
+  C1CFG2bits.PRSEG = b; // Set propagation segment time
   C1CFG2bits.SEG2PHTS = 0x1; // Keep segment 2 time programmable
-  C1CFG2bits.SEG2PH = c;//(parameters[2] & 0x01C0) >> 6; // Set phase segment 2 time
-  C1CFG2bits.SAM = 0x1; // Triple-sample for majority rules at bit sample point TODO: Make this a user option
+  C1CFG2bits.SEG2PH = c; // Set phase segment 2 time
+  C1CFG2bits.SAM = (parameters[2] & 0x0800) >> 11; // Triple-sample for majority rules at bit sample point
   
   // Setup our frequencies for time quanta calculations.
-  // FCAN is selected to be FCY: FCAN = FCY = 40MHz
-  // We need to check FCY and FOSC to verify that FCAN doesn't exceed 40MHz.
+  // FCAN is selected to be FCY: FCAN = FCY = 40MHz. This is actually a don't care bit in dsPIC33f
   C1CTRL1bits.CANCKS = 1;
 
   C1FCTRLbits.DMABS = 0; // Use 4 buffers in DMA RAM
