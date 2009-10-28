@@ -103,32 +103,32 @@ int main(void)
   //Initialize ECAN1
   uint16_t parameters[28];
   parameters[0] = 0x0000; // Normal mode, standard frames
-  parameters[1] = 2500; // Set to 250kbps
-  parameters[2] = 0x0167; // phase segment 1: 8, phase segment 2: 6, propagation: 5
-  parameters[3] = 0x0007; // Enable filters 0,1,2
-  parameters[4] = 0x0000; // Select filter mask 1 for filters 0,1,2
-  parameters[5] = 0x0000;
-  parameters[6] = 0;
-  //parameters[7] = 0xFFE0; // Set filter mask 1 to check all bits
-  parameters[7] = 0; // Set filter mask 1 to ignore all bits
-  parameters[8] = 0;
+  parameters[1] = 2500; // Bit rate to 250kbps (parameter is in hundreds of bps)
+  parameters[2] = 40000; // Oscillator frequency 40000000 (parameter is in khz)
+  parameters[3] = 0x0F67; // phase segment 1: 8, phase segment 2: 6, propagation: 5, sjw: 4, triple-sample:on
+  parameters[4] = 0x0007; // Enable filters 0,1,2
+  parameters[5] = 0x0000; // Select filter mask 1 for filters 0,1,2
+  parameters[6] = 0x0000;
+  parameters[7] = 0;
+  parameters[8] = 0; // Set filter mask 1 to ignore all bits
   parameters[9] = 0;
   parameters[10] = 0;
   parameters[11] = 0;
-  parameters[12] = 0x0383; // Buffer 0/1 highest priority and 0 set to receive, 1 set to receive
-  parameters[13] = 0;
+  parameters[12] = 0;
+  parameters[13] = 0x0383; // Buffer 0/1 highest priority and 0 set to receive, 1 set to receive
   parameters[14] = 0;
   parameters[15] = 0;
-  parameters[16] = 0x0111; // Filters 0 through 2 direct messages to buffer 1
-  parameters[17] = 0;
+  parameters[16] = 0;
+  parameters[17] = 0x0111; // Filters 0 through 2 direct messages to buffer 1
   parameters[18] = 0;
   parameters[19] = 0;
-  parameters[20] = 0x8000; // Catch 0x400 messages
-  parameters[21] = 0;
-  parameters[22] = 0x8020; // Catch 0x401 messages
-  parameters[23] = 0;
-  parameters[22] = 0x8040; // Catch 0x402 messages
-  parameters[23] = 0;
+  parameters[20] = 0;
+  parameters[21] = 0x8000; // Catch 0x400 messages
+  parameters[22] = 0;
+  parameters[23] = 0x8020; // Catch 0x401 messages
+  parameters[24] = 0;
+  parameters[25] = 0x8040; // Catch 0x402 messages
+  parameters[26] = 0;
   ecan1_init(parameters);
   
   // Initialize DMA0

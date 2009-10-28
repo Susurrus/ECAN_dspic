@@ -20,20 +20,20 @@ void ecan1_init(uint16_t* parameters) {
   ecanBuffer = (struct CircBuffer* )&testBuffer;
   newCircBuffer(ecanBuffer);
  
-  // Initialize our time quanta (assume 20 total)
-  C1CFG1bits.SJW = (parameters[2] & 0x0600) >> 9; // Set jump width
-  uint16_t a = parameters[2] & 0x0007;
-  uint16_t b = (parameters[2] & 0x0038) >> 3;
-  uint16_t c = (parameters[2] & 0x01C0) >> 6;
+  // Initialize our time quanta
+  uint16_t a = parameters[3] & 0x0007;
+  uint16_t b = (parameters[3] & 0x0038) >> 3;
+  uint16_t c = (parameters[3] & 0x01C0) >> 6;
   
-  unsigned long int ftq = 400000/(parameters[1]);
-  ftq = ftq / (2 * (a+b+c+C1CFG1bits.SJW)); // Divide by the 2*number of time quanta
+  unsigned long int ftq = parameters[2]/parameters[1]*10;
+  ftq = ftq / (2 * (a+b+c+4)); // Divide by the 2*number of time quanta (4 is because of the 1-offset for a/b/c and the sync segment)
   C1CFG1bits.BRP = ftq - 1;
+  C1CFG1bits.SJW = (parameters[3] & 0x0600) >> 9;
   C1CFG2bits.SEG1PH = a; // Set segment 1 time
   C1CFG2bits.PRSEG = b; // Set propagation segment time
   C1CFG2bits.SEG2PHTS = 0x1; // Keep segment 2 time programmable
   C1CFG2bits.SEG2PH = c; // Set phase segment 2 time
-  C1CFG2bits.SAM = (parameters[2] & 0x0800) >> 11; // Triple-sample for majority rules at bit sample point
+  C1CFG2bits.SAM = (parameters[3] & 0x0800) >> 11; // Triple-sample for majority rules at bit sample point
   
   // Setup our frequencies for time quanta calculations.
   // FCAN is selected to be FCY: FCAN = FCY = 40MHz. This is actually a don't care bit in dsPIC33f
@@ -45,35 +45,35 @@ void ecan1_init(uint16_t* parameters) {
   C1CTRL1bits.WIN = 1; // Allow configuration of masks and filters
   
   // Set our filter mask parameters
-  C1RXM0SIDbits.SID = parameters[6] >> 5; // Set filter 0
-  C1RXM0SIDbits.MIDE = (parameters[6] & 0x0008) >> 3;
-  C1RXM0EID = parameters[7];
-  C1RXM1SIDbits.SID = parameters[8] >> 5; // Set filter 1
-  C1RXM1SIDbits.MIDE = (parameters[8] & 0x0008) >> 3;
-  C1RXM1EID = parameters[9];
-  C1RXM2SIDbits.SID = parameters[10] >> 5; // Set filter 2
-  C1RXM2SIDbits.MIDE = (parameters[10] & 0x0008) >> 3;
-  C1RXM2EID = parameters[11];
+  C1RXM0SIDbits.SID = parameters[7] >> 5; // Set filter 0
+  C1RXM0SIDbits.MIDE = (parameters[7] & 0x0008) >> 3;
+  C1RXM0EID = parameters[8];
+  C1RXM1SIDbits.SID = parameters[9] >> 5; // Set filter 1
+  C1RXM1SIDbits.MIDE = (parameters[9] & 0x0008) >> 3;
+  C1RXM1EID = parameters[10];
+  C1RXM2SIDbits.SID = parameters[11] >> 5; // Set filter 2
+  C1RXM2SIDbits.MIDE = (parameters[11] & 0x0008) >> 3;
+  C1RXM2EID = parameters[12];
 
-  C1FEN1 = parameters[3]; // Enable desired filters
+  C1FEN1 = parameters[4]; // Enable desired filters
 
-  C1FMSKSEL1 = parameters[4]; // Set filter mask selection bits for filters 0-7
-  C1FMSKSEL2 = parameters[5]; // Set filter mask selection bits for filters 8-15
+  C1FMSKSEL1 = parameters[5]; // Set filter mask selection bits for filters 0-7
+  C1FMSKSEL2 = parameters[6]; // Set filter mask selection bits for filters 8-15
 
-  C1BUFPNT1 = parameters[16]; // Buffer pointer for filters 0-3
-  C1BUFPNT2 = parameters[17]; // Buffer pointer for filters 4-7
-  C1BUFPNT3 = parameters[18]; // Buffer pointer for filters 8-11
-  C1BUFPNT4 = parameters[19]; // Buffer pointer for filters 12-15x
+  C1BUFPNT1 = parameters[17]; // Buffer pointer for filters 0-3
+  C1BUFPNT2 = parameters[18]; // Buffer pointer for filters 4-7
+  C1BUFPNT3 = parameters[19]; // Buffer pointer for filters 8-11
+  C1BUFPNT4 = parameters[20]; // Buffer pointer for filters 12-15x
   
   // Set our filter parameters
-  C1RXF0SID = parameters[20];
-  C1RXF0EID = parameters[21];
-  C1RXF1SID = parameters[22];
-  C1RXF1EID = parameters[23];
-  C1RXF2SID = parameters[24];
-  C1RXF2EID = parameters[25];
-  C1RXF3SID = parameters[26];
-  C1RXF3EID = parameters[27];
+  C1RXF0SID = parameters[21];
+  C1RXF0EID = parameters[22];
+  C1RXF1SID = parameters[23];
+  C1RXF1EID = parameters[24];
+  C1RXF2SID = parameters[25];
+  C1RXF2EID = parameters[26];
+  C1RXF3SID = parameters[27];
+  C1RXF3EID = parameters[28];
    
   C1CTRL1bits.WIN=0;
   
@@ -87,17 +87,17 @@ void ecan1_init(uint16_t* parameters) {
   C1RXFUL1=C1RXFUL2=C1RXOVF1=C1RXOVF2=0x0000;
   
   // Enable interrupts for ECAN1
-	IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
-	C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
-	C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
+  IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
+  C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
+  C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
   
   // Configure buffer settings.
   // Must be done after mode setting for some reason
   // (can't find documentation on it)
-  C1TR01CON = parameters[12];
-  C1TR23CON = parameters[13];
-  C1TR45CON = parameters[14];
-  C1TR67CON = parameters[15];
+  C1TR01CON = parameters[13];
+  C1TR23CON = parameters[14];
+  C1TR45CON = parameters[15];
+  C1TR67CON = parameters[16];
 }
 
 void init_DMA(uint16_t* parameters) {
@@ -113,14 +113,14 @@ void init_DMA(uint16_t* parameters) {
     
 	DMACS0 = 0; // Clear the status register
 
-	*periAddrRegAddr = (unsigned int *)parameters[1]; // Set the peripheral address that will be using DMA
- 	*transCountRegAddr = (unsigned int *)parameters[2]; // Set data units to words or bytes
-	*irqSelRegAddr = (unsigned int *)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
-	*addrOffsetRegAddr = (unsigned int *)parameters[3]; // Set primary DPSRAM start address bits
-	*secAddrOffsetRegAddr(unsigned int *)parameters[5]; // Set secondary DPSRAM start address bits
+	*periAddrRegAddr = (unsigned int)parameters[1]; // Set the peripheral address that will be using DMA
+ 	*transCountRegAddr = (unsigned int)parameters[2]; // Set data units to words or bytes
+	*irqSelRegAddr = (unsigned int)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
+	*addrOffsetRegAddr = (unsigned int)parameters[3]; // Set primary DPSRAM start address bits
+	*secAddrOffsetRegAddr = (unsigned int)parameters[5]; // Set secondary DPSRAM start address bits
 	
 	// Setup the configuration register & enable DMA
-	*chanCtrlRegAddr = (unsigned int *)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
+	*chanCtrlRegAddr = (unsigned int)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
 }
 
 void rxECAN1(tCanMessage* message)

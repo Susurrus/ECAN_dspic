@@ -32,33 +32,34 @@ typedef unsigned char uint8_t;
                     bits 2-4 specify module mode (loopback, disabled, etc.),
                     bits 5-7 specify which DMA channel to use for receiving,
                     bits 8-10 specify which DMA channel to use for transmitting
-  * parameters[1] = baud rate in units of hundreds of bits per second
-  * parameters[2] = bits 0-2 are phase segment 1, bits 3-5 are propagation delay, bits 6-8 are phase segment 2, bits 9-10 are sync jump width, bits 11 specifies triple sample at sampling point
-  * parameters[3] = filters 0 through 15 enable
-  * parameters[4] = filters 0 through 7 mask select
-  * parameters[5] = filters 8 through 15 mask select
-  * parameters[6] = mask 0 (standard, exide, ei17-16)
-  * parameters[7] = mask 0 (ei15-0)
-  * parameters[8] = mask 1 (standard, exide, ei17-16)
-  * parameters[9] = mask 1 (ei15-0)
-  * parameters[10] = mask 2 (standard, exide, ei17-16)
-  * parameters[11] = mask 2 (ei15-0)
-  * parameters[12] = C1TR01CON
-  * parameters[13] = C1TR23CON
-  * parameters[14] = C1TR45CON
-  * parameters[15] = C1TR67CON
-  * parameters[16] = Buffer pointer for filters 0-3
-  * parameters[17] = Buffer pointer for filters 4-7
-  * parameters[18] = Buffer pointer for filters 8-11
-  * parameters[19] = Buffer pointer for filters 12-15
-  * parameters[20] = filter 0 (standard, exide, ei17-16)
-  * parameters[21] = filter 0 (extended 15-0)
-  * parameters[22] = filter 1 (standard, exide, ei17-16)
-  * parameters[23] = filter 1 (extended 15-0)
-  * parameters[24] = filter 2 (standard, exide, ei17-16)
-  * parameters[25] = filter 2 (extended 15-0)
-  * parameters[26] = filter 3 (standard, exide, ei17-16)
-  * parameters[27] = filter 3 (extended 15-0)
+  * parameters[1] = bit rate in units of hundreds of bits per second
+  * parameters[2] = oscillator frequency in hundreds of Hertz
+  * parameters[3] = bits 0-2 are phase segment 1, bits 3-5 are propagation delay, bits 6-8 are phase segment 2, bits 9-10 are sync jump width, bits 11 specifies triple sample at sampling point
+  * parameters[4] = filters 0 through 15 enable
+  * parameters[5] = filters 0 through 7 mask select
+  * parameters[6] = filters 8 through 15 mask select
+  * parameters[7] = mask 0 (standard, exide, ei17-16)
+  * parameters[8] = mask 0 (ei15-0)
+  * parameters[9] = mask 1 (standard, exide, ei17-16)
+  * parameters[10] = mask 1 (ei15-0)
+  * parameters[11] = mask 2 (standard, exide, ei17-16)
+  * parameters[12] = mask 2 (ei15-0)
+  * parameters[13] = C1TR01CON
+  * parameters[14] = C1TR23CON
+  * parameters[15] = C1TR45CON
+  * parameters[16] = C1TR67CON
+  * parameters[17] = Buffer pointer for filters 0-3
+  * parameters[18] = Buffer pointer for filters 4-7
+  * parameters[19] = Buffer pointer for filters 8-11
+  * parameters[20] = Buffer pointer for filters 12-15
+  * parameters[21] = filter 0 (standard, exide, ei17-16)
+  * parameters[22] = filter 0 (extended 15-0)
+  * parameters[23] = filter 1 (standard, exide, ei17-16)
+  * parameters[24] = filter 1 (extended 15-0)
+  * parameters[25] = filter 2 (standard, exide, ei17-16)
+  * parameters[26] = filter 2 (extended 15-0)
+  * parameters[27] = filter 3 (standard, exide, ei17-16)
+  * parameters[28] = filter 3 (extended 15-0)
   */
 void ecan1_init(uint16_t* parameters);
 
