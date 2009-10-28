@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.221"
+    ComputedModelVersion    "1.232"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Oct 21 15:13:57 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:221>"
+  LastModifiedDate	  "Wed Oct 28 16:25:51 2009"
+  ModelVersionFormat	  "1.%<AutoIncrement:232>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -694,6 +694,9 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
+      BlockType		      Reference
+    }
+    Block {
       BlockType		      "S-Function"
       FunctionName	      "system"
       SFunctionModules	      "''"
@@ -741,7 +744,7 @@ Model {
   }
   System {
     Name		    "blocks"
-    Location		    [632, 268, 1117, 516]
+    Location		    [960, 590, 1445, 838]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -985,7 +988,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1005,7 +1008,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1025,7 +1028,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1045,7 +1048,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1065,7 +1068,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1085,7 +1088,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1421,81 +1424,82 @@ Model {
 "Allows for configuration of almost all ECAN options to produce a usable syste"
 "m."
       MaskPromptString	      "Extended Frames (Standard if unchecked)|Mode|DM"
-"A Reception Channel|DMA Transmission Channel|Baud Rate|Phase Segment 1|Propag"
-"ation Delay|Phase Segment 2|Time Quanta|DMA Buffer Size|Reception Buffers|Tra"
-"nsmission Buffers|Buffer 0 Transmission Priority|Buffer 0 Remote Transmit Ena"
-"ble|Buffer 1 Transmission Priority|Buffer 1 Remote Transmit Enable|Buffer 2 T"
-"ransmission Priority|Buffer 2 Remote Transmit Enable|Buffer 3 Transmission Pr"
-"iority|Buffer 3 Remote Transmit Enable|Buffer 4 Transmission Priority|Buffer "
-"4 Remote Transmit Enable|Buffer 5 Transmission Priority|Buffer 5 Remote Trans"
-"mit Enable|Buffer 6 Transmission Priority|Buffer 6 Remote Transmit Enable|Buf"
-"fer 7 Transmission Priority|Buffer 7 Remote Transmit Enable|Mask 0|Mask 0 Rec"
-"eive Mode|Mask 1|Mask 1 Receive Mode|Mask 2|Mask 2 Receive Mode|Filters|Filte"
-"r 0|Filter 0 Mask|Filter 0 Extended Enable|Filter 0 Buffer|Filter 1|Filter 1 "
-"Mask|Filter 1 Extended Enable|Filter 1 Buffer"
+"A Reception Channel|DMA Transmission Channel|Baud Rate (hundreds of bps)|CPU "
+"Frequency (in kHz)|Phase Segment 1|Propagation Delay|Phase Segment 2|Sync Jum"
+"p Width|Time Quanta|Triple-sample|DMA Buffer Size|Reception Buffers|Transmiss"
+"ion Buffers|Buffer 0 Transmission Priority|Buffer 0 Remote Transmit Enable|Bu"
+"ffer 1 Transmission Priority|Buffer 1 Remote Transmit Enable|Buffer 2 Transmi"
+"ssion Priority|Buffer 2 Remote Transmit Enable|Buffer 3 Transmission Priority"
+"|Buffer 3 Remote Transmit Enable|Buffer 4 Transmission Priority|Buffer 4 Remo"
+"te Transmit Enable|Buffer 5 Transmission Priority|Buffer 5 Remote Transmit En"
+"able|Buffer 6 Transmission Priority|Buffer 6 Remote Transmit Enable|Buffer 7 "
+"Transmission Priority|Buffer 7 Remote Transmit Enable|Mask 0|Mask 0 Receive M"
+"ode|Mask 1|Mask 1 Receive Mode|Mask 2|Mask 2 Receive Mode|Filters|Filter 0|Fi"
+"lter 0 Mask|Filter 0 Extended Enable|Filter 0 Buffer|Filter 1|Filter 1 Mask|F"
+"ilter 1 Extended Enable|Filter 1 Buffer"
       MaskStyleString	      "checkbox,popup(--|Normal|Loopback|Listen only|C"
-"onfiguration|Listen all),edit,edit,edit,edit,edit,edit,edit,popup(4 buffers|6"
-" buffers|8 buffers|12 buffers|16 buffers|24 buffers|32 buffers),edit,edit,pop"
-"up(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popu"
-"p(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|"
-"Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Low"
-"est|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Y"
-"es),popup(Lowest|Low|High|Highest),popup(No|Yes),edit,popup(0|1),edit,popup(0"
-"|1),edit,popup(0|1),edit,edit,popup(--|0|1|2),checkbox,popup(FIFO|0|1|2|3|4|5"
-"|6|7|8|9|10|11|12|13|14),edit,popup(--|0|1|2),checkbox,popup(FIFO|0|1|2|3|4|5"
-"|6|7|8|9|10|11|12|13|14)"
-      MaskTunableValueString  "on,on,on,on,on,on,on,on,off,on,on,on,on,on,on,o"
+"onfiguration|Listen all),edit,edit,edit,edit,edit,edit,edit,popup(0|1|2|3),ed"
+"it,checkbox,popup(4 buffers|6 buffers|8 buffers|12 buffers|16 buffers|24 buff"
+"ers|32 buffers),edit,edit,popup(Lowest|Low|High|Highest),popup(No|Yes),popup("
+"Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(N"
+"o|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Hig"
+"hest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest"
+"|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes)"
+",edit,popup(0|1),edit,popup(0|1),edit,popup(0|1),edit,edit,popup(--|0|1|2),ch"
+"eckbox,popup(FIFO|0|1|2|3|4|5|6|7|8|9|10|11|12|13|14),edit,popup(--|0|1|2),ch"
+"eckbox,popup(FIFO|0|1|2|3|4|5|6|7|8|9|10|11|12|13|14)"
+      MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,off,on,on,on,on,o"
 "n,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,"
-"on,on"
-      MaskCallbackString      "|||||tq = str2num(get_param(gcb, 'ps1')) + str2"
-"num(get_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, '"
-"tq', int2str(tq));|tq = str2num(get_param(gcb, 'ps1')) + str2num(get_param(gc"
-"b, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq)"
-");|tq = str2num(get_param(gcb, 'ps1')) + str2num(get_param(gcb, 'pd')) + str2"
-"num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));||||filters = "
-"eval(get_param(gcb,'tx_bufs'));\nmVisibilities = get_param(gcb,'MaskVisibilit"
-"ies');\nmNames = get_param(gcb,'MaskNames');\nfor i = 1:size(mNames);\n"
-"	n = mNames{i};\n    if size(n,2) > 4 && strcmp(n(1:4), 'buf_') == 1\n"
-"        filterNumber = sscanf(n, 'buf_%d');\n        if isempty(find(filters "
-"== filterNumber, 1)) == 0\n             mVisibilities{i} = 'on';\n        els"
-"e\n             mVisibilities{i} = 'off';\n        end\n    end\nend\nset_par"
-"am(gcb, 'MaskVisibilities', mVisibilities);|||||||||||||||||||||||filters = e"
-"val(get_param(gcb,'filters'));\nmVisibilities = get_param(gcb,'MaskVisibiliti"
-"es');\nmNames = get_param(gcb,'MaskNames');\nfor i = 1:size(mNames);\n"
-"	n = mNames{i};\n    if size(n,2) > 7 && strcmp(n(1:7), 'filter_') == "
-"1\n        filterNumber = sscanf(n, 'filter_%d');\n        if isempty(find(fi"
-"lters == filterNumber, 1)) == 0\n             mVisibilities{i} = 'on';\n     "
-"   else\n             mVisibilities{i} = 'off';\n        end\n    end\nend\ns"
-"et_param(gcb, 'MaskVisibilities', mVisibilities);||||||||"
-      MaskEnableString	      "on,on,on,on,on,on,on,on,off,on,on,on,on,on,on,o"
+"on,on,on,on,on"
+      MaskCallbackString      "||||||tq = 1 + str2num(get_param(gcb, 'ps1')) +"
+" str2num(get_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(g"
+"cb, 'tq', int2str(tq));|tq = 1 + str2num(get_param(gcb, 'ps1')) + str2num(get"
+"_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', in"
+"t2str(tq));|tq = 1 + str2num(get_param(gcb, 'ps1')) + str2num(get_param(gcb, "
+"'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));|"
+"|||||filters = eval(get_param(gcb,'tx_bufs'));\nmVisibilities = get_param(gcb"
+",'MaskVisibilities');\nmNames = get_param(gcb,'MaskNames');\nfor i = 1:size(m"
+"Names);\n	n = mNames{i};\n    if size(n,2) > 4 && strcmp(n(1:4), 'buf_"
+"') == 1\n        filterNumber = sscanf(n, 'buf_%d');\n        if isempty(find"
+"(filters == filterNumber, 1)) == 0\n             mVisibilities{i} = 'on';\n  "
+"      else\n             mVisibilities{i} = 'off';\n        end\n    end\nend"
+"\nset_param(gcb, 'MaskVisibilities', mVisibilities);|||||||||||||||||||||||fi"
+"lters = eval(get_param(gcb,'filters'));\nmVisibilities = get_param(gcb,'MaskV"
+"isibilities');\nmNames = get_param(gcb,'MaskNames');\nfor i = 1:size(mNames);"
+"\n	n = mNames{i};\n    if size(n,2) > 7 && strcmp(n(1:7), 'filter_') ="
+"= 1\n        filterNumber = sscanf(n, 'filter_%d');\n        if isempty(find("
+"filters == filterNumber, 1)) == 0\n             mVisibilities{i} = 'on';\n   "
+"     else\n             mVisibilities{i} = 'off';\n        end\n    end\nend"
+"\nset_param(gcb, 'MaskVisibilities', mVisibilities);||||||||"
+      MaskEnableString	      "on,on,on,on,on,on,on,on,on,on,off,on,on,on,on,o"
 "n,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,"
-"on,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,off,off,off"
-",off,off,off,off,off,off,off,off,off,off,off,off,off,on,on,on,on,on,on,on,off"
-",off,off,off,off,off,off,off"
+"on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,of"
+"f,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,on,on,on,on,on,"
+"on,on,off,off,off,off,off,off,off,off"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
 ",on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,o"
-"n,on"
-      MaskVarAliasString      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+"n,on,on,on,on"
+      MaskVarAliasString      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       MaskVariables	      "frame_setting=@1;mode=@2;dma_rx_chan=@3;dma_tx_"
-"chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;tq=&9;dma_buf_size=@10;rx_bufs=@11;tx_buf"
-"s=@12;buf_0_tx_pri=@13;buf_0_rte=@14;buf_1_tx_pri=@15;buf_1_rte=@16;buf_2_tx_"
-"pri=@17;buf_2_rte=@18;buf_3_tx_pri=@19;buf_3_rte=@20;buf_4_tx_pri=@21;buf_4_r"
-"te=@22;buf_5_tx_pri=@23;buf_5_rte=@24;buf_6_tx_pri=@25;buf_6_rte=@26;buf_7_tx"
-"_pri=@27;buf_7_rte=@28;mask_0=@29;mask_0_rm=@30;mask_1=@31;mask_1_rm=@32;mask"
-"_2=@33;mask_2_rm=@34;filters=@35;filter_0=@36;filter_0_mask=@37;filter_0_exid"
-"e=@38;filter_0_buf=@39;filter_1=@40;filter_1_mask=@41;filter_1_exide=@42;filt"
-"er_1_buf=@43;"
+"chan=@4;baud=@5;cpu_freq=@6;ps1=@7;pd=@8;ps2=@9;sjw=@10;tq=&11;triple_sample="
+"@12;dma_buf_size=@13;rx_bufs=@14;tx_bufs=@15;buf_0_tx_pri=@16;buf_0_rte=@17;b"
+"uf_1_tx_pri=@18;buf_1_rte=@19;buf_2_tx_pri=@20;buf_2_rte=@21;buf_3_tx_pri=@22"
+";buf_3_rte=@23;buf_4_tx_pri=@24;buf_4_rte=@25;buf_5_tx_pri=@26;buf_5_rte=@27;"
+"buf_6_tx_pri=@28;buf_6_rte=@29;buf_7_tx_pri=@30;buf_7_rte=@31;mask_0=@32;mask"
+"_0_rm=@33;mask_1=@34;mask_1_rm=@35;mask_2=@36;mask_2_rm=@37;filters=@38;filte"
+"r_0=@39;filter_0_mask=@40;filter_0_exide=@41;filter_0_buf=@42;filter_1=@43;fi"
+"lter_1_mask=@44;filter_1_exide=@45;filter_1_buf=@46;"
       MaskDisplay	      "text(0.5,0.5,'Configure ECAN1','horizontalAlign"
 "ment','center','verticalAlignment','middle');\n"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskIconUnits	      "normalized"
-      MaskValueString	      "off|--|0|0|0|0|0|0|0|4 buffers|[]|[]|Highest|No"
-"|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|0|0|0|"
-"0|0|0|[]|0|--|off|FIFO|0|0|off|0"
-      MaskTabNameString	      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+      MaskValueString	      "off|--|0|0|0|0|0|0|0|0|1|on|4 buffers|[]|[]|Hig"
+"hest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No"
+"|0|0|0|0|0|0|[]|0|--|off|FIFO|0|0|off|0"
+      MaskTabNameString	      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
 	Location		[110, 174, 785, 774]
@@ -1516,7 +1520,7 @@ Model {
 	  Name			  "C Function Call"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [1]
-	  Position		  [365, 250, 490, 290]
+	  Position		  [365, 255, 490, 295]
 	  ShowName		  off
 	  List {
 	    ListType		    RTWdata
@@ -1546,8 +1550,16 @@ Model {
 	}
 	Block {
 	  BlockType		  Constant
+	  Name			  "Constant1"
+	  Position		  [35, 108, 80, 132]
+	  ShowName		  off
+	  Value			  "cpu_freq"
+	  OutDataTypeMode	  "uint16"
+	}
+	Block {
+	  BlockType		  Constant
 	  Name			  "Constant4"
-	  Position		  [50, 104, 80, 126]
+	  Position		  [50, 84, 80, 106]
 	  ShowName		  off
 	  Value			  "baud"
 	  OutDataTypeMode	  "uint16"
@@ -1555,9 +1567,19 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "Gain"
-	  Position		  [100, 100, 145, 130]
+	  Position		  [100, 81, 140, 109]
 	  ShowName		  off
 	  Gain			  ".01"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "Gain1"
+	  Position		  [100, 106, 140, 134]
+	  ShowName		  off
+	  Gain			  ".001"
 	  ParameterDataTypeMode	  "Inherit via internal rule"
 	  OutDataTypeMode	  "Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1566,7 +1588,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem"
 	  Ports			  [0, 1]
-	  Position		  [50, 62, 145, 98]
+	  Position		  [50, 37, 145, 73]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1578,8 +1600,8 @@ Model {
 	  MaskIconUnits		  "autoscale"
 	  System {
 	    Name		    "Subsystem"
-	    Location		    [154, 546, 965, 876]
-	    Open		    on
+	    Location		    [719, 575, 1530, 905]
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1749,7 +1771,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1769,7 +1791,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1789,7 +1811,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
+	      FunctionWithSeparateData "off"
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1876,8 +1898,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem1"
-	    Location		    [482, 453, 1459, 934]
-	    Open		    off
+	    Location		    [887, 165, 1529, 467]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1889,6 +1911,22 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant1"
+	      Position		      [135, 155, 200, 175]
+	      ShowName		      off
+	      Value		      "sjw"
+	      OutDataTypeMode	      "uint16"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [125, 191, 200, 209]
+	      ShowName		      off
+	      Value		      "triple_sample"
+	      OutDataTypeMode	      "uint16"
+	    }
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant5"
@@ -1908,19 +1946,122 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant7"
-	      Position		      [140, 115, 205, 135]
+	      Position		      [135, 115, 200, 135]
 	      ShowName		      off
 	      Value		      "ps2"
 	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
+	      BlockType		      SubSystem
+	      Name		      "Embedded\nMATLAB Function"
+	      Ports		      [1, 1]
+	      Position		      [250, 184, 350, 216]
+	      ShowName		      off
+	      MinAlgLoopOccurrences   off
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      MaskHideContents	      off
+	      MaskType		      "Stateflow"
+	      MaskDescription	      "Embedded MATLAB block"
+	      MaskDisplay	      "disp('checkbox_to_bit');"
+	      MaskSelfModifiable      on
+	      MaskIconFrame	      on
+	      MaskIconOpaque	      off
+	      MaskIconRotate	      "none"
+	      MaskIconUnits	      "autoscale"
+	      System {
+		Name			"Embedded\nMATLAB Function"
+		Location		[257, 457, 812, 717]
+		Open			off
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"usletter"
+		PaperUnits		"inches"
+		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
+"00]"
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "u"
+		  Position		  [20, 101, 40, 119]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Demux
+		  Name			  " Demux "
+		  Ports			  [1, 1]
+		  Position		  [270, 160, 320, 200]
+		  Outputs		  "1"
+		}
+		Block {
+		  BlockType		  "S-Function"
+		  Name			  " SFunction "
+		  Tag			  "Stateflow S-Function blocks 14"
+		  Ports			  [1, 2]
+		  Position		  [180, 100, 230, 160]
+		  FunctionName		  "sf_sfun"
+		  PortCounts		  "[1 2]"
+		  Port {
+		    PortNumber		    2
+		    Name		    "y"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		}
+		Block {
+		  BlockType		  Terminator
+		  Name			  " Terminator "
+		  Position		  [460, 171, 480, 189]
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "y"
+		  Position		  [460, 101, 480, 119]
+		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
+		}
+		Line {
+		  SrcBlock		  " SFunction "
+		  SrcPort		  1
+		  Points		  [0, 65]
+		  DstBlock		  " Demux "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  " Demux "
+		  SrcPort		  1
+		  DstBlock		  " Terminator "
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "u"
+		  SrcPort		  1
+		  DstBlock		  " SFunction "
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "y"
+		  Labels		  [0, 0]
+		  SrcBlock		  " SFunction "
+		  SrcPort		  2
+		  DstBlock		  "y"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Block {
 	      BlockType		      Logic
 	      Name		      "Logical\nOperator"
-	      Ports		      [3, 1]
-	      Position		      [455, 49, 490, 121]
+	      Ports		      [5, 1]
+	      Position		      [455, 64, 490, 136]
 	      ShowName		      off
 	      Operator		      "OR"
-	      Inputs		      "3"
+	      Inputs		      "5"
 	      AllPortsSameDT	      off
 	      OutDataTypeMode	      "Boolean"
 	    }
@@ -1965,8 +2106,28 @@ Model {
 	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic3"
+	      Ports		      [1, 1]
+	      Position		      [255, 145, 335, 185]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-9"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter2"
+	      Name		      "parameter3"
 	      Position		      [515, 78, 545, 92]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
@@ -1980,19 +2141,21 @@ Model {
 	    Line {
 	      SrcBlock		      "Shift\nArithmetic2"
 	      SrcPort		      1
-	      Points		      [50, 0; 0, -15]
+	      Points		      [50, 0; 0, -25]
 	      DstBlock		      "Logical\nOperator"
 	      DstPort		      3
 	    }
 	    Line {
 	      SrcBlock		      "Logical\nOperator"
 	      SrcPort		      1
-	      DstBlock		      "parameter2"
+	      Points		      [0, -15]
+	      DstBlock		      "parameter3"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Constant5"
 	      SrcPort		      1
+	      Points		      [235, 0]
 	      DstBlock		      "Logical\nOperator"
 	      DstPort		      1
 	    }
@@ -2007,6 +2170,32 @@ Model {
 	      SrcPort		      1
 	      DstBlock		      "Shift\nArithmetic2"
 	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic3"
+	      SrcPort		      1
+	      Points		      [55, 0; 0, -50]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic3"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcPort		      1
+	      Points		      [85, 0]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      5
 	    }
 	  }
 	}
@@ -2161,14 +2350,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter22"
+	      Name		      "parameter23"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter23"
+	      Name		      "parameter24"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -2177,13 +2366,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter23"
+	      DstBlock		      "parameter24"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter22"
+	      DstBlock		      "parameter23"
 	      DstPort		      1
 	    }
 	  }
@@ -2339,14 +2528,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter24"
+	      Name		      "parameter25"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter25"
+	      Name		      "parameter26"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -2355,13 +2544,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter24"
+	      DstBlock		      "parameter25"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter25"
+	      DstBlock		      "parameter26"
 	      DstPort		      1
 	    }
 	  }
@@ -2504,7 +2693,7 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter3"
+	      Name		      "parameter4"
 	      Position		      [270, 33, 300, 47]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
@@ -2518,7 +2707,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter3"
+	      DstBlock		      "parameter4"
 	      DstPort		      1
 	    }
 	  }
@@ -2653,6 +2842,7 @@ Model {
 		  Position		  [460, 171, 480, 189]
 		  Port			  "3"
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Block {
 		  BlockType		  Outport
@@ -2660,6 +2850,7 @@ Model {
 		  Position		  [460, 206, 480, 224]
 		  Port			  "4"
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  " Ground "
@@ -2716,14 +2907,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter12"
+	      Name		      "parameter13"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter13"
+	      Name		      "parameter14"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -2731,7 +2922,7 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter14"
+	      Name		      "parameter15"
 	      Position		      [270, 83, 300, 97]
 	      Port		      "3"
 	      IconDisplay	      "Port number"
@@ -2739,7 +2930,7 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter15"
+	      Name		      "parameter16"
 	      Position		      [270, 113, 300, 127]
 	      Port		      "4"
 	      IconDisplay	      "Port number"
@@ -2748,25 +2939,25 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter13"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      1
-	      DstBlock		      "parameter12"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      3
 	      DstBlock		      "parameter14"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      4
+	      SrcPort		      1
+	      DstBlock		      "parameter13"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcPort		      3
 	      DstBlock		      "parameter15"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcPort		      4
+	      DstBlock		      "parameter16"
 	      DstPort		      1
 	    }
 	  }
@@ -2922,14 +3113,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter4"
+	      Name		      "parameter5"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter5"
+	      Name		      "parameter6"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -2938,13 +3129,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter5"
+	      DstBlock		      "parameter6"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter4"
+	      DstBlock		      "parameter5"
 	      DstPort		      1
 	    }
 	  }
@@ -3100,14 +3291,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter6"
+	      Name		      "parameter7"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter7"
+	      Name		      "parameter8"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -3116,13 +3307,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter6"
+	      DstBlock		      "parameter7"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter7"
+	      DstBlock		      "parameter8"
 	      DstPort		      1
 	    }
 	  }
@@ -3278,14 +3469,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter8"
+	      Name		      "parameter9"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter9"
+	      Name		      "parameter10"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -3294,13 +3485,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter9"
+	      DstBlock		      "parameter10"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter8"
+	      DstBlock		      "parameter9"
 	      DstPort		      1
 	    }
 	  }
@@ -3456,14 +3647,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter10"
+	      Name		      "parameter11"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter11"
+	      Name		      "parameter12"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -3472,13 +3663,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter10"
+	      DstBlock		      "parameter11"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter11"
+	      DstBlock		      "parameter12"
 	      DstPort		      1
 	    }
 	  }
@@ -3605,6 +3796,7 @@ Model {
 		  Position		  [460, 136, 480, 154]
 		  Port			  "2"
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Block {
 		  BlockType		  Outport
@@ -3612,6 +3804,7 @@ Model {
 		  Position		  [460, 171, 480, 189]
 		  Port			  "3"
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Block {
 		  BlockType		  Outport
@@ -3619,6 +3812,7 @@ Model {
 		  Position		  [460, 206, 480, 224]
 		  Port			  "4"
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  " SFunction "
@@ -3675,53 +3869,57 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter16"
-	      Position		      [240, 35, 270, 49]
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Outport
 	      Name		      "parameter17"
-	      Position		      [240, 65, 270, 79]
-	      Port		      "2"
+	      Position		      [240, 33, 270, 47]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "parameter18"
-	      Position		      [240, 95, 270, 109]
-	      Port		      "3"
+	      Position		      [240, 63, 270, 77]
+	      Port		      "2"
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "parameter19"
+	      Position		      [240, 93, 270, 107]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "parameter20"
 	      Position		      [240, 122, 270, 138]
 	      Port		      "4"
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter16"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
 	      DstBlock		      "parameter17"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      3
+	      SrcPort		      2
 	      DstBlock		      "parameter18"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      4
+	      SrcPort		      3
 	      DstBlock		      "parameter19"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcPort		      4
+	      DstBlock		      "parameter20"
 	      DstPort		      1
 	    }
 	  }
@@ -3738,7 +3936,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem9"
-	    Location		    [527, 579, 955, 769]
+	    Location		    [629, 504, 1057, 694]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3877,14 +4075,14 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter20"
+	      Name		      "parameter21"
 	      Position		      [270, 23, 300, 37]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter21"
+	      Name		      "parameter22"
 	      Position		      [270, 53, 300, 67]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -3893,13 +4091,13 @@ Model {
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      1
-	      DstBlock		      "parameter20"
+	      DstBlock		      "parameter21"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Embedded\nMATLAB Function"
 	      SrcPort		      2
-	      DstBlock		      "parameter21"
+	      DstBlock		      "parameter22"
 	      DstPort		      1
 	    }
 	  }
@@ -3907,8 +4105,8 @@ Model {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "myMux Fun"
-	  Ports			  [26, 1]
-	  Position		  [340, 80, 345, 455]
+	  Ports			  [27, 1]
+	  Position		  [340, 80, 345, 470]
 	  BackgroundColor	  "black"
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
@@ -4120,20 +4318,27 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
+	      BlockType		      Inport
+	      Name		      "u27"
+	      Position		      [20, 1036, 40, 1054]
+	      Port		      "27"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
 	      BlockType		      Demux
 	      Name		      " Demux "
 	      Ports		      [1, 1]
-	      Position		      [270, 665, 320, 705]
+	      Position		      [270, 685, 320, 725]
 	      Outputs		      "1"
 	    }
 	    Block {
 	      BlockType		      "S-Function"
 	      Name		      " SFunction "
 	      Tag		      "Stateflow S-Function blocks 1"
-	      Ports		      [26, 2]
-	      Position		      [180, 125, 230, 665]
+	      Ports		      [27, 2]
+	      Position		      [180, 125, 230, 685]
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[26 2]"
+	      PortCounts	      "[27 2]"
 	      Port {
 		PortNumber		2
 		Name			"y"
@@ -4144,7 +4349,7 @@ Model {
 	    Block {
 	      BlockType		      Terminator
 	      Name		      " Terminator "
-	      Position		      [460, 676, 480, 694]
+	      Position		      [460, 696, 480, 714]
 	    }
 	    Block {
 	      BlockType		      Outport
@@ -4191,7 +4396,7 @@ Model {
 	    Line {
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
-	      Points		      [0, 425]
+	      Points		      [0, 440]
 	      DstBlock		      " Demux "
 	      DstPort		      1
 	    }
@@ -4334,6 +4539,12 @@ Model {
 	      DstBlock		      " SFunction "
 	      DstPort		      26
 	    }
+	    Line {
+	      SrcBlock		      "u27"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      27
+	    }
 	  }
 	}
 	Line {
@@ -4351,183 +4562,196 @@ Model {
 	Line {
 	  SrcBlock		  "Subsystem"
 	  SrcPort		  1
+	  Points		  [0, 25]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Gain"
 	  SrcPort		  1
-	  Points		  [5, 0; 0, -20]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Subsystem1"
 	  SrcPort		  1
-	  Points		  [10, 0; 0, -40]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "Subsystem2"
-	  SrcPort		  1
-	  Points		  [15, 0; 0, -60]
+	  Points		  [10, 0; 0, -25]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  4
 	}
 	Line {
-	  SrcBlock		  "Subsystem4"
-	  SrcPort		  2
-	  Points		  [25, 0; 0, -75]
-	  DstBlock		  "myMux Fun"
-	  DstPort		  6
-	}
-	Line {
-	  SrcBlock		  "Subsystem4"
+	  SrcBlock		  "Subsystem2"
 	  SrcPort		  1
-	  Points		  [20, 0; 0, -75]
+	  Points		  [15, 0; 0, -45]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  5
 	}
 	Line {
-	  SrcBlock		  "Subsystem5"
-	  SrcPort		  1
-	  Points		  [30, 0; 0, -80]
+	  SrcBlock		  "Subsystem4"
+	  SrcPort		  2
+	  Points		  [25, 0; 0, -60]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  7
 	}
 	Line {
+	  SrcBlock		  "Subsystem4"
+	  SrcPort		  1
+	  Points		  [20, 0; 0, -60]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  6
+	}
+	Line {
 	  SrcBlock		  "Subsystem5"
-	  SrcPort		  2
-	  Points		  [35, 0; 0, -80]
+	  SrcPort		  1
+	  Points		  [30, 0; 0, -65]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  8
 	}
 	Line {
-	  SrcBlock		  "Subsystem6"
-	  SrcPort		  1
-	  Points		  [40, 0; 0, -85]
+	  SrcBlock		  "Subsystem5"
+	  SrcPort		  2
+	  Points		  [35, 0; 0, -65]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  9
 	}
 	Line {
 	  SrcBlock		  "Subsystem6"
-	  SrcPort		  2
-	  Points		  [45, 0; 0, -85]
+	  SrcPort		  1
+	  Points		  [40, 0; 0, -70]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  10
 	}
 	Line {
-	  SrcBlock		  "Subsystem7"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, -90]
+	  SrcBlock		  "Subsystem6"
+	  SrcPort		  2
+	  Points		  [45, 0; 0, -70]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  11
 	}
 	Line {
 	  SrcBlock		  "Subsystem7"
-	  SrcPort		  2
-	  Points		  [55, 0; 0, -90]
+	  SrcPort		  1
+	  Points		  [50, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  12
 	}
 	Line {
-	  SrcBlock		  "Subsystem3"
-	  SrcPort		  1
-	  Points		  [60, 0; 0, -90]
+	  SrcBlock		  "Subsystem7"
+	  SrcPort		  2
+	  Points		  [55, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  13
 	}
 	Line {
 	  SrcBlock		  "Subsystem3"
-	  SrcPort		  2
-	  Points		  [65, 0; 0, -90]
+	  SrcPort		  1
+	  Points		  [60, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  14
 	}
 	Line {
 	  SrcBlock		  "Subsystem3"
-	  SrcPort		  3
-	  Points		  [70, 0; 0, -90]
+	  SrcPort		  2
+	  Points		  [65, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  15
 	}
 	Line {
 	  SrcBlock		  "Subsystem3"
-	  SrcPort		  4
-	  Points		  [75, 0; 0, -90]
+	  SrcPort		  3
+	  Points		  [70, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  16
 	}
 	Line {
-	  SrcBlock		  "Subsystem8"
-	  SrcPort		  1
-	  Points		  [80, 0; 0, -90]
+	  SrcBlock		  "Subsystem3"
+	  SrcPort		  4
+	  Points		  [75, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  17
 	}
 	Line {
 	  SrcBlock		  "Subsystem8"
-	  SrcPort		  2
-	  Points		  [85, 0; 0, -90]
+	  SrcPort		  1
+	  Points		  [80, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  18
 	}
 	Line {
 	  SrcBlock		  "Subsystem8"
-	  SrcPort		  3
-	  Points		  [90, 0; 0, -90]
+	  SrcPort		  2
+	  Points		  [85, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  19
 	}
 	Line {
 	  SrcBlock		  "Subsystem8"
-	  SrcPort		  4
-	  Points		  [95, 0; 0, -90]
+	  SrcPort		  3
+	  Points		  [90, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  20
 	}
 	Line {
-	  SrcBlock		  "Subsystem9"
-	  SrcPort		  1
-	  Points		  [100, 0; 0, -95]
+	  SrcBlock		  "Subsystem8"
+	  SrcPort		  4
+	  Points		  [95, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  21
 	}
 	Line {
 	  SrcBlock		  "Subsystem9"
-	  SrcPort		  2
-	  Points		  [105, 0; 0, -95]
+	  SrcPort		  1
+	  Points		  [100, 0; 0, -80]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  22
 	}
 	Line {
-	  SrcBlock		  "Subsystem10"
-	  SrcPort		  1
-	  Points		  [110, 0; 0, -100]
+	  SrcBlock		  "Subsystem9"
+	  SrcPort		  2
+	  Points		  [105, 0; 0, -80]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  23
 	}
 	Line {
 	  SrcBlock		  "Subsystem10"
-	  SrcPort		  2
-	  Points		  [115, 0; 0, -100]
+	  SrcPort		  1
+	  Points		  [110, 0; 0, -85]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  24
 	}
 	Line {
-	  SrcBlock		  "Subsystem11"
-	  SrcPort		  1
-	  Points		  [120, 0; 0, -105]
+	  SrcBlock		  "Subsystem10"
+	  SrcPort		  2
+	  Points		  [115, 0; 0, -85]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  25
 	}
 	Line {
 	  SrcBlock		  "Subsystem11"
-	  SrcPort		  2
-	  Points		  [125, 0; 0, -105]
+	  SrcPort		  1
+	  Points		  [120, 0; 0, -90]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  26
+	}
+	Line {
+	  SrcBlock		  "Subsystem11"
+	  SrcPort		  2
+	  Points		  [125, 0; 0, -90]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  27
+	}
+	Line {
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  DstBlock		  "Gain1"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Gain1"
+	  SrcPort		  1
+	  Points		  [5, 0; 0, -10]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  3
 	}
       }
     }
@@ -4547,7 +4771,7 @@ Stateflow {
 		name                 		"blocks"
 		created              		"09-Oct-2009 13:28:24"
 		isLibrary            		0
-		firstTarget          		127
+		firstTarget          		135
 		sfVersion            		66014000
 	}
 
@@ -4587,7 +4811,7 @@ Stateflow {
 			isEML                    		1
 			script                   		"function y = myMux3(u1, u2, u3, u4, u5, u6, u7, u8, u9, u10"
 						", u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u2"
-						"2, u23, u24, u25, u26)\n"
+						"2, u23, u24, u25, u26, u27)\n"
 						"% This block supports an embeddable subset of the MATLAB la"
 						"nguage.\n"
 						"% See the help menu for details. \n"
@@ -4595,7 +4819,7 @@ Stateflow {
 						"y = [u1(1); u2(1); u3(1); u4(1); u5(1); u6(1); u7(1); u8(1)"
 						"; u9(1); u10(1); u11(1); u12(1); u13(1); u14(1); u15(1); u1"
 						"6(1); u17(1); u18(1); u19(1); u20(1); u21(1); u22(1); u23(1"
-						"); u24(1); u25(1); u26(1)];"
+						"); u24(1); u25(1); u26(1); u27(1)];"
 			editorLayout             		"100 M4x1[69 578 1613 364]"
 			treatIntsAsFixpt         		0
 		}
@@ -5233,7 +5457,30 @@ Stateflow {
 	data {
 		id                            		32
 		name                          		"u26"
-		linkNode                      		[2 31 0]
+		linkNode                      		[2 31 33]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		33
+		name                          		"u27"
+		linkNode                      		[2 32 0]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5254,26 +5501,26 @@ Stateflow {
 	}
 
 	instance {
-		id     		33
+		id     		34
 		name   		"Configure ECAN 1/myMux Fun"
 		machine		1
 		chart  		2
 	}
 
 	chart {
-		id                                        		34
+		id                                        		35
 		name                                      		"Configure DMA/myMux Fun"
 		windowPosition                            		[312.45 255 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 35 0 0]
-		firstTransition                           		37
-		firstJunction                             		36
-		viewObj                                   		34
+		treeNode                                  		[0 36 0 0]
+		firstTransition                           		38
+		firstJunction                             		37
+		viewObj                                   		35
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		38
+		firstData                                 		39
 		chartFileNumber                           		2
 		disableImplicitCasting                    		1
 		eml {
@@ -5282,14 +5529,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		35
+		id                           		36
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		34
-		treeNode                     		[34 0 0 0]
+		chart                        		35
+		treeNode                     		[35 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		34
+		subviewer                    		35
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -5306,16 +5553,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		36
+		id         		37
 		position   		[23.5747 49.5747 7]
-		chart      		34
-		linkNode   		[34 0 0]
-		subviewer  		34
+		chart      		35
+		linkNode   		[35 0 0]
+		subviewer  		35
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		37
+		id             		38
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -5323,22 +5570,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		36
+			id          		37
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		34
-		linkNode       		[34 0 0]
+		chart          		35
+		linkNode       		[35 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		34
+		subviewer      		35
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		38
+		id                            		39
 		name                          		"u1"
-		linkNode                      		[34 0 39]
+		linkNode                      		[35 0 40]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5359,9 +5606,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		39
+		id                            		40
 		name                          		"y"
-		linkNode                      		[34 38 40]
+		linkNode                      		[35 39 41]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5383,32 +5630,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		40
-		name                          		"u2"
-		linkNode                      		[34 39 41]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
 		id                            		41
-		name                          		"u3"
-		linkNode                      		[34 40 42]
+		name                          		"u2"
+		linkNode                      		[35 40 42]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5430,8 +5654,8 @@ Stateflow {
 
 	data {
 		id                            		42
-		name                          		"u4"
-		linkNode                      		[34 41 43]
+		name                          		"u3"
+		linkNode                      		[35 41 43]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5453,8 +5677,8 @@ Stateflow {
 
 	data {
 		id                            		43
-		name                          		"u5"
-		linkNode                      		[34 42 44]
+		name                          		"u4"
+		linkNode                      		[35 42 44]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5476,8 +5700,31 @@ Stateflow {
 
 	data {
 		id                            		44
+		name                          		"u5"
+		linkNode                      		[35 43 45]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		45
 		name                          		"u6"
-		linkNode                      		[34 43 0]
+		linkNode                      		[35 44 0]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5498,29 +5745,27 @@ Stateflow {
 	}
 
 	instance {
-		id     		45
+		id     		46
 		name   		"Configure DMA/myMux Fun"
 		machine		1
-		chart  		34
+		chart  		35
 	}
 
 	chart {
-		id                                        		46
+		id                                        		47
 		name                                      		"Configure ECAN 1/Subsystem3/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[474.879 216.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 47 0 0]
-		firstTransition                           		49
-		firstJunction                             		48
-		viewObj                                   		46
+		treeNode                                  		[0 48 0 0]
+		firstTransition                           		50
+		firstJunction                             		49
+		viewObj                                   		47
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		50
+		firstData                                 		51
 		chartFileNumber                           		3
 		disableImplicitCasting                    		1
 		eml {
@@ -5529,14 +5774,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		47
+		id                           		48
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		46
-		treeNode                     		[46 0 0 0]
+		chart                        		47
+		treeNode                     		[47 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		46
+		subviewer                    		47
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -5583,16 +5828,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		48
+		id         		49
 		position   		[23.5747 49.5747 7]
-		chart      		46
-		linkNode   		[46 0 0]
-		subviewer  		46
+		chart      		47
+		linkNode   		[47 0 0]
+		subviewer  		47
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		49
+		id             		50
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -5600,22 +5845,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		48
+			id          		49
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		46
-		linkNode       		[46 0 0]
+		chart          		47
+		linkNode       		[47 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		46
+		subviewer      		47
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		50
+		id                            		51
 		name                          		"CiTR01CON"
-		linkNode                      		[46 0 51]
+		linkNode                      		[47 0 52]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5636,9 +5881,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		51
+		id                            		52
 		name                          		"CiTR23CON"
-		linkNode                      		[46 50 52]
+		linkNode                      		[47 51 53]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5660,9 +5905,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		52
+		id                            		53
 		name                          		"CiTR45CON"
-		linkNode                      		[46 51 53]
+		linkNode                      		[47 52 54]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5683,9 +5928,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		53
+		id                            		54
 		name                          		"CiTR67CON"
-		linkNode                      		[46 52 0]
+		linkNode                      		[47 53 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5706,28 +5951,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		54
+		id     		55
 		name   		"Configure ECAN 1/Subsystem3/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		46
+		chart  		47
 	}
 
 	chart {
-		id                                        		55
+		id                                        		56
 		name                                      		"Configure ECAN 1/Subsystem2/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[384.879 306.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 56 0 0]
-		firstTransition                           		58
-		firstJunction                             		57
-		viewObj                                   		55
+		treeNode                                  		[0 57 0 0]
+		firstTransition                           		59
+		firstJunction                             		58
+		viewObj                                   		56
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		59
+		firstData                                 		60
 		chartFileNumber                           		4
 		disableImplicitCasting                    		1
 		eml {
@@ -5736,14 +5981,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		56
+		id                           		57
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		55
-		treeNode                     		[55 0 0 0]
+		chart                        		56
+		treeNode                     		[56 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		55
+		subviewer                    		56
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -5760,16 +6005,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		57
+		id         		58
 		position   		[23.5747 49.5747 7]
-		chart      		55
-		linkNode   		[55 0 0]
-		subviewer  		55
+		chart      		56
+		linkNode   		[56 0 0]
+		subviewer  		56
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		58
+		id             		59
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -5777,22 +6022,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		57
+			id          		58
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		55
-		linkNode       		[55 0 0]
+		chart          		56
+		linkNode       		[56 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		55
+		subviewer      		56
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		59
+		id                            		60
 		name                          		"u"
-		linkNode                      		[55 0 60]
+		linkNode                      		[56 0 61]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -5813,9 +6058,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		60
+		id                            		61
 		name                          		"y"
-		linkNode                      		[55 59 0]
+		linkNode                      		[56 60 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5837,28 +6082,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		61
+		id     		62
 		name   		"Configure ECAN 1/Subsystem2/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		55
+		chart  		56
 	}
 
 	chart {
-		id                                        		62
+		id                                        		63
 		name                                      		"Configure ECAN 1/Subsystem4/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[414.879 276.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 63 0 0]
-		firstTransition                           		65
-		firstJunction                             		64
-		viewObj                                   		62
+		treeNode                                  		[0 64 0 0]
+		firstTransition                           		66
+		firstJunction                             		65
+		viewObj                                   		63
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		66
+		firstData                                 		67
 		chartFileNumber                           		5
 		disableImplicitCasting                    		1
 		eml {
@@ -5867,14 +6112,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		63
+		id                           		64
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		62
-		treeNode                     		[62 0 0 0]
+		chart                        		63
+		treeNode                     		[63 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		62
+		subviewer                    		63
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -5902,16 +6147,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		64
+		id         		65
 		position   		[23.5747 49.5747 7]
-		chart      		62
-		linkNode   		[62 0 0]
-		subviewer  		62
+		chart      		63
+		linkNode   		[63 0 0]
+		subviewer  		63
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		65
+		id             		66
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -5919,22 +6164,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		64
+			id          		65
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		62
-		linkNode       		[62 0 0]
+		chart          		63
+		linkNode       		[63 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		62
+		subviewer      		63
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		66
+		id                            		67
 		name                          		"sel1"
-		linkNode                      		[62 0 67]
+		linkNode                      		[63 0 68]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5955,9 +6200,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		67
+		id                            		68
 		name                          		"sel2"
-		linkNode                      		[62 66 0]
+		linkNode                      		[63 67 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -5979,28 +6224,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		68
+		id     		69
 		name   		"Configure ECAN 1/Subsystem4/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		62
+		chart  		63
 	}
 
 	chart {
-		id                                        		69
+		id                                        		70
 		name                                      		"Configure ECAN 1/Subsystem5/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[429.879 261.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 70 0 0]
-		firstTransition                           		72
-		firstJunction                             		71
-		viewObj                                   		69
+		treeNode                                  		[0 71 0 0]
+		firstTransition                           		73
+		firstJunction                             		72
+		viewObj                                   		70
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		73
+		firstData                                 		74
 		chartFileNumber                           		6
 		disableImplicitCasting                    		1
 		eml {
@@ -6009,14 +6254,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		70
+		id                           		71
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		69
-		treeNode                     		[69 0 0 0]
+		chart                        		70
+		treeNode                     		[70 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		69
+		subviewer                    		70
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6047,16 +6292,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		71
+		id         		72
 		position   		[23.5747 49.5747 7]
-		chart      		69
-		linkNode   		[69 0 0]
-		subviewer  		69
+		chart      		70
+		linkNode   		[70 0 0]
+		subviewer  		70
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		72
+		id             		73
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6064,22 +6309,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		71
+			id          		72
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		69
-		linkNode       		[69 0 0]
+		chart          		70
+		linkNode       		[70 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		69
+		subviewer      		70
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		73
+		id                            		74
 		name                          		"cirxmnsid"
-		linkNode                      		[69 0 74]
+		linkNode                      		[70 0 75]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6100,9 +6345,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		74
+		id                            		75
 		name                          		"cirxmneid"
-		linkNode                      		[69 73 0]
+		linkNode                      		[70 74 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6124,28 +6369,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		75
+		id     		76
 		name   		"Configure ECAN 1/Subsystem5/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		69
+		chart  		70
 	}
 
 	chart {
-		id                                        		76
+		id                                        		77
 		name                                      		"Configure ECAN 1/Subsystem6/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[444.879 246.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 77 0 0]
-		firstTransition                           		79
-		firstJunction                             		78
-		viewObj                                   		76
+		treeNode                                  		[0 78 0 0]
+		firstTransition                           		80
+		firstJunction                             		79
+		viewObj                                   		77
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		80
+		firstData                                 		81
 		chartFileNumber                           		7
 		disableImplicitCasting                    		1
 		eml {
@@ -6154,14 +6399,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		77
+		id                           		78
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		76
-		treeNode                     		[76 0 0 0]
+		chart                        		77
+		treeNode                     		[77 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		76
+		subviewer                    		77
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6192,16 +6437,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		78
+		id         		79
 		position   		[23.5747 49.5747 7]
-		chart      		76
-		linkNode   		[76 0 0]
-		subviewer  		76
+		chart      		77
+		linkNode   		[77 0 0]
+		subviewer  		77
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		79
+		id             		80
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6209,22 +6454,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		78
+			id          		79
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		76
-		linkNode       		[76 0 0]
+		chart          		77
+		linkNode       		[77 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		76
+		subviewer      		77
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		80
+		id                            		81
 		name                          		"cirxmnsid"
-		linkNode                      		[76 0 81]
+		linkNode                      		[77 0 82]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6245,9 +6490,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		81
+		id                            		82
 		name                          		"cirxmneid"
-		linkNode                      		[76 80 0]
+		linkNode                      		[77 81 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6269,28 +6514,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		82
+		id     		83
 		name   		"Configure ECAN 1/Subsystem6/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		76
+		chart  		77
 	}
 
 	chart {
-		id                                        		83
+		id                                        		84
 		name                                      		"Configure ECAN 1/Subsystem7/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[459.879 231.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 84 0 0]
-		firstTransition                           		86
-		firstJunction                             		85
-		viewObj                                   		83
+		treeNode                                  		[0 85 0 0]
+		firstTransition                           		87
+		firstJunction                             		86
+		viewObj                                   		84
 		machine                                   		1
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		87
+		firstData                                 		88
 		chartFileNumber                           		8
 		disableImplicitCasting                    		1
 		eml {
@@ -6299,14 +6544,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		84
+		id                           		85
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		83
-		treeNode                     		[83 0 0 0]
+		chart                        		84
+		treeNode                     		[84 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		83
+		subviewer                    		84
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6337,16 +6582,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		85
+		id         		86
 		position   		[23.5747 49.5747 7]
-		chart      		83
-		linkNode   		[83 0 0]
-		subviewer  		83
+		chart      		84
+		linkNode   		[84 0 0]
+		subviewer  		84
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		86
+		id             		87
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6354,22 +6599,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		85
+			id          		86
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		83
-		linkNode       		[83 0 0]
+		chart          		84
+		linkNode       		[84 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		83
+		subviewer      		84
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		87
+		id                            		88
 		name                          		"cirxmnsid"
-		linkNode                      		[83 0 88]
+		linkNode                      		[84 0 89]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6390,9 +6635,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		88
+		id                            		89
 		name                          		"cirxmneid"
-		linkNode                      		[83 87 0]
+		linkNode                      		[84 88 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6414,30 +6659,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		89
+		id     		90
 		name   		"Configure ECAN 1/Subsystem7/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		83
+		chart  		84
 	}
 
 	chart {
-		id                                        		90
+		id                                        		91
 		name                                      		"Configure ECAN 1/Subsystem8/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[369.879 321.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 91 0 0]
-		firstTransition                           		93
-		firstJunction                             		92
-		viewObj                                   		90
+		treeNode                                  		[0 92 0 0]
+		firstTransition                           		94
+		firstJunction                             		93
+		viewObj                                   		91
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		94
+		firstData                                 		95
 		chartFileNumber                           		9
 		disableImplicitCasting                    		1
 		eml {
@@ -6446,14 +6689,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		91
+		id                           		92
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		90
-		treeNode                     		[90 0 0 0]
+		chart                        		91
+		treeNode                     		[91 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		90
+		subviewer                    		91
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6587,16 +6830,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		92
+		id         		93
 		position   		[23.5747 49.5747 7]
-		chart      		90
-		linkNode   		[90 0 0]
-		subviewer  		90
+		chart      		91
+		linkNode   		[91 0 0]
+		subviewer  		91
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		93
+		id             		94
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6604,22 +6847,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		92
+			id          		93
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		90
-		linkNode       		[90 0 0]
+		chart          		91
+		linkNode       		[91 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		90
+		subviewer      		91
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		94
+		id                            		95
 		name                          		"CiBUFPNT1"
-		linkNode                      		[90 0 95]
+		linkNode                      		[91 0 96]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6641,32 +6884,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		95
-		name                          		"CiBUFPNT2"
-		linkNode                      		[90 94 96]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
 		id                            		96
-		name                          		"CiBUFPNT3"
-		linkNode                      		[90 95 97]
+		name                          		"CiBUFPNT2"
+		linkNode                      		[91 95 97]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6688,8 +6908,31 @@ Stateflow {
 
 	data {
 		id                            		97
+		name                          		"CiBUFPNT3"
+		linkNode                      		[91 96 98]
+		scope                         		OUTPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_NO
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		98
 		name                          		"CiBUFPNT4"
-		linkNode                      		[90 96 0]
+		linkNode                      		[91 97 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6710,30 +6953,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		98
+		id     		99
 		name   		"Configure ECAN 1/Subsystem8/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		90
+		chart  		91
 	}
 
 	chart {
-		id                                        		99
+		id                                        		100
 		name                                      		"Configure ECAN 1/Subsystem9/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[444.879 246.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 100 0 0]
-		firstTransition                           		102
-		firstJunction                             		101
-		viewObj                                   		99
+		treeNode                                  		[0 101 0 0]
+		firstTransition                           		103
+		firstJunction                             		102
+		viewObj                                   		100
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		103
+		firstData                                 		104
 		chartFileNumber                           		10
 		disableImplicitCasting                    		1
 		eml {
@@ -6742,14 +6983,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		100
+		id                           		101
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		99
-		treeNode                     		[99 0 0 0]
+		chart                        		100
+		treeNode                     		[100 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		99
+		subviewer                    		100
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6785,16 +7026,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		101
+		id         		102
 		position   		[23.5747 49.5747 7]
-		chart      		99
-		linkNode   		[99 0 0]
-		subviewer  		99
+		chart      		100
+		linkNode   		[100 0 0]
+		subviewer  		100
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		102
+		id             		103
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6802,22 +7043,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		101
+			id          		102
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		99
-		linkNode       		[99 0 0]
+		chart          		100
+		linkNode       		[100 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		99
+		subviewer      		100
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		103
+		id                            		104
 		name                          		"cirxf0sid"
-		linkNode                      		[99 0 104]
+		linkNode                      		[100 0 105]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6838,9 +7079,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		104
+		id                            		105
 		name                          		"cirxf0eid"
-		linkNode                      		[99 103 0]
+		linkNode                      		[100 104 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6862,30 +7103,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		105
+		id     		106
 		name   		"Configure ECAN 1/Subsystem9/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		99
+		chart  		100
 	}
 
 	chart {
-		id                                        		106
+		id                                        		107
 		name                                      		"Configure ECAN 1/Subsystem10/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[459.879 231.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 107 0 0]
-		firstTransition                           		109
-		firstJunction                             		108
-		viewObj                                   		106
+		treeNode                                  		[0 108 0 0]
+		firstTransition                           		110
+		firstJunction                             		109
+		viewObj                                   		107
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		110
+		firstData                                 		111
 		chartFileNumber                           		11
 		disableImplicitCasting                    		1
 		eml {
@@ -6894,14 +7133,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		107
+		id                           		108
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		106
-		treeNode                     		[106 0 0 0]
+		chart                        		107
+		treeNode                     		[107 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		106
+		subviewer                    		107
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -6937,16 +7176,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		108
+		id         		109
 		position   		[23.5747 49.5747 7]
-		chart      		106
-		linkNode   		[106 0 0]
-		subviewer  		106
+		chart      		107
+		linkNode   		[107 0 0]
+		subviewer  		107
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		109
+		id             		110
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -6954,22 +7193,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		108
+			id          		109
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		106
-		linkNode       		[106 0 0]
+		chart          		107
+		linkNode       		[107 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		106
+		subviewer      		107
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		110
+		id                            		111
 		name                          		"cirxf1sid"
-		linkNode                      		[106 0 111]
+		linkNode                      		[107 0 112]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6990,9 +7229,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		111
+		id                            		112
 		name                          		"cirxf1eid"
-		linkNode                      		[106 110 0]
+		linkNode                      		[107 111 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -7014,30 +7253,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		112
+		id     		113
 		name   		"Configure ECAN 1/Subsystem10/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		106
+		chart  		107
 	}
 
 	chart {
-		id                                        		113
+		id                                        		114
 		name                                      		"Configure ECAN 1/Subsystem11/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[474.879 216.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 114 0 0]
-		firstTransition                           		116
-		firstJunction                             		115
-		viewObj                                   		113
+		treeNode                                  		[0 115 0 0]
+		firstTransition                           		117
+		firstJunction                             		116
+		viewObj                                   		114
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		117
+		firstData                                 		118
 		chartFileNumber                           		12
 		disableImplicitCasting                    		1
 		eml {
@@ -7046,14 +7283,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		114
+		id                           		115
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		113
-		treeNode                     		[113 0 0 0]
+		chart                        		114
+		treeNode                     		[114 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		113
+		subviewer                    		114
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -7089,16 +7326,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		115
+		id         		116
 		position   		[23.5747 49.5747 7]
-		chart      		113
-		linkNode   		[113 0 0]
-		subviewer  		113
+		chart      		114
+		linkNode   		[114 0 0]
+		subviewer  		114
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		116
+		id             		117
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -7106,22 +7343,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		115
+			id          		116
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		113
-		linkNode       		[113 0 0]
+		chart          		114
+		linkNode       		[114 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		113
+		subviewer      		114
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		117
+		id                            		118
 		name                          		"cirxf2sid"
-		linkNode                      		[113 0 118]
+		linkNode                      		[114 0 119]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -7142,9 +7379,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		118
+		id                            		119
 		name                          		"cirxf2eid"
-		linkNode                      		[113 117 0]
+		linkNode                      		[114 118 0]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -7166,30 +7403,28 @@ Stateflow {
 	}
 
 	instance {
-		id     		119
+		id     		120
 		name   		"Configure ECAN 1/Subsystem11/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		113
+		chart  		114
 	}
 
 	chart {
-		id                                        		120
+		id                                        		121
 		name                                      		"Configure ECAN 1/Subsystem/Embedded\n"
 					"MATLAB Function"
 		windowPosition                            		[489.879 201.305 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1680 1050 1.333333333333333]
-		treeNode                                  		[0 121 0 0]
-		firstTransition                           		123
-		firstJunction                             		122
-		viewObj                                   		120
+		treeNode                                  		[0 122 0 0]
+		firstTransition                           		124
+		firstJunction                             		123
+		viewObj                                   		121
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
-		firstData                                 		124
+		firstData                                 		125
 		chartFileNumber                           		13
 		disableImplicitCasting                    		1
 		eml {
@@ -7198,14 +7433,14 @@ Stateflow {
 	}
 
 	state {
-		id                           		121
+		id                           		122
 		labelString                  		"eML_blk_kernel()"
 		position                     		[18 64.5 118 66]
 		fontSize                     		12
-		chart                        		120
-		treeNode                     		[120 0 0 0]
+		chart                        		121
+		treeNode                     		[121 0 0 0]
 		superState                   		SUBCHART
-		subviewer                    		120
+		subviewer                    		121
 		type                         		FUNC_STATE
 		decomposition                		CLUSTER_STATE
 		eml {
@@ -7233,16 +7468,16 @@ Stateflow {
 	}
 
 	junction {
-		id         		122
+		id         		123
 		position   		[23.5747 49.5747 7]
-		chart      		120
-		linkNode   		[120 0 0]
-		subviewer  		120
+		chart      		121
+		linkNode   		[121 0 0]
+		subviewer  		121
 		type       		CONNECTIVE_JUNCTION
 	}
 
 	transition {
-		id             		123
+		id             		124
 		labelString    		"{eML_blk_kernel();}"
 		labelPosition  		[32.125 19.875 102.544 14.964]
 		fontSize       		12
@@ -7250,22 +7485,22 @@ Stateflow {
 			intersection		[0 0 1 0 23.5747 14.625 0 0]
 		}
 		dst {
-			id          		122
+			id          		123
 			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
 		}
 		midPoint       		[23.5747 24.9468]
-		chart          		120
-		linkNode       		[120 0 0]
+		chart          		121
+		linkNode       		[121 0 0]
 		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		120
+		subviewer      		121
 		drawStyle      		SMART
 		executionOrder 		1
 	}
 
 	data {
-		id                            		124
+		id                            		125
 		name                          		"mode_bits"
-		linkNode                      		[120 0 125]
+		linkNode                      		[121 0 126]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -7286,9 +7521,9 @@ Stateflow {
 	}
 
 	data {
-		id                            		125
+		id                            		126
 		name                          		"mode"
-		linkNode                      		[120 124 0]
+		linkNode                      		[121 125 0]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -7309,15 +7544,151 @@ Stateflow {
 	}
 
 	instance {
-		id     		126
+		id     		127
 		name   		"Configure ECAN 1/Subsystem/Embedded\n"
 					"MATLAB Function"
 		machine		1
-		chart  		120
+		chart  		121
+	}
+
+	chart {
+		id                                        		128
+		name                                      		"Configure ECAN 1/Subsystem1/Embedded\n"
+					"MATLAB Function"
+		windowPosition                            		[369.879 321.305 200.25 189.75]
+		viewLimits                                		[0 156.75 0 153.75]
+		screen                                    		[1 1 1680 1050 1.333333333333333]
+		treeNode                                  		[0 129 0 0]
+		firstTransition                           		131
+		firstJunction                             		130
+		viewObj                                   		128
+		machine                                   		1
+		subviewS {
+		}
+		decomposition                             		CLUSTER_CHART
+		type                                      		EML_CHART
+		firstData                                 		132
+		chartFileNumber                           		14
+		disableImplicitCasting                    		1
+		eml {
+			name       		"checkbox_to_bit"
+		}
+	}
+
+	state {
+		id                           		129
+		labelString                  		"eML_blk_kernel()"
+		position                     		[18 64.5 118 66]
+		fontSize                     		12
+		chart                        		128
+		treeNode                     		[128 0 0 0]
+		superState                   		SUBCHART
+		subviewer                    		128
+		type                         		FUNC_STATE
+		decomposition                		CLUSTER_STATE
+		eml {
+			isEML                    		1
+			script                   		"function y = checkbox_to_bit(u)\n"
+						"% This block supports an embeddable subset of the MATLAB la"
+						"nguage.\n"
+						"% See the help menu for details. \n"
+						"\n"
+						"y = 0;\n"
+						"if strcmp(u, 'on')\n"
+						"    y = 1;\n"
+						"end"
+			editorLayout             		"100 M4x1[146 214 671 364]"
+			treatIntsAsFixpt         		0
+		}
+	}
+
+	junction {
+		id         		130
+		position   		[23.5747 49.5747 7]
+		chart      		128
+		linkNode   		[128 0 0]
+		subviewer  		128
+		type       		CONNECTIVE_JUNCTION
+	}
+
+	transition {
+		id             		131
+		labelString    		"{eML_blk_kernel();}"
+		labelPosition  		[32.125 19.875 102.544 14.964]
+		fontSize       		12
+		src {
+			intersection		[0 0 1 0 23.5747 14.625 0 0]
+		}
+		dst {
+			id          		130
+			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
+		}
+		midPoint       		[23.5747 24.9468]
+		chart          		128
+		linkNode       		[128 0 0]
+		dataLimits     		[23.575 23.575 14.625 34.575]
+		subviewer      		128
+		drawStyle      		SMART
+		executionOrder 		1
+	}
+
+	data {
+		id                            		132
+		name                          		"u"
+		linkNode                      		[128 0 133]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+			}
+			complexity           		SF_COMPLEX_INHERITED
+		}
+		dataType                      		"inherited"
+		fixptType {
+			slope   		1
+			baseType		SF_INT16_TYPE
+		}
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		133
+		name                          		"y"
+		linkNode                      		[128 132 0]
+		scope                         		OUTPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_NO
+		}
+		dataType                      		"inherited"
+		fixptType {
+			slope   		1
+			baseType		SF_INT16_TYPE
+		}
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	instance {
+		id     		134
+		name   		"Configure ECAN 1/Subsystem1/Embedded\n"
+					"MATLAB Function"
+		machine		1
+		chart  		128
 	}
 
 	target {
-		id                        		127
+		id                        		135
 		name                      		"sfun"
 		description               		"Default Simulink S-Function Target."
 		machine                   		1
