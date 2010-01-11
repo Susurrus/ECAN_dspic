@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.232"
+    ComputedModelVersion    "1.234"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Oct 28 16:25:51 2009"
-  ModelVersionFormat	  "1.%<AutoIncrement:232>"
+  LastModifiedDate	  "Mon Jan 11 10:17:39 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:234>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -744,7 +744,7 @@ Model {
   }
   System {
     Name		    "blocks"
-    Location		    [960, 590, 1445, 838]
+    Location		    [746, 487, 1231, 735]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1437,8 +1437,8 @@ Model {
 "ode|Mask 1|Mask 1 Receive Mode|Mask 2|Mask 2 Receive Mode|Filters|Filter 0|Fi"
 "lter 0 Mask|Filter 0 Extended Enable|Filter 0 Buffer|Filter 1|Filter 1 Mask|F"
 "ilter 1 Extended Enable|Filter 1 Buffer"
-      MaskStyleString	      "checkbox,popup(--|Normal|Loopback|Listen only|C"
-"onfiguration|Listen all),edit,edit,edit,edit,edit,edit,edit,popup(0|1|2|3),ed"
+      MaskStyleString	      "checkbox,popup(--|Configuration|Listen all|List"
+"en only|Loopback|Normal),edit,edit,edit,edit,edit,edit,edit,popup(0|1|2|3),ed"
 "it,checkbox,popup(4 buffers|6 buffers|8 buffers|12 buffers|16 buffers|24 buff"
 "ers|32 buffers),edit,edit,popup(Lowest|Low|High|Highest),popup(No|Yes),popup("
 "Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(N"
@@ -1502,7 +1502,7 @@ Model {
       MaskTabNameString	      ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[110, 174, 785, 774]
+	Location		[16, 216, 691, 816]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1600,8 +1600,8 @@ Model {
 	  MaskIconUnits		  "autoscale"
 	  System {
 	    Name		    "Subsystem"
-	    Location		    [719, 575, 1530, 905]
-	    Open		    off
+	    Location		    [48, 589, 859, 919]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1771,7 +1771,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
+	      FunctionWithSeparateData off
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1791,7 +1791,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
+	      FunctionWithSeparateData off
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1811,7 +1811,7 @@ Model {
 	      SourceType	      "Shift Arithmetic"
 	      ShowPortLabels	      "FromPortIcon"
 	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData "off"
+	      FunctionWithSeparateData off
 	      RTWMemSecFuncInitTerm   "Inherit from model"
 	      RTWMemSecFuncExecute    "Inherit from model"
 	      RTWMemSecDataConstants  "Inherit from model"
@@ -1898,8 +1898,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem1"
-	    Location		    [887, 165, 1529, 467]
-	    Open		    on
+	    Location		    [603, 273, 1245, 575]
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -3330,7 +3330,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem6"
-	    Location		    [853, 199, 1281, 389]
+	    Location		    [654, 304, 1082, 494]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -6431,7 +6431,7 @@ Stateflow {
 						"% Set the EIDE bits\n"
 						"cirxmneid = (eid & 65535);\n"
 						""
-			editorLayout             		"100 M4x1[219 360 778 537]"
+			editorLayout             		"100 M4x1[227 425 778 537]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -7449,18 +7449,18 @@ Stateflow {
 						"\n"
 						"mode_bits = 0;\n"
 						"switch mode\n"
-						"    case 'Normal'\n"
-						"        mode_bits = 0;\n"
 						"    case '--'\n"
 						"        mode_bits = 1;\n"
-						"    case 'Loopback'\n"
-						"        mode_bits = 2;\n"
-						"    case 'Listen only'\n"
-						"        mode_bits = 3;\n"
 						"    case 'Configuration'\n"
 						"        mode_bits = 4;\n"
 						"    case 'Listen all'\n"
 						"        mode_bits = 7;\n"
+						"    case 'Listen only'\n"
+						"        mode_bits = 3;\n"
+						"    case 'Normal'\n"
+						"        mode_bits = 0;\n"
+						"    case 'Loopback'\n"
+						"        mode_bits = 2;\n"
 						"end"
 			editorLayout             		"100 M4x1[260 100 778 469]"
 			treatIntsAsFixpt         		0
@@ -7563,8 +7563,6 @@ Stateflow {
 		firstJunction                             		130
 		viewObj                                   		128
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		132
