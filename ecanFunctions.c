@@ -1,6 +1,6 @@
 #include "ecanFunctions.h"
 
-unsigned int ecan1MsgBuf[4][8] __attribute__(space(dma));
+unsigned int ecan1MsgBuf[4][8] __attribute__((space(dma)));
 tCanMessage canMsg;
 
 void ecan1_init(uint16_t* parameters) {
@@ -18,14 +18,14 @@ void ecan1_init(uint16_t* parameters) {
   // We need to check FCY and FOSC to verify that FCAN doesn't exceed 40MHz.
   C1CTRL1bits.CANCKS = 1;
  
-  // Initialize our time quanta.
+  // Initialize our time quanta (assume 20 total)
   uint16_t ftq = 20 * parameters[1];
-  C1CFG1bits.BRP = (40000000/(2 * ftq)) - 1; //TODO: Determine frequency of chip by using existing variable or checking registers somehow
+  C1CFG1bits.BRP = (40000/(2 * ftq)) - 1; //TODO: Determine frequency of chip by using existing variable or checking registers somehow (frequency should be used here as itself divided by 100 because of how desired bps is passed in)
   C1CFG1bits.SJW = 0x3; // Set jump width to 4TQ.
-  C1CFG2bits.SEG1PH = (parameters[3] & 0x0007); // Set segment 1 time
-  C1CFG2bits.PRSEG = ((parameters[3] & 0x003A) >> 3); // Set propagation segment time
+  C1CFG2bits.SEG1PH = (parameters[2] & 0x0007); // Set segment 1 time
+  C1CFG2bits.PRSEG = (parameters[2] & 0x0038) >> 3; // Set propagation segment time
   C1CFG2bits.SEG2PHTS = 0x1; // Keep segment 2 time programmable
-  C1CFG2bits.SEG2PH = (parameters[3] & 0x01C0) >> 6; // Set phase segment 2 time
+  C1CFG2bits.SEG2PH = (parameters[2] & 0x01C0) >> 6; // Set phase segment 2 time
   C1CFG2bits.SAM = 0x1; // Triple-sample for majority rules at bit sample point TODO: Make this a user option
   
   // Setup message filters and masks.
@@ -36,46 +36,37 @@ void ecan1_init(uint16_t* parameters) {
   C1FMSKSEL1 = parameters[4]; // Set filter mask selection bits for filters 0-7
   C1FMSKSEL2 = parameters[5]; // Set filter mask selection bits for filters 8-15
   
-  C1RXM0SIDbits.SID = parameters[6]; // Set filter 0
-  C1RXM1SIDbits.SID = parameters[7]; // Set filter 1
-  C1RXM2SIDbits.SID = parameters[8]; // Set filter 2
+  // Set our filter mask parameters
+  C1RXM0SIDbits.SID = parameters[6] >> 5; // Set filter 0
+  C1RXM0SIDbits.MIDE = (parameters[6] & 0x0008) >> 3
+  C1RXM1SIDbits.SID = parameters[7] >> 5; // Set filter 1
+  C1RXM1SIDbits.MIDE = (parameters[7] & 0x0008) >> 3
+  C1RXM2SIDbits.SID = parameters[8] >> 5; // Set filter 2
+  C1RXM2SIDbits.MIDE = (parameters[8] & 0x0008) >> 3
   
-  C1BUFPNT1 = parameters[13]; // Buffer pointer for filters 0-3
-  C1BUFPNT2 = parameters[14]; // Buffer pointer for filters 4-7
-  C1BUFPNT3 = parameters[15]; // Buffer pointer for filters 8-11
-  C1BUFPNT4 = parameters[16]; // Buffer pointer for filters 12-15
-      
-  C1RXF0SIDbits.SID = parameters[17]; // Set the actual filter bits for filter 0
-  C1RXF1SIDbits.SID = parameters[18]; // Set the actual filter bits for filter 0
-  C1RXF2SIDbits.SID = parameters[19]; // Set the actual filter bits for filter 0
-  C1RXF3SIDbits.SID = parameters[20]; // Set the actual filter bits for filter 0
+  // Setup C1TRmnCON registers (for dealing with buffers)
+  C1TR01CON = parameters[12];
+  C1TR23CON = parameters[13];
+  C1TR45CON = parameters[14];
+  C1TR67CON = parameters[15];
+  
+  C1BUFPNT1 = parameters[16]; // Buffer pointer for filters 0-3
+  C1BUFPNT2 = parameters[17]; // Buffer pointer for filters 4-7
+  C1BUFPNT3 = parameters[18]; // Buffer pointer for filters 8-11
+  C1BUFPNT4 = parameters[19]; // Buffer pointer for filters 12-15
+  
+  // Set our filter parameters
+  C1RXF0SIDbits.SID = parameters[20] >> 5; // Set the actual filter bits for filter 0
+  C1RXF0SIDbits.MIDE = (parameters[20] & 0x0008) >> 3
+  C1RXF1SIDbits.SID = parameters[21] >> 5; // Set the actual filter bits for filter 0
+  C1RXF1SIDbits.MIDE = (parameters[21] & 0x0008) >> 3
+  C1RXF2SIDbits.SID = parameters[22] >> 5; // Set the actual filter bits for filter 0
+  C1RXF2SIDbits.MIDE = (parameters[22] & 0x0008) >> 3
+  C1RXF3SIDbits.SID = parameters[23] >> 5; // Set the actual filter bits for filter 0
+  C1RXF3SIDbits.MIDE = (parameters[23] & 0x0008) >> 3
     
   C1CTRL1bits.WIN = 0; // Restore the WIN bit to re-enable interrupts and access to other registers
-  
-  // Setup CiTRmnCON registers (for dealing with buffers)
-  C1TR01CON = parameters[9];
-  C1TR23CON = parameters[10];
-  C1TR45CON = parameters[11];
-  C1TR67CON = parameters[12];
-  
-  // Deal with DMA setup
-  C1FCTRL.DMABS = 0; // Use 4 buffers in DMA RAM
-  uint16_t dma_params[4];
-  switch ((parameters[0] & 0x0060) >> 5) {
-    case 0:
-      init_DMA0();
-      break;
-    case 1:
-      init_DMA1();
-      break;
-    case 2:
-      init_DMA2();
-      break;
-    case 3:
-      init_DMA3();
-      break;
-  }
-  
+    
   // Return the modules to specified operating mode.
   // 0 normal, 1 disable, 2 loopback, 3 listen-only, 4 configuration, 7 listen all messages
   uint8_t desired_mode = (parameters[0] & 0x000C) >> 2;
@@ -85,13 +76,8 @@ void ecan1_init(uint16_t* parameters) {
 #endif
   
   // Setup our interrupts as our last step and clear all interrupt bits
-  C1RXFUL1=0;
-  C1INTFbits.RBIF=0;
+  C1RXFUL1=C1RXFUL2=C1RXOVF1=C1RXOVF2=0x0000;
 
-
-	// Configfure the DMA here Need two DMAs. Choose 7 and 8
-	
-	// Need to configure which buffer for receive and which to send
 }
 
 #ifdef SIM
@@ -149,7 +135,7 @@ void rxECAN1(tCanMessage* message)
 		id = (ecan1msgBuf[message->buffer][2] & 0xFC00) >> 10;
 		message->id = message->id + id;
 		
-		// Se the frame type to extended
+		// Set the frame type to extended
 		message->frame_type = CAN_FRAME_EXT;
 	}
 	/* check to see what type of message it is */
