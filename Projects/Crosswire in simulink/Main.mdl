@@ -1,18 +1,18 @@
 Model {
-  Name			  "blocks"
+  Name			  "Main"
   Version		  6.6
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.236"
+    ComputedModelVersion    "1.5"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
   SavedCharacterEncoding  "windows-1252"
   SaveDefaultBlockParams  on
-  SampleTimeColors	  on
+  SampleTimeColors	  off
   LibraryLinkDisplay	  "none"
   WideLines		  off
   ShowLineDimensions	  off
@@ -38,14 +38,14 @@ Model {
   StatusBar		  on
   BrowserShowLibraryLinks off
   BrowserLookUnderMasks	  off
-  Created		  "Fri Oct 09 13:19:59 2009"
+  Created		  "Sat Jan 23 12:08:37 2010"
   Creator		  "bwmairs"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Jan 23 13:03:27 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:236>"
+  LastModifiedDate	  "Mon Jan 25 12:05:19 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:5>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -162,7 +162,7 @@ Model {
 	  BlockReduction	  on
 	  BooleanDataType	  on
 	  ConditionallyExecuteInputs on
-	  InlineParams		  on
+	  InlineParams		  off
 	  InlineInvariantSignals  off
 	  OptimizeBlockIOStorage  on
 	  BufferReuse		  on
@@ -526,8 +526,8 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"OPTIM_GCC"
-		Value			"-mcpu=choose_dsPIC_Target -O3 -fsched"
-"ule-insns -fschedule-insns2"
+		Value			"-mcpu=33fJ256GP710 -O3 -fschedule-ins"
+"ns -fschedule-insns2"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -539,15 +539,15 @@ Model {
 		DataType		"string"
 		Name			"LDPICTYPE"
 		Value			"-T C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\"
-"support\\dsPIC30F\\gld\\pchoose_dsPIC_Target.gld"
+"support\\dsPIC33F\\gld\\p33fJ256GP710.gld"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"LDLIBPIC"
 		Value			"C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib"
-"\\libpic30-coff.a  C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\dsPIC30F\\libpchoos"
-"e_dsPIC_Target-coff.a C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\libc-coff.a C:\\"
-"PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\libm-coff.a"
+"\\libpic30-coff.a  C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\dsPIC33F\\libp33fJ2"
+"56GP710-coff.a C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\libc-coff.a C:\\PROGRA~"
+"1\\MICROC~1\\MPLABC~1\\lib\\libm-coff.a"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -558,7 +558,7 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"PIC_REF"
-		Value			"choose_dsPIC_Target"
+		Value			"33fJ256GP710"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -586,7 +586,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Optimization"
+      CurrentDlgPage	      "Solver"
     }
     PropName		    "ConfigurationSets"
   }
@@ -740,8 +740,8 @@ Model {
     FontAngle		    "normal"
   }
   System {
-    Name		    "blocks"
-    Location		    [30, 551, 515, 799]
+    Name		    "Main"
+    Location		    [2, 82, 1270, 978]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -756,10 +756,29 @@ Model {
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
     Block {
+      BlockType		      Reference
+      Name		      "Configuration"
+      Ports		      []
+      Position		      [285, 20, 385, 70]
+      BackgroundColor	      "lightBlue"
+      DropShadow	      on
+      SourceBlock	      "dsPICdrivers/Configuration"
+      SourceType	      ""
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      double64		      off
+    }
+    Block {
       BlockType		      SubSystem
       Name		      "Configure DMA"
       Ports		      [2]
-      Position		      [225, 52, 370, 103]
+      Position		      [170, 117, 315, 168]
       BackgroundColor	      "lightBlue"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -1279,7 +1298,7 @@ Model {
 	    Block {
 	      BlockType		      "S-Function"
 	      Name		      " SFunction "
-	      Tag		      "Stateflow S-Function blocks 2"
+	      Tag		      "Stateflow S-Function Main 2"
 	      Ports		      [6, 2]
 	      Position		      [180, 102, 230, 243]
 	      FunctionName	      "sf_sfun"
@@ -1410,9 +1429,662 @@ Model {
     }
     Block {
       BlockType		      SubSystem
+      Name		      "Configure DMA1"
+      Ports		      [2]
+      Position		      [340, 117, 485, 168]
+      BackgroundColor	      "lightBlue"
+      MinAlgLoopOccurrences   off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      MaskHideContents	      off
+      MaskType		      "Configure dsPIC33f DMA"
+      MaskDescription	      "This block allows for the configuration of the "
+"DMA peripheral on the dsPIC33f. All options for configuring it are allowed wi"
+"thin the block though they are not all currently implemented in the software "
+"supporting this block. Please check that source before trying anything beyond"
+" the very basics of configuration."
+      MaskHelp		      "Batch size - This refers to the DMAxCNT registe"
+"r. It consists of a 10-bit number that is 1 less than the number of requests "
+"the channel must service before the data block transfer is considered complet"
+"e."
+      MaskPromptString	      "DMA Channel|Direction|IRQ|Peripheral|Addressing"
+" Mode|Mode|Trigger Block Transfer Interrupt|Null Data Peripheral Write Mode|D"
+"ata Size|Batch Size"
+      MaskStyleString	      "popup(0|1|2|3|4|5|6|7),popup(Read|Write),popup("
+"INT0|IC1|OC1|IC2|OC2|TMR2|TMR3|SPI1|UART1RX|UART1TX|ADC1|ADC2|UART2RX|UART2TX"
+"|SPI2|ECAN1|ECAN2|DCI|ECAN1|ECAN2),edit,popup(Peripheral Indirect|Register In"
+"direct|Register Indirect: Post-Increment),popup(Continuous|One-Shot|Continuou"
+"s w/ Ping-Pong|One-Shot w/ Ping-Pong),popup(when half of data has been moved|"
+"when all the data has been moved),popup(Null data write to peripheral|Normal "
+"operation),popup(Word|Byte),edit"
+      MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on"
+      MaskCallbackString      "|||||||||"
+      MaskEnableString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,,,,,"
+      MaskVariables	      "channel=@1;direction=@2;irqsel=@3;peripheral=@4"
+";a_mode=@5;mode=@6;half=@7;nullw=@8;data_size=@9;batch_size=@10;"
+      MaskDisplay	      "text(0.5,0.5,sprintf('Configure DMA%d',str2num("
+"get_param(gcb,'channel'))),'horizontalAlignment','center','verticalAlignment'"
+",'middle');\nport_label('input',1,'DMAxSTA');\nport_label('input',2,'DMAxSTB'"
+");"
+      MaskIconFrame	      on
+      MaskIconOpaque	      on
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "normalized"
+      MaskValueString	      "0|Read|INT0|0|Peripheral Indirect|Continuous|wh"
+"en half of data has been moved|Null data write to peripheral|Word|0"
+      MaskTabNameString	      ",,,,,,,,,"
+      System {
+	Name			"Configure DMA1"
+	Location		[2, 82, 1270, 1000]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  Inport
+	  Name			  "Primary\nAddress"
+	  Position		  [20, 151, 50, 169]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "Secondary\nAddress"
+	  Position		  [20, 196, 50, 214]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "C Function Call"
+	  Tag			  "dsPIC_dsPIC_CFunctionCall"
+	  Ports			  [1]
+	  Position		  [220, 130, 345, 170]
+	  ShowName		  off
+	  List {
+	    ListType		    RTWdata
+	    FctDeclaration	    "extern void init_DMA(uint16_T* u1);"
+	    FctCall		    "init_DMA(*%u1);"
+	    fctName		    "init_DMA"
+	    INPUT_SIZE		    "5"
+	    OUTPUT_SIZE		    "1"
+	    NBR_INPUT		    "1"
+	    NBR_OUTPUT		    "0"
+	  }
+	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
+	  SourceType		  "C Function Call"
+	  fctName		  "'init_DMA'"
+	  INPUT_SIZE		  "5"
+	  INPUT1		  "uint16"
+	  INPUT2		  "--"
+	  INPUT3		  "--"
+	  OUTPUT_SIZE		  "1"
+	  OUTPUT1		  "--"
+	  SampleTime		  "inf"
+	  InputType		  "[ 4 ]"
+	  OutputType		  "[ ]"
+	  FctDeclaration	  "extern void init_DMA(uint16_T* u1);"
+	  FctCall		  "init_DMA(*%u1);"
+	  OrderingInOutPopup	  "None"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  Position		  [70, 172, 135, 188]
+	  ShowName		  off
+	  Value			  "channel"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant1"
+	  Position		  [70, 132, 135, 148]
+	  ShowName		  off
+	  Value			  "batch_size"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant5"
+	  Position		  [70, 112, 135, 128]
+	  ShowName		  off
+	  Value			  "peripheral"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Subsystem"
+	  Ports			  [0, 1]
+	  Position		  [75, 91, 135, 109]
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  System {
+	    Name		    "Subsystem"
+	    Location		    [848, 205, 1365, 535]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant1"
+	      Position		      [70, 127, 135, 143]
+	      ShowName		      off
+	      Value		      "direction"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [70, 47, 135, 63]
+	      ShowName		      off
+	      Value		      "irqsel"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [70, 247, 135, 263]
+	      ShowName		      off
+	      Value		      "a_mode"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant4"
+	      Position		      [70, 87, 135, 103]
+	      ShowName		      off
+	      Value		      "data_size"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [70, 167, 135, 183]
+	      ShowName		      off
+	      Value		      "half"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant6"
+	      Position		      [70, 282, 135, 298]
+	      ShowName		      off
+	      Value		      "mode"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant7"
+	      Position		      [70, 207, 135, 223]
+	      ShowName		      off
+	      Value		      "nullw"
+	    }
+	    Block {
+	      BlockType		      Logic
+	      Name		      "Logical\nOperator"
+	      Ports		      [7, 1]
+	      Position		      [415, 199, 450, 271]
+	      ShowName		      off
+	      Operator		      "OR"
+	      Inputs		      "7"
+	      AllPortsSameDT	      off
+	      OutDataTypeMode	      "Boolean"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [160, 195, 240, 235]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [160, 235, 240, 275]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-2"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic3"
+	      Ports		      [1, 1]
+	      Position		      [160, 155, 240, 195]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic4"
+	      Ports		      [1, 1]
+	      Position		      [160, 115, 240, 155]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-6"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic5"
+	      Ports		      [1, 1]
+	      Position		      [160, 75, 240, 115]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-7"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic6"
+	      Ports		      [1, 1]
+	      Position		      [160, 35, 240, 75]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "parameter0"
+	      Position		      [470, 228, 500, 242]
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic6"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic6"
+	      SrcPort		      1
+	      Points		      [70, 0; 0, 150]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic5"
+	      SrcPort		      1
+	      Points		      [65, 0; 0, 120]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic4"
+	      SrcPort		      1
+	      Points		      [60, 0; 0, 90]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic3"
+	      SrcPort		      1
+	      Points		      [55, 0; 0, 60]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic3"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic4"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic5"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [50, 0; 0, 30]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      5
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      6
+	    }
+	    Line {
+	      SrcBlock		      "Logical\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "parameter0"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant7"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant6"
+	      SrcPort		      1
+	      Points		      [260, 0]
+	      DstBlock		      "Logical\nOperator"
+	      DstPort		      7
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "myMux Fun"
+	  Ports			  [6, 1]
+	  Position		  [190, 83, 195, 217]
+	  BackgroundColor	  "black"
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  MaskType		  "Stateflow"
+	  MaskDescription	  "Embedded MATLAB block"
+	  MaskDisplay		  "disp('myMux3');"
+	  MaskSelfModifiable	  on
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  off
+	  MaskIconRotate	  "none"
+	  MaskIconUnits		  "autoscale"
+	  System {
+	    Name		    "myMux Fun"
+	    Location		    [257, 457, 812, 717]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u1"
+	      Position		      [20, 101, 40, 119]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u2"
+	      Position		      [20, 136, 40, 154]
+	      Port		      "2"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u3"
+	      Position		      [20, 171, 40, 189]
+	      Port		      "3"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u4"
+	      Position		      [20, 206, 40, 224]
+	      Port		      "4"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u5"
+	      Position		      [20, 246, 40, 264]
+	      Port		      "5"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Inport
+	      Name		      "u6"
+	      Position		      [20, 281, 40, 299]
+	      Port		      "6"
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      " Demux "
+	      Ports		      [1, 1]
+	      Position		      [270, 245, 320, 285]
+	      Outputs		      "1"
+	    }
+	    Block {
+	      BlockType		      "S-Function"
+	      Name		      " SFunction "
+	      Tag		      "Stateflow S-Function Main 15"
+	      Ports		      [6, 2]
+	      Position		      [180, 102, 230, 243]
+	      FunctionName	      "sf_sfun"
+	      PortCounts	      "[6 2]"
+	      Port {
+		PortNumber		2
+		Name			"y"
+		RTWStorageClass		"Auto"
+		DataLoggingNameMode	"SignalName"
+	      }
+	    }
+	    Block {
+	      BlockType		      Terminator
+	      Name		      " Terminator "
+	      Position		      [460, 256, 480, 274]
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "y"
+	      Position		      [460, 101, 480, 119]
+	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
+	    }
+	    Line {
+	      SrcBlock		      "u6"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      6
+	    }
+	    Line {
+	      SrcBlock		      "u5"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      5
+	    }
+	    Line {
+	      SrcBlock		      "u4"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      Points		      [0, 125]
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      " Demux "
+	      SrcPort		      1
+	      DstBlock		      " Terminator "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "u1"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      1
+	    }
+	    Line {
+	      Name		      "y"
+	      Labels		      [0, 0]
+	      SrcBlock		      " SFunction "
+	      SrcPort		      2
+	      DstBlock		      "y"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "u2"
+	      SrcPort		      1
+	      Points		      [120, 0]
+	      DstBlock		      " SFunction "
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "u3"
+	      SrcPort		      1
+	      DstBlock		      " SFunction "
+	      DstPort		      3
+	    }
+	  }
+	}
+	Line {
+	  SrcBlock		  "Secondary\nAddress"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  DstBlock		  "myMux Fun"
+	  DstPort		  6
+	}
+	Line {
+	  SrcBlock		  "Primary\nAddress"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  5
+	}
+	Line {
+	  SrcBlock		  "myMux Fun"
+	  SrcPort		  1
+	  DstBlock		  "C Function Call"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Constant1"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  3
+	}
+	Line {
+	  SrcBlock		  "Constant5"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Subsystem"
+	  SrcPort		  1
+	  DstBlock		  "myMux Fun"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
       Name		      "Configure ECAN 1"
       Ports		      []
-      Position		      [45, 49, 160, 101]
+      Position		      [35, 114, 150, 166]
       BackgroundColor	      "lightBlue"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -1694,7 +2366,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 13"
+		  Tag			  "Stateflow S-Function Main 13"
 		  Ports			  [1, 2]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -2000,7 +2672,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 14"
+		  Tag			  "Stateflow S-Function Main 14"
 		  Ports			  [1, 2]
 		  Position		  [180, 100, 230, 160]
 		  FunctionName		  "sf_sfun"
@@ -2272,7 +2944,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 11"
+		  Tag			  "Stateflow S-Function Main 11"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -2450,7 +3122,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 12"
+		  Tag			  "Stateflow S-Function Main 12"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -2637,7 +3309,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 4"
+		  Tag			  "Stateflow S-Function Main 4"
 		  Ports			  [1, 2]
 		  Position		  [180, 100, 230, 160]
 		  FunctionName		  "sf_sfun"
@@ -2785,7 +3457,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 3"
+		  Tag			  "Stateflow S-Function Main 3"
 		  Ports			  [1, 5]
 		  Position		  [180, 100, 230, 220]
 		  FunctionName		  "sf_sfun"
@@ -3035,7 +3707,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 5"
+		  Tag			  "Stateflow S-Function Main 5"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -3213,7 +3885,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 6"
+		  Tag			  "Stateflow S-Function Main 6"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -3391,7 +4063,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 7"
+		  Tag			  "Stateflow S-Function Main 7"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -3569,7 +4241,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 8"
+		  Tag			  "Stateflow S-Function Main 8"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -3747,7 +4419,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 9"
+		  Tag			  "Stateflow S-Function Main 9"
 		  Ports			  [1, 5]
 		  Position		  [180, 100, 230, 220]
 		  FunctionName		  "sf_sfun"
@@ -3997,7 +4669,7 @@ Model {
 		Block {
 		  BlockType		  "S-Function"
 		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function blocks 10"
+		  Tag			  "Stateflow S-Function Main 10"
 		  Ports			  [1, 3]
 		  Position		  [180, 100, 230, 180]
 		  FunctionName		  "sf_sfun"
@@ -4333,7 +5005,7 @@ Model {
 	    Block {
 	      BlockType		      "S-Function"
 	      Name		      " SFunction "
-	      Tag		      "Stateflow S-Function blocks 1"
+	      Tag		      "Stateflow S-Function Main 1"
 	      Ports		      [27, 2]
 	      Position		      [180, 125, 230, 685]
 	      FunctionName	      "sf_sfun"
@@ -4754,6 +5426,129 @@ Model {
 	}
       }
     }
+    Block {
+      BlockType		      Reference
+      Name		      "Configure Model \nfor dsPIC"
+      Ports		      []
+      Position		      [35, 14, 147, 70]
+      BackgroundColor	      "yellow"
+      DropShadow	      on
+      SourceBlock	      "dsPICdrivers/Simulink Configuration/Configure M"
+"odel \nfor dsPIC"
+      SourceType	      ""
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Input from ECAN1"
+      Tag		      "dsPIC_dsPIC_CFunctionCall"
+      Ports		      [0, 1]
+      Position		      [165, 230, 290, 270]
+      BackgroundColor	      "orange"
+      List {
+	ListType		RTWdata
+	FctDeclaration		"extern void readFromECAN1Buffer(uint8_T* y1);"
+	FctCall			"readFromECAN1Buffer(*%y1);"
+	fctName			"readFromECAN1Buffer"
+	INPUT_SIZE		"1"
+	OUTPUT_SIZE		"99"
+	NBR_INPUT		"0"
+	NBR_OUTPUT		"1"
+      }
+      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
+      SourceType	      "C Function Call"
+      fctName		      "'readFromECAN1Buffer'"
+      INPUT_SIZE	      "1"
+      INPUT1		      "--"
+      INPUT2		      "--"
+      INPUT3		      "--"
+      OUTPUT_SIZE	      "99"
+      OUTPUT1		      "uint8"
+      SampleTime	      ".01"
+      InputType		      "[ ]"
+      OutputType	      "[ 2 ]"
+      FctDeclaration	      "extern void readFromECAN1Buffer(uint8_T* y1);"
+      FctCall		      "readFromECAN1Buffer(*%y1);"
+      OrderingInOutPopup      "None"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Master"
+      Tag		      "dsPIC_MASTER"
+      Ports		      []
+      Position		      [169, 20, 269, 70]
+      BackgroundColor	      "lightBlue"
+      DropShadow	      on
+      Priority		      "1"
+      List {
+	ListType		RTWdata
+	NumBusyPort		"-1"
+      }
+      SourceBlock	      "dsPICdrivers/Master"
+      SourceType	      "Master"
+      TimeStepType	      "Timer1"
+      picType		      "33fJ256GP710"
+      fcy		      "40000000"
+      Quartz_33f	      "8e6"
+      PLLActive_33f	      on
+      fcyDesired_33f	      "40000000"
+      tmr1		      "[1  39999  0]"
+      tmr1Info		      "Time Step : 0.001  ;   Error : 0%  PR1=39999"
+      tmr2345		      "[0  0  0  0  0  0  0  0]"
+      tmr2345cfg	      "[-1 -1 -1 -1 -1 -1 -1 -1]"
+      IOautoConf	      on
+      typePort		      "[ 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  "
+"0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 "
+" 0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0"
+"  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  4  0  0  0  0  0  0  0  "
+"0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 ]"
+      TRIS		      "[ 65535  65535  65535  65535  65535  65535  655"
+"35 ]"
+      ADPCFG		      "0"
+      MasterBusyPort	      "None"
+      MasterOverloadPort      "None"
+      FOSC		      "Quartz (XT - HS)"
+      ClockSwitchMonitor      "Both disabled"
+      TempProtection_33f      "TEMP_ON"
+      FPBOR		      "<empty>"
+      PWRT		      "disable"
+      MCLR		      "<empty>"
+      PowerSave		      off
+      OverrideFcy	      off
+      NewFcy		      "1e6"
+      PR2345		      "[65535  65535  65535  65535  65535  65535  6553"
+"5  65535]"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "UART Configuration"
+      Tag		      "dsPIC_config_UART"
+      Ports		      []
+      Position		      [400, 23, 500, 73]
+      BackgroundColor	      "lightBlue"
+      DropShadow	      on
+      Priority		      "2"
+      List {
+	ListType		RTWdata
+	RxBufferSize		"32"
+      }
+      SourceBlock	      "dsPICdrivers/Serial PORT/UART Configuration"
+      SourceType	      "Configure UART"
+      UART		      "2"
+      proposed_BAUD	      "38400"
+      ALT_TX_RX		      off
+      InterruptTxWhen	      "Do not use interrupt"
+      TXInterruptPri	      "7"
+      TxBufferSize	      "4"
+      TXEN		      off
+      InterruptRxWhen	      "Do not use interrupt"
+      RXInterruptPri	      "1"
+      RxBufferSize	      "32"
+      BAUD		      "38400"
+      UxBRG		      "64"
+      Info		      "UxBRG = 64   ||  Real Baud : 38462   ||  % erro"
+"r : 0.16026  ||  max 3.8462 Bytes / Step"
+      RealBaud		      "0"
+    }
   }
 }
 
@@ -4767,19 +5562,19 @@ Stateflow {
 
 	machine {
 		id                   		1
-		name                 		"blocks"
-		created              		"09-Oct-2009 13:28:24"
+		name                 		"Main"
+		created              		"23-Jan-2010 13:01:13"
 		isLibrary            		0
-		firstTarget          		135
+		firstTarget          		147
 		sfVersion            		66014000
 	}
 
 	chart {
 		id                                        		2
 		name                                      		"Configure ECAN 1/myMux Fun"
-		windowPosition                            		[297.45 270 200.25 189.75]
+		windowPosition                            		[238.057 269.343 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 3 0 0]
 		firstTransition                           		5
 		firstJunction                             		4
@@ -5509,9 +6304,9 @@ Stateflow {
 	chart {
 		id                                        		35
 		name                                      		"Configure DMA/myMux Fun"
-		windowPosition                            		[312.45 255 200.25 189.75]
+		windowPosition                            		[249.486 254.715 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 36 0 0]
 		firstTransition                           		38
 		firstJunction                             		37
@@ -5754,9 +6549,9 @@ Stateflow {
 		id                                        		47
 		name                                      		"Configure ECAN 1/Subsystem3/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[474.879 216.305 200.25 189.75]
+		windowPosition                            		[373.241 216.978 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 48 0 0]
 		firstTransition                           		50
 		firstJunction                             		49
@@ -5961,9 +6756,9 @@ Stateflow {
 		id                                        		56
 		name                                      		"Configure ECAN 1/Subsystem2/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[384.879 306.305 200.25 189.75]
+		windowPosition                            		[304.67 304.749 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 57 0 0]
 		firstTransition                           		59
 		firstJunction                             		58
@@ -6092,9 +6887,9 @@ Stateflow {
 		id                                        		63
 		name                                      		"Configure ECAN 1/Subsystem4/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[414.879 276.305 200.25 189.75]
+		windowPosition                            		[327.527 275.492 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 64 0 0]
 		firstTransition                           		66
 		firstJunction                             		65
@@ -6234,9 +7029,9 @@ Stateflow {
 		id                                        		70
 		name                                      		"Configure ECAN 1/Subsystem5/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[429.879 261.305 200.25 189.75]
+		windowPosition                            		[338.955 260.864 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 71 0 0]
 		firstTransition                           		73
 		firstJunction                             		72
@@ -6379,9 +7174,9 @@ Stateflow {
 		id                                        		77
 		name                                      		"Configure ECAN 1/Subsystem6/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[444.879 246.305 200.25 189.75]
+		windowPosition                            		[350.384 246.235 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 78 0 0]
 		firstTransition                           		80
 		firstJunction                             		79
@@ -6524,9 +7319,9 @@ Stateflow {
 		id                                        		84
 		name                                      		"Configure ECAN 1/Subsystem7/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[459.879 231.305 200.25 189.75]
+		windowPosition                            		[361.813 231.606 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 85 0 0]
 		firstTransition                           		87
 		firstJunction                             		86
@@ -6669,9 +7464,9 @@ Stateflow {
 		id                                        		91
 		name                                      		"Configure ECAN 1/Subsystem8/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[369.879 321.305 200.25 189.75]
+		windowPosition                            		[293.241 319.378 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 92 0 0]
 		firstTransition                           		94
 		firstJunction                             		93
@@ -6963,9 +7758,9 @@ Stateflow {
 		id                                        		100
 		name                                      		"Configure ECAN 1/Subsystem9/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[444.879 246.305 200.25 189.75]
+		windowPosition                            		[350.384 246.235 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 101 0 0]
 		firstTransition                           		103
 		firstJunction                             		102
@@ -7113,9 +7908,9 @@ Stateflow {
 		id                                        		107
 		name                                      		"Configure ECAN 1/Subsystem10/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[459.879 231.305 200.25 189.75]
+		windowPosition                            		[361.813 231.606 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 108 0 0]
 		firstTransition                           		110
 		firstJunction                             		109
@@ -7263,9 +8058,9 @@ Stateflow {
 		id                                        		114
 		name                                      		"Configure ECAN 1/Subsystem11/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[474.879 216.305 200.25 189.75]
+		windowPosition                            		[373.241 216.978 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 115 0 0]
 		firstTransition                           		117
 		firstJunction                             		116
@@ -7413,9 +8208,9 @@ Stateflow {
 		id                                        		121
 		name                                      		"Configure ECAN 1/Subsystem/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[489.879 201.305 200.25 189.75]
+		windowPosition                            		[384.67 202.349 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 122 0 0]
 		firstTransition                           		124
 		firstJunction                             		123
@@ -7554,9 +8349,9 @@ Stateflow {
 		id                                        		128
 		name                                      		"Configure ECAN 1/Subsystem1/Embedded\n"
 					"MATLAB Function"
-		windowPosition                            		[369.879 321.305 200.25 189.75]
+		windowPosition                            		[293.241 319.378 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1680 1050 1.333333333333333]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 129 0 0]
 		firstTransition                           		131
 		firstJunction                             		130
@@ -7684,8 +8479,252 @@ Stateflow {
 		chart  		128
 	}
 
+	chart {
+		id                                        		135
+		name                                      		"Configure DMA1/myMux Fun"
+		windowPosition                            		[264.486 239.715 200.25 189.75]
+		viewLimits                                		[0 156.75 0 153.75]
+		screen                                    		[1 1 1280 1024 1.333333333333333]
+		treeNode                                  		[0 136 0 0]
+		firstTransition                           		138
+		firstJunction                             		137
+		viewObj                                   		135
+		machine                                   		1
+		decomposition                             		CLUSTER_CHART
+		type                                      		EML_CHART
+		firstData                                 		139
+		chartFileNumber                           		15
+		disableImplicitCasting                    		1
+		eml {
+			name       		"myMux3"
+		}
+	}
+
+	state {
+		id                           		136
+		labelString                  		"eML_blk_kernel()"
+		position                     		[18 64.5 118 66]
+		fontSize                     		12
+		chart                        		135
+		treeNode                     		[135 0 0 0]
+		superState                   		SUBCHART
+		subviewer                    		135
+		type                         		FUNC_STATE
+		decomposition                		CLUSTER_STATE
+		eml {
+			isEML                    		1
+			script                   		"function y = myMux3(u1, u2, u3, u4, u5, u6)\n"
+						"% This block supports an embeddable subset of the MATLAB la"
+						"nguage.\n"
+						"% See the help menu for details. \n"
+						"\n"
+						"y = [u1(1); u2(1); u3(1); u4(1); u5(1); u6(1)];"
+			editorLayout             		"100 M4x1[623 427 671 364]"
+			treatIntsAsFixpt         		0
+		}
+	}
+
+	junction {
+		id         		137
+		position   		[23.5747 49.5747 7]
+		chart      		135
+		linkNode   		[135 0 0]
+		subviewer  		135
+		type       		CONNECTIVE_JUNCTION
+	}
+
+	transition {
+		id             		138
+		labelString    		"{eML_blk_kernel();}"
+		labelPosition  		[32.125 19.875 102.544 14.964]
+		fontSize       		12
+		src {
+			intersection		[0 0 1 0 23.5747 14.625 0 0]
+		}
+		dst {
+			id          		137
+			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
+		}
+		midPoint       		[23.5747 24.9468]
+		chart          		135
+		linkNode       		[135 0 0]
+		dataLimits     		[23.575 23.575 14.625 34.575]
+		subviewer      		135
+		drawStyle      		SMART
+		executionOrder 		1
+	}
+
+	data {
+		id                            		139
+		name                          		"u1"
+		linkNode                      		[135 0 140]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+			}
+			complexity           		SF_COMPLEX_INHERITED
+		}
+		dataType                      		"inherited"
+		fixptType {
+			slope   		1
+			baseType		SF_INT16_TYPE
+		}
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		140
+		name                          		"y"
+		linkNode                      		[135 139 141]
+		scope                         		OUTPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_NO
+		}
+		dataType                      		"inherited"
+		fixptType {
+			slope   		1
+			baseType		SF_INT16_TYPE
+		}
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		141
+		name                          		"u2"
+		linkNode                      		[135 140 142]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		142
+		name                          		"u3"
+		linkNode                      		[135 141 143]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		143
+		name                          		"u4"
+		linkNode                      		[135 142 144]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		144
+		name                          		"u5"
+		linkNode                      		[135 143 145]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		145
+		name                          		"u6"
+		linkNode                      		[135 144 0]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	instance {
+		id     		146
+		name   		"Configure DMA1/myMux Fun"
+		machine		1
+		chart  		135
+	}
+
 	target {
-		id                        		135
+		id                        		147
 		name                      		"sfun"
 		description               		"Default Simulink S-Function Target."
 		machine                   		1

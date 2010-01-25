@@ -95,7 +95,6 @@ int main(void)
 /* Clear Interrupt Flags 				*/
 	clearIntrflags();
 
-
 /* ECAN1 Initialisation 		
    Configure DMA Channel 0 for ECAN1 Transmit
    Configure DMA Channel 2 for ECAN1 Receive */
@@ -164,129 +163,36 @@ int main(void)
 	C2INTEbits.TBIE = 1;	
 	C2INTEbits.RBIE = 1;
 
+	ecan2WriteTxMsgBufId(0,0x402,0,0);
+	ecan2WriteTxMsgBufData(0,8,0xabcd,0xef12,0x3456,0x789a);
+	C2TR01CONbits.TXREQ0=1;
  
 /* Write a Message in ECAN1 Transmit Buffer	
    Request Message Transmission			*/
-ecan1WriteMessage();
+	unsigned short payload[4];
+	
+	payload[0] = 0x1234;
+	payload[1] = 0x5678;
+	payload[2] = 0x1234;
+	payload[3] = 0x5678;
+	
+	txECAN1(0,0x300,0,0,8,(unsigned char*)payload);
 
+	// Make sure to wait for the first message to send before sending a second
+	while(C2TR01CONbits.TXREQ0 == 1);
 
 /* Write a Message in ECAN2 Transmit Buffer
    Request Message Transmission			*/
-	ecan2WriteMessage();
+	ecan2WriteTxMsgBufId(0,0x402,0,0);
+	ecan2WriteTxMsgBufData(0,6,0x3344,0x7788,0x9911,0);
 	C2TR01CONbits.TXREQ0=1;
 	
-
-// Turn on the drive, set to max forward speed, and disable it
-  //enableDrive();
-
-  //setSpeed(1024);
-  //unsigned long i;
-  //for (i=0;i<40000000;i++);
-  
-  //disableDrive();
+	// Check that every message was successfully sent. If the code runs
+	// past these checks, then the code probably executed correctly.
+	while(C1TR01CONbits.TXREQ0 == 1);
+	while(C2TR01CONbits.TXREQ0 == 1);
 	
-  while(1);
-}
-
-void setSpeed(short speed) {
-  unsigned char payload[4];
-  payload[0] = 0x01;
-  payload[1] = 0x05;
-  payload[2] = speed << 4;
-  payload[3] = speed;
-  
-  txECAN1(0,0x301,0,0,4,payload);
-}
-
-void enableDrive() {
-  unsigned char payload[6];
-  payload[0] = 0;
-  payload[1] = 0;
-  payload[2] = 0;
-  payload[3] = 0;
-  payload[4] = 0x20;
-  payload[5] = 0;
-  
-	txECAN1(0,0x300,0,0,6,payload);
-}
-
-void disableDrive() {
-  unsigned char payload[6];
-  payload[0] = 0;
-  payload[1] = 0;
-  payload[2] = 0;
-  payload[3] = 0;
-  payload[4] = 0x40;
-  payload[5] = 0;
-  
-	txECAN1(0,0x300,0,0,6,payload);
-}
-
-
-/* ECAN1 buffer loaded with Identifiers and Data */
-void ecan1WriteMessage(void){
-
-/* Writing the message for Transmission
-ecan1WriteTxMsgBufId(unsigned int buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit);
-ecan1WriteTxMsgBufData(unsigned int buf, unsigned int dataLength, unsigned int data1, unsigned int data2, unsigned int data3, unsigned int data4);
-
-buf -> Transmit Buffer number
-
-txIdentifier -> SID<10:0> : EID<17:0>
-
-ide = 0 -> Message will transmit standard identifier
-ide = 1 -> Message will transmit extended identifier
-
-remoteTransmit = 0 -> Normal message
-remoteTransmit = 1 -> Message will request remote transmission
-
-dataLength -> Data length can be from 0 to 8 bytes
-
-data1, data2, data3, data4 -> Data words (2 bytes) each
-
-*/
-
-  unsigned short payload[4];
-
-  payload[0] = 0x1234;
-  payload[1] = 0x5678;
-  payload[2] = 0x1234;
-  payload[3] = 0x5678;
-  
-	txECAN1(0,0x300,0,0,8,(unsigned char*)payload);
-
-}
-
-/* ECAN2 buffer loaded with Identifiers and Data */
-
-void ecan2WriteMessage(void){
-
-/* Writing the message for Transmission
-
-ecan2WriteTxMsgBufId(unsigned int buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit);
-ecan2WriteTxMsgBufData(unsigned int buf, unsigned int dataLength, unsigned int data1, unsigned int data2, unsigned int data3, unsigned int data4);
-
-buf -> Transmit Buffer Number
-
-txIdentifier -> SID<10:0> : EID<17:0>
-
-ide = 0 -> Message will transmit standard identifier
-ide = 1 -> Message will transmit extended identifier
-
-remoteTransmit = 0 -> Normal message
-remoteTransmit = 1 -> Message will request remote transmission
-
-
-dataLength -> Data length can be from 0 to 8 bytes
-
-data1, data2, data3, data4 -> Data words (2 bytes) each
-
-
-*/
-
-ecan2WriteTxMsgBufId(0,0x402,0,0);
-ecan2WriteTxMsgBufData(0,8,0xabcd,0xef12,0x3456,0x789a);
-
+	while(1);
 }
 
 /******************************************************************************
@@ -376,10 +282,6 @@ void rxECAN2(mID *message)
 	}	
 }
 
-
-
-
-
 void clearIntrflags(void){
 /* Clear Interrupt Flags */
 
@@ -389,7 +291,6 @@ void clearIntrflags(void){
 	IFS3=0;
 	IFS4=0;
 }
-
 
 void oscConfig(void){
 

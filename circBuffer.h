@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG 1
+//#define DEBUG 1
 
 // This defines the size of the circular buffers
 #define BSIZE  40

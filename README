@@ -1,1 +1,0 @@
-This project is being actively developed by Mariano and Bryant with the goal of developing ECAN blocks for Simulink for compiling for the dsPIC33f with the Real Time Workshop. It will consist of 4 blocks: a configure block, a read block, a circular buffer block, and a write block.

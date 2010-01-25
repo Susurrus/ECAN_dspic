@@ -1,0 +1,2 @@
+ - Keep DMA interrupts from being compiled if they're not needed to avoid conflicts with user code
+ - Create crosswire example in Simulink (block for reading data should also provide size of circ buffer)

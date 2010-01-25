@@ -19,14 +19,13 @@
 
 // Constructors - Destructors
 // ==========================
-// this Function creates a new Circular Buffer of size pm_size 
+// this Function creates a new Circular Buffer 
 
 	void newCircBuffer (CBRef cB){
 		
 		// initialize to zero
 		int i;
 		for (i=0; i<BSIZE; i++){
-			// cB->buffer[i] = 0;
 			memset(&(cB->buffer[i]), 0, sizeof(tCanMessage));
 		}
 				

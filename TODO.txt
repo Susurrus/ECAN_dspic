@@ -1,6 +1,0 @@
- - Make convenience functions for all the DMA init functions
- - Make other txECAN1 functions for taking a canMsg, a MATLAB-style array of ints.
- - Add constructor for canMsg
- - Add DMA-initialization code to init() functions
- - Keep DMA interrupts from being compiled if they're not needed to avoid conflicts with user code
- - Create crosswire example in Simulink (block for reading data should also provide size of circ buffer)
