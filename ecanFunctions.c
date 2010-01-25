@@ -101,16 +101,16 @@ void ecan1_init(uint16_t* parameters) {
 }
 
 void init_DMA(uint16_t* parameters) {
-    
-    // Determine the correct addresses for all needed registers
-    unsigned int offset = (parameters[4]*6);
+
+	// Determine the correct addresses for all needed registers
+	unsigned int offset = (parameters[4]*6);
 	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
 	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
 	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
 	unsigned int* secAddrOffsetRegAddr = (unsigned int *)(&DMA0STB + offset);
 	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
 	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
-    
+
 	DMACS0 = 0; // Clear the status register
 
 	*periAddrRegAddr = (unsigned int)parameters[1]; // Set the peripheral address that will be using DMA
@@ -180,11 +180,14 @@ void rxECAN1(tCanMessage* message)
 
 void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit, unsigned char dataLength, unsigned char* data){
 
-  unsigned long word0=0, word1=0, word2=0;
-  unsigned long sid10_0=0, eid5_0=0, eid17_6=0,a;
+	unsigned long word0=0, word1=0, word2=0;
+	unsigned long sid10_0=0, eid5_0=0, eid17_6=0,a;
 
-
-  if(ide) {
+	// Variables for setting correct TXREQ bit
+	unsigned int offset;
+	unsigned int* bufferCtrlRegAddr;
+	
+	if(ide) {
 		eid5_0  = (txIdentifier & 0x3F);
 		eid17_6 = (txIdentifier>>6) & 0xFFF;
 		sid10_0 = (txIdentifier>>18) & 0x7FF;
@@ -192,22 +195,22 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned in
 	}	else {
 		sid10_0 = (txIdentifier & 0x7FF);
 	}
-	
-	
+
+
 	if(remoteTransmit==1) { 	// Transmit Remote Frame
 		word0 = ((sid10_0 << 2) | ide | 0x2);
 		word2 = ((eid5_0 << 10)| 0x0200);
-  }	else {
-	  word0 = ((sid10_0 << 2) | ide);
-	  word2 = (eid5_0 << 10);
+	}	else {
+		word0 = ((sid10_0 << 2) | ide);
+		word2 = (eid5_0 << 10);
 	}
 
-  if(ide) {
-	  ecan1msgBuf[buf][0] = (word0 | 0x0002);
-  } else {
-	  ecan1msgBuf[buf][0] = word0;
-  }
-  
+	if(ide) {
+		ecan1msgBuf[buf][0] = (word0 | 0x0002);
+	} else {
+		ecan1msgBuf[buf][0] = word0;
+	}
+
 	ecan1msgBuf[buf][1] = word1;
 	ecan1msgBuf[buf][2] = ((word2 & 0xFFF0) + dataLength) ;
 	ecan1msgBuf[buf][3] = ((unsigned short*)data)[0];
@@ -215,8 +218,10 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned in
 	ecan1msgBuf[buf][5] = ((unsigned short*)data)[2];
 	ecan1msgBuf[buf][6] = ((unsigned short*)data)[3];
 
-  // TODO: Allow this to automatically set bit for correct buffer
-	C1TR01CONbits.TXREQ0=1;	
+	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
+    offset = buf >> 1;
+	bufferCtrlRegAddr = (unsigned int *)(&C1TR01CON + offset);
+	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
 }
 
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
@@ -226,11 +231,11 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 	
 	// If the interrupt was set because of a transmit
 	if(C1INTFbits.TBIF){ 
-    	C1INTFbits.TBIF = 0;
-	} 
- 
+		C1INTFbits.TBIF = 0;
+	}
+
 	// if the interrupt was fired because of a received message
-	if (C1INTFbits.RBIF) {      
+	if (C1INTFbits.RBIF) {
 		// read the message 
 		if (C1RXFUL1bits.RXFUL1==1) {
 			canMsg.buffer=1; // Set which buffer the message is in
@@ -240,7 +245,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
 		rxECAN1(&canMsg);
 		writeBack(ecanBuffer, canMsg);
-    
+
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
 	}
