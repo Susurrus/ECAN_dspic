@@ -195,7 +195,7 @@ void rxECAN1(tCanMessage* message)
 	}	
 }
 
-void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned int remoteTransmit, unsigned char dataLength, unsigned char* data){
+void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
 
 	unsigned long word0=0, word1=0, word2=0;
 	unsigned long sid10_0=0, eid5_0=0, eid17_6=0,a;
@@ -239,6 +239,26 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned int ide, unsigned in
     offset = buf >> 1;
 	bufferCtrlRegAddr = (unsigned int *)(&C1TR01CON + offset);
 	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
+}
+
+/**
+ * Function for MATLAB to transmit a CAN message.
+ * @param parameters An array of uint16_ts with configuration options documented below.
+ * parameters[0] = bits 0-7 buffer number, 8-15 data length (in bytes)
+ * parameters[1] = CAN identifier
+ * parameters[2] = bits 0-7 ide bit, 8-15 remote transmit bit
+ * parameters[3] = data bytes 0 and 1
+ * parameters[4] = data bytes 2 and 3
+ * parameters[5] = data bytes 4 and 5
+ * parameters[6] = data bytes 6 and 7
+ */
+void ecan1_send(uint16_t* parameters) {
+	txECAN1((unsigned char)parameters[0], 
+	        (long)parameters[1],
+			(unsigned char)parameters[2],
+			(unsigned char)(parameters[2]>>8),
+			(unsigned char)(parameters[0]>>8),
+			(unsigned char*)parameters[3]);
 }
 
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
