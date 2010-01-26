@@ -98,6 +98,23 @@ void ecan1_init(uint16_t* parameters) {
   C1TR23CON = parameters[14];
   C1TR45CON = parameters[15];
   C1TR67CON = parameters[16];
+  
+  // Setup necessary DMA channels for transmission and reception
+  // Transmission DMA
+  uint16_t dmaParameters[6];
+  dmaParameters[0] = 0x4648;
+  dmaParameters[1] = (uint16_t)&C1TXD;
+  dmaParameters[2] = 7;
+  dmaParameters[3] = __builtin_dmaoffset(ecan1msgBuf);
+  dmaParameters[4] = ((parameters[0] >> 5) & 7);
+  dmaParameters[5] = 0;
+  init_DMA(dmaParameters);
+  
+  // Reception DMA
+  dmaParameters[0] = 0x2208;
+  dmaParameters[1] = (uint16_t)&C1RXD;
+  dmaParameters[4] = ((parameters[0] >> 8) & 7);
+  init_DMA(dmaParameters);
 }
 
 void init_DMA(uint16_t* parameters) {

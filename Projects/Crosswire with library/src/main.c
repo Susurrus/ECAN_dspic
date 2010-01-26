@@ -101,7 +101,7 @@ int main(void)
   
   //Initialize ECAN1
   uint16_t parameters[28];
-  parameters[0] = 0x0000; // Normal mode, standard frames
+  parameters[0] = 0x0040; // Normal mode, standard frames, DMA0 for transmission, DMA2 for reception
   parameters[1] = 2500; // Bit rate to 250kbps (parameter is in hundreds of bps)
   parameters[2] = 40000; // Oscillator frequency 40000000 (parameter is in khz)
   parameters[3] = 0x0F67; // phase segment 1: 8, phase segment 2: 6, propagation: 5, sjw: 4, triple-sample:on
@@ -129,26 +129,6 @@ int main(void)
   parameters[25] = 0x8040; // Catch 0x402 messages
   parameters[26] = 0;
   ecan1_init(parameters);
-  
-  // Initialize DMA0
-  uint16_t d0_parameters[6];
-  d0_parameters[0] = 0x4648;
-  d0_parameters[1] = (uint16_t)&C1TXD;
-  d0_parameters[2] = 7;
-  d0_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
-  d0_parameters[4] = 0;
-  d0_parameters[5] = 0;
-  init_DMA(d0_parameters);
-  
-  // Initialize DMA2
-  uint16_t d2_parameters[6];
-  d2_parameters[0] = 0x2208;
-  d2_parameters[1] = (uint16_t)&C1RXD;
-  d2_parameters[2] = 7;
-  d2_parameters[3] = __builtin_dmaoffset(ecan1msgBuf);
-  d2_parameters[4] = 2;
-  d2_parameters[5] = 0;
-  init_DMA(d2_parameters);
 
 /* ECAN2 Initialisation 		
    Configure DMA Channel 1 for ECAN2 Transmit
