@@ -6,13 +6,13 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.180"
+    ComputedModelVersion    "1.230"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
   SavedCharacterEncoding  "windows-1252"
   SaveDefaultBlockParams  on
-  SampleTimeColors	  off
+  SampleTimeColors	  on
   LibraryLinkDisplay	  "none"
   WideLines		  off
   ShowLineDimensions	  off
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Feb 02 16:57:07 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:180>"
+  LastModifiedDate	  "Wed Feb 03 12:14:53 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:230>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -162,7 +162,7 @@ Model {
 	  BlockReduction	  on
 	  BooleanDataType	  on
 	  ConditionallyExecuteInputs on
-	  InlineParams		  off
+	  InlineParams		  on
 	  InlineInvariantSignals  off
 	  OptimizeBlockIOStorage  on
 	  BufferReuse		  on
@@ -463,7 +463,7 @@ Model {
 		  ExtModeStaticAlloc	  off
 		  ExtModeStaticAllocSize  1000000
 		  ExtModeTesting	  off
-		  ExtModeMexFile	  "ext_comm"
+		  ExtModeMexFile	  "noextcomm"
 		  ExtModeIntrfLevel	  "Level1"
 		  InlinedParameterPlacement "NonHierarchical"
 		  TargetOS		  "BareBoardExample"
@@ -587,7 +587,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Solver"
+      CurrentDlgPage	      "Optimization"
     }
     PropName		    "ConfigurationSets"
   }
@@ -626,16 +626,21 @@ Model {
       FramePeriod	      "inf"
     }
     Block {
+      BlockType		      DataTypeConversion
+      OutDataTypeMode	      "Inherit via back propagation"
+      OutDataType	      "sfix(16)"
+      OutScaling	      "2^0"
+      LockScale		      off
+      ConvertRealWorld	      "Real World Value (RWV)"
+      RndMeth		      "Zero"
+      SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      Demux
       Outputs		      "4"
       DisplayOption	      "none"
       BusSelectionMode	      off
-    }
-    Block {
-      BlockType		      EnablePort
-      StatesWhenEnabling      "held"
-      ShowOutputPort	      off
-      ZeroCross		      on
     }
     Block {
       BlockType		      Gain
@@ -652,9 +657,6 @@ Model {
       RndMeth		      "Floor"
       SaturateOnIntegerOverflow	on
       SampleTime	      "-1"
-    }
-    Block {
-      BlockType		      Ground
     }
     Block {
       BlockType		      Inport
@@ -701,36 +703,10 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
-      BlockType		      RateTransition
-      Integrity		      on
-      Deterministic	      on
-      X0		      "0"
-      OutPortSampleTime	      "-1"
-    }
-    Block {
       BlockType		      "S-Function"
       FunctionName	      "system"
       SFunctionModules	      "''"
       PortCounts	      "[]"
-    }
-    Block {
-      BlockType		      SignalSpecification
-      Dimensions	      "-1"
-      SampleTime	      "-1"
-      DataType		      "auto"
-      OutDataType	      "sfix(16)"
-      OutScaling	      "2^0"
-      SignalType	      "auto"
-      SamplingMode	      "auto"
-    }
-    Block {
-      BlockType		      Step
-      Time		      "1"
-      Before		      "0"
-      After		      "1"
-      SampleTime	      "-1"
-      VectorParams1D	      on
-      ZeroCross		      on
     }
     Block {
       BlockType		      SubSystem
@@ -751,40 +727,7 @@ Model {
       MinMaxOverflowLogging   "UseLocalSettings"
     }
     Block {
-      BlockType		      Sum
-      IconShape		      "rectangular"
-      Inputs		      "++"
-      CollapseMode	      "All dimensions"
-      CollapseDim	      "1"
-      InputSameDT	      on
-      OutDataTypeMode	      "Same as first input"
-      OutDataType	      "sfix(16)"
-      OutScaling	      "2^0"
-      LockScale		      off
-      RndMeth		      "Floor"
-      SaturateOnIntegerOverflow	on
-      SampleTime	      "-1"
-    }
-    Block {
-      BlockType		      Switch
-      Criteria		      "u2 >= Threshold"
-      Threshold		      "0"
-      InputSameDT	      on
-      OutDataTypeMode	      "Inherit via internal rule"
-      RndMeth		      "Floor"
-      SaturateOnIntegerOverflow	on
-      ZeroCross		      on
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Terminator
-    }
-    Block {
-      BlockType		      UnitDelay
-      X0		      "0"
-      SampleTime	      "1"
-      StateMustResolveToSignalObject off
-      RTWStateStorageClass    "Auto"
     }
   }
   AnnotationDefaults {
@@ -807,7 +750,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [586, 139, 1241, 438]
+    Location		    [575, 586, 1230, 885]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -844,7 +787,7 @@ Model {
       BlockType		      SubSystem
       Name		      "Configure ECAN 1"
       Ports		      []
-      Position		      [35, 114, 150, 166]
+      Position		      [30, 149, 145, 201]
       BackgroundColor	      "lightBlue"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -988,8 +931,8 @@ Model {
 ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[481, 327, 1156, 927]
-	Open			off
+	Location		[102, 254, 973, 939]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1001,6 +944,39 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
+	Block {
+	  BlockType		  Reference
+	  Name			  "C Function Call"
+	  Tag			  "dsPIC_dsPIC_CFunctionCall"
+	  Ports			  [1]
+	  Position		  [415, 255, 540, 295]
+	  ShowName		  off
+	  List {
+	    ListType		    RTWdata
+	    FctDeclaration	    "extern void ecan1_init(uint16_T* u1);"
+	    FctCall		    "ecan1_init(*%u1);"
+	    fctName		    "ecan1_init"
+	    INPUT_SIZE		    "27"
+	    OUTPUT_SIZE		    "1"
+	    NBR_INPUT		    "1"
+	    NBR_OUTPUT		    "0"
+	  }
+	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
+	  SourceType		  "C Function Call"
+	  fctName		  "'ecan1_init'"
+	  INPUT_SIZE		  "27"
+	  INPUT1		  "uint16"
+	  INPUT2		  "--"
+	  INPUT3		  "--"
+	  OUTPUT_SIZE		  "1"
+	  OUTPUT1		  "--"
+	  SampleTime		  "Inf"
+	  InputType		  "[ 4 ]"
+	  OutputType		  "[ ]"
+	  FctDeclaration	  "extern void ecan1_init(uint16_T* u1);"
+	  FctCall		  "ecan1_init(*%u1);"
+	  OrderingInOutPopup	  "None"
+	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant1"
@@ -1022,7 +998,7 @@ Model {
 	  Name			  "Gain"
 	  Position		  [100, 81, 140, 109]
 	  ShowName		  off
-	  Gain			  ".01"
+	  Gain			  "1/100"
 	  ParameterDataTypeMode	  "Specify via dialog"
 	  ParameterDataType	  "uint(16)"
 	  SaturateOnIntegerOverflow off
@@ -1032,24 +1008,16 @@ Model {
 	  Name			  "Gain1"
 	  Position		  [100, 106, 140, 134]
 	  ShowName		  off
-	  Gain			  ".001"
+	  Gain			  "1/1000"
 	  ParameterDataTypeMode	  "Specify via dialog"
 	  ParameterDataType	  "uint(16)"
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  Step
-	  Name			  "Step"
-	  Position		  [390, 200, 420, 230]
-	  Time			  ".002"
-	  Before		  "1"
-	  After			  "0"
-	}
-	Block {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem"
 	  Ports			  [0, 1]
-	  Position		  [50, 37, 145, 73]
+	  Position		  [85, 56, 145, 74]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1061,7 +1029,7 @@ Model {
 	  MaskIconUnits		  "autoscale"
 	  System {
 	    Name		    "Subsystem"
-	    Location		    [48, 589, 859, 919]
+	    Location		    [257, 531, 1068, 861]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1242,7 +1210,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem1"
 	  Ports			  [0, 1]
-	  Position		  [50, 133, 145, 167]
+	  Position		  [85, 137, 145, 153]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1445,7 +1413,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem10"
 	  Ports			  [0, 2]
-	  Position		  [50, 500, 145, 535]
+	  Position		  [85, 502, 145, 533]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1453,7 +1421,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem10"
-	    Location		    [772, 676, 1200, 866]
+	    Location		    [465, 311, 1203, 704]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1467,9 +1435,24 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [445, 66, 485, 104]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [45, 23, 135, 47]
+	      Name		      "Constant3"
+	      Position		      [80, 38, 150, 62]
 	      ShowName		      off
 	      Value		      "filter_1_exide"
 	      OutDataTypeMode	      "uint16"
@@ -1477,192 +1460,213 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [70, 54, 135, 76]
+	      Position		      [80, 138, 150, 162]
 	      ShowName		      off
 	      Value		      "filter_1"
-	      OutDataTypeMode	      "uint16"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [170, 22, 295, 78]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [310, 133, 385, 167]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [195, 80, 275, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildFilter1Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_1_exide"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_1"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 11"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxf1sid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxf1eid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf1sid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf1eid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxf1sid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxf1sid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxf1eid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxf1eid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_1_exide"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_1"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [195, 130, 275, 170]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [195, 185, 275, 225]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [245, 30, 325, 70]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [295, 80, 375, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter23"
-	      Position		      [315, 28, 345, 42]
+	      Name		      "C1RXF1SID"
+	      Position		      [530, 78, 560, 92]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter24"
-	      Position		      [315, 58, 345, 72]
+	      Name		      "C1RXF1EID"
+	      Position		      [530, 198, 560, 212]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter24"
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF1EID"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Extract Bits1"
 	      SrcPort		      1
-	      DstBlock		      "parameter23"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Constant1"
-	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Data Type Conversion"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Constant4"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, 0]
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+	      }
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF1SID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic"
+	      DstPort		      1
 	    }
 	  }
 	}
@@ -1670,7 +1674,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem11"
 	  Ports			  [0, 2]
-	  Position		  [50, 535, 145, 570]
+	  Position		  [85, 536, 145, 569]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1678,7 +1682,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem11"
-	    Location		    [527, 579, 955, 769]
+	    Location		    [465, 311, 1203, 704]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1692,217 +1696,254 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
-	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [55, 18, 145, 42]
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [445, 66, 485, 104]
 	      ShowName		      off
-	      Value		      "filter_1_exide"
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [80, 38, 150, 62]
+	      ShowName		      off
+	      Value		      "filter_2_exide"
 	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [80, 49, 145, 71]
+	      Position		      [80, 138, 150, 162]
 	      ShowName		      off
-	      Value		      "filter_1"
-	      OutDataTypeMode	      "uint16"
+	      Value		      "filter_2"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [175, 17, 300, 73]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [310, 133, 385, 167]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [195, 80, 275, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildFilter2Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_2_exide"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_2"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 12"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxf2sid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxf2eid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf2sid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf2eid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  Name			  "cirxf2eid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxf2eid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxf2sid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxf2sid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_2_exide"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_2"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [195, 130, 275, 170]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [195, 185, 275, 225]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [245, 30, 325, 70]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [295, 80, 375, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter25"
-	      Position		      [355, 23, 385, 37]
+	      Name		      "C1RXF2SID"
+	      Position		      [530, 78, 560, 92]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter26"
-	      Position		      [355, 53, 385, 67]
+	      Name		      "C1RXF2EID"
+	      Position		      [530, 198, 560, 212]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Constant3"
 	      SrcPort		      1
-	      DstBlock		      "parameter25"
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter26"
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Constant1"
+	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF2SID"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Constant4"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
-	      DstPort		      2
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 0]
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits1"
+	      SrcPort		      1
+	      DstBlock		      "Data Type Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF2EID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
 	    }
 	  }
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem12"
-	  Ports			  [1, 0, 1]
-	  Position		  [465, 245, 505, 305]
+	  Ports			  [0, 1]
+	  Position		  [75, 402, 145, 418]
+	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem12"
-	    Location		    [429, 643, 719, 841]
+	    Location		    [60, 225, 667, 484]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1916,54 +1957,552 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
-	      BlockType		      Inport
-	      Name		      "In1"
-	      Position		      [25, 40, 55, 54]
-	      IconDisplay	      "Port number"
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [4, 1]
+	      Position		      [295, 65, 335, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "4"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
 	    }
 	    Block {
-	      BlockType		      EnablePort
-	      Name		      "Enable"
-	      Ports		      []
-	      Position		      [235, 30, 255, 50]
+	      BlockType		      Constant
+	      Name		      "Constant"
+	      Position		      [25, 21, 105, 39]
+	      ShowName		      off
+	      Value		      "filter_0_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [25, 101, 105, 119]
+	      ShowName		      off
+	      Value		      "filter_2_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [25, 56, 105, 74]
+	      ShowName		      off
+	      Value		      "filter_1_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [25, 146, 105, 164]
+	      ShowName		      off
+	      Value		      "filter_3_buf"
+	      OutDataTypeMode	      "uint8"
 	    }
 	    Block {
 	      BlockType		      Reference
-	      Name		      "C Function Call"
-	      Tag		      "dsPIC_dsPIC_CFunctionCall"
-	      Ports		      [1]
-	      Position		      [80, 25, 205, 65]
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [130, 45, 210, 85]
 	      ShowName		      off
-	      List {
-		ListType		RTWdata
-		FctDeclaration		"extern void ecan1_init(uint16_T* u1);"
-		FctCall			"ecan1_init(*%u1);"
-		fctName			"ecan1_init"
-		INPUT_SIZE		"27"
-		OUTPUT_SIZE		"1"
-		NBR_INPUT		"1"
-		NBR_OUTPUT		"0"
-	      }
-	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
-	      SourceType	      "C Function Call"
-	      fctName		      "'ecan1_init'"
-	      INPUT_SIZE	      "27"
-	      INPUT1		      "uint16"
-	      INPUT2		      "--"
-	      INPUT3		      "--"
-	      OUTPUT_SIZE	      "1"
-	      OUTPUT1		      "--"
-	      SampleTime	      "inf"
-	      InputType		      "[ 4 ]"
-	      OutputType	      "[ ]"
-	      FctDeclaration	      "extern void ecan1_init(uint16_T* u1);"
-	      FctCall		      "ecan1_init(*%u1);"
-	      OrderingInOutPopup      "None"
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [130, 90, 210, 130]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [130, 135, 210, 175]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-12"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "C1BUFPNT1"
+	      Position		      [395, 90, 425, 104]
+	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      SrcBlock		      "In1"
+	      SrcBlock		      "Constant3"
 	      SrcPort		      1
-	      DstBlock		      "C Function Call"
+	      DstBlock		      "Shift\nArithmetic"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -10]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -40]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant"
+	      SrcPort		      1
+	      Points		      [170, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1BUFPNT1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, 20]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Subsystem13"
+	  Ports			  [0, 1]
+	  Position		  [75, 432, 145, 448]
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "Subsystem13"
+	    Location		    [60, 225, 667, 484]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [4, 1]
+	      Position		      [295, 65, 335, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "4"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant"
+	      Position		      [25, 21, 105, 39]
+	      ShowName		      off
+	      Value		      "filter_8_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [25, 101, 105, 119]
+	      ShowName		      off
+	      Value		      "filter_10_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [25, 56, 105, 74]
+	      ShowName		      off
+	      Value		      "filter_9_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [25, 146, 105, 164]
+	      ShowName		      off
+	      Value		      "filter_11_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [130, 45, 210, 85]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [130, 90, 210, 130]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [130, 135, 210, 175]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-12"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "C1BUFPNT3"
+	      Position		      [395, 88, 425, 102]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -10]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -40]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant"
+	      SrcPort		      1
+	      Points		      [170, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1BUFPNT3"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, 20]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "Subsystem14"
+	  Ports			  [0, 1]
+	  Position		  [75, 447, 145, 463]
+	  ShowName		  off
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "Subsystem14"
+	    Location		    [60, 225, 667, 484]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [4, 1]
+	      Position		      [295, 65, 335, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "4"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant"
+	      Position		      [25, 21, 105, 39]
+	      ShowName		      off
+	      Value		      "filter_12_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [25, 101, 105, 119]
+	      ShowName		      off
+	      Value		      "filter_14_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [25, 56, 105, 74]
+	      ShowName		      off
+	      Value		      "filter_13_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [25, 146, 105, 164]
+	      ShowName		      off
+	      Value		      "filter_15_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [130, 45, 210, 85]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [130, 90, 210, 130]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [130, 135, 210, 175]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-12"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "C1BUFPNT4"
+	      Position		      [395, 88, 425, 102]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, 20]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1BUFPNT4"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant"
+	      SrcPort		      1
+	      Points		      [170, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -40]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -10]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	  }
@@ -1972,7 +2511,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem2"
 	  Ports			  [0, 1]
-	  Position		  [50, 168, 145, 202]
+	  Position		  [85, 166, 145, 184]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -1980,8 +2519,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem2"
-	    Location		    [534, 273, 991, 381]
-	    Open		    off
+	    Location		    [534, 273, 1115, 452]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2010,11 +2549,6 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
 	      MaskHideContents	      off
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
@@ -2134,7 +2668,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem3"
 	  Ports			  [0, 4]
-	  Position		  [50, 345, 145, 400]
+	  Position		  [75, 344, 145, 401]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -2142,7 +2676,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem3"
-	    Location		    [126, 501, 880, 905]
+	    Location		    [459, 419, 1213, 823]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2191,11 +2725,6 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
 	      MaskHideContents	      off
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
@@ -2461,7 +2990,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem4"
 	  Ports			  [0, 2]
-	  Position		  [50, 205, 145, 240]
+	  Position		  [85, 206, 145, 239]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -2469,7 +2998,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem4"
-	    Location		    [69, 620, 510, 852]
+	    Location		    [361, 344, 750, 576]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2510,11 +3039,6 @@ Model {
 	      MinAlgLoopOccurrences   off
 	      RTWSystemCode	      "Auto"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
 	      MaskHideContents	      off
 	      MaskType		      "Stateflow"
 	      MaskDescription	      "Embedded MATLAB block"
@@ -2689,7 +3213,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem5"
 	  Ports			  [0, 2]
-	  Position		  [50, 240, 145, 275]
+	  Position		  [85, 242, 145, 273]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -2697,7 +3221,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem5"
-	    Location		    [84, 479, 543, 673]
+	    Location		    [667, 152, 1213, 508]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2711,202 +3235,238 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [385, 136, 425, 174]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [20, 43, 90, 67]
+	      Name		      "Constant3"
+	      Position		      [20, 108, 90, 132]
 	      ShowName		      off
 	      Value		      "mask_0_rm"
 	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant2"
-	      Position		      [20, 13, 90, 37]
+	      Name		      "Constant4"
+	      Position		      [20, 208, 90, 232]
 	      ShowName		      off
 	      Value		      "mask_0"
-	      OutDataTypeMode	      "uint16"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [135, 12, 260, 68]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [250, 203, 325, 237]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [135, 150, 215, 190]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildMask0Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_0"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_0_rm"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 6"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxmnsid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxmneid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmnsid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmneid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  Name			  "cirxmneid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxmneid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxmnsid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxmnsid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_0"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_0_rm"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [135, 200, 215, 240]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [135, 255, 215, 295]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [185, 100, 265, 140]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [235, 150, 315, 190]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter7"
-	      Position		      [310, 18, 340, 32]
+	      Name		      "C1RXM0SID"
+	      Position		      [470, 148, 500, 162]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter8"
-	      Position		      [310, 48, 340, 62]
+	      Name		      "C1RXM0EID"
+	      Position		      [470, 268, 500, 282]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Constant3"
 	      SrcPort		      1
-	      DstBlock		      "parameter7"
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter8"
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Constant1"
+	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "Constant2"
+	      SrcBlock		      "Bitwise\nOperator"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "C1RXM0SID"
 	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      Points		      [5, 0; 5, 0]
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[-5, 0; 5, 0]
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits1"
+	      SrcPort		      1
+	      DstBlock		      "Data Type Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXM0EID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
 	    }
 	  }
 	}
@@ -2914,7 +3474,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem6"
 	  Ports			  [0, 2]
-	  Position		  [50, 275, 145, 310]
+	  Position		  [85, 277, 145, 308]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -2922,7 +3482,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem6"
-	    Location		    [654, 413, 1081, 603]
+	    Location		    [95, 358, 658, 617]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2936,202 +3496,238 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [400, 56, 440, 94]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [30, 48, 100, 72]
+	      Name		      "Constant3"
+	      Position		      [35, 28, 105, 52]
 	      ShowName		      off
 	      Value		      "mask_1_rm"
 	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant2"
-	      Position		      [30, 18, 100, 42]
+	      Name		      "Constant4"
+	      Position		      [35, 128, 105, 152]
 	      ShowName		      off
 	      Value		      "mask_1"
-	      OutDataTypeMode	      "uint16"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [145, 17, 270, 73]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [265, 123, 340, 157]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [150, 70, 230, 110]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildMask1Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_1"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_1_rm"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 7"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxmnsid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxmneid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmnsid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmneid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxmnsid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxmnsid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxmneid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxmneid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_1"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_1_rm"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [150, 120, 230, 160]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [150, 175, 230, 215]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [200, 20, 280, 60]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [250, 70, 330, 110]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter9"
-	      Position		      [320, 23, 350, 37]
+	      Name		      "C1RXM1SID"
+	      Position		      [485, 68, 515, 82]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter10"
-	      Position		      [320, 53, 350, 67]
+	      Name		      "C1RXM1EID"
+	      Position		      [485, 188, 515, 202]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter10"
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Shift\nArithmetic"
 	      SrcPort		      1
-	      DstBlock		      "parameter9"
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Constant1"
+	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "Constant2"
+	      SrcBlock		      "Bitwise\nOperator"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "C1RXM1SID"
 	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 0]
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits1"
+	      SrcPort		      1
+	      DstBlock		      "Data Type Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXM1EID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
 	    }
 	  }
 	}
@@ -3139,7 +3735,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem7"
 	  Ports			  [0, 2]
-	  Position		  [50, 310, 145, 345]
+	  Position		  [85, 312, 145, 343]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -3147,7 +3743,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem7"
-	    Location		    [437, 709, 865, 899]
+	    Location		    [196, 290, 1152, 729]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3161,210 +3757,246 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
-	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [30, 48, 100, 72]
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [385, 56, 425, 94]
 	      ShowName		      off
-	      Value		      "mask_1_rm"
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [20, 28, 90, 52]
+	      ShowName		      off
+	      Value		      "mask_2_rm"
 	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant2"
-	      Position		      [30, 18, 100, 42]
+	      Name		      "Constant4"
+	      Position		      [20, 128, 90, 152]
 	      ShowName		      off
-	      Value		      "mask_1"
-	      OutDataTypeMode	      "uint16"
+	      Value		      "mask_2"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [145, 17, 270, 73]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [250, 123, 325, 157]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [135, 70, 215, 110]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildMask2Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_2"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "mask_2_rm"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 8"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxmnsid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxmneid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmnsid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxmneid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  Name			  "cirxmneid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxmneid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxmnsid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxmnsid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_2"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "mask_2_rm"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [135, 120, 215, 160]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [135, 175, 215, 215]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [185, 20, 265, 60]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [235, 70, 315, 110]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter11"
-	      Position		      [320, 23, 350, 37]
+	      Name		      "C1RXM2SID"
+	      Position		      [470, 68, 500, 82]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter12"
-	      Position		      [320, 53, 350, 67]
+	      Name		      "C1RXM2EID"
+	      Position		      [470, 188, 500, 202]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Constant3"
 	      SrcPort		      1
-	      DstBlock		      "parameter11"
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter12"
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Constant1"
+	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "Constant2"
+	      SrcBlock		      "Bitwise\nOperator"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "C1RXM2SID"
 	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 0]
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits1"
+	      SrcPort		      1
+	      DstBlock		      "Data Type Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXM2EID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
 	    }
 	  }
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem8"
-	  Ports			  [0, 4]
-	  Position		  [50, 401, 145, 464]
+	  Ports			  [0, 1]
+	  Position		  [75, 417, 145, 433]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -3372,7 +4004,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem8"
-	    Location		    [530, 521, 1172, 774]
+	    Location		    [60, 225, 667, 484]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3386,249 +4018,168 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [4, 1]
+	      Position		      [295, 65, 335, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "4"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant"
-	      Position		      [105, 81, 185, 99]
+	      Position		      [25, 21, 105, 39]
 	      ShowName		      off
-	      Value		      "[filter_0_buf;filter_1_buf;filter_2_buf"
-";filter_3_buf;filter_4_buf;filter_5_buf;filter_6_buf;filter_7_buf;filter_8_bu"
-"f;filter_9_buf;filter_10_buf;filter_11_buf;filter_12_buf;filter_13_buf;filter"
-"_14_buf;filter_15_buf]"
-	      OutDataTypeMode	      "uint16"
+	      Value		      "filter_4_buf"
+	      OutDataTypeMode	      "uint8"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [1, 4]
-	      Position		      [290, 28, 480, 152]
+	      BlockType		      Constant
+	      Name		      "Constant2"
+	      Position		      [25, 101, 105, 119]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      Value		      "filter_6_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant3"
+	      Position		      [25, 56, 105, 74]
+	      ShowName		      off
+	      Value		      "filter_5_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant5"
+	      Position		      [25, 146, 105, 164]
+	      ShowName		      off
+	      Value		      "filter_7_buf"
+	      OutDataTypeMode	      "uint8"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [130, 45, 210, 85]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildCiBUFPNT');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_bufs"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 245, 320, 285]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 9"
-		  Ports			  [1, 5]
-		  Position		  [180, 100, 230, 220]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[1 5]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "CiBUFPNT1"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "CiBUFPNT2"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    4
-		    Name		    "CiBUFPNT3"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    5
-		    Name		    "CiBUFPNT4"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 256, 480, 274]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "CiBUFPNT1"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "CiBUFPNT2"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "CiBUFPNT3"
-		  Position		  [460, 171, 480, 189]
-		  Port			  "3"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "CiBUFPNT4"
-		  Position		  [460, 206, 480, 224]
-		  Port			  "4"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 155]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "CiBUFPNT1"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "CiBUFPNT1"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "CiBUFPNT2"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "CiBUFPNT2"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "CiBUFPNT3"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  4
-		  DstBlock		  "CiBUFPNT3"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "CiBUFPNT4"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  5
-		  DstBlock		  "CiBUFPNT4"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_bufs"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-4"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [130, 90, 210, 130]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-8"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic2"
+	      Ports		      [1, 1]
+	      Position		      [130, 135, 210, 175]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-12"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter17"
-	      Position		      [500, 38, 530, 52]
+	      Name		      "C1BUFPNT2"
+	      Position		      [395, 88, 425, 102]
 	      IconDisplay	      "Port number"
-	      BusOutputAsStruct	      off
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "parameter18"
-	      Position		      [500, 68, 530, 82]
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	      BusOutputAsStruct	      off
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "parameter19"
-	      Position		      [500, 98, 530, 112]
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	      BusOutputAsStruct	      off
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "parameter20"
-	      Position		      [500, 127, 530, 143]
-	      Port		      "4"
-	      IconDisplay	      "Port number"
-	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Shift\nArithmetic"
 	      SrcPort		      1
-	      DstBlock		      "parameter17"
-	      DstPort		      1
+	      Points		      [30, 0; 0, 20]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter18"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      3
-	      DstBlock		      "parameter19"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      4
-	      DstBlock		      "parameter20"
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1BUFPNT2"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Constant"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      Points		      [170, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic2"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -40]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Constant5"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [30, 0; 0, -10]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Constant2"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant3"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	  }
@@ -3637,7 +4188,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem9"
 	  Ports			  [0, 2]
-	  Position		  [50, 465, 145, 500]
+	  Position		  [85, 465, 145, 500]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -3645,7 +4196,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem9"
-	    Location		    [262, 583, 690, 773]
+	    Location		    [465, 311, 1203, 704]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3659,9 +4210,24 @@ Model {
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
 	    Block {
+	      BlockType		      Reference
+	      Name		      "Bitwise\nOperator"
+	      Ports		      [3, 1]
+	      Position		      [445, 66, 485, 104]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
+"ise\nOperator"
+	      SourceType	      "Bitwise Operator"
+	      logicop		      "OR"
+	      UseBitMask	      off
+	      NumInputPorts	      "3"
+	      BitMask		      "bin2dec('11011001')"
+	      BitMaskRealWorld	      "Stored Integer"
+	    }
+	    Block {
 	      BlockType		      Constant
-	      Name		      "Constant1"
-	      Position		      [45, 23, 135, 47]
+	      Name		      "Constant3"
+	      Position		      [80, 38, 150, 62]
 	      ShowName		      off
 	      Value		      "filter_0_exide"
 	      OutDataTypeMode	      "uint16"
@@ -3669,192 +4235,213 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [70, 54, 135, 76]
+	      Position		      [80, 138, 150, 162]
 	      ShowName		      off
 	      Value		      "filter_0"
-	      OutDataTypeMode	      "uint16"
+	      OutDataTypeMode	      "uint32"
 	    }
 	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Embedded\nMATLAB Function"
-	      Ports		      [2, 2]
-	      Position		      [170, 22, 295, 78]
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion"
+	      Position		      [310, 133, 385, 167]
 	      ShowName		      off
-	      MinAlgLoopOccurrences   off
-	      RTWSystemCode	      "Auto"
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits"
+	      Ports		      [1, 1]
+	      Position		      [195, 80, 275, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
 	      FunctionWithSeparateData off
-	      Array {
-		Type			"Handle"
-		Dimension		0
-		PropName		"AvailSigsLoadSave"
-	      }
-	      MaskHideContents	      off
-	      MaskType		      "Stateflow"
-	      MaskDescription	      "Embedded MATLAB block"
-	      MaskDisplay	      "disp('buildFilter0Reg');"
-	      MaskSelfModifiable      on
-	      MaskIconFrame	      on
-	      MaskIconOpaque	      off
-	      MaskIconRotate	      "none"
-	      MaskIconUnits	      "autoscale"
-	      System {
-		Name			"Embedded\nMATLAB Function"
-		Location		[257, 457, 812, 717]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
-"00]"
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_0_exide"
-		  Position		  [20, 101, 40, 119]
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "filter_0"
-		  Position		  [20, 136, 40, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		}
-		Block {
-		  BlockType		  Demux
-		  Name			  " Demux "
-		  Ports			  [1, 1]
-		  Position		  [270, 180, 320, 220]
-		  Outputs		  "1"
-		}
-		Block {
-		  BlockType		  "S-Function"
-		  Name			  " SFunction "
-		  Tag			  "Stateflow S-Function Main 10"
-		  Ports			  [2, 3]
-		  Position		  [180, 100, 230, 180]
-		  FunctionName		  "sf_sfun"
-		  PortCounts		  "[2 3]"
-		  Port {
-		    PortNumber		    2
-		    Name		    "cirxf0sid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		  Port {
-		    PortNumber		    3
-		    Name		    "cirxf0eid"
-		    RTWStorageClass	    "Auto"
-		    DataLoggingNameMode	    "SignalName"
-		  }
-		}
-		Block {
-		  BlockType		  Terminator
-		  Name			  " Terminator "
-		  Position		  [460, 191, 480, 209]
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf0sid"
-		  Position		  [460, 101, 480, 119]
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "cirxf0eid"
-		  Position		  [460, 136, 480, 154]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  BusOutputAsStruct	  off
-		}
-		Line {
-		  Name			  "cirxf0eid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  3
-		  DstBlock		  "cirxf0eid"
-		  DstPort		  1
-		}
-		Line {
-		  Name			  "cirxf0sid"
-		  Labels		  [0, 0]
-		  SrcBlock		  " SFunction "
-		  SrcPort		  2
-		  DstBlock		  "cirxf0sid"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " SFunction "
-		  SrcPort		  1
-		  Points		  [0, 85]
-		  DstBlock		  " Demux "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  " Demux "
-		  SrcPort		  1
-		  DstBlock		  " Terminator "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_0_exide"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "filter_0"
-		  SrcPort		  1
-		  DstBlock		  " SFunction "
-		  DstPort		  2
-		}
-	      }
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 11]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits1"
+	      Ports		      [1, 1]
+	      Position		      [195, 130, 275, 170]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[0 1]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Extract Bits2"
+	      Ports		      [1, 1]
+	      Position		      [195, 185, 275, 225]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
+"act Bits"
+	      SourceType	      "Extract Bits"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      bitsToExtract	      "Range of bits"
+	      numBits		      "8"
+	      bitIdxRange	      "[11 26]"
+	      outScalingMode	      "Treat bit field as an integer"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic"
+	      Ports		      [1, 1]
+	      Position		      [245, 30, 325, 70]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-3"
+	      nBinPtShiftRight	      "0"
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "Shift\nArithmetic1"
+	      Ports		      [1, 1]
+	      Position		      [295, 80, 375, 120]
+	      ShowName		      off
+	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
+"t\nArithmetic"
+	      SourceType	      "Shift Arithmetic"
+	      ShowPortLabels	      "FromPortIcon"
+	      SystemSampleTime	      "-1"
+	      FunctionWithSeparateData off
+	      RTWMemSecFuncInitTerm   "Inherit from model"
+	      RTWMemSecFuncExecute    "Inherit from model"
+	      RTWMemSecDataConstants  "Inherit from model"
+	      RTWMemSecDataInternal   "Inherit from model"
+	      RTWMemSecDataParameters "Inherit from model"
+	      nBitShiftRight	      "-5"
+	      nBinPtShiftRight	      "0"
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter21"
-	      Position		      [345, 28, 375, 42]
+	      Name		      "C1RXF0SID"
+	      Position		      [530, 78, 560, 92]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
-	      Name		      "parameter22"
-	      Position		      [345, 58, 375, 72]
+	      Name		      "C1RXF0EID"
+	      Position		      [530, 198, 560, 212]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
+	      SrcBlock		      "Constant3"
 	      SrcPort		      1
-	      DstBlock		      "parameter21"
+	      DstBlock		      "Shift\nArithmetic"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Embedded\nMATLAB Function"
-	      SrcPort		      2
-	      DstBlock		      "parameter22"
+	      SrcBlock		      "Shift\nArithmetic"
+	      SrcPort		      1
+	      Points		      [35, 0; 0, 25]
+	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Constant1"
+	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Shift\nArithmetic1"
+	      SrcPort		      1
+	      Points		      [10, 0; 0, -15]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Bitwise\nOperator"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF0SID"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Constant4"
 	      SrcPort		      1
-	      DstBlock		      "Embedded\nMATLAB Function"
-	      DstPort		      2
+	      Points		      [10, 0]
+	      Branch {
+		Points			[0, -50]
+		DstBlock		"Extract Bits"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 0]
+		Branch {
+		  DstBlock		  "Extract Bits1"
+		  DstPort		  1
+		}
+		Branch {
+		  Points		  [0, 55]
+		  DstBlock		  "Extract Bits2"
+		  DstPort		  1
+		}
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits1"
+	      SrcPort		      1
+	      DstBlock		      "Data Type Conversion"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Extract Bits2"
+	      SrcPort		      1
+	      DstBlock		      "C1RXF0EID"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion"
+	      SrcPort		      1
+	      Points		      [40, 0]
+	      DstBlock		      "Bitwise\nOperator"
+	      DstPort		      3
 	    }
 	  }
 	}
@@ -3868,11 +4455,6 @@ Model {
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
-	  Array {
-	    Type		    "Handle"
-	    Dimension		    0
-	    PropName		    "AvailSigsLoadSave"
-	  }
 	  MaskHideContents	  off
 	  MaskType		  "Stateflow"
 	  MaskDescription	  "Embedded MATLAB block"
@@ -4315,15 +4897,9 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "myMux Fun"
-	  SrcPort		  1
-	  DstBlock		  "Subsystem12"
-	  DstPort		  1
-	}
-	Line {
 	  SrcBlock		  "Subsystem"
 	  SrcPort		  1
-	  Points		  [0, 25]
+	  Points		  [0, 15]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  1
 	}
@@ -4336,14 +4912,14 @@ Model {
 	Line {
 	  SrcBlock		  "Subsystem1"
 	  SrcPort		  1
-	  Points		  [10, 0; 0, -25]
+	  Points		  [10, 0; 0, -20]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "Subsystem2"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -45]
+	  Points		  [15, 0; 0, -35]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  5
 	}
@@ -4432,7 +5008,7 @@ Model {
 	  DstPort		  17
 	}
 	Line {
-	  SrcBlock		  "Subsystem8"
+	  SrcBlock		  "Subsystem12"
 	  SrcPort		  1
 	  Points		  [80, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
@@ -4440,21 +5016,21 @@ Model {
 	}
 	Line {
 	  SrcBlock		  "Subsystem8"
-	  SrcPort		  2
+	  SrcPort		  1
 	  Points		  [85, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  19
 	}
 	Line {
-	  SrcBlock		  "Subsystem8"
-	  SrcPort		  3
+	  SrcBlock		  "Subsystem13"
+	  SrcPort		  1
 	  Points		  [90, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  20
 	}
 	Line {
-	  SrcBlock		  "Subsystem8"
-	  SrcPort		  4
+	  SrcBlock		  "Subsystem14"
+	  SrcPort		  1
 	  Points		  [95, 0; 0, -75]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  21
@@ -4515,11 +5091,10 @@ Model {
 	  DstPort		  3
 	}
 	Line {
-	  SrcBlock		  "Step"
+	  SrcBlock		  "myMux Fun"
 	  SrcPort		  1
-	  Points		  [60, 0]
-	  DstBlock		  "Subsystem12"
-	  DstPort		  enable
+	  DstBlock		  "C Function Call"
+	  DstPort		  1
 	}
       }
     }
@@ -4583,33 +5158,10 @@ Model {
 "5  65535]"
     }
     Block {
-      BlockType		      Reference
-      Name		      "Pacer"
-      Ports		      [0, 1]
-      Position		      [190, 126, 235, 164]
-      SourceBlock	      "simulink/Sources/Counter\nLimited"
-      SourceType	      "Counter Limited"
-      ShowPortLabels	      "FromPortIcon"
-      SystemSampleTime	      "-1"
-      FunctionWithSeparateData off
-      RTWMemSecFuncInitTerm   "Inherit from model"
-      RTWMemSecFuncExecute    "Inherit from model"
-      RTWMemSecDataConstants  "Inherit from model"
-      RTWMemSecDataInternal   "Inherit from model"
-      RTWMemSecDataParameters "Inherit from model"
-      uplimit		      "1"
-      tsamp		      "1"
-    }
-    Block {
-      BlockType		      RateTransition
-      Name		      "Rate Transition"
-      Position		      [280, 124, 320, 166]
-    }
-    Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      Ports		      [0, 0, 1]
-      Position		      [350, 165, 495, 255]
+      Ports		      []
+      Position		      [201, 150, 322, 204]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
@@ -4617,23 +5169,25 @@ Model {
       MaskType		      "Send ECAN Message"
       MaskDescription	      "This block allows for the transmission of a mes"
 "sage over the ECAN module."
-      MaskPromptString	      "Buffer|Identifier|Ide|Remote|Length|Data"
-      MaskStyleString	      "edit,edit,checkbox,checkbox,edit,edit"
-      MaskTunableValueString  "on,on,on,on,on,on"
-      MaskCallbackString      "|||||"
-      MaskEnableString	      "on,on,on,on,on,on"
-      MaskVisibilityString    "on,on,on,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on"
-      MaskVarAliasString      ",,,,,"
+      MaskPromptString	      "Buffer|Identifier|Ide|Remote|Length|Data|Sample"
+" time"
+      MaskStyleString	      "edit,edit,checkbox,checkbox,edit,edit,edit"
+      MaskTunableValueString  "off,off,off,off,off,off,off"
+      MaskCallbackString      "||||||"
+      MaskEnableString	      "on,on,on,on,on,on,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,,"
       MaskVariables	      "buffer=@1;identifier=@2;ide=@3;remote=@4;length"
-"=@5;data=@6;"
+"=@5;data=@6;c_func_sample_time=@7;"
+      MaskDisplay	      "disp('ECAN1 TX');"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
       MaskValueString	      "1|hex2dec('401')|off|off|4|[hex2dec('11') hex2d"
-"ec('12') hex2dec('13') hex2dec('14')]"
-      MaskTabNameString	      ",,,,,"
+"ec('12') hex2dec('13') hex2dec('14')]|1"
+      MaskTabNameString	      ",,,,,,"
       System {
 	Name			"Send ECAN1 Message"
 	Location		[40, 155, 630, 405]
@@ -4649,12 +5203,6 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	Block {
-	  BlockType		  EnablePort
-	  Name			  "Enable"
-	  Ports			  []
-	  Position		  [265, 15, 285, 35]
-	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
@@ -4729,7 +5277,7 @@ Model {
 	  INPUT3		  "--"
 	  OUTPUT_SIZE		  "1"
 	  OUTPUT1		  "--"
-	  SampleTime		  ".01"
+	  SampleTime		  "c_func_sample_time"
 	  InputType		  "[ 4 ]"
 	  OutputType		  "[ ]"
 	  FctDeclaration	  "extern void ecan1_send(uint16_T* u1);"
@@ -4744,11 +5292,6 @@ Model {
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
-	  Array {
-	    Type		    "Handle"
-	    Dimension		    0
-	    PropName		    "AvailSigsLoadSave"
-	  }
 	  MaskHideContents	  off
 	  MaskType		  "Stateflow"
 	  MaskDescription	  "Embedded MATLAB block"
@@ -4957,19 +5500,6 @@ Model {
 	}
       }
     }
-    Line {
-      SrcBlock		      "Pacer"
-      SrcPort		      1
-      DstBlock		      "Rate Transition"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Rate Transition"
-      SrcPort		      1
-      Points		      [95, 0]
-      DstBlock		      "Send ECAN1 Message"
-      DstPort		      enable
-    }
   }
 }
 
@@ -4986,7 +5516,7 @@ Stateflow {
 		name                 		"Main"
 		created              		"23-Jan-2010 13:01:13"
 		isLibrary            		0
-		firstTarget          		139
+		firstTarget          		75
 		sfVersion            		66014000
 	}
 
@@ -5004,6 +5534,8 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		6
+		updateMethod                              		DISCRETE
+		sampleTime                                		"Inf"
 		chartFileNumber                           		1
 		disableImplicitCasting                    		1
 		eml {
@@ -5734,6 +6266,8 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		39
+		updateMethod                              		DISCRETE
+		sampleTime                                		"Inf"
 		chartFileNumber                           		3
 		disableImplicitCasting                    		1
 		eml {
@@ -6004,6 +6538,8 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		51
+		updateMethod                              		DISCRETE
+		sampleTime                                		"Inf"
 		chartFileNumber                           		4
 		disableImplicitCasting                    		1
 		eml {
@@ -6030,7 +6566,7 @@ Stateflow {
 						"for k = 1:size(u,1)\n"
 						"    y = bitset(y,u(k)+1);\n"
 						"end;"
-			editorLayout             		"100 M4x1[515 476 706 409]"
+			editorLayout             		"100 M4x1[205 205 720 621]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -6135,6 +6671,8 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		58
+		updateMethod                              		DISCRETE
+		sampleTime                                		"Inf"
 		chartFileNumber                           		5
 		disableImplicitCasting                    		1
 		eml {
@@ -6170,7 +6708,7 @@ Stateflow {
 						"(k-8)));\n"
 						"    end\n"
 						"end"
-			editorLayout             		"100 M4x1[515 476 706 409]"
+			editorLayout             		"100 M4x1[129 551 706 409]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -6308,9 +6846,8 @@ Stateflow {
 
 	chart {
 		id                                        		63
-		name                                      		"Configure ECAN 1/Subsystem5/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[338.955 260.864 200.25 189.75]
+		name                                      		"Send ECAN1 Message/Mux"
+		windowPosition                            		[296.813 314.45 200.25 189.75]
 		viewLimits                                		[0 156.75 0 153.75]
 		screen                                    		[1 1 1280 1024 1.333333333333333]
 		treeNode                                  		[0 64 0 0]
@@ -6321,10 +6858,10 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		67
-		chartFileNumber                           		6
+		chartFileNumber                           		15
 		disableImplicitCasting                    		1
 		eml {
-			name       		"buildMask0Reg"
+			name       		"myMux"
 		}
 	}
 
@@ -6341,26 +6878,30 @@ Stateflow {
 		decomposition                		CLUSTER_STATE
 		eml {
 			isEML                    		1
-			script                   		"function [cirxmnsid,cirxmneid] = buildMask0Reg(mask_0, mask"
-						"_0_rm)\n"
+			script                   		"function y = myMux(buffer, identifier, ide, remote, dataLen"
+						"gth, data)\n"
+						"% This block muxes the different parameters for a CAN trans"
+						"mission into\n"
+						"% the proper format for calling ecan1_send()\n"
 						"\n"
-						"% Set the MIDE bit\n"
-						"cirxmnsid = bitshift(mask_0_rm,3);\n"
+						"y = uint16(zeros(7,1));\n"
 						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if mask_0 > 2047\n"
-						"    eid = bitshift(mask_0, -11);\n"
-						"    mask_0 = bitand(mask_0, 2047);\n"
+						"y(1) = bitand(bitshift(dataLength,8),buffer);\n"
+						"y(2) = identifier;\n"
+						"y(3) = bitand(bitshift(remote,8),ide);\n"
+						"if dataLength > 0\n"
+						"    y(4) = data(1);\n"
 						"end\n"
-						"cirxmnsid = bitor(bitor(cirxmnsid,bitshift(mask_0,5)), bits"
-						"hift(eid,-16));\n"
-						"\n"
-						"% Set the EIDE bits (choose only the lower 16 bits)\n"
-						"cirxmneid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[307 477 970 697]"
+						"if dataLength > 2\n"
+						"    y(5) = data(2);\n"
+						"end\n"
+						"if dataLength > 4\n"
+						"    y(6) = data(3);\n"
+						"end\n"
+						"if dataLength > 6\n"
+						"    y(7) = data(4);\n"
+						"end"
+			editorLayout             		"100 M4x1[515 476 706 409]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -6397,9 +6938,9 @@ Stateflow {
 
 	data {
 		id                            		67
-		name                          		"cirxmnsid"
+		name                          		"buffer"
 		linkNode                      		[63 0 68]
-		scope                         		OUTPUT_DATA
+		scope                         		INPUT_DATA
 		machine                       		1
 		props {
 			array {
@@ -6407,20 +6948,20 @@ Stateflow {
 			}
 			type {
 				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
 			}
 			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
 		}
 		dataType                      		"inherited"
+		fixptType {
+			slope   		1
+			baseType		SF_INT16_TYPE
+		}
 		complexity                    		SF_COMPLEX_INHERITED
 	}
 
 	data {
 		id                            		68
-		name                          		"cirxmneid"
+		name                          		"y"
 		linkNode                      		[63 67 69]
 		scope                         		OUTPUT_DATA
 		machine                       		1
@@ -6444,7 +6985,7 @@ Stateflow {
 
 	data {
 		id                            		69
-		name                          		"mask_0"
+		name                          		"identifier"
 		linkNode                      		[63 68 70]
 		scope                         		INPUT_DATA
 		machine                       		1
@@ -6467,8 +7008,77 @@ Stateflow {
 
 	data {
 		id                            		70
-		name                          		"mask_0_rm"
-		linkNode                      		[63 69 0]
+		name                          		"ide"
+		linkNode                      		[63 69 71]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		71
+		name                          		"remote"
+		linkNode                      		[63 70 72]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		72
+		name                          		"dataLength"
+		linkNode                      		[63 71 73]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		73
+		name                          		"data"
+		linkNode                      		[63 72 0]
 		scope                         		INPUT_DATA
 		machine                       		1
 		props {
@@ -6489,1462 +7099,27 @@ Stateflow {
 	}
 
 	instance {
-		id     		71
-		name   		"Configure ECAN 1/Subsystem5/Embedded\n"
-					"MATLAB Function"
+		id     		74
+		name   		"Send ECAN1 Message/Mux"
 		machine		1
 		chart  		63
 	}
 
-	chart {
-		id                                        		72
-		name                                      		"Configure ECAN 1/Subsystem6/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[350.384 246.235 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 73 0 0]
-		firstTransition                           		75
-		firstJunction                             		74
-		viewObj                                   		72
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		76
-		chartFileNumber                           		7
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildMask1Reg"
-		}
-	}
-
-	state {
-		id                           		73
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		72
-		treeNode                     		[72 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		72
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [cirxmnsid,cirxmneid] = buildMask1Reg(mask_1, mask"
-						"_1_rm)\n"
-						"\n"
-						"% Set the MIDE bit\n"
-						"cirxmnsid = bitshift(mask_1_rm, 3);\n"
-						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if mask_1 > 2047\n"
-						"    eid = bitshift(mask_1, -11);\n"
-						"    mask_1 = bitand(mask_1, 2047);\n"
-						"end\n"
-						"cirxmnsid = bitor(bitor(cirxmnsid, bitshift(mask_1,5)), bit"
-						"shift(eid,-16));\n"
-						"\n"
-						"% Set the EIDE bits\n"
-						"cirxmneid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[307 477 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		74
-		position   		[23.5747 49.5747 7]
-		chart      		72
-		linkNode   		[72 0 0]
-		subviewer  		72
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		75
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		74
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		72
-		linkNode       		[72 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		72
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		76
-		name                          		"cirxmnsid"
-		linkNode                      		[72 0 77]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		77
-		name                          		"cirxmneid"
-		linkNode                      		[72 76 78]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		78
-		name                          		"mask_1"
-		linkNode                      		[72 77 79]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		79
-		name                          		"mask_1_rm"
-		linkNode                      		[72 78 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		80
-		name   		"Configure ECAN 1/Subsystem6/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		72
-	}
-
-	chart {
-		id                                        		81
-		name                                      		"Configure ECAN 1/Subsystem7/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[361.813 231.606 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 82 0 0]
-		firstTransition                           		84
-		firstJunction                             		83
-		viewObj                                   		81
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		85
-		chartFileNumber                           		8
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildMask2Reg"
-		}
-	}
-
-	state {
-		id                           		82
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		81
-		treeNode                     		[81 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		81
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [cirxmnsid,cirxmneid] = buildMask2Reg(mask_2, mask"
-						"_2_rm)\n"
-						"\n"
-						"% Set the MIDE bit\n"
-						"cirxmnsid = bitshift(mask_2_rm,3);\n"
-						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if mask_2 > 2047\n"
-						"    eid = bitshift(mask_2, -11);\n"
-						"    mask_2 = bitand(mask_2, 2047);\n"
-						"end\n"
-						"cirxmnsid = bitor(bitor(cirxmnsid, bitshift(mask_2,5)), bit"
-						"shift(eid,-16));\n"
-						"\n"
-						"% Set the EIDE bits\n"
-						"cirxmneid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[307 477 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		83
-		position   		[23.5747 49.5747 7]
-		chart      		81
-		linkNode   		[81 0 0]
-		subviewer  		81
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		84
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		83
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		81
-		linkNode       		[81 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		81
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		85
-		name                          		"cirxmnsid"
-		linkNode                      		[81 0 86]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		86
-		name                          		"cirxmneid"
-		linkNode                      		[81 85 87]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		87
-		name                          		"mask_2"
-		linkNode                      		[81 86 88]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		88
-		name                          		"mask_2_rm"
-		linkNode                      		[81 87 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		89
-		name   		"Configure ECAN 1/Subsystem7/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		81
-	}
-
-	chart {
-		id                                        		90
-		name                                      		"Configure ECAN 1/Subsystem8/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[293.241 319.378 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 91 0 0]
-		firstTransition                           		93
-		firstJunction                             		92
-		viewObj                                   		90
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		94
-		chartFileNumber                           		9
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildCiBUFPNT"
-		}
-	}
-
-	state {
-		id                           		91
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		90
-		treeNode                     		[90 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		90
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [CiBUFPNT1,CiBUFPNT2,CiBUFPNT3,CiBUFPNT4] = buildC"
-						"iBUFPNT(filter_bufs)\n"
-						"\n"
-						"% Build CiBUFPNT1\n"
-						"CiBUFPNT1 = bitshift(bitor(filter_bufs(1), filter_bufs(2)),"
-						"4);\n"
-						"CiBUFPNT1 = bitshift(bitor(CiBUFPNT1, filter_bufs(3)),8);\n"
-						"CiBUFPNT1 = bitshift(bitor(CiBUFPNT1, filter_bufs(4)),12);\n"
-						"\n"
-						"% Build CiBUFPNT2\n"
-						"CiBUFPNT2 = bitshift(bitor(filter_bufs(5), filter_bufs(6)),"
-						"4);\n"
-						"CiBUFPNT2 = bitshift(bitor(CiBUFPNT2, filter_bufs(7)),8);\n"
-						"CiBUFPNT2 = bitshift(bitor(CiBUFPNT2, filter_bufs(8)),12);\n"
-						"\n"
-						"% Build CiBUFPNT3\n"
-						"CiBUFPNT3 = bitshift(bitor(filter_bufs(9), filter_bufs(10))"
-						",4);\n"
-						"CiBUFPNT3 = bitshift(bitor(CiBUFPNT3, filter_bufs(11)),8);\n"
-						"CiBUFPNT3 = bitshift(bitor(CiBUFPNT3, filter_bufs(12)),12);"
-						"\n"
-						"\n"
-						"% Build CiBUFPNT4\n"
-						"CiBUFPNT4 = bitshift(bitor(filter_bufs(13),filter_bufs(14))"
-						",4);\n"
-						"CiBUFPNT4 = bitshift(bitor(CiBUFPNT4, filter_bufs(15)),8);\n"
-						"CiBUFPNT4 = bitshift(bitor(CiBUFPNT4, filter_bufs(16)),12);"
-						"\n"
-						""
-			editorLayout             		"100 M4x1[273 28 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		92
-		position   		[23.5747 49.5747 7]
-		chart      		90
-		linkNode   		[90 0 0]
-		subviewer  		90
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		93
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		92
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		90
-		linkNode       		[90 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		90
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		94
-		name                          		"CiBUFPNT1"
-		linkNode                      		[90 0 95]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		95
-		name                          		"CiBUFPNT2"
-		linkNode                      		[90 94 96]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		96
-		name                          		"CiBUFPNT3"
-		linkNode                      		[90 95 97]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		97
-		name                          		"CiBUFPNT4"
-		linkNode                      		[90 96 98]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		98
-		name                          		"filter_bufs"
-		linkNode                      		[90 97 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		99
-		name   		"Configure ECAN 1/Subsystem8/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		90
-	}
-
-	chart {
-		id                                        		100
-		name                                      		"Configure ECAN 1/Subsystem9/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[350.384 246.235 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 101 0 0]
-		firstTransition                           		103
-		firstJunction                             		102
-		viewObj                                   		100
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		104
-		chartFileNumber                           		10
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildFilter0Reg"
-		}
-	}
-
-	state {
-		id                           		101
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		100
-		treeNode                     		[100 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		100
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [cirxf0sid,cirxf0eid] = buildFilter0Reg(filter_0_e"
-						"xide,filter_0)\n"
-						"\n"
-						"% Set the EXIDE bit\n"
-						"cirxf0sid = bitshift(filter_0_exide, 3);\n"
-						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if filter_0 > 2047\n"
-						"    eid = bitshift(filter_0, -11);\n"
-						"    filter_0 = bitand(filter_0, 2047);\n"
-						"end\n"
-						"cirxf0sid = bitor(bitor(cirxf0sid, bitshift(filter_0,5)), b"
-						"itshift(eid,-16));\n"
-						"\n"
-						"% Set the EID bits (choose only the lower 16 bits)\n"
-						"cirxf0eid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[273 28 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		102
-		position   		[23.5747 49.5747 7]
-		chart      		100
-		linkNode   		[100 0 0]
-		subviewer  		100
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		103
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		102
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		100
-		linkNode       		[100 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		100
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		104
-		name                          		"cirxf0sid"
-		linkNode                      		[100 0 105]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		105
-		name                          		"cirxf0eid"
-		linkNode                      		[100 104 106]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		106
-		name                          		"filter_0_exide"
-		linkNode                      		[100 105 107]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		107
-		name                          		"filter_0"
-		linkNode                      		[100 106 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		108
-		name   		"Configure ECAN 1/Subsystem9/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		100
-	}
-
-	chart {
-		id                                        		109
-		name                                      		"Configure ECAN 1/Subsystem10/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[361.813 231.606 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 110 0 0]
-		firstTransition                           		112
-		firstJunction                             		111
-		viewObj                                   		109
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		113
-		chartFileNumber                           		11
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildFilter1Reg"
-		}
-	}
-
-	state {
-		id                           		110
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		109
-		treeNode                     		[109 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		109
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [cirxf1sid,cirxf1eid] = buildFilter1Reg(filter_1_e"
-						"xide,filter_1)\n"
-						"\n"
-						"% Set the EXIDE bit\n"
-						"cirxf1sid = bitshift(filter_1_exide, 3);\n"
-						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if filter_1 > 2047\n"
-						"    eid = bitshift(filter_1, -11);\n"
-						"    filter_1 = bitand(filter_1, 2047);\n"
-						"end\n"
-						"cirxf1sid = bitor(bitor(cirxf1sid, bitshift(filter_1,5)), b"
-						"itshift(eid,-16));\n"
-						"\n"
-						"% Set the EID bits (choose only the lower 16 bits)\n"
-						"cirxf1eid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[273 28 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		111
-		position   		[23.5747 49.5747 7]
-		chart      		109
-		linkNode   		[109 0 0]
-		subviewer  		109
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		112
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		111
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		109
-		linkNode       		[109 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		109
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		113
-		name                          		"cirxf1sid"
-		linkNode                      		[109 0 114]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		114
-		name                          		"cirxf1eid"
-		linkNode                      		[109 113 115]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		115
-		name                          		"filter_1_exide"
-		linkNode                      		[109 114 116]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		116
-		name                          		"filter_1"
-		linkNode                      		[109 115 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		117
-		name   		"Configure ECAN 1/Subsystem10/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		109
-	}
-
-	chart {
-		id                                        		118
-		name                                      		"Configure ECAN 1/Subsystem11/Embedded\n"
-					"MATLAB Function"
-		windowPosition                            		[373.241 216.978 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 119 0 0]
-		firstTransition                           		121
-		firstJunction                             		120
-		viewObj                                   		118
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		122
-		chartFileNumber                           		12
-		disableImplicitCasting                    		1
-		eml {
-			name       		"buildFilter2Reg"
-		}
-	}
-
-	state {
-		id                           		119
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		118
-		treeNode                     		[118 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		118
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function [cirxf2sid,cirxf2eid] = buildFilter2Reg(filter_2_e"
-						"xide,filter_2)\n"
-						"\n"
-						"% Set the EXIDE bit\n"
-						"cirxf2sid = bitshift(filter_2_exide, 3);\n"
-						"\n"
-						"% Set the SID bits\n"
-						"% Split the eid from the sid if necessary\n"
-						"eid = uint16(0);\n"
-						"if filter_2 > 2047\n"
-						"    eid = bitshift(filter_2, -11);\n"
-						"    filter_2 = bitand(filter_2, 2047);\n"
-						"end\n"
-						"cirxf2sid = bitor(bitor(cirxf2sid, bitshift(filter_2,5)), b"
-						"itshift(eid,-16));\n"
-						"\n"
-						"% Set the EID bits (choose only the lower 16 bits)\n"
-						"cirxf2eid = bitand(eid, 65535);\n"
-						""
-			editorLayout             		"100 M4x1[273 28 970 697]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		120
-		position   		[23.5747 49.5747 7]
-		chart      		118
-		linkNode   		[118 0 0]
-		subviewer  		118
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		121
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		120
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		118
-		linkNode       		[118 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		118
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		122
-		name                          		"cirxf2sid"
-		linkNode                      		[118 0 123]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		123
-		name                          		"cirxf2eid"
-		linkNode                      		[118 122 124]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		124
-		name                          		"filter_2_exide"
-		linkNode                      		[118 123 125]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		125
-		name                          		"filter_2"
-		linkNode                      		[118 124 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		126
-		name   		"Configure ECAN 1/Subsystem11/Embedded\n"
-					"MATLAB Function"
-		machine		1
-		chart  		118
-	}
-
-	chart {
-		id                                        		127
-		name                                      		"Send ECAN1 Message/Mux"
-		windowPosition                            		[296.813 314.45 200.25 189.75]
-		viewLimits                                		[0 156.75 0 153.75]
-		screen                                    		[1 1 1280 1024 1.333333333333333]
-		treeNode                                  		[0 128 0 0]
-		firstTransition                           		130
-		firstJunction                             		129
-		viewObj                                   		127
-		machine                                   		1
-		decomposition                             		CLUSTER_CHART
-		type                                      		EML_CHART
-		firstData                                 		131
-		chartFileNumber                           		15
-		disableImplicitCasting                    		1
-		eml {
-			name       		"myMux"
-		}
-	}
-
-	state {
-		id                           		128
-		labelString                  		"eML_blk_kernel()"
-		position                     		[18 64.5 118 66]
-		fontSize                     		12
-		chart                        		127
-		treeNode                     		[127 0 0 0]
-		superState                   		SUBCHART
-		subviewer                    		127
-		type                         		FUNC_STATE
-		decomposition                		CLUSTER_STATE
-		eml {
-			isEML                    		1
-			script                   		"function y = myMux(buffer, identifier, ide, remote, dataLen"
-						"gth, data)\n"
-						"% This block muxes the different parameters for a CAN trans"
-						"mission into\n"
-						"% the proper format for calling ecan1_send()\n"
-						"\n"
-						"y = uint16(zeros(7,1));\n"
-						"\n"
-						"y(1) = bitand(bitshift(dataLength,8),buffer);\n"
-						"y(2) = identifier;\n"
-						"y(3) = bitand(bitshift(remote,8),ide);\n"
-						"if dataLength > 0\n"
-						"    y(4) = data(1);\n"
-						"end\n"
-						"if dataLength > 2\n"
-						"    y(5) = data(2);\n"
-						"end\n"
-						"if dataLength > 4\n"
-						"    y(6) = data(3);\n"
-						"end\n"
-						"if dataLength > 6\n"
-						"    y(7) = data(4);\n"
-						"end"
-			editorLayout             		"100 M4x1[515 476 706 409]"
-			treatIntsAsFixpt         		0
-		}
-	}
-
-	junction {
-		id         		129
-		position   		[23.5747 49.5747 7]
-		chart      		127
-		linkNode   		[127 0 0]
-		subviewer  		127
-		type       		CONNECTIVE_JUNCTION
-	}
-
-	transition {
-		id             		130
-		labelString    		"{eML_blk_kernel();}"
-		labelPosition  		[32.125 19.875 102.544 14.964]
-		fontSize       		12
-		src {
-			intersection		[0 0 1 0 23.5747 14.625 0 0]
-		}
-		dst {
-			id          		129
-			intersection		[7 0 -1 -1 23.5747 42.5747 0 0]
-		}
-		midPoint       		[23.5747 24.9468]
-		chart          		127
-		linkNode       		[127 0 0]
-		dataLimits     		[23.575 23.575 14.625 34.575]
-		subviewer      		127
-		drawStyle      		SMART
-		executionOrder 		1
-	}
-
-	data {
-		id                            		131
-		name                          		"buffer"
-		linkNode                      		[127 0 132]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		132
-		name                          		"y"
-		linkNode                      		[127 131 133]
-		scope                         		OUTPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_NO
-		}
-		dataType                      		"inherited"
-		fixptType {
-			slope   		1
-			baseType		SF_INT16_TYPE
-		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		133
-		name                          		"identifier"
-		linkNode                      		[127 132 134]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		134
-		name                          		"ide"
-		linkNode                      		[127 133 135]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		135
-		name                          		"remote"
-		linkNode                      		[127 134 136]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		136
-		name                          		"dataLength"
-		linkNode                      		[127 135 137]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		137
-		name                          		"data"
-		linkNode                      		[127 136 0]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	instance {
-		id     		138
-		name   		"Send ECAN1 Message/Mux"
-		machine		1
-		chart  		127
-	}
-
 	target {
-		id                        		139
+		id                        		75
 		name                      		"sfun"
 		description               		"Default Simulink S-Function Target."
 		machine                   		1
-		linkNode                  		[1 0 140]
+		linkNode                  		[1 0 76]
 	}
 
 	target {
-		id                        		140
+		id                        		76
 		name                      		"rtw"
 		codeFlags                 		" comments=1 statebitsets=1 databitsets=1 emitlogicalops=1 el"
 						"seifdetection=1 constantfolding=1 redundantloadelimination=0"
 						" preservenames=0 preservenameswithparent=0 exportcharts=0"
 		machine                   		1
-		linkNode                  		[1 139 0]
+		linkNode                  		[1 75 0]
 	}
 }
