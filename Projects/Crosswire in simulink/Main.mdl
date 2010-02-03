@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.172"
+    ComputedModelVersion    "1.180"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -44,8 +44,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Feb 02 11:24:43 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:172>"
+  LastModifiedDate	  "Tue Feb 02 16:57:07 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:180>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -587,7 +587,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Real-Time Workshop"
+      CurrentDlgPage	      "Solver"
     }
     PropName		    "ConfigurationSets"
   }
@@ -701,6 +701,13 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
+      BlockType		      RateTransition
+      Integrity		      on
+      Deterministic	      on
+      X0		      "0"
+      OutPortSampleTime	      "-1"
+    }
+    Block {
       BlockType		      "S-Function"
       FunctionName	      "system"
       SFunctionModules	      "''"
@@ -715,6 +722,15 @@ Model {
       OutScaling	      "2^0"
       SignalType	      "auto"
       SamplingMode	      "auto"
+    }
+    Block {
+      BlockType		      Step
+      Time		      "1"
+      Before		      "0"
+      After		      "1"
+      SampleTime	      "-1"
+      VectorParams1D	      on
+      ZeroCross		      on
     }
     Block {
       BlockType		      SubSystem
@@ -791,7 +807,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [200, 288, 757, 587]
+    Location		    [586, 139, 1241, 438]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -972,8 +988,8 @@ Model {
 ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[66, 267, 741, 867]
-	Open			on
+	Location		[481, 327, 1156, 927]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -986,45 +1002,12 @@ Model {
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
 	Block {
-	  BlockType		  Reference
-	  Name			  "C Function Call"
-	  Tag			  "dsPIC_dsPIC_CFunctionCall"
-	  Ports			  [1]
-	  Position		  [400, 255, 525, 295]
-	  ShowName		  off
-	  List {
-	    ListType		    RTWdata
-	    FctDeclaration	    "extern void ecan1_init(uint16_T* u1);"
-	    FctCall		    "ecan1_init(*%u1);"
-	    fctName		    "ecan1_init"
-	    INPUT_SIZE		    "27"
-	    OUTPUT_SIZE		    "1"
-	    NBR_INPUT		    "1"
-	    NBR_OUTPUT		    "0"
-	  }
-	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
-	  SourceType		  "C Function Call"
-	  fctName		  "'ecan1_init'"
-	  INPUT_SIZE		  "27"
-	  INPUT1		  "uint16"
-	  INPUT2		  "--"
-	  INPUT3		  "--"
-	  OUTPUT_SIZE		  "1"
-	  OUTPUT1		  "--"
-	  SampleTime		  "inf"
-	  InputType		  "[ 4 ]"
-	  OutputType		  "[ ]"
-	  FctDeclaration	  "extern void ecan1_init(uint16_T* u1);"
-	  FctCall		  "ecan1_init(*%u1);"
-	  OrderingInOutPopup	  "None"
-	}
-	Block {
 	  BlockType		  Constant
 	  Name			  "Constant1"
 	  Position		  [35, 108, 80, 132]
 	  ShowName		  off
 	  Value			  "cpu_freq"
-	  OutDataTypeMode	  "uint16"
+	  OutDataTypeMode	  "uint32"
 	}
 	Block {
 	  BlockType		  Constant
@@ -1032,7 +1015,7 @@ Model {
 	  Position		  [50, 84, 80, 106]
 	  ShowName		  off
 	  Value			  "baud"
-	  OutDataTypeMode	  "uint16"
+	  OutDataTypeMode	  "uint32"
 	}
 	Block {
 	  BlockType		  Gain
@@ -1040,7 +1023,8 @@ Model {
 	  Position		  [100, 81, 140, 109]
 	  ShowName		  off
 	  Gain			  ".01"
-	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataTypeMode	  "Specify via dialog"
+	  ParameterDataType	  "uint(16)"
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
@@ -1049,8 +1033,17 @@ Model {
 	  Position		  [100, 106, 140, 134]
 	  ShowName		  off
 	  Gain			  ".001"
-	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataTypeMode	  "Specify via dialog"
+	  ParameterDataType	  "uint(16)"
 	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "Step"
+	  Position		  [390, 200, 420, 230]
+	  Time			  ".002"
+	  Before		  "1"
+	  After			  "0"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -1900,6 +1893,83 @@ Model {
 	}
 	Block {
 	  BlockType		  SubSystem
+	  Name			  "Subsystem12"
+	  Ports			  [1, 0, 1]
+	  Position		  [465, 245, 505, 305]
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "Subsystem12"
+	    Location		    [429, 643, 719, 841]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In1"
+	      Position		      [25, 40, 55, 54]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      EnablePort
+	      Name		      "Enable"
+	      Ports		      []
+	      Position		      [235, 30, 255, 50]
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "C Function Call"
+	      Tag		      "dsPIC_dsPIC_CFunctionCall"
+	      Ports		      [1]
+	      Position		      [80, 25, 205, 65]
+	      ShowName		      off
+	      List {
+		ListType		RTWdata
+		FctDeclaration		"extern void ecan1_init(uint16_T* u1);"
+		FctCall			"ecan1_init(*%u1);"
+		fctName			"ecan1_init"
+		INPUT_SIZE		"27"
+		OUTPUT_SIZE		"1"
+		NBR_INPUT		"1"
+		NBR_OUTPUT		"0"
+	      }
+	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
+	      SourceType	      "C Function Call"
+	      fctName		      "'ecan1_init'"
+	      INPUT_SIZE	      "27"
+	      INPUT1		      "uint16"
+	      INPUT2		      "--"
+	      INPUT3		      "--"
+	      OUTPUT_SIZE	      "1"
+	      OUTPUT1		      "--"
+	      SampleTime	      "inf"
+	      InputType		      "[ 4 ]"
+	      OutputType	      "[ ]"
+	      FctDeclaration	      "extern void ecan1_init(uint16_T* u1);"
+	      FctCall		      "ecan1_init(*%u1);"
+	      OrderingInOutPopup      "None"
+	    }
+	    Line {
+	      SrcBlock		      "In1"
+	      SrcPort		      1
+	      DstBlock		      "C Function Call"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
 	  Name			  "Subsystem2"
 	  Ports			  [0, 1]
 	  Position		  [50, 168, 145, 202]
@@ -1911,7 +1981,7 @@ Model {
 	  System {
 	    Name		    "Subsystem2"
 	    Location		    [534, 273, 991, 381]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2400,7 +2470,7 @@ Model {
 	  System {
 	    Name		    "Subsystem4"
 	    Location		    [69, 620, 510, 852]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -4247,7 +4317,7 @@ Model {
 	Line {
 	  SrcBlock		  "myMux Fun"
 	  SrcPort		  1
-	  DstBlock		  "C Function Call"
+	  DstBlock		  "Subsystem12"
 	  DstPort		  1
 	}
 	Line {
@@ -4444,6 +4514,13 @@ Model {
 	  DstBlock		  "myMux Fun"
 	  DstPort		  3
 	}
+	Line {
+	  SrcBlock		  "Step"
+	  SrcPort		  1
+	  Points		  [60, 0]
+	  DstBlock		  "Subsystem12"
+	  DstPort		  enable
+	}
       }
     }
     Block {
@@ -4521,13 +4598,18 @@ Model {
       RTWMemSecDataInternal   "Inherit from model"
       RTWMemSecDataParameters "Inherit from model"
       uplimit		      "1"
-      tsamp		      "-1"
+      tsamp		      "1"
+    }
+    Block {
+      BlockType		      RateTransition
+      Name		      "Rate Transition"
+      Position		      [280, 124, 320, 166]
     }
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
       Ports		      [0, 0, 1]
-      Position		      [270, 165, 415, 255]
+      Position		      [350, 165, 495, 255]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
@@ -4554,8 +4636,8 @@ Model {
       MaskTabNameString	      ",,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[58, 624, 648, 874]
-	Open			on
+	Location		[40, 155, 630, 405]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -4878,7 +4960,13 @@ Model {
     Line {
       SrcBlock		      "Pacer"
       SrcPort		      1
-      Points		      [100, 0]
+      DstBlock		      "Rate Transition"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Rate Transition"
+      SrcPort		      1
+      Points		      [95, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      enable
     }
@@ -4899,8 +4987,6 @@ Stateflow {
 		created              		"23-Jan-2010 13:01:13"
 		isLibrary            		0
 		firstTarget          		139
-		debug {
-		}
 		sfVersion            		66014000
 	}
 
@@ -7849,6 +7935,16 @@ Stateflow {
 		name                      		"sfun"
 		description               		"Default Simulink S-Function Target."
 		machine                   		1
-		linkNode                  		[1 0 0]
+		linkNode                  		[1 0 140]
+	}
+
+	target {
+		id                        		140
+		name                      		"rtw"
+		codeFlags                 		" comments=1 statebitsets=1 databitsets=1 emitlogicalops=1 el"
+						"seifdetection=1 constantfolding=1 redundantloadelimination=0"
+						" preservenames=0 preservenameswithparent=0 exportcharts=0"
+		machine                   		1
+		linkNode                  		[1 139 0]
 	}
 }
