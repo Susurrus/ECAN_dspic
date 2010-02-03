@@ -144,7 +144,7 @@ void rxECAN1(tCanMessage* message)
 {
 	unsigned int ide=0;
 	unsigned int srr=0;
-	unsigned long id=0,d;
+	unsigned long id=0;
 			
 	// read word 0 to see the message type 
 	ide=ecan1msgBuf[message->buffer][0] & 0x0001;	
@@ -198,7 +198,7 @@ void rxECAN1(tCanMessage* message)
 void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
 
 	unsigned long word0=0, word1=0, word2=0;
-	unsigned long sid10_0=0, eid5_0=0, eid17_6=0,a;
+	unsigned long sid10_0=0, eid5_0=0, eid17_6=0;
 
 	// Variables for setting correct TXREQ bit
 	unsigned int offset;
