@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.230"
+    ComputedModelVersion    "1.264"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -38,14 +38,15 @@ Model {
   StatusBar		  on
   BrowserShowLibraryLinks off
   BrowserLookUnderMasks	  off
+  CloseFcn		  "rtwprivate ssgencode ModelCloseRequest Main"
   Created		  "Sat Jan 23 12:08:37 2010"
   Creator		  "bwmairs"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 03 12:14:53 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:230>"
+  LastModifiedDate	  "Wed Feb 03 16:21:02 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:264>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -105,7 +106,7 @@ Model {
 	  $ObjectID		  2
 	  Version		  "1.2.0"
 	  StartTime		  "0.0"
-	  StopTime		  "10.0"
+	  StopTime		  "Inf"
 	  AbsTol		  "auto"
 	  FixedStep		  "0.001"
 	  InitialStep		  "auto"
@@ -587,7 +588,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Optimization"
+      CurrentDlgPage	      "Real-Time Workshop"
     }
     PropName		    "ConfigurationSets"
   }
@@ -641,6 +642,12 @@ Model {
       Outputs		      "4"
       DisplayOption	      "none"
       BusSelectionMode	      off
+    }
+    Block {
+      BlockType		      EnablePort
+      StatesWhenEnabling      "held"
+      ShowOutputPort	      off
+      ZeroCross		      on
     }
     Block {
       BlockType		      Gain
@@ -750,7 +757,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [575, 586, 1230, 885]
+    Location		    [32, 637, 675, 906]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -762,7 +769,7 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "98"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
     Block {
       BlockType		      Reference
@@ -931,8 +938,8 @@ Model {
 ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[102, 254, 973, 939]
-	Open			on
+	Location		[8, 224, 879, 909]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2066,8 +2073,9 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1BUFPNT1"
-	      Position		      [395, 90, 425, 104]
+	      Position		      [395, 88, 425, 102]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Constant3"
@@ -2260,6 +2268,7 @@ Model {
 	      Name		      "C1BUFPNT3"
 	      Position		      [395, 88, 425, 102]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Constant3"
@@ -2452,6 +2461,7 @@ Model {
 	      Name		      "C1BUFPNT4"
 	      Position		      [395, 88, 425, 102]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Shift\nArithmetic"
@@ -2519,8 +2529,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem2"
-	    Location		    [534, 273, 1115, 452]
-	    Open		    on
+	    Location		    [582, 315, 1245, 494]
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -2676,7 +2686,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem3"
-	    Location		    [459, 419, 1213, 823]
+	    Location		    [449, 428, 1203, 832]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2998,7 +3008,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem4"
-	    Location		    [361, 344, 750, 576]
+	    Location		    [671, 481, 1060, 713]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -4129,6 +4139,7 @@ Model {
 	      Name		      "C1BUFPNT2"
 	      Position		      [395, 88, 425, 102]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Shift\nArithmetic"
@@ -5111,6 +5122,26 @@ Model {
     }
     Block {
       BlockType		      Reference
+      Name		      "DocBlock"
+      Ports		      []
+      Position		      [417, 25, 504, 72]
+      ShowName		      off
+      UserDataPersistent      on
+      UserData		      "DataTag0"
+      SourceBlock	      "simulink/Model-Wide\nUtilities/DocBlock"
+      SourceType	      "DocBlock"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
+      FunctionWithSeparateData off
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      DocumentType	      "Text"
+    }
+    Block {
+      BlockType		      Reference
       Name		      "Master"
       Tag		      "dsPIC_MASTER"
       Ports		      []
@@ -5160,8 +5191,9 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      Ports		      []
-      Position		      [201, 150, 322, 204]
+      Ports		      [3]
+      Position		      [205, 147, 325, 223]
+      ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
@@ -5169,29 +5201,52 @@ Model {
       MaskType		      "Send ECAN Message"
       MaskDescription	      "This block allows for the transmission of a mes"
 "sage over the ECAN module."
-      MaskPromptString	      "Buffer|Identifier|Ide|Remote|Length|Data|Sample"
-" time"
-      MaskStyleString	      "edit,edit,checkbox,checkbox,edit,edit,edit"
-      MaskTunableValueString  "off,off,off,off,off,off,off"
-      MaskCallbackString      "||||||"
-      MaskEnableString	      "on,on,on,on,on,on,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on,on"
-      MaskVarAliasString      ",,,,,,"
-      MaskVariables	      "buffer=@1;identifier=@2;ide=@3;remote=@4;length"
-"=@5;data=@6;c_func_sample_time=@7;"
-      MaskDisplay	      "disp('ECAN1 TX');"
+      MaskPromptString	      "Buffer|Identifier|Indentifier from input|Ide|Re"
+"mote|Length|Data|Data from input|Sample time|Trigger on input"
+      MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,"
+"checkbox,edit,checkbox"
+      MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off"
+      MaskCallbackString      "||mEnables = get_param(gcb,'MaskEnables');\nena"
+"bled = get_param(gcb, 'identifier_from_input');\nif strcmp(enabled,'on');\n  "
+"  replace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    mEn"
+"ables{2} = 'off';\n    set_param([gcb '/identifier'],'Port','1');\nelse\n    "
+"replace_block([gcb '/identifier'],'Inport','Constant','noprompt');\n    mEnab"
+"les{2} = 'off';\n    set_param([gcb '/identifier'],'Value','identifier');\nen"
+"d\nset_param(gcb, 'MaskEnables', mEnables);\n|||||mEnables = get_param(gcb,'M"
+"askEnables');\nenabled = get_param(gcb, 'data_from_input');\nif strcmp(enable"
+"d,'on');\n    mEnables{7} = 'off';\n    replace_block([gcb '/data'],'Constant"
+"','Inport','noprompt');\n    if strcmp(get_param([gcb '/identifier'],'BlockTy"
+"pe'), 'Inport');\n        set_param([gcb '/data'],'Port','2');\n    else\n   "
+"     set_param([gcb '/data'],'Port','1');\n    end\nelse\n    mEnables{7} = '"
+"on';\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    s"
+"et_param([gcb '/data'],'Value','data');\nend\nset_param(gcb, 'MaskEnables', m"
+"Enables);||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb,"
+" 'trigger_on_input');\nif strcmp(enabled,'on');\n    mEnables{9} = 'off';\n  "
+"  set_param([gcb '/C-function Call/ECAN1 Transmit'],'SampleTime','-1');\n    "
+"replace_block([gcb '/trigger'],'Constant','Inport','noprompt');\nelse\n    mE"
+"nables{9} = 'on';\n    set_param([gcb '/C-function Call/ECAN1 Transmit'],'Sam"
+"pleTime','c_func_sample_time');\n    replace_block([gcb '/trigger'],'Inport',"
+"'Constant','noprompt');\n    set_param([gcb '/trigger'],'Value','1');\nend\ns"
+"et_param(gcb, 'MaskEnables', mEnables);"
+      MaskEnableString	      "on,off,on,on,on,on,off,on,off,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,,,,,"
+      MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&"
+"3;ide=@4;remote=@5;length=@6;data=@7;data_from_input=&8;c_func_sample_time=@9"
+";trigger_on_input=@10;"
+      MaskDisplay	      "disp('ECAN1 TX');\n\n"
       MaskIconFrame	      on
-      MaskIconOpaque	      on
+      MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "1|hex2dec('401')|off|off|4|[hex2dec('11') hex2d"
-"ec('12') hex2dec('13') hex2dec('14')]|1"
-      MaskTabNameString	      ",,,,,,"
+      MaskValueString	      "1|hex2dec('401')|on|off|off|4|[hex2dec('11') he"
+"x2dec('12') hex2dec('13') hex2dec('14')]|on|1|on"
+      MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[40, 155, 630, 405]
-	Open			off
+	Location		[33, 212, 676, 531]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5204,25 +5259,114 @@ Model {
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
 	Block {
+	  BlockType		  Inport
+	  Name			  "identifier"
+	  Position		  [20, 102, 95, 118]
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "data"
+	  Position		  [20, 82, 85, 98]
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "trigger"
+	  Position		  [420, 42, 485, 58]
+	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "C-function Call"
+	  Ports			  [1, 0, 1]
+	  Position		  [485, 99, 560, 141]
+	  MinAlgLoopOccurrences	  off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "C-function Call"
+	    Location		    [742, 195, 1106, 379]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "parameters"
+	      Position		      [25, 80, 55, 94]
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      EnablePort
+	      Name		      "Enable"
+	      Ports		      []
+	      Position		      [125, 15, 145, 35]
+	    }
+	    Block {
+	      BlockType		      Reference
+	      Name		      "ECAN1 Transmit"
+	      Tag		      "dsPIC_dsPIC_CFunctionCall"
+	      Ports		      [1]
+	      Position		      [80, 65, 205, 105]
+	      BackgroundColor	      "orange"
+	      List {
+		ListType		RTWdata
+		FctDeclaration		"extern void ecan1_send(uint16_T* u1);"
+		FctCall			"ecan1_send(*%u1);"
+		fctName			"ecan1_send"
+		INPUT_SIZE		"7"
+		OUTPUT_SIZE		"1"
+		NBR_INPUT		"1"
+		NBR_OUTPUT		"0"
+	      }
+	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
+	      SourceType	      "C Function Call"
+	      fctName		      "'ecan1_send'"
+	      INPUT_SIZE	      "7"
+	      INPUT1		      "uint16"
+	      INPUT2		      "--"
+	      INPUT3		      "--"
+	      OUTPUT_SIZE	      "1"
+	      OUTPUT1		      "--"
+	      SampleTime	      "-1"
+	      InputType		      "[ 4 ]"
+	      OutputType	      "[ ]"
+	      FctDeclaration	      "extern void ecan1_send(uint16_T* u1);"
+	      FctCall		      "ecan1_send(*%u1);"
+	      OrderingInOutPopup      "None"
+	    }
+	    Line {
+	      SrcBlock		      "parameters"
+	      SrcPort		      1
+	      DstBlock		      "ECAN1 Transmit"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
-	  Position		  [20, 37, 60, 53]
+	  Position		  [20, 62, 60, 78]
 	  ShowName		  off
 	  Value			  "buffer"
 	  OutDataTypeMode	  "uint16"
 	}
 	Block {
 	  BlockType		  Constant
-	  Name			  "Constant1"
-	  Position		  [20, 67, 95, 83]
-	  ShowName		  off
-	  Value			  "identifier"
-	  OutDataTypeMode	  "uint16"
-	}
-	Block {
-	  BlockType		  Constant
 	  Name			  "Constant2"
-	  Position		  [20, 97, 60, 113]
+	  Position		  [20, 122, 60, 138]
 	  ShowName		  off
 	  Value			  "ide"
 	  OutDataTypeMode	  "uint16"
@@ -5230,7 +5374,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant3"
-	  Position		  [20, 117, 60, 133]
+	  Position		  [20, 142, 60, 158]
 	  ShowName		  off
 	  Value			  "remote"
 	  OutDataTypeMode	  "uint16"
@@ -5238,64 +5382,23 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  Position		  [20, 137, 85, 153]
+	  Position		  [20, 162, 85, 178]
 	  ShowName		  off
 	  Value			  "length"
 	  OutDataTypeMode	  "uint16"
 	}
 	Block {
-	  BlockType		  Constant
-	  Name			  "Constant5"
-	  Position		  [20, 157, 85, 173]
-	  ShowName		  off
-	  Value			  "data"
-	  OutDataTypeMode	  "uint16"
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "ECAN1 Transmit"
-	  Tag			  "dsPIC_dsPIC_CFunctionCall"
-	  Ports			  [1]
-	  Position		  [385, 100, 510, 140]
-	  BackgroundColor	  "orange"
-	  List {
-	    ListType		    RTWdata
-	    FctDeclaration	    "extern void ecan1_send(uint16_T* u1);"
-	    FctCall		    "ecan1_send(*%u1);"
-	    fctName		    "ecan1_send"
-	    INPUT_SIZE		    "7"
-	    OUTPUT_SIZE		    "1"
-	    NBR_INPUT		    "1"
-	    NBR_OUTPUT		    "0"
-	  }
-	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
-	  SourceType		  "C Function Call"
-	  fctName		  "'ecan1_send'"
-	  INPUT_SIZE		  "7"
-	  INPUT1		  "uint16"
-	  INPUT2		  "--"
-	  INPUT3		  "--"
-	  OUTPUT_SIZE		  "1"
-	  OUTPUT1		  "--"
-	  SampleTime		  "c_func_sample_time"
-	  InputType		  "[ 4 ]"
-	  OutputType		  "[ ]"
-	  FctDeclaration	  "extern void ecan1_send(uint16_T* u1);"
-	  FctCall		  "ecan1_send(*%u1);"
-	  OrderingInOutPopup	  "None"
-	}
-	Block {
 	  BlockType		  SubSystem
 	  Name			  "Mux"
 	  Ports			  [6, 1]
-	  Position		  [235, 67, 340, 168]
+	  Position		  [235, 60, 345, 180]
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
 	  MaskHideContents	  off
 	  MaskType		  "Stateflow"
 	  MaskDescription	  "Embedded MATLAB block"
-	  MaskDisplay		  "disp('myMux');"
+	  MaskDisplay		  "disp('Mux');"
 	  MaskSelfModifiable	  on
 	  MaskIconFrame		  on
 	  MaskIconOpaque	  off
@@ -5324,35 +5427,35 @@ Model {
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "identifier"
+	      Name		      "data"
 	      Position		      [20, 136, 40, 154]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "ide"
+	      Name		      "identifier"
 	      Position		      [20, 171, 40, 189]
 	      Port		      "3"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "remote"
+	      Name		      "ide"
 	      Position		      [20, 206, 40, 224]
 	      Port		      "4"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "dataLength"
+	      Name		      "remote"
 	      Position		      [20, 246, 40, 264]
 	      Port		      "5"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
-	      Name		      "data"
+	      Name		      "dataLength"
 	      Position		      [20, 281, 40, 299]
 	      Port		      "6"
 	      IconDisplay	      "Port number"
@@ -5361,17 +5464,17 @@ Model {
 	      BlockType		      Demux
 	      Name		      " Demux "
 	      Ports		      [1, 1]
-	      Position		      [270, 245, 320, 285]
+	      Position		      [270, 265, 320, 305]
 	      Outputs		      "1"
 	    }
 	    Block {
 	      BlockType		      "S-Function"
 	      Name		      " SFunction "
 	      Tag		      "Stateflow S-Function Main 15"
-	      Ports		      [6, 2]
-	      Position		      [180, 102, 230, 243]
+	      Ports		      [7, 2]
+	      Position		      [180, 104, 230, 266]
 	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[6 2]"
+	      PortCounts	      "[7 2]"
 	      Port {
 		PortNumber		2
 		Name			"y"
@@ -5382,7 +5485,7 @@ Model {
 	    Block {
 	      BlockType		      Terminator
 	      Name		      " Terminator "
-	      Position		      [460, 256, 480, 274]
+	      Position		      [460, 276, 480, 294]
 	    }
 	    Block {
 	      BlockType		      Outport
@@ -5394,7 +5497,7 @@ Model {
 	    Line {
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
-	      Points		      [0, 125]
+	      Points		      [0, 140]
 	      DstBlock		      " Demux "
 	      DstPort		      1
 	    }
@@ -5411,6 +5514,20 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
+	      SrcBlock		      "identifier"
+	      SrcPort		      1
+	      Points		      [0, 0]
+	      Branch {
+		Points			[0, 145]
+		DstBlock		" SFunction "
+		DstPort			7
+	      }
+	      Branch {
+		DstBlock		" SFunction "
+		DstPort			3
+	      }
+	    }
+	    Line {
 	      Name		      "y"
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
@@ -5419,9 +5536,8 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "identifier"
+	      SrcBlock		      "data"
 	      SrcPort		      1
-	      Points		      [120, 0]
 	      DstBlock		      " SFunction "
 	      DstPort		      2
 	    }
@@ -5429,22 +5545,16 @@ Model {
 	      SrcBlock		      "ide"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
-	      DstPort		      3
+	      DstPort		      4
 	    }
 	    Line {
 	      SrcBlock		      "remote"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
-	      DstPort		      4
-	    }
-	    Line {
-	      SrcBlock		      "dataLength"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
 	      DstPort		      5
 	    }
 	    Line {
-	      SrcBlock		      "data"
+	      SrcBlock		      "dataLength"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
 	      DstPort		      6
@@ -5454,13 +5564,12 @@ Model {
 	Line {
 	  SrcBlock		  "Mux"
 	  SrcPort		  1
-	  DstBlock		  "ECAN1 Transmit"
+	  DstBlock		  "C-function Call"
 	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Constant"
 	  SrcPort		  1
-	  Points		  [155, 0]
 	  DstBlock		  "Mux"
 	  DstPort		  1
 	}
@@ -5468,38 +5577,55 @@ Model {
 	  SrcBlock		  "Constant3"
 	  SrcPort		  1
 	  DstBlock		  "Mux"
-	  DstPort		  4
+	  DstPort		  5
 	}
 	Line {
 	  SrcBlock		  "Constant4"
 	  SrcPort		  1
-	  Points		  [130, 0]
-	  DstBlock		  "Mux"
-	  DstPort		  5
-	}
-	Line {
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  Points		  [75, 0; 0, 20]
-	  DstBlock		  "Mux"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant5"
-	  SrcPort		  1
-	  Points		  [45, 0; 0, -10]
 	  DstBlock		  "Mux"
 	  DstPort		  6
 	}
 	Line {
-	  SrcBlock		  "Constant2"
+	  SrcBlock		  "identifier"
 	  SrcPort		  1
-	  Points		  [0, 5]
 	  DstBlock		  "Mux"
 	  DstPort		  3
 	}
+	Line {
+	  SrcBlock		  "data"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Constant2"
+	  SrcPort		  1
+	  DstBlock		  "Mux"
+	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "trigger"
+	  SrcPort		  1
+	  Points		  [30, 0]
+	  DstBlock		  "C-function Call"
+	  DstPort		  enable
+	}
       }
     }
+  }
+}
+MatData {
+  NumRecords		  1
+  DataRecord {
+    Tag			    DataTag0
+    Data		    "  %)30     .    D $   8    (     @         %    "
+"\"     $    !     0         %  0 \"     $    0    =F5R<VEO;@!C;VYT96YT  X    "
+"X    !@    @    &          4    (     0    $    !          D    (    FIF9F9F9"
+"\\3\\.      $   8    (    !          %    \"     $   #-     0         0    S0"
+"   %1H:7,@;6]D96P@<F5C<F5A=&5S('1H92!#<F]S<W=I<F4@87!P;&EC871I;VX@;F]T92!F<F]"
+"M($UI8W)O8VAI<\"X-\"E1H92!$96)U9V=I;F<@9&ER96-T;W)Y(&EN8VQU9&5S(&%N($U03$%\"("
+"'!R;VIE8W0@=&AA=\"!C86X@8V]M<&EL92!A;F0@;&]A9 T*=&AE($U!5$Q!0BUG96YE<F%T960@8"
+"V]D92!I;B!O<F1E<B!T;R!F86-I;&ET871E(&1E8G5G9VEN9RX    "
   }
 }
 
@@ -6538,7 +6664,6 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		51
-		updateMethod                              		DISCRETE
 		sampleTime                                		"Inf"
 		chartFileNumber                           		4
 		disableImplicitCasting                    		1
@@ -6636,6 +6761,7 @@ Stateflow {
 			}
 			type {
 				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
 			}
 			complexity           		SF_COMPLEX_INHERITED
 			frame                		SF_FRAME_NO
@@ -6858,10 +6984,11 @@ Stateflow {
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		67
+		sampleTime                                		"Inf"
 		chartFileNumber                           		15
 		disableImplicitCasting                    		1
 		eml {
-			name       		"myMux"
+			name       		"Mux"
 		}
 	}
 
@@ -6878,8 +7005,8 @@ Stateflow {
 		decomposition                		CLUSTER_STATE
 		eml {
 			isEML                    		1
-			script                   		"function y = myMux(buffer, identifier, ide, remote, dataLen"
-						"gth, data)\n"
+			script                   		"function y = Mux(buffer, identifier, ide, remote, dataLengt"
+						"h, data)\n"
 						"% This block muxes the different parameters for a CAN trans"
 						"mission into\n"
 						"% the proper format for calling ecan1_send()\n"
@@ -6901,7 +7028,7 @@ Stateflow {
 						"if dataLength > 6\n"
 						"    y(7) = data(4);\n"
 						"end"
-			editorLayout             		"100 M4x1[515 476 706 409]"
+			editorLayout             		"100 M4x1[186 516 706 409]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -6961,8 +7088,31 @@ Stateflow {
 
 	data {
 		id                            		68
-		name                          		"y"
+		name                          		"identifier"
 		linkNode                      		[63 67 69]
+		scope                         		INPUT_DATA
+		machine                       		1
+		props {
+			array {
+				size      		"-1"
+			}
+			type {
+				method    		SF_INHERITED_TYPE
+				primitive 		SF_DOUBLE_TYPE
+				isSigned  		1
+				wordLength		"16"
+			}
+			complexity           		SF_COMPLEX_INHERITED
+			frame                		SF_FRAME_INHERITED
+		}
+		dataType                      		"inherited"
+		complexity                    		SF_COMPLEX_INHERITED
+	}
+
+	data {
+		id                            		69
+		name                          		"y"
+		linkNode                      		[63 68 70]
 		scope                         		OUTPUT_DATA
 		machine                       		1
 		props {
@@ -6980,29 +7130,6 @@ Stateflow {
 			slope   		1
 			baseType		SF_INT16_TYPE
 		}
-		complexity                    		SF_COMPLEX_INHERITED
-	}
-
-	data {
-		id                            		69
-		name                          		"identifier"
-		linkNode                      		[63 68 70]
-		scope                         		INPUT_DATA
-		machine                       		1
-		props {
-			array {
-				size      		"-1"
-			}
-			type {
-				method    		SF_INHERITED_TYPE
-				primitive 		SF_DOUBLE_TYPE
-				isSigned  		1
-				wordLength		"16"
-			}
-			complexity           		SF_COMPLEX_INHERITED
-			frame                		SF_FRAME_INHERITED
-		}
-		dataType                      		"inherited"
 		complexity                    		SF_COMPLEX_INHERITED
 	}
 
