@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.264"
+    ComputedModelVersion    "1.266"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 03 16:21:02 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:264>"
+  LastModifiedDate	  "Wed Feb 03 16:27:37 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:266>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -757,7 +757,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [32, 637, 675, 906]
+    Location		    [92, 505, 735, 774]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -5191,8 +5191,8 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      Ports		      [3]
-      Position		      [205, 147, 325, 223]
+      Ports		      []
+      Position		      [250, 137, 370, 213]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -5202,7 +5202,7 @@ Model {
       MaskDescription	      "This block allows for the transmission of a mes"
 "sage over the ECAN module."
       MaskPromptString	      "Buffer|Identifier|Indentifier from input|Ide|Re"
-"mote|Length|Data|Data from input|Sample time|Trigger on input"
+"mote|Data Length (bytes)|Data|Data from input|Sample time|Trigger on input"
       MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,"
 "checkbox,edit,checkbox"
       MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off"
@@ -5211,42 +5211,42 @@ Model {
 "  replace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    mEn"
 "ables{2} = 'off';\n    set_param([gcb '/identifier'],'Port','1');\nelse\n    "
 "replace_block([gcb '/identifier'],'Inport','Constant','noprompt');\n    mEnab"
-"les{2} = 'off';\n    set_param([gcb '/identifier'],'Value','identifier');\nen"
-"d\nset_param(gcb, 'MaskEnables', mEnables);\n|||||mEnables = get_param(gcb,'M"
-"askEnables');\nenabled = get_param(gcb, 'data_from_input');\nif strcmp(enable"
-"d,'on');\n    mEnables{7} = 'off';\n    replace_block([gcb '/data'],'Constant"
-"','Inport','noprompt');\n    if strcmp(get_param([gcb '/identifier'],'BlockTy"
-"pe'), 'Inport');\n        set_param([gcb '/data'],'Port','2');\n    else\n   "
-"     set_param([gcb '/data'],'Port','1');\n    end\nelse\n    mEnables{7} = '"
-"on';\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    s"
-"et_param([gcb '/data'],'Value','data');\nend\nset_param(gcb, 'MaskEnables', m"
-"Enables);||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb,"
-" 'trigger_on_input');\nif strcmp(enabled,'on');\n    mEnables{9} = 'off';\n  "
-"  set_param([gcb '/C-function Call/ECAN1 Transmit'],'SampleTime','-1');\n    "
-"replace_block([gcb '/trigger'],'Constant','Inport','noprompt');\nelse\n    mE"
-"nables{9} = 'on';\n    set_param([gcb '/C-function Call/ECAN1 Transmit'],'Sam"
-"pleTime','c_func_sample_time');\n    replace_block([gcb '/trigger'],'Inport',"
-"'Constant','noprompt');\n    set_param([gcb '/trigger'],'Value','1');\nend\ns"
-"et_param(gcb, 'MaskEnables', mEnables);"
-      MaskEnableString	      "on,off,on,on,on,on,off,on,off,on"
+"les{2} = 'on';\n    set_param([gcb '/identifier'],'Value','identifier');\nend"
+"\nset_param(gcb, 'MaskEnables', mEnables);\n|||||mEnables = get_param(gcb,'Ma"
+"skEnables');\nenabled = get_param(gcb, 'data_from_input');\nif strcmp(enabled"
+",'on');\n    mEnables{7} = 'off';\n    replace_block([gcb '/data'],'Constant'"
+",'Inport','noprompt');\n    if strcmp(get_param([gcb '/identifier'],'BlockTyp"
+"e'), 'Inport');\n        set_param([gcb '/data'],'Port','2');\n    else\n    "
+"    set_param([gcb '/data'],'Port','1');\n    end\nelse\n    mEnables{7} = 'o"
+"n';\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    se"
+"t_param([gcb '/data'],'Value','data');\nend\nset_param(gcb, 'MaskEnables', mE"
+"nables);||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb, "
+"'trigger_on_input');\nif strcmp(enabled,'on');\n    mEnables{9} = 'off';\n   "
+" set_param([gcb '/C-function Call/ECAN1 Transmit'],'SampleTime','-1');\n    r"
+"eplace_block([gcb '/trigger'],'Constant','Inport','noprompt');\nelse\n    mEn"
+"ables{9} = 'on';\n    set_param([gcb '/C-function Call/ECAN1 Transmit'],'Samp"
+"leTime','c_func_sample_time');\n    replace_block([gcb '/trigger'],'Inport','"
+"Constant','noprompt');\n    set_param([gcb '/trigger'],'Value','1');\nend\nse"
+"t_param(gcb, 'MaskEnables', mEnables);"
+      MaskEnableString	      "on,on,on,on,on,on,on,on,on,on"
       MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
       MaskVarAliasString      ",,,,,,,,,"
       MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&"
 "3;ide=@4;remote=@5;length=@6;data=@7;data_from_input=&8;c_func_sample_time=@9"
 ";trigger_on_input=@10;"
-      MaskDisplay	      "disp('ECAN1 TX');\n\n"
+      MaskDisplay	      "disp('ECAN1 TX');"
       MaskIconFrame	      on
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "1|hex2dec('401')|on|off|off|4|[hex2dec('11') he"
-"x2dec('12') hex2dec('13') hex2dec('14')]|on|1|on"
+      MaskValueString	      "1|hex2dec('401')|off|off|off|4|[hex2dec('11') h"
+"ex2dec('12') hex2dec('13') hex2dec('14')]|off|1|off"
       MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
 	Location		[33, 212, 676, 531]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5258,26 +5258,6 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "identifier"
-	  Position		  [20, 102, 95, 118]
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "data"
-	  Position		  [20, 82, 85, 98]
-	  Port			  "2"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "trigger"
-	  Position		  [420, 42, 485, 58]
-	  Port			  "3"
-	  IconDisplay		  "Port number"
-	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "C-function Call"
@@ -5305,7 +5285,7 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "parameters"
-	      Position		      [25, 80, 55, 94]
+	      Position		      [25, 78, 55, 92]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
@@ -5340,7 +5320,7 @@ Model {
 	      INPUT3		      "--"
 	      OUTPUT_SIZE	      "1"
 	      OUTPUT1		      "--"
-	      SampleTime	      "-1"
+	      SampleTime	      "c_func_sample_time"
 	      InputType		      "[ 4 ]"
 	      OutputType	      "[ ]"
 	      FctDeclaration	      "extern void ecan1_send(uint16_T* u1);"
@@ -5560,6 +5540,23 @@ Model {
 	      DstPort		      6
 	    }
 	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "data"
+	  Position		  [20, 82, 85, 98]
+	  Value			  "data"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "identifier"
+	  Position		  [20, 102, 95, 118]
+	  Value			  "identifier"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "trigger"
+	  Position		  [420, 42, 485, 58]
 	}
 	Line {
 	  SrcBlock		  "Mux"
