@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.316"
+    ComputedModelVersion    "1.334"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Feb 05 09:10:58 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:316>"
+  LastModifiedDate	  "Fri Feb 05 12:27:06 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:334>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -588,7 +588,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Real-Time Workshop"
+      CurrentDlgPage	      "Optimization"
     }
     PropName		    "ConfigurationSets"
   }
@@ -945,8 +945,8 @@ Model {
 ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
       System {
 	Name			"Configure ECAN 1"
-	Location		[74, 82, 945, 767]
-	Open			off
+	Location		[10, 239, 881, 924]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1438,7 +1438,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem10"
-	    Location		    [465, 311, 1203, 704]
+	    Location		    [341, 510, 1079, 903]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1761,7 +1761,7 @@ Model {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      Position		      [315, 142, 365, 158]
+	      Position		      [295, 141, 340, 159]
 	      ShowName		      off
 	      OutDataTypeMode	      "uint16"
 	      RndMeth		      "Floor"
@@ -1966,7 +1966,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Data Type Conversion"
 	      SrcPort		      1
-	      Points		      [90, 0]
+	      Points		      [115, 0]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      3
 	    }
@@ -2024,7 +2024,7 @@ Model {
 	      Position		      [25, 21, 105, 39]
 	      ShowName		      off
 	      Value		      "filter_0_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2032,7 +2032,7 @@ Model {
 	      Position		      [25, 101, 105, 119]
 	      ShowName		      off
 	      Value		      "filter_2_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2040,7 +2040,7 @@ Model {
 	      Position		      [25, 56, 105, 74]
 	      ShowName		      off
 	      Value		      "filter_1_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2048,7 +2048,7 @@ Model {
 	      Position		      [25, 146, 105, 164]
 	      ShowName		      off
 	      Value		      "filter_3_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Reference
@@ -2217,7 +2217,7 @@ Model {
 	      Position		      [25, 21, 105, 39]
 	      ShowName		      off
 	      Value		      "filter_8_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2225,7 +2225,7 @@ Model {
 	      Position		      [25, 101, 105, 119]
 	      ShowName		      off
 	      Value		      "filter_10_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2233,7 +2233,7 @@ Model {
 	      Position		      [25, 56, 105, 74]
 	      ShowName		      off
 	      Value		      "filter_9_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2241,7 +2241,7 @@ Model {
 	      Position		      [25, 146, 105, 164]
 	      ShowName		      off
 	      Value		      "filter_11_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Reference
@@ -2410,7 +2410,7 @@ Model {
 	      Position		      [25, 21, 105, 39]
 	      ShowName		      off
 	      Value		      "filter_12_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2418,7 +2418,7 @@ Model {
 	      Position		      [25, 101, 105, 119]
 	      ShowName		      off
 	      Value		      "filter_14_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2426,7 +2426,7 @@ Model {
 	      Position		      [25, 56, 105, 74]
 	      ShowName		      off
 	      Value		      "filter_13_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -2434,7 +2434,7 @@ Model {
 	      Position		      [25, 146, 105, 164]
 	      ShowName		      off
 	      Value		      "filter_15_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Reference
@@ -2726,7 +2726,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem3"
-	    Location		    [449, 428, 1203, 832]
+	    Location		    [44, 459, 798, 863]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3048,7 +3048,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem4"
-	    Location		    [671, 481, 1060, 713]
+	    Location		    [567, 650, 956, 882]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3271,7 +3271,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem5"
-	    Location		    [667, 152, 1213, 508]
+	    Location		    [203, 284, 749, 640]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3288,7 +3288,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Bitwise\nOperator"
 	      Ports		      [3, 1]
-	      Position		      [385, 136, 425, 174]
+	      Position		      [385, 61, 425, 99]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
 "ise\nOperator"
@@ -3302,7 +3302,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant3"
-	      Position		      [20, 108, 90, 132]
+	      Position		      [20, 33, 90, 57]
 	      ShowName		      off
 	      Value		      "mask_0_rm"
 	      OutDataTypeMode	      "uint16"
@@ -3310,7 +3310,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [20, 208, 90, 232]
+	      Position		      [20, 133, 90, 157]
 	      ShowName		      off
 	      Value		      "mask_0"
 	      OutDataTypeMode	      "uint32"
@@ -3318,7 +3318,16 @@ Model {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      Position		      [250, 203, 325, 237]
+	      Position		      [225, 138, 260, 152]
+	      ShowName		      off
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion1"
+	      Position		      [225, 88, 260, 102]
 	      ShowName		      off
 	      OutDataTypeMode	      "uint16"
 	      RndMeth		      "Floor"
@@ -3328,7 +3337,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits"
 	      Ports		      [1, 1]
-	      Position		      [135, 150, 215, 190]
+	      Position		      [125, 75, 205, 115]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3350,7 +3359,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits1"
 	      Ports		      [1, 1]
-	      Position		      [135, 200, 215, 240]
+	      Position		      [125, 125, 205, 165]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3372,7 +3381,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits2"
 	      Ports		      [1, 1]
-	      Position		      [135, 255, 215, 295]
+	      Position		      [125, 175, 205, 215]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3394,7 +3403,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic"
 	      Ports		      [1, 1]
-	      Position		      [185, 100, 265, 140]
+	      Position		      [185, 39, 265, 51]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3414,7 +3423,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic1"
 	      Ports		      [1, 1]
-	      Position		      [235, 150, 315, 190]
+	      Position		      [280, 88, 350, 102]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3433,14 +3442,14 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM0SID"
-	      Position		      [470, 148, 500, 162]
+	      Position		      [470, 73, 500, 87]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM0EID"
-	      Position		      [470, 268, 500, 282]
+	      Position		      [470, 188, 500, 202]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
@@ -3461,13 +3470,14 @@ Model {
 	    Line {
 	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Shift\nArithmetic1"
+	      DstBlock		      "Data Type Conversion1"
 	      DstPort		      1
 	    }
 	    Line {
+	      Labels		      [2, 0]
 	      SrcBlock		      "Shift\nArithmetic1"
 	      SrcPort		      1
-	      Points		      [10, 0; 0, -15]
+	      Points		      [5, 0; 0, -15]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
@@ -3480,7 +3490,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Constant4"
 	      SrcPort		      1
-	      Points		      [5, 0; 5, 0]
+	      Points		      [10, 0]
 	      Branch {
 		Points			[0, -50]
 		DstBlock		"Extract Bits"
@@ -3493,7 +3503,7 @@ Model {
 		  DstPort		  1
 		}
 		Branch {
-		  Points		  [0, 55]
+		  Points		  [0, 50]
 		  DstBlock		  "Extract Bits2"
 		  DstPort		  1
 		}
@@ -3514,9 +3524,15 @@ Model {
 	    Line {
 	      SrcBlock		      "Data Type Conversion"
 	      SrcPort		      1
-	      Points		      [40, 0]
+	      Points		      [105, 0]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
 	    }
 	  }
 	}
@@ -3524,7 +3540,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem6"
 	  Ports			  [0, 2]
-	  Position		  [85, 277, 145, 308]
+	  Position		  [85, 276, 145, 309]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -3532,7 +3548,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem6"
-	    Location		    [95, 358, 658, 617]
+	    Location		    [278, 426, 841, 685]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3549,7 +3565,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Bitwise\nOperator"
 	      Ports		      [3, 1]
-	      Position		      [400, 56, 440, 94]
+	      Position		      [380, 51, 420, 89]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
 "ise\nOperator"
@@ -3563,7 +3579,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant3"
-	      Position		      [35, 28, 105, 52]
+	      Position		      [15, 23, 85, 47]
 	      ShowName		      off
 	      Value		      "mask_1_rm"
 	      OutDataTypeMode	      "uint16"
@@ -3571,7 +3587,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [35, 128, 105, 152]
+	      Position		      [15, 123, 85, 147]
 	      ShowName		      off
 	      Value		      "mask_1"
 	      OutDataTypeMode	      "uint32"
@@ -3579,7 +3595,16 @@ Model {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      Position		      [265, 123, 340, 157]
+	      Position		      [220, 128, 255, 142]
+	      ShowName		      off
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion1"
+	      Position		      [220, 78, 255, 92]
 	      ShowName		      off
 	      OutDataTypeMode	      "uint16"
 	      RndMeth		      "Floor"
@@ -3589,7 +3614,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits"
 	      Ports		      [1, 1]
-	      Position		      [150, 70, 230, 110]
+	      Position		      [120, 65, 200, 105]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3611,7 +3636,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits1"
 	      Ports		      [1, 1]
-	      Position		      [150, 120, 230, 160]
+	      Position		      [120, 115, 200, 155]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3633,7 +3658,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits2"
 	      Ports		      [1, 1]
-	      Position		      [150, 175, 230, 215]
+	      Position		      [120, 165, 200, 205]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3655,7 +3680,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic"
 	      Ports		      [1, 1]
-	      Position		      [200, 20, 280, 60]
+	      Position		      [180, 29, 260, 41]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3675,7 +3700,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic1"
 	      Ports		      [1, 1]
-	      Position		      [250, 70, 330, 110]
+	      Position		      [275, 78, 345, 92]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3694,14 +3719,14 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM1SID"
-	      Position		      [485, 68, 515, 82]
+	      Position		      [465, 63, 495, 77]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM1EID"
-	      Position		      [485, 188, 515, 202]
+	      Position		      [465, 178, 495, 192]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
@@ -3722,13 +3747,14 @@ Model {
 	    Line {
 	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Shift\nArithmetic1"
+	      DstBlock		      "Data Type Conversion1"
 	      DstPort		      1
 	    }
 	    Line {
+	      Labels		      [2, 0]
 	      SrcBlock		      "Shift\nArithmetic1"
 	      SrcPort		      1
-	      Points		      [10, 0; 0, -15]
+	      Points		      [5, 0; 0, -15]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
@@ -3754,7 +3780,7 @@ Model {
 		  DstPort		  1
 		}
 		Branch {
-		  Points		  [0, 55]
+		  Points		  [0, 50]
 		  DstBlock		  "Extract Bits2"
 		  DstPort		  1
 		}
@@ -3775,9 +3801,15 @@ Model {
 	    Line {
 	      SrcBlock		      "Data Type Conversion"
 	      SrcPort		      1
-	      Points		      [40, 0]
+	      Points		      [105, 0]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
 	    }
 	  }
 	}
@@ -3785,7 +3817,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Subsystem7"
 	  Ports			  [0, 2]
-	  Position		  [85, 312, 145, 343]
+	  Position		  [85, 311, 145, 344]
 	  ShowName		  off
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
@@ -3793,7 +3825,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem7"
-	    Location		    [196, 290, 1152, 729]
+	    Location		    [196, 290, 752, 530]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3810,7 +3842,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Bitwise\nOperator"
 	      Ports		      [3, 1]
-	      Position		      [385, 56, 425, 94]
+	      Position		      [380, 51, 420, 89]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitw"
 "ise\nOperator"
@@ -3824,7 +3856,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant3"
-	      Position		      [20, 28, 90, 52]
+	      Position		      [15, 23, 85, 47]
 	      ShowName		      off
 	      Value		      "mask_2_rm"
 	      OutDataTypeMode	      "uint16"
@@ -3832,7 +3864,7 @@ Model {
 	    Block {
 	      BlockType		      Constant
 	      Name		      "Constant4"
-	      Position		      [20, 128, 90, 152]
+	      Position		      [15, 123, 85, 147]
 	      ShowName		      off
 	      Value		      "mask_2"
 	      OutDataTypeMode	      "uint32"
@@ -3840,7 +3872,16 @@ Model {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      Position		      [250, 123, 325, 157]
+	      Position		      [220, 128, 255, 142]
+	      ShowName		      off
+	      OutDataTypeMode	      "uint16"
+	      RndMeth		      "Floor"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      DataTypeConversion
+	      Name		      "Data Type Conversion1"
+	      Position		      [220, 78, 255, 92]
 	      ShowName		      off
 	      OutDataTypeMode	      "uint16"
 	      RndMeth		      "Floor"
@@ -3850,7 +3891,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits"
 	      Ports		      [1, 1]
-	      Position		      [135, 70, 215, 110]
+	      Position		      [120, 65, 200, 105]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3872,7 +3913,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits1"
 	      Ports		      [1, 1]
-	      Position		      [135, 120, 215, 160]
+	      Position		      [120, 115, 200, 155]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3894,7 +3935,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Extract Bits2"
 	      Ports		      [1, 1]
-	      Position		      [135, 175, 215, 215]
+	      Position		      [120, 165, 200, 205]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extr"
 "act Bits"
@@ -3916,7 +3957,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic"
 	      Ports		      [1, 1]
-	      Position		      [185, 20, 265, 60]
+	      Position		      [180, 28, 260, 42]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3936,7 +3977,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "Shift\nArithmetic1"
 	      Ports		      [1, 1]
-	      Position		      [235, 70, 315, 110]
+	      Position		      [275, 78, 345, 92]
 	      ShowName		      off
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shif"
 "t\nArithmetic"
@@ -3955,14 +3996,14 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM2SID"
-	      Position		      [470, 68, 500, 82]
+	      Position		      [465, 63, 495, 77]
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "C1RXM2EID"
-	      Position		      [470, 188, 500, 202]
+	      Position		      [465, 178, 495, 192]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	      BusOutputAsStruct	      off
@@ -3983,13 +4024,14 @@ Model {
 	    Line {
 	      SrcBlock		      "Extract Bits"
 	      SrcPort		      1
-	      DstBlock		      "Shift\nArithmetic1"
+	      DstBlock		      "Data Type Conversion1"
 	      DstPort		      1
 	    }
 	    Line {
+	      Labels		      [2, 0]
 	      SrcBlock		      "Shift\nArithmetic1"
 	      SrcPort		      1
-	      Points		      [10, 0; 0, -15]
+	      Points		      [5, 0; 0, -15]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      2
 	    }
@@ -4015,7 +4057,7 @@ Model {
 		  DstPort		  1
 		}
 		Branch {
-		  Points		  [0, 55]
+		  Points		  [0, 50]
 		  DstBlock		  "Extract Bits2"
 		  DstPort		  1
 		}
@@ -4036,9 +4078,15 @@ Model {
 	    Line {
 	      SrcBlock		      "Data Type Conversion"
 	      SrcPort		      1
-	      Points		      [40, 0]
+	      Points		      [105, 0]
 	      DstBlock		      "Bitwise\nOperator"
 	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Data Type Conversion1"
+	      SrcPort		      1
+	      DstBlock		      "Shift\nArithmetic1"
+	      DstPort		      1
 	    }
 	  }
 	}
@@ -4088,7 +4136,7 @@ Model {
 	      Position		      [25, 21, 105, 39]
 	      ShowName		      off
 	      Value		      "filter_4_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -4096,7 +4144,7 @@ Model {
 	      Position		      [25, 101, 105, 119]
 	      ShowName		      off
 	      Value		      "filter_6_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -4104,7 +4152,7 @@ Model {
 	      Position		      [25, 56, 105, 74]
 	      ShowName		      off
 	      Value		      "filter_5_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Constant
@@ -4112,7 +4160,7 @@ Model {
 	      Position		      [25, 146, 105, 164]
 	      ShowName		      off
 	      Value		      "filter_7_buf"
-	      OutDataTypeMode	      "uint8"
+	      OutDataTypeMode	      "uint16"
 	    }
 	    Block {
 	      BlockType		      Reference
@@ -4247,7 +4295,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Subsystem9"
-	    Location		    [465, 311, 1203, 704]
+	    Location		    [64, 571, 802, 964]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -5304,7 +5352,7 @@ Model {
       System {
 	Name			"Send ECAN1 Message"
 	Location		[537, 338, 1180, 740]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5503,7 +5551,7 @@ Model {
 	      BlockType		      Demux
 	      Name		      "Demux"
 	      Ports		      [1, 8]
-	      Position		      [295, 41, 300, 164]
+	      Position		      [295, 27, 300, 168]
 	      BackgroundColor	      "black"
 	      ShowName		      off
 	      Outputs		      "8"
@@ -5521,7 +5569,7 @@ Model {
 	      System {
 		Name			"Pad to 8x1"
 		Location		[172, 610, 899, 910]
-		Open			on
+		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -6063,60 +6111,61 @@ Model {
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      8
+	      Points		      [0, 5]
 	      DstBlock		      "uint8 combiner5"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      7
+	      Points		      [0, 5]
 	      DstBlock		      "uint8 combiner5"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      6
-	      Points		      [5, 0; 0, -5]
 	      DstBlock		      "uint8 combiner4"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      5
-	      Points		      [40, 0]
 	      DstBlock		      "uint8 combiner4"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      4
-	      Points		      [40, 0]
+	      Points		      [0, -5]
 	      DstBlock		      "uint8 combiner3"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      3
-	      Points		      [5, 0; 0, -10]
+	      Points		      [0, -5]
 	      DstBlock		      "uint8 combiner3"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      2
-	      Points		      [5, 0; 0, -15]
+	      Points		      [0, -10]
 	      DstBlock		      "uint8 combiner2"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
 	      SrcPort		      1
-	      Points		      [0, -15]
+	      Points		      [0, -10]
 	      DstBlock		      "uint8 combiner2"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "Pad to 8x1"
 	      SrcPort		      1
+	      Points		      [50, 0]
 	      DstBlock		      "Demux"
 	      DstPort		      1
 	    }
@@ -7800,20 +7849,20 @@ Stateflow {
 						"\n"
 						"% Go through all enabled transmission buffers setting appro"
 						"priate bits\n"
-						"buf_array = ones(8,1);\n"
-						"b_size = int(size(bufs,1));\n"
-						"buf_array(1:b_size) = bufs;\n"
-						"for b = buf_array\n"
+						"for b = 1:size(bufs,1)\n"
+						"    \n"
+						"    index = bufs(b);\n"
 						"    \n"
 						"    % Set transmission bit\n"
-						"    regs(b) = bitset(regs(b),8);\n"
+						"    regs(index) = bitset(regs(index),8);\n"
 						"    \n"
 						"    % Set priority bits\n"
-						"    regs(b) = bitor(regs(b), uint16(buf_priorities(b)-1));\n"
+						"    regs(index) = bitor(regs(index), uint16(buf_priorities("
+						"index)-1));\n"
 						"    \n"
 						"    % Set remote transmit enable bits\n"
-						"    if all(buf_rtes(b))\n"
-						"        regs(b) = bitset(regs(b),3);\n"
+						"    if all(buf_rtes(index))\n"
+						"        regs(index) = bitset(regs(index),3);\n"
 						"    end\n"
 						"end\n"
 						"\n"
@@ -7822,7 +7871,7 @@ Stateflow {
 						"CiTR23CON = uint16(bitshift(regs(4),8) | regs(3));\n"
 						"CiTR45CON = uint16(bitshift(regs(6),8) | regs(5));\n"
 						"CiTR67CON = uint16(bitshift(regs(8),8) | regs(7));"
-			editorLayout             		"100 M4x1[273 28 970 697]"
+			editorLayout             		"100 M4x1[83 211 970 697]"
 			treatIntsAsFixpt         		0
 		}
 	}
@@ -8069,7 +8118,7 @@ Stateflow {
 						"for k = 1:size(u,1)\n"
 						"    y = bitset(y,u(k)+1);\n"
 						"end;"
-			editorLayout             		"100 M4x1[205 205 720 621]"
+			editorLayout             		"100 M4x1[83 211 970 697]"
 			treatIntsAsFixpt         		0
 		}
 	}
