@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.311"
+    ComputedModelVersion    "1.316"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Feb 04 16:43:52 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:311>"
+  LastModifiedDate	  "Fri Feb 05 09:10:58 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:316>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -694,6 +694,13 @@ Model {
       SampleTime	      "-1"
     }
     Block {
+      BlockType		      Merge
+      Inputs		      "2"
+      InitialOutput	      "[]"
+      AllowUnequalInputPortWidths off
+      InputPortOffsets	      "[]"
+    }
+    Block {
       BlockType		      Outport
       Port		      "1"
       UseBusObject	      off
@@ -939,7 +946,7 @@ Model {
       System {
 	Name			"Configure ECAN 1"
 	Location		[74, 82, 945, 767]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5296,8 +5303,8 @@ Model {
       MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[235, 107, 878, 509]
-	Open			off
+	Location		[537, 338, 1180, 740]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5473,8 +5480,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Remap Mxuint8 to 4xuint16"
-	    Location		    [438, 597, 1201, 906]
-	    Open		    off
+	    Location		    [172, 195, 935, 504]
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -5489,17 +5496,8 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "vector"
-	      Position		      [20, 100, 50, 114]
+	      Position		      [20, 98, 50, 112]
 	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      DataTypeConversion
-	      Name		      "Data Type Conversion"
-	      Position		      [80, 96, 135, 114]
-	      ShowName		      off
-	      OutDataTypeMode	      "uint16"
-	      RndMeth		      "Floor"
-	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
 	      BlockType		      Demux
@@ -5512,39 +5510,92 @@ Model {
 	      DisplayOption	      "bar"
 	    }
 	    Block {
-	      BlockType		      Reference
-	      Name		      "Reshape to 8x1"
+	      BlockType		      SubSystem
+	      Name		      "Pad to 8x1"
 	      Ports		      [1, 1]
-	      Position		      [175, 91, 250, 119]
-	      SourceBlock	      "dspsigops/Pad"
-	      SourceType	      "Pad"
-	      padAlong		      "Specified dimensions"
-	      dimsToPad		      "1"
-	      valSrc		      "Specify via dialog"
-	      padVal		      "0"
-	      spec		      "Output size"
-	      padNumOutRowsSpecMethod "User-specified"
-	      numOutRows	      "4"
-	      padNumOutColsSpecMethod "User-specified"
-	      numOutCols	      "1"
-	      isVarDimsMode	      off
-	      padBeginning	      "0"
-	      padEnd		      "0"
-	      outSizeMode	      "User-specified"
-	      outSize		      "8"
-	      padSigAt		      "End"
-	      trunc_flag	      "None"
-	      outputMode	      "Same as input"
-	      outputWordLength	      "0"
-	      outputFracLength	      "0"
-	      accumMode		      "Same as input"
-	      accumWordLength	      "0"
-	      accumFracLength	      "0"
-	      roundingMode	      "Floor"
-	      overflowMode	      off
-	      LockScale		      off
-	      truncOrWrapMode	      "Truncate"
-	      wrap_flag		      "None"
+	      Position		      [125, 84, 225, 126]
+	      MinAlgLoopOccurrences   off
+	      RTWSystemCode	      "Auto"
+	      FunctionWithSeparateData off
+	      MaskHideContents	      off
+	      System {
+		Name			"Pad to 8x1"
+		Location		[172, 610, 899, 910]
+		Open			on
+		ModelBrowserVisibility	off
+		ModelBrowserWidth	200
+		ScreenColor		"white"
+		PaperOrientation	"landscape"
+		PaperPositionMode	"auto"
+		PaperType		"usletter"
+		PaperUnits		"inches"
+		TiledPaperMargins	"[0.500000, 0.500000, 0.500000, 0.5000"
+"00]"
+		TiledPageScale		1
+		ShowPageBoundaries	off
+		ZoomFactor		"100"
+		Block {
+		  BlockType		  Inport
+		  Name			  "In1"
+		  Position		  [25, 103, 55, 117]
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Constant
+		  Name			  "Constant"
+		  Position		  [100, 120, 145, 140]
+		  Value			  "[0 0 0 0 0 0 0 0]"
+		  OutDataTypeMode	  "uint8"
+		}
+		Block {
+		  BlockType		  DataTypeConversion
+		  Name			  "Data Type Conversion"
+		  Position		  [270, 111, 325, 129]
+		  ShowName		  off
+		  OutDataTypeMode	  "uint16"
+		  RndMeth		  "Floor"
+		  SaturateOnIntegerOverflow off
+		}
+		Block {
+		  BlockType		  Merge
+		  Name			  "Merge"
+		  Ports			  [2, 1]
+		  Position		  [190, 100, 230, 140]
+		  InitialOutput		  "[0 0 0 0 0 0 0 0]"
+		  AllowUnequalInputPortWidths on
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "Out1"
+		  Position		  [350, 113, 380, 127]
+		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
+		}
+		Line {
+		  SrcBlock		  "In1"
+		  SrcPort		  1
+		  DstBlock		  "Merge"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Merge"
+		  SrcPort		  1
+		  DstBlock		  "Data Type Conversion"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Constant"
+		  SrcPort		  1
+		  DstBlock		  "Merge"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Data Type Conversion"
+		  SrcPort		  1
+		  DstBlock		  "Out1"
+		  DstPort		  1
+		}
+	      }
 	    }
 	    Block {
 	      BlockType		      SubSystem
@@ -5625,6 +5676,7 @@ Model {
 		  Name			  "combined"
 		  Position		  [280, 38, 310, 52]
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  "Shift\nArithmetic"
@@ -5732,6 +5784,7 @@ Model {
 		  Name			  "combined"
 		  Position		  [280, 38, 310, 52]
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  "low-order"
@@ -5839,6 +5892,7 @@ Model {
 		  Name			  "combined"
 		  Position		  [280, 38, 310, 52]
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  "Shift\nArithmetic"
@@ -5946,6 +6000,7 @@ Model {
 		  Name			  "combined"
 		  Position		  [280, 38, 310, 52]
 		  IconDisplay		  "Port number"
+		  BusOutputAsStruct	  off
 		}
 		Line {
 		  SrcBlock		  "low-order"
@@ -5977,29 +6032,33 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "data0"
-	      Position		      [485, 40, 515, 54]
+	      Position		      [485, 38, 515, 52]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "data1"
-	      Position		      [485, 75, 515, 89]
+	      Position		      [485, 73, 515, 87]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "data2"
-	      Position		      [485, 110, 515, 124]
+	      Position		      [485, 108, 515, 122]
 	      Port		      "3"
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "data3"
-	      Position		      [485, 145, 515, 159]
+	      Position		      [485, 143, 515, 157]
 	      Port		      "4"
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Demux"
@@ -6056,7 +6115,7 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Reshape to 8x1"
+	      SrcBlock		      "Pad to 8x1"
 	      SrcPort		      1
 	      DstBlock		      "Demux"
 	      DstPort		      1
@@ -6076,7 +6135,7 @@ Model {
 	    Line {
 	      SrcBlock		      "vector"
 	      SrcPort		      1
-	      DstBlock		      "Data Type Conversion"
+	      DstBlock		      "Pad to 8x1"
 	      DstPort		      1
 	    }
 	    Line {
@@ -6089,12 +6148,6 @@ Model {
 	      SrcBlock		      "uint8 combiner5"
 	      SrcPort		      1
 	      DstBlock		      "data3"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Data Type Conversion"
-	      SrcPort		      1
-	      DstBlock		      "Reshape to 8x1"
 	      DstPort		      1
 	    }
 	  }
@@ -6347,13 +6400,13 @@ Model {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "high-order"
-	      Position		      [30, 15, 60, 29]
+	      Position		      [30, 13, 60, 27]
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "low-order"
-	      Position		      [25, 50, 55, 64]
+	      Position		      [25, 48, 55, 62]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
 	    }
@@ -6395,8 +6448,9 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "combined"
-	      Position		      [280, 40, 310, 54]
+	      Position		      [280, 38, 310, 52]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "Shift\nArithmetic"
@@ -6503,6 +6557,7 @@ Model {
 	      Name		      "combined"
 	      Position		      [280, 38, 310, 52]
 	      IconDisplay	      "Port number"
+	      BusOutputAsStruct	      off
 	    }
 	    Line {
 	      SrcBlock		      "low-order"
@@ -6537,12 +6592,6 @@ Model {
 	  Points		  [50, 0]
 	  DstBlock		  "C-function Call"
 	  DstPort		  enable
-	}
-	Line {
-	  SrcBlock		  "data"
-	  SrcPort		  1
-	  DstBlock		  "Remap Mxuint8 to 4xuint16"
-	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "myMux Fun"
@@ -6643,6 +6692,12 @@ Model {
 	  Points		  [55, 0]
 	  DstBlock		  "myMux Fun"
 	  DstPort		  8
+	}
+	Line {
+	  SrcBlock		  "data"
+	  SrcPort		  1
+	  DstBlock		  "Remap Mxuint8 to 4xuint16"
+	  DstPort		  1
 	}
       }
     }
@@ -7422,8 +7477,6 @@ Stateflow {
 		firstJunction                             		37
 		viewObj                                   		35
 		machine                                   		1
-		subviewS {
-		}
 		decomposition                             		CLUSTER_CHART
 		type                                      		EML_CHART
 		firstData                                 		39
