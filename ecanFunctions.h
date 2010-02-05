@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+typedef unsigned long int uint32_t;
 typedef unsigned int uint16_t;
 typedef unsigned char uint8_t;
 
@@ -93,6 +94,11 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned c
  * Sends an ECAN message by calling txECAN1. Acts as a proxy for Simulink as that just likes fixed-size parameters that are arrays.
  */
 void ecan1_send(uint16_t*);
+
+/**
+ * Pull the top message from the ECAN1 reception buffer. Acts as a proxy for Simulink.
+ */
+void ecan1_receive(uint32_t* output);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 

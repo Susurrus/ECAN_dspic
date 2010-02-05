@@ -262,6 +262,26 @@ void ecan1_send(uint16_t* parameters) {
 			(unsigned char*)parameters[4]);
 }
 
+/**
+ * Function to return ECAN messages in a MATLAB-friendly format.
+ * @param output A pointer to a 4-element uint32 array.
+ * output[0] = identifier (bits 0-28)
+ * output[1] = CAN data, low-order bits
+ * output[2] = CAN data, high-order bits
+ * output[3] = # of valid data bytes, low-order bits
+ *             remote transmit bit  , high-order bits
+ */
+void ecan1_receive(uint32_t* output) {
+	tCanMessage msg;
+
+	msg = readFront(ecanBuffer);
+
+	output[0] = msg.id.ulData;
+	output[1] = *((uint32_t*)msg.payload);
+	output[2] = *((uint32_t*)&msg.payload[4]);
+	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
+}
+
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
 
 	// Give us a CAN message struct to populate and use
