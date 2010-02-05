@@ -246,19 +246,20 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned c
  * @param parameters An array of uint16_ts with configuration options documented below.
  * parameters[0] = bits 0-7 buffer number, 8-15 data length (in bytes)
  * parameters[1] = CAN identifier
- * parameters[2] = bits 0-7 ide bit, 8-15 remote transmit bit
- * parameters[3] = data bytes 0 and 1
- * parameters[4] = data bytes 2 and 3
- * parameters[5] = data bytes 4 and 5
- * parameters[6] = data bytes 6 and 7
+ * parameters[2] = CAN identifier (high-order bits)
+ * parameters[3] = bits 0-7 ide bit, 8-15 remote transmit bit
+ * parameters[4] = data bytes 0 and 1
+ * parameters[5] = data bytes 2 and 3
+ * parameters[6] = data bytes 4 and 5
+ * parameters[7] = data bytes 6 and 7
  */
 void ecan1_send(uint16_t* parameters) {
 	txECAN1((unsigned char)parameters[0], 
-	        (long)parameters[1],
-			(unsigned char)parameters[2],
-			(unsigned char)(parameters[2]>>8),
+	        ((long)parameters[1])|(((long)parameters[2])<<8),
+			(unsigned char)parameters[3],
+			(unsigned char)(parameters[3]>>8),
 			(unsigned char)(parameters[0]>>8),
-			(unsigned char*)parameters[3]);
+			(unsigned char*)parameters[4]);
 }
 
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
