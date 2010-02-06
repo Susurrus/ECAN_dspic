@@ -136,8 +136,9 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 
 	uint32_t word0 = 0, word1 = 0, word2 = 0;
 	uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
-
+	
 	// Variables for setting correct TXREQ bit
+	uint8_t bit_to_set;
 	uint16_t offset;
 	uint16_t* bufferCtrlRegAddr;
 	
@@ -178,7 +179,11 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
     offset = buffer >> 1;
 	bufferCtrlRegAddr = (uint16_t *)(&C1TR01CON + offset);
-	*bufferCtrlRegAddr |= (1 << (3 | ((buffer & 1) << 3)));
+	bit_to_set = 1 << (3 | ((buffer & 1) << 3));
+	*bufferCtrlRegAddr |= bit_to_set;
+	
+	// Block while message is being sent
+	while(((*bufferCtrlRegAddr) & bit_to_set) != 0);
 }
 
 void ecan1_transmit_matlab(uint16_t* parameters) {

@@ -20,13 +20,17 @@
   * FIXME: This code is only being developed to work for filters 0 through 3 for simplicity's sake.
   *
   * The parameters array is used as follows:
-  * parameters[0] = bits 0-1 specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), 
-                    bits 2-4 specify module mode (loopback, disabled, etc.),
-                    bits 5-7 specify which DMA channel to use for receiving,
-                    bits 8-10 specify which DMA channel to use for transmitting
+  * parameters[0] = bits 0-1: specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), 
+                    bits 2-4: specify module mode (loopback, disabled, etc.),
+                    bits 5-7: specify which DMA channel to use for receiving,
+                    bits 8-10: specify which DMA channel to use for transmitting
   * parameters[1] = bit rate in units of hundreds of bits per second
   * parameters[2] = oscillator frequency in hundreds of Hertz
-  * parameters[3] = bits 0-2 are phase segment 1, bits 3-5 are propagation delay, bits 6-8 are phase segment 2, bits 9-10 are sync jump width, bits 11 specifies triple sample at sampling point
+  * parameters[3] = bits 0-2: phase segment 1
+                    bits 3-5: propagation delay
+					bits 6-8: phase segment 2
+					bits 9-10: sync jump width
+					bit 11: specifies triple sample at sampling point
   * parameters[4] = filters 0 through 15 enable
   * parameters[5] = filters 0 through 7 mask select
   * parameters[6] = filters 8 through 15 mask select
@@ -75,6 +79,7 @@ void ecan1_receive_matlab(uint32_t* output);
 
 /**
  * This function transmits a CAN message on the ECAN1 CAN bus.
+ * NOTE: This function blocks until message is sent.
  * @param buf Transmission buffer ID
  * @param txIdentifier CAN message identifier (either 11 or 29 bits)
  * @param ide Single bit specifying if the message uses an extended ID

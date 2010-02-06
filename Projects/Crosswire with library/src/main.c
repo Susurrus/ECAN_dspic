@@ -139,34 +139,38 @@ int main(void)
 	C2INTEbits.TBIE = 1;	
 	C2INTEbits.RBIE = 1;
 
+	/**
+	 * Send first message from ECAN2
+	 */
 	ecan2WriteTxMsgBufId(0,0x402,0,0);
 	ecan2WriteTxMsgBufData(0,8,0xabcd,0xef12,0x3456,0x789a);
 	C2TR01CONbits.TXREQ0=1;
+	
+	// Block on message transmission
+	while(C2TR01CONbits.TXREQ0 == 1);
  
-/* Write a Message in ECAN1 Transmit Buffer	
-   Request Message Transmission			*/
-	unsigned short payload[4];
+	/**
+	 * Send second message from ECAN1
+	 */
+	uint16_t payload[4];
 	
 	payload[0] = 0x1234;
 	payload[1] = 0x5678;
 	payload[2] = 0x1234;
 	payload[3] = 0x5678;
 	
-	ecan1_transmit(0,0x300,0,0,8,(unsigned char*)payload);
+	ecan1_transmit(0,0x300,0,0,8,(uint8_t*)payload);
 
-	// Make sure to wait for the first message to send before sending a second
-	while(C2TR01CONbits.TXREQ0 == 1);
-
-/* Write a Message in ECAN2 Transmit Buffer
-   Request Message Transmission			*/
+	/**
+	 * Send third message from ECAN2
+	 */
 	ecan2WriteTxMsgBufId(0,0x402,0,0);
 	ecan2WriteTxMsgBufData(0,6,0x3344,0x7788,0x9911,0);
 	C2TR01CONbits.TXREQ0=1;
 	
-	// Check that every message was successfully sent. If the code runs
-	// past these checks, then the code probably executed correctly.
-	while(C1TR01CONbits.TXREQ0 == 1);
+	// Block on message transmission
 	while(C2TR01CONbits.TXREQ0 == 1);
+	
 	
 	/* This code should result in the following:
 	 * ecan1msgbuf[0-1] and ecan2msgbuf[0-1] filled with data
