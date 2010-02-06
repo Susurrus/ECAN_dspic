@@ -3,7 +3,7 @@ magic_cookie={66E99B07-E706-4689-9E80-9B2582898A13}
 file_version=1.0
 device=dsPIC33FJ256GP710
 [PATH_INFO]
-BuildDirPolicy=BuildDirIsProjectDir
+BuildDirPolicy=BuildDirIsSourceDir
 dir_src=
 dir_bin=hex
 dir_tmp=
