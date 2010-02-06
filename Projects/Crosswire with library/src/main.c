@@ -80,11 +80,7 @@ mID rx_ecan2message;
 // Prototype Declaration
 void oscConfig(void);
 void clearIntrflags(void);
-void ecan1WriteMessage(void);
-void ecan2WriteMessage(void);
-void setSpeed(short speed);
-void enableDrive();
-void disableDrive();
+void oscConfig(void);
 
 int main(void)
 {
@@ -156,7 +152,7 @@ int main(void)
 	payload[2] = 0x1234;
 	payload[3] = 0x5678;
 	
-	txECAN1(0,0x300,0,0,8,(unsigned char*)payload);
+	ecan1_transmit(0,0x300,0,0,8,(unsigned char*)payload);
 
 	// Make sure to wait for the first message to send before sending a second
 	while(C2TR01CONbits.TXREQ0 == 1);
@@ -172,6 +168,11 @@ int main(void)
 	while(C1TR01CONbits.TXREQ0 == 1);
 	while(C2TR01CONbits.TXREQ0 == 1);
 	
+	/* This code should result in the following:
+	 * ecan1msgbuf[0-1] and ecan2msgbuf[0-1] filled with data
+	 * ecanBuffer.buffer[0-1] full with CAN data.
+	 * ecanBuffer.head = 0 and ecanBuffer.tail = 2
+	 */
 	while(1);
 }
 

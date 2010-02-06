@@ -108,39 +108,16 @@ void ecan1_init(uint16_t* parameters) {
   dmaParameters[3] = __builtin_dmaoffset(ecan1msgBuf);
   dmaParameters[4] = ((parameters[0] >> 5) & 7);
   dmaParameters[5] = 0;
-  init_DMA(dmaParameters);
+  dma_init(dmaParameters);
   
   // Reception DMA
   dmaParameters[0] = 0x2208;
   dmaParameters[1] = (uint16_t)&C1RXD;
   dmaParameters[4] = ((parameters[0] >> 8) & 7);
-  init_DMA(dmaParameters);
+  dma_init(dmaParameters);
 }
 
-void init_DMA(uint16_t* parameters) {
-
-	// Determine the correct addresses for all needed registers
-	unsigned int offset = (parameters[4]*6);
-	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
-	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
-	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
-	unsigned int* secAddrOffsetRegAddr = (unsigned int *)(&DMA0STB + offset);
-	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
-	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
-
-	DMACS0 = 0; // Clear the status register
-
-	*periAddrRegAddr = (unsigned int)parameters[1]; // Set the peripheral address that will be using DMA
- 	*transCountRegAddr = (unsigned int)parameters[2]; // Set data units to words or bytes
-	*irqSelRegAddr = (unsigned int)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
-	*addrOffsetRegAddr = (unsigned int)parameters[3]; // Set primary DPSRAM start address bits
-	*secAddrOffsetRegAddr = (unsigned int)parameters[5]; // Set secondary DPSRAM start address bits
-	
-	// Setup the configuration register & enable DMA
-	*chanCtrlRegAddr = (unsigned int)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
-}
-
-void rxECAN1(tCanMessage* message)
+void ecan1_receive(tCanMessage* message)
 {
 	unsigned int ide=0;
 	unsigned int srr=0;
@@ -195,7 +172,7 @@ void rxECAN1(tCanMessage* message)
 	}	
 }
 
-void rxECAN1_matlab(uint32_t* output) {
+void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
 	msg = readFront(ecanBuffer);
@@ -206,7 +183,7 @@ void rxECAN1_matlab(uint32_t* output) {
 	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
 }
 
-void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
+void ecan1_transmit(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
 
 	unsigned long word0=0, word1=0, word2=0;
 	unsigned long sid10_0=0, eid5_0=0, eid17_6=0;
@@ -252,13 +229,36 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned c
 	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
 }
 
-void txECAN1_matlab(uint16_t* parameters) {
-	txECAN1((unsigned char)parameters[0], 
+void ecan1_transmit_matlab(uint16_t* parameters) {
+	ecan1_transmit((unsigned char)parameters[0], 
 	        ((long)parameters[1])|(((long)parameters[2])<<8),
 			(unsigned char)parameters[3],
 			(unsigned char)(parameters[3]>>8),
 			(unsigned char)(parameters[0]>>8),
 			(unsigned char*)parameters[4]);
+}
+
+void dma_init(uint16_t* parameters) {
+
+	// Determine the correct addresses for all needed registers
+	unsigned int offset = (parameters[4]*6);
+	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
+	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
+	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
+	unsigned int* secAddrOffsetRegAddr = (unsigned int *)(&DMA0STB + offset);
+	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
+	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
+
+	DMACS0 = 0; // Clear the status register
+
+	*periAddrRegAddr = (unsigned int)parameters[1]; // Set the peripheral address that will be using DMA
+ 	*transCountRegAddr = (unsigned int)parameters[2]; // Set data units to words or bytes
+	*irqSelRegAddr = (unsigned int)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
+	*addrOffsetRegAddr = (unsigned int)parameters[3]; // Set primary DPSRAM start address bits
+	*secAddrOffsetRegAddr = (unsigned int)parameters[5]; // Set secondary DPSRAM start address bits
+	
+	// Setup the configuration register & enable DMA
+	*chanCtrlRegAddr = (unsigned int)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
 }
 
 /**
@@ -286,7 +286,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		}
 		
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
-		rxECAN1(&canMsg);
+		ecan1_receive(&canMsg);
 		writeBack(ecanBuffer, canMsg);
 
 		// Be sure to clear the interrupt flag.

@@ -7,20 +7,13 @@
 #ifndef _ECANFUNCTIONS_H_
 #define _ECANFUNCTIONS_H_
 
- 
-// The SIM variable declares that this code is running in simulation mode on an x86 processor. It cuts or modifies code
-// that won't work or is unneccesary for simulation. This is useful for validating the settings the code makes.
-//#define SIM
-
 // Include various helpful header files
 // Only include dsPIC33f header if not simulating
 #include <p33Fxxxx.h>
 #include "ecanDefinitions.h"
 #include "circBuffer.h"
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
 
+// Specify some primitive types for convenience
 typedef unsigned long int uint32_t;
 typedef unsigned int uint16_t;
 typedef unsigned char uint8_t;
@@ -29,7 +22,7 @@ typedef unsigned char uint8_t;
   * This function initializes the first ECAN module. It takes a parameters array
   * of uint16s to specify all of the options.
   *
-  * This code is only being developed to work for filters 0 through 3 for simplicity's sake.
+  * FIXME: This code is only being developed to work for filters 0 through 3 for simplicity's sake.
   *
   * The parameters array is used as follows:
   * parameters[0] = bits 0-1 specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), 
@@ -68,22 +61,11 @@ typedef unsigned char uint8_t;
 void ecan1_init(uint16_t* parameters);
 
 /**
- * This function provides a general way to initialize the DMA peripheral.
- *
- * parameters[0] = IRQ address & squeezed version of DMAxCON minus CHEN bit
- * parameters[1] = address of peripheral (DMAxPAD)
- * parameters[2] = Number of memory units per DMA packet, starting at 1(DMAxCNT)
- * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
- * parameters[4] = Which DMA channel to configure
- * parameters[5] = Secondary DPSRAM start address offset bits (DMAxSTB)
- */
-void init_DMA(uint16_t* parameters);
-
-/**
  * This function copies a can message into the global
  * reception CAN circular buffer.
+ * @param message A tCanMessage struct pointer where received message will be stored.
  */
-void rxECAN1(tCanMessage* message);
+void ecan1_receive(tCanMessage* message);
 
 /**
  * Pop the top message from the ECAN1 reception buffer.
@@ -95,13 +77,18 @@ void rxECAN1(tCanMessage* message);
  * output[3] = bits 0-7: number of valid data bytes
  *             bits 8-15: remote transmit bit
  */
-void rxECAN1_matlab(uint32_t* output);
+void ecan1_receive_matlab(uint32_t* output);
 
 /**
  * This function transmits a CAN message on the ECAN1 CAN bus.
- 
+ * @param buf Transmission buffer ID
+ * @param txIdentifier CAN message identifier (either 11 or 29 bits)
+ * @param ide Single bit specifying if the message uses an extended ID
+ * @param remoteTransmit RTR bit specifying if this message requests a remote transmission
+ * @param dataLength Number of bytes of data passed
+ * @param data Data to transmit, between 0 and 8 bytes
  */
-void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data);
+void ecan1_transmit(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data);
 
 /**
  * Transmits an ECAN message by calling txECAN1.
@@ -118,7 +105,19 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned c
  * parameters[6] = data bytes 4 and 5
  * parameters[7] = data bytes 6 and 7
  */
-void txECAN1_matlab(uint16_t* parameters);
+void ecan1_transmit_matlab(uint16_t* parameters);
+
+/**
+ * This function provides a general way to initialize the DMA peripheral.
+ *
+ * parameters[0] = IRQ address & squeezed version of DMAxCON minus CHEN bit
+ * parameters[1] = address of peripheral (DMAxPAD)
+ * parameters[2] = Number of memory units per DMA packet, starting at 1(DMAxCNT)
+ * parameters[3] = Primary DPSRAM start address offset bits (DMAxSTA)
+ * parameters[4] = Which DMA channel to configure
+ * parameters[5] = Secondary DPSRAM start address offset bits (DMAxSTB)
+ */
+void dma_init(uint16_t* parameters);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 

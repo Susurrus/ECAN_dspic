@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.359"
+    ComputedModelVersion    "1.361"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Feb 06 10:34:59 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:359>"
+  LastModifiedDate	  "Sat Feb 06 11:05:11 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:361>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -588,7 +588,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Optimization"
+      CurrentDlgPage	      "Real-Time Workshop/Memory Sections"
     }
     PropName		    "ConfigurationSets"
   }
@@ -4883,7 +4883,7 @@ Model {
       System {
 	Name			"Receive ECAN1 Message"
 	Location		[452, 659, 1137, 881]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -4904,9 +4904,10 @@ Model {
 	  ShowName		  off
 	  List {
 	    ListType		    RTWdata
-	    FctDeclaration	    "extern void rxECAN1_matlab(uint32_T* y1);"
-	    FctCall		    "rxECAN1_matlab(*%y1);"
-	    fctName		    "rxECAN1_matlab"
+	    FctDeclaration	    "extern void ecan1_receive_matlab(uint32_T"
+"* y1);"
+	    FctCall		    "ecan1_receive_matlab(*%y1);"
+	    fctName		    "ecan1_receive_matlab"
 	    INPUT_SIZE		    "1"
 	    OUTPUT_SIZE		    "4"
 	    NBR_INPUT		    "0"
@@ -4914,7 +4915,7 @@ Model {
 	  }
 	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
 	  SourceType		  "C Function Call"
-	  fctName		  "'rxECAN1_matlab'"
+	  fctName		  "'ecan1_receive_matlab'"
 	  INPUT_SIZE		  "1"
 	  INPUT1		  "--"
 	  INPUT2		  "--"
@@ -4924,8 +4925,9 @@ Model {
 	  SampleTime		  "-1"
 	  InputType		  "[ ]"
 	  OutputType		  "[ 6 ]"
-	  FctDeclaration	  "extern void rxECAN1_matlab(uint32_T* y1);"
-	  FctCall		  "rxECAN1_matlab(*%y1);"
+	  FctDeclaration	  "extern void ecan1_receive_matlab(uint32_T* "
+"y1);"
+	  FctCall		  "ecan1_receive_matlab(*%y1);"
 	  OrderingInOutPopup	  "None"
 	}
 	Block {
@@ -5499,7 +5501,7 @@ Model {
       System {
 	Name			"Send ECAN1 Message"
 	Location		[284, 133, 927, 535]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -5523,7 +5525,7 @@ Model {
 	  System {
 	    Name		    "C-function Call"
 	    Location		    [742, 195, 1106, 379]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -5556,10 +5558,10 @@ Model {
 	      BackgroundColor	      "orange"
 	      List {
 		ListType		RTWdata
-		FctDeclaration		"extern void txECAN1_matlab(uint16_T* "
-"u1);"
-		FctCall			"txECAN1_matlab(*%u1);"
-		fctName			"txECAN1_matlab"
+		FctDeclaration		"extern void ecan1_transmit_matlab(uin"
+"t16_T* u1);"
+		FctCall			"ecan1_transmit_matlab(*%u1);"
+		fctName			"ecan1_transmit_matlab"
 		INPUT_SIZE		"8"
 		OUTPUT_SIZE		"1"
 		NBR_INPUT		"1"
@@ -5567,7 +5569,7 @@ Model {
 	      }
 	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
 	      SourceType	      "C Function Call"
-	      fctName		      "'txECAN1_matlab'"
+	      fctName		      "'ecan1_transmit_matlab'"
 	      INPUT_SIZE	      "8"
 	      INPUT1		      "uint16"
 	      INPUT2		      "--"
@@ -5577,9 +5579,9 @@ Model {
 	      SampleTime	      "c_func_sample_time"
 	      InputType		      "[ 4 ]"
 	      OutputType	      "[ ]"
-	      FctDeclaration	      "extern void txECAN1_matlab(uint16_T* u1"
-");"
-	      FctCall		      "txECAN1_matlab(*%u1);"
+	      FctDeclaration	      "extern void ecan1_transmit_matlab(uint1"
+"6_T* u1);"
+	      FctCall		      "ecan1_transmit_matlab(*%u1);"
 	      OrderingInOutPopup      "None"
 	    }
 	    Line {
