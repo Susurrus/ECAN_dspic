@@ -81,24 +81,44 @@ void init_DMA(uint16_t* parameters);
 
 /**
  * This function copies a can message into the global
- * reception CAN circular buffer
+ * reception CAN circular buffer.
  */
 void rxECAN1(tCanMessage* message);
 
 /**
+ * Pop the top message from the ECAN1 reception buffer.
+ * Parameters designed to interface with MATLAB C-function block.
+ * @param output A pointer to a 4-element uint32 array.
+ * output[0] = identifier (bits 0-28)
+ * output[1] = CAN data, low-order bits
+ * output[2] = CAN data, high-order bits
+ * output[3] = bits 0-7: number of valid data bytes
+ *             bits 8-15: remote transmit bit
+ */
+void rxECAN1_matlab(uint32_t* output);
+
+/**
  * This function transmits a CAN message on the ECAN1 CAN bus.
+ 
  */
 void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data);
 
 /**
- * Sends an ECAN message by calling txECAN1. Acts as a proxy for Simulink as that just likes fixed-size parameters that are arrays.
+ * Transmits an ECAN message by calling txECAN1.
+ * Parameters designed to interface with MATLAB C-function block.
+ * @param parameters An array of uint16_ts with configuration options documented below.
+ * parameters[0] = bits 0-7: ECAN buffer number
+ *                 bits 8-15: data length (in bytes)
+ * parameters[1] = CAN identifier
+ * parameters[2] = CAN identifier (high-order bits)
+ * parameters[3] = bits 0-7: ide bit
+ *                 bits 8-15: remote transmit bit
+ * parameters[4] = data bytes 0 and 1
+ * parameters[5] = data bytes 2 and 3
+ * parameters[6] = data bytes 4 and 5
+ * parameters[7] = data bytes 6 and 7
  */
-void ecan1_send(uint16_t*);
-
-/**
- * Pull the top message from the ECAN1 reception buffer. Acts as a proxy for Simulink.
- */
-void ecan1_receive(uint32_t* output);
+void txECAN1_matlab(uint16_t* parameters);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 

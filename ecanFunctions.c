@@ -195,6 +195,17 @@ void rxECAN1(tCanMessage* message)
 	}	
 }
 
+void rxECAN1_matlab(uint32_t* output) {
+	tCanMessage msg;
+
+	msg = readFront(ecanBuffer);
+
+	output[0] = msg.id.ulData;
+	output[1] = *((uint32_t*)msg.payload);
+	output[2] = *((uint32_t*)&msg.payload[4]);
+	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
+}
+
 void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
 
 	unsigned long word0=0, word1=0, word2=0;
@@ -241,19 +252,7 @@ void txECAN1(unsigned char buf, long txIdentifier, unsigned char ide, unsigned c
 	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
 }
 
-/**
- * Function for MATLAB to transmit a CAN message.
- * @param parameters An array of uint16_ts with configuration options documented below.
- * parameters[0] = bits 0-7 buffer number, 8-15 data length (in bytes)
- * parameters[1] = CAN identifier
- * parameters[2] = CAN identifier (high-order bits)
- * parameters[3] = bits 0-7 ide bit, 8-15 remote transmit bit
- * parameters[4] = data bytes 0 and 1
- * parameters[5] = data bytes 2 and 3
- * parameters[6] = data bytes 4 and 5
- * parameters[7] = data bytes 6 and 7
- */
-void ecan1_send(uint16_t* parameters) {
+void txECAN1_matlab(uint16_t* parameters) {
 	txECAN1((unsigned char)parameters[0], 
 	        ((long)parameters[1])|(((long)parameters[2])<<8),
 			(unsigned char)parameters[3],
@@ -263,31 +262,17 @@ void ecan1_send(uint16_t* parameters) {
 }
 
 /**
- * Function to return ECAN messages in a MATLAB-friendly format.
- * @param output A pointer to a 4-element uint32 array.
- * output[0] = identifier (bits 0-28)
- * output[1] = CAN data, low-order bits
- * output[2] = CAN data, high-order bits
- * output[3] = # of valid data bytes, low-order bits
- *             remote transmit bit  , high-order bits
+ * This is an interrupt handler for the ECAN1 peripheral.
+ * It clears interrupt bits and pushes received message into
+ * the circular buffer.
  */
-void ecan1_receive(uint32_t* output) {
-	tCanMessage msg;
-
-	msg = readFront(ecanBuffer);
-
-	output[0] = msg.id.ulData;
-	output[1] = *((uint32_t*)msg.payload);
-	output[2] = *((uint32_t*)&msg.payload[4]);
-	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
-}
-
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
 
 	// Give us a CAN message struct to populate and use
 	tCanMessage canMsg;
 	
-	// If the interrupt was set because of a transmit
+	// If the interrupt was set because of a transmit,
+	// clear the corresponding bit.
 	if(C1INTFbits.TBIF){ 
 		C1INTFbits.TBIF = 0;
 	}
