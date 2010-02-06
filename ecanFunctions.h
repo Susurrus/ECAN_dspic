@@ -61,11 +61,10 @@ typedef unsigned char uint8_t;
 void ecan1_init(uint16_t* parameters);
 
 /**
- * This function copies a can message into the global
- * reception CAN circular buffer.
- * @param message A tCanMessage struct pointer where received message will be stored.
+ * Pops the top message from the ECAN1 reception buffer.
+ * @return A tCanMessage struct with the older message data.
  */
-void ecan1_receive(tCanMessage* message);
+tCanMessage ecan1_receive();
 
 /**
  * Pop the top message from the ECAN1 reception buffer.

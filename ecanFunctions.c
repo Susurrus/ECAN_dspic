@@ -1,7 +1,7 @@
 #include "ecanFunctions.h"
 
 // Declare space for our message buffer in DMA
-unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
+uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffer for receiving CAN messages
 struct CircBuffer testBuffer;
@@ -117,59 +117,8 @@ void ecan1_init(uint16_t* parameters) {
   dma_init(dmaParameters);
 }
 
-void ecan1_receive(tCanMessage* message)
-{
-	unsigned int ide=0;
-	unsigned int srr=0;
-	unsigned long id=0;
-			
-	// read word 0 to see the message type 
-	ide=ecan1msgBuf[message->buffer][0] & 0x0001;	
-	srr=ecan1msgBuf[message->buffer][0] & 0x0002;	
-	
-	/* check to see what type of message it is */
-	/* message is standard identifier */
-	if(0==ide)
-	{
-		message->id = (tUnsignedLongToChar)(unsigned long)((ecan1msgBuf[message->buffer][0] & 0x1FFC) >> 2);		
-		message->frame_type = CAN_FRAME_STD;
-	}
-	/* mesage is extended identifier */
-	else
-	{
-		// If extended compute the extended ID
-		id = ecan1msgBuf[message->buffer][0] & 0x1FFC;		
-		message->id.ulData = (id << 16);
-		id = ecan1msgBuf[message->buffer][1] & 0x0FFF;
-		message->id.ulData = (message->id.ulData + (id << 6));
-		id = (ecan1msgBuf[message->buffer][2] & 0xFC00) >> 10;
-		message->id.ulData = (message->id.ulData + id);
-		
-		// Se the frame type to extended
-		message->frame_type = CAN_FRAME_EXT;
-	}
-	/* check to see what type of message it is */
-	/* RTR message */
-	if(1==srr)
-	{
-		message->message_type=CAN_MSG_RTR;	
-	}
-	/* normal message */
-	else
-	{
-		// set the data type
-		message->message_type=CAN_MSG_DATA;
-		
-		message->payload[0]=(unsigned char)ecan1msgBuf[message->buffer][3];
-		message->payload[1]=(unsigned char)((ecan1msgBuf[message->buffer][3] & 0xFF00) >> 8);
-		message->payload[2]=(unsigned char)ecan1msgBuf[message->buffer][4];
-		message->payload[3]=(unsigned char)((ecan1msgBuf[message->buffer][4] & 0xFF00) >> 8);
-		message->payload[4]=(unsigned char)ecan1msgBuf[message->buffer][5];
-		message->payload[5]=(unsigned char)((ecan1msgBuf[message->buffer][5] & 0xFF00) >> 8);
-		message->payload[6]=(unsigned char)ecan1msgBuf[message->buffer][6];
-		message->payload[7]=(unsigned char)((ecan1msgBuf[message->buffer][6] & 0xFF00) >> 8);
-		message->validBytes=(unsigned char)(ecan1msgBuf[message->buffer][2] & 0x000F);
-	}	
+tCanMessage ecan1_receive() {
+	return readFront(ecanBuffer);
 }
 
 void ecan1_receive_matlab(uint32_t* output) {
@@ -183,36 +132,39 @@ void ecan1_receive_matlab(uint32_t* output) {
 	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
 }
 
-void ecan1_transmit(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data){
+void ecan1_transmit(uint8_t buf, long txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data){
 
 	unsigned long word0=0, word1=0, word2=0;
 	unsigned long sid10_0=0, eid5_0=0, eid17_6=0;
 
 	// Variables for setting correct TXREQ bit
-	unsigned int offset;
-	unsigned int* bufferCtrlRegAddr;
+	uint16_t offset;
+	uint16_t* bufferCtrlRegAddr;
 	
-	if(ide) {
+	if (ide) {
 		eid5_0  = (txIdentifier & 0x3F);
 		eid17_6 = (txIdentifier>>6) & 0xFFF;
 		sid10_0 = (txIdentifier>>18) & 0x7FF;
 		word1 = eid17_6;
-	}	else {
+	}
+	else {
 		sid10_0 = (txIdentifier & 0x7FF);
 	}
 
 
-	if(remoteTransmit==1) { 	// Transmit Remote Frame
+	if (remoteTransmit == 1) { 	// Transmit Remote Frame
 		word0 = ((sid10_0 << 2) | ide | 0x2);
 		word2 = ((eid5_0 << 10)| 0x0200);
-	}	else {
+	}
+	else {
 		word0 = ((sid10_0 << 2) | ide);
 		word2 = (eid5_0 << 10);
 	}
 
-	if(ide) {
+	if (ide) {
 		ecan1msgBuf[buf][0] = (word0 | 0x0002);
-	} else {
+	}
+	else {
 		ecan1msgBuf[buf][0] = word0;
 	}
 
@@ -225,40 +177,40 @@ void ecan1_transmit(unsigned char buf, long txIdentifier, unsigned char ide, uns
 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
     offset = buf >> 1;
-	bufferCtrlRegAddr = (unsigned int *)(&C1TR01CON + offset);
+	bufferCtrlRegAddr = (uint16_t *)(&C1TR01CON + offset);
 	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
 }
 
 void ecan1_transmit_matlab(uint16_t* parameters) {
-	ecan1_transmit((unsigned char)parameters[0], 
-	        ((long)parameters[1])|(((long)parameters[2])<<8),
-			(unsigned char)parameters[3],
-			(unsigned char)(parameters[3]>>8),
-			(unsigned char)(parameters[0]>>8),
-			(unsigned char*)parameters[4]);
+	ecan1_transmit((uint8_t)parameters[0], 
+	        ((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<8),
+			(uint8_t)parameters[3],
+			(uint8_t)(parameters[3]>>8),
+			(uint8_t)(parameters[0]>>8),
+			(uint8_t*)parameters[4]);
 }
 
 void dma_init(uint16_t* parameters) {
 
 	// Determine the correct addresses for all needed registers
-	unsigned int offset = (parameters[4]*6);
-	unsigned int* chanCtrlRegAddr = (unsigned int *)(&DMA0CON + offset);
-	unsigned int* irqSelRegAddr = (unsigned int *)(&DMA0REQ + offset);
-	unsigned int* addrOffsetRegAddr = (unsigned int *)(&DMA0STA + offset);
-	unsigned int* secAddrOffsetRegAddr = (unsigned int *)(&DMA0STB + offset);
-	unsigned int* periAddrRegAddr = (unsigned int *)(&DMA0PAD + offset);
-	unsigned int* transCountRegAddr = (unsigned int *)(&DMA0CNT + offset);
+	uint16_t offset = (parameters[4]*6);
+	uint16_t* chanCtrlRegAddr = (uint16_t *)(&DMA0CON + offset);
+	uint16_t* irqSelRegAddr = (uint16_t *)(&DMA0REQ + offset);
+	uint16_t* addrOffsetRegAddr = (uint16_t *)(&DMA0STA + offset);
+	uint16_t* secAddrOffsetRegAddr = (uint16_t *)(&DMA0STB + offset);
+	uint16_t* periAddrRegAddr = (uint16_t *)(&DMA0PAD + offset);
+	uint16_t* transCountRegAddr = (uint16_t *)(&DMA0CNT + offset);
 
 	DMACS0 = 0; // Clear the status register
 
-	*periAddrRegAddr = (unsigned int)parameters[1]; // Set the peripheral address that will be using DMA
- 	*transCountRegAddr = (unsigned int)parameters[2]; // Set data units to words or bytes
-	*irqSelRegAddr = (unsigned int)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
-	*addrOffsetRegAddr = (unsigned int)parameters[3]; // Set primary DPSRAM start address bits
-	*secAddrOffsetRegAddr = (unsigned int)parameters[5]; // Set secondary DPSRAM start address bits
+	*periAddrRegAddr = (uint16_t)parameters[1]; // Set the peripheral address that will be using DMA
+ 	*transCountRegAddr = (uint16_t)parameters[2]; // Set data units to words or bytes
+	*irqSelRegAddr = (uint16_t)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
+	*addrOffsetRegAddr = (uint16_t)parameters[3]; // Set primary DPSRAM start address bits
+	*secAddrOffsetRegAddr = (uint16_t)parameters[5]; // Set secondary DPSRAM start address bits
 	
 	// Setup the configuration register & enable DMA
-	*chanCtrlRegAddr = (unsigned int)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
+	*chanCtrlRegAddr = (uint16_t)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
 }
 
 /**
@@ -269,25 +221,75 @@ void dma_init(uint16_t* parameters) {
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
 
 	// Give us a CAN message struct to populate and use
-	tCanMessage canMsg;
+	tCanMessage message;
+	uint8_t ide = 0;
+	uint8_t srr = 0;
+	uint32_t id = 0;
+	uint8_t buffer = 0;
 	
 	// If the interrupt was set because of a transmit,
-	// clear the corresponding bit.
-	if(C1INTFbits.TBIF){ 
+	// just clear the corresponding bit.
+	if (C1INTFbits.TBIF) { 
 		C1INTFbits.TBIF = 0;
 	}
 
-	// if the interrupt was fired because of a received message
+	// If the interrupt was fired because of a received message
+	// package it all up and store in the circular buffer.
 	if (C1INTFbits.RBIF) {
 		// read the message 
-		if (C1RXFUL1bits.RXFUL1==1) {
-			canMsg.buffer=1; // Set which buffer the message is in
-			C1RXFUL1bits.RXFUL1=0;
+		if (C1RXFUL1bits.RXFUL1 == 1) {
+			buffer = 1; // Set which buffer the message is in
+			C1RXFUL1bits.RXFUL1 = 0;
 		}
 		
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
-		ecan1_receive(&canMsg);
-		writeBack(ecanBuffer, canMsg);
+				
+		// read word 0 to see the message type 
+		ide = ecan1msgBuf[buffer][0] & 0x0001;	
+		srr = ecan1msgBuf[buffer][0] & 0x0002;	
+		
+		/* Format the message properly according to whether it
+		 * uses an extended identifier or not.
+		 */
+		if (ide == 0) {		
+			message.frame_type = CAN_FRAME_STD;
+			
+			message.id = (tUnsignedLongToChar)(uint32_t)((ecan1msgBuf[buffer][0] & 0x1FFC) >> 2);
+		}
+		else {
+			message.frame_type = CAN_FRAME_EXT;
+			
+			id = ecan1msgBuf[buffer][0] & 0x1FFC;		
+			message.id.ulData = (id << 16);
+			id = ecan1msgBuf[buffer][1] & 0x0FFF;
+			message.id.ulData = (message.id.ulData + (id << 6));
+			id = (ecan1msgBuf[buffer][2] & 0xFC00) >> 10;
+			message.id.ulData = (message.id.ulData + id);
+		}
+		
+		/* If message is a remote transmit request, mark it as such.
+		 * Otherwise it will be a regular transmission so fill its
+		 * payload with the relevant data.
+		 */
+		if (srr == 1) {
+			message.message_type = CAN_MSG_RTR;	
+		}
+		else {
+			message.message_type = CAN_MSG_DATA;
+			
+			message.validBytes = (uint8_t)(ecan1msgBuf[buffer][2] & 0x000F);
+			message.payload[0] = (uint8_t)ecan1msgBuf[buffer][3];
+			message.payload[1] = (uint8_t)((ecan1msgBuf[buffer][3] & 0xFF00) >> 8);
+			message.payload[2] = (uint8_t)ecan1msgBuf[buffer][4];
+			message.payload[3] = (uint8_t)((ecan1msgBuf[buffer][4] & 0xFF00) >> 8);
+			message.payload[4] = (uint8_t)ecan1msgBuf[buffer][5];
+			message.payload[5] = (uint8_t)((ecan1msgBuf[buffer][5] & 0xFF00) >> 8);
+			message.payload[6] = (uint8_t)ecan1msgBuf[buffer][6];
+			message.payload[7] = (uint8_t)((ecan1msgBuf[buffer][6] & 0xFF00) >> 8);
+		}
+		
+		// Send off the message
+		writeBack(ecanBuffer, message);
 
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;

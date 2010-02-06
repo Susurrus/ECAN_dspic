@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.361"
+    ComputedModelVersion    "1.362"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Feb 06 11:05:11 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:361>"
+  LastModifiedDate	  "Sat Feb 06 11:30:38 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:362>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -779,7 +779,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [46, 453, 844, 894]
+    Location		    [230, 214, 1028, 655]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
