@@ -21,30 +21,30 @@
 // ==========================
 // this Function creates a new Circular Buffer 
 
-	void newCircBuffer (CBRef cB){
-		
-		// initialize to zero
-		int i;
-		for (i=0; i<BSIZE; i++){
-			memset(&(cB->buffer[i]), 0, sizeof(tCanMessage));
-		}
-				
-		// initialize the data members
-		cB->head = 0;
-		cB->tail = 0;
-		cB->size = BSIZE;
-		cB->overflowCount = 0;
-
+void newCircBuffer (CBRef cB){
+	
+	// initialize to zero
+	uint8_t i;
+	for (i=0; i<BSIZE; i++){
+		memset(&(cB->buffer[i]), 0, sizeof(tCanMessage));
 	}
+			
+	// initialize the data members
+	cB->head = 0;
+	cB->tail = 0;
+	cB->size = BSIZE;
+	cB->overflowCount = 0;
+
+}
 
 // this function frees the Circular Buffer CB Ref
-	void freeCircBuffer (CBRef* cB){
-		// if it is already null, nothing to free
-		if (cB == NULL || *cB == NULL) {return;}
-				
-		// free and nil the pointer
-		*cB = NULL;
-	}
+void freeCircBuffer (CBRef* cB){
+	// if it is already null, nothing to free
+	if (cB == NULL || *cB == NULL) {return;}
+			
+	// free and nil the pointer
+	*cB = NULL;
+}
 	
 
 
@@ -52,7 +52,7 @@
 // ===============
 
 // returns the amount of unread bytes in the circular buffer
-unsigned int getLength (CBRef cB){	
+uint16_t getLength (CBRef cB){	
 	// if the circular buffer is not null
 	if (cB != NULL){
 		if (cB->head <= cB->tail){
@@ -69,7 +69,7 @@ unsigned int getLength (CBRef cB){
 }
 
 // returns the actual index of the head
-unsigned int readHead (CBRef cB){
+uint16_t readHead (CBRef cB){
 	// if the circular buffer is not null
 	if (cB != NULL){
 		return (cB->head);
@@ -81,7 +81,7 @@ unsigned int readHead (CBRef cB){
 }
 
 // returns the actual index of the tail
-unsigned int readTail (CBRef cB){
+uint16_t readTail (CBRef cB){
 	// if the circular buffer is not null
 	if (cB != NULL){
 		return (cB->tail);
@@ -158,7 +158,7 @@ void makeEmpty(CBRef cB){
 }
 
 // returns the amount of times the CB has overflown;
-unsigned char getOverflow(CBRef cB){
+uint8_t getOverflow(CBRef cB){
 	if (cB != NULL){
 		return cB->overflowCount;
 	}
@@ -170,7 +170,7 @@ unsigned char getOverflow(CBRef cB){
 // ===============
 // prints the circular buffer, used for debug
 void printCircBuf(CBRef cB){
-	int i,j;
+	uint16_t i,j;
 	// if the circular buffer is not null
 	if (cB != NULL){
 		printf("Buffer Size: \t%d\n", cB->size );
@@ -186,7 +186,7 @@ void printCircBuf(CBRef cB){
 			printf("Buffer:\t\t%d\n", cB->buffer[i].buffer);
 			printf("Data Bytes: ");
 			printf("[");
-			for(j=0; j < 8; j++){
+			for(j = 0; j < 8; j++){
 				printf("%d ", cB->buffer[i].payload[j]);
 			}
 			printf("]\n");			

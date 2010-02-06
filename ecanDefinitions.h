@@ -13,47 +13,52 @@
 #define CAN_FRAME_EXT	0x03 // Frame type
 #define CAN_FRAME_STD	0x04 // extended or standard
 
+// Specify some primitive types for convenience
+typedef long int int32_t;
+typedef unsigned long int uint32_t;
+typedef int int16_t;
+typedef unsigned int uint16_t;
+typedef char int8_t;
+typedef unsigned char uint8_t;
 
 // Union definitions used to manipulate bytes for data
 // sending and receiving but interpreting them as 
 // signed/unsigned integers and/or floats
 
 typedef union{
-	unsigned char    chData[2];
-	unsigned short   usData;
+	uint8_t  chData[2];
+	uint16_t usData;
 } tUnsignedShortToChar; 
 
 typedef union{
-	unsigned char    chData[2];
- 	short   		 shData;
+	uint8_t chData[2];
+ 	int16_t shData;
 } tShortToChar; 
 
 typedef union{
-	unsigned char   	chData[4];
- 	unsigned long   	ulData;
+	uint8_t  chData[4];
+ 	uint32_t ulData;
 } tUnsignedLongToChar; 
 
 typedef union{
-	unsigned char   chData[4];
- 	long   					loData;
+	uint8_t	chData[4];
+ 	int32_t loData;
 } tLongToChar; 
 
 typedef union{
-	unsigned char   chData[4];
- 	float   		flData;
-	unsigned short	shData[2];
+	uint8_t  chData[4];
+ 	float    flData;
+	uint16_t shData[2];
 } tFloatToChar; 
 
 
 // Data structures
-
 typedef struct tCanMessage{
 	tUnsignedLongToChar 				id;
-	unsigned char						message_type;
-	unsigned char						frame_type;
-	unsigned char						payload [8];
-	unsigned char 						validBytes;
-	unsigned char						buffer;
+	uint8_t						message_type;
+	uint8_t						frame_type;
+	uint8_t						payload [8];
+	uint8_t 						validBytes;
 }tCanMessage;
 
 

@@ -34,10 +34,10 @@
 
 typedef struct CircBuffer{
 	tCanMessage buffer[BSIZE];
-	unsigned int head;
-	unsigned int tail;
-	unsigned int size;
-	unsigned char overflowCount;
+	uint16_t head;
+	uint16_t tail;
+	uint16_t size;
+	uint8_t overflowCount;
 }CircBuffer;
 	
 
@@ -49,7 +49,7 @@ typedef struct CircBuffer* CBRef;
 // ==========================
 // this Function returns a pointer to a new Circular Buffer of 
 // size pm_size 
-	void newCircBuffer (CBRef cB);
+void newCircBuffer (CBRef cB);
 
 
 // this function frees the Circular Buffer CB Ref
@@ -60,13 +60,13 @@ void freeCircBuffer (CBRef* cB);
 // ===============
 
 // returns the amount of unread bytes in the circular buffer
-unsigned int getLength (CBRef cB);
+uint16_t getLength (CBRef cB);
 
 // returns the actual index of the head
-unsigned int readHead (CBRef cB);
+uint16_t readHead (CBRef cB);
 
 // returns the actual index of the tail
-unsigned int readTail (CBRef cB);
+uint16_t readTail (CBRef cB);
 
 // returns the struct (actual value) that the head points to. this
 // does not mark the struct as read, so succesive calls to peak will
@@ -76,17 +76,17 @@ tCanMessage peek(CBRef cB);
 
 // Manipulation Procedures
 // ======================
-// returns the front of the circular buffer and marks the byte as read
+// returns the front of the circular buffer and marks the tCanMessage as read
 tCanMessage readFront (CBRef cB);
 
-// writes one byte at the end of the circular buffer.
+// writes one tCanMessage at the end of the circular buffer.
 void writeBack (CBRef cB, tCanMessage data);
 
 // empties the circular buffer. It does not change the size. use with caution!!
 void makeEmpty (CBRef cB);
 
 // returns the amount of times the CB has overflown;
-unsigned char getOverflow(CBRef cB);
+uint8_t getOverflow(CBRef cB);
 
 
 #ifdef DEBUG

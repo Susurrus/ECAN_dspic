@@ -13,11 +13,6 @@
 #include "ecanDefinitions.h"
 #include "circBuffer.h"
 
-// Specify some primitive types for convenience
-typedef unsigned long int uint32_t;
-typedef unsigned int uint16_t;
-typedef unsigned char uint8_t;
-
  /**
   * This function initializes the first ECAN module. It takes a parameters array
   * of uint16s to specify all of the options.
@@ -87,7 +82,7 @@ void ecan1_receive_matlab(uint32_t* output);
  * @param dataLength Number of bytes of data passed
  * @param data Data to transmit, between 0 and 8 bytes
  */
-void ecan1_transmit(unsigned char buf, long txIdentifier, unsigned char ide, unsigned char remoteTransmit, unsigned char dataLength, unsigned char* data);
+void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data);
 
 /**
  * Transmits an ECAN message by calling txECAN1.

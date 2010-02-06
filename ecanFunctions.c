@@ -25,7 +25,7 @@ void ecan1_init(uint16_t* parameters) {
   uint16_t b = (parameters[3] & 0x0038) >> 3;
   uint16_t c = (parameters[3] & 0x01C0) >> 6;
   
-  unsigned long int ftq = parameters[2]/parameters[1]*10;
+  uint32_t ftq = parameters[2]/parameters[1]*10;
   ftq = ftq / (2 * (a+b+c+4)); // Divide by the 2*number of time quanta (4 is because of the 1-offset for a/b/c and the sync segment)
   C1CFG1bits.BRP = ftq - 1;
   C1CFG1bits.SJW = (parameters[3] & 0x0600) >> 9;
@@ -132,10 +132,10 @@ void ecan1_receive_matlab(uint32_t* output) {
 	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
 }
 
-void ecan1_transmit(uint8_t buf, long txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data){
+void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data){
 
-	unsigned long word0=0, word1=0, word2=0;
-	unsigned long sid10_0=0, eid5_0=0, eid17_6=0;
+	uint32_t word0 = 0, word1 = 0, word2 = 0;
+	uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
 
 	// Variables for setting correct TXREQ bit
 	uint16_t offset;
@@ -162,23 +162,23 @@ void ecan1_transmit(uint8_t buf, long txIdentifier, uint8_t ide, uint8_t remoteT
 	}
 
 	if (ide) {
-		ecan1msgBuf[buf][0] = (word0 | 0x0002);
+		ecan1msgBuf[buffer][0] = (word0 | 0x0002);
 	}
 	else {
-		ecan1msgBuf[buf][0] = word0;
+		ecan1msgBuf[buffer][0] = word0;
 	}
 
-	ecan1msgBuf[buf][1] = word1;
-	ecan1msgBuf[buf][2] = ((word2 & 0xFFF0) + dataLength) ;
-	ecan1msgBuf[buf][3] = ((unsigned short*)data)[0];
-	ecan1msgBuf[buf][4] = ((unsigned short*)data)[1];
-	ecan1msgBuf[buf][5] = ((unsigned short*)data)[2];
-	ecan1msgBuf[buf][6] = ((unsigned short*)data)[3];
+	ecan1msgBuf[buffer][1] = word1;
+	ecan1msgBuf[buffer][2] = ((word2 & 0xFFF0) + dataLength) ;
+	ecan1msgBuf[buffer][3] = ((uint16_t*)data)[0];
+	ecan1msgBuf[buffer][4] = ((uint16_t*)data)[1];
+	ecan1msgBuf[buffer][5] = ((uint16_t*)data)[2];
+	ecan1msgBuf[buffer][6] = ((uint16_t*)data)[3];
 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
-    offset = buf >> 1;
+    offset = buffer >> 1;
 	bufferCtrlRegAddr = (uint16_t *)(&C1TR01CON + offset);
-	*bufferCtrlRegAddr |= (1 << (3 | ((buf & 1) << 3)));
+	*bufferCtrlRegAddr |= (1 << (3 | ((buffer & 1) << 3)));
 }
 
 void ecan1_transmit_matlab(uint16_t* parameters) {
