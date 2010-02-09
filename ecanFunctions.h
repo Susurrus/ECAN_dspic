@@ -17,8 +17,6 @@
   * This function initializes the first ECAN module. It takes a parameters array
   * of uint16s to specify all of the options.
   *
-  * FIXME: This code is only being developed to work for filters 0 through 3 for simplicity's sake.
-  *
   * The parameters array is used as follows:
   * parameters[0] = bits 0-1: specify standard or extended frames (1 for standard, 2 for extended, 0 means ECAN is not used), 
                     bits 2-4: specify module mode (loopback, disabled, etc.),
@@ -56,6 +54,30 @@
   * parameters[26] = filter 2 (extended 15-0)
   * parameters[27] = filter 3 (standard, exide, ei17-16)
   * parameters[28] = filter 3 (extended 15-0)
+  * parameters[29] = filter 4 (standard, exide, ei17-16)
+  * parameters[30] = filter 4 
+  * parameters[31] = filter 5 (standard, exide, ei17-16)
+  * parameters[32] = filter 5 (extended 15-0)(extended 15-0)
+  * parameters[33] = filter 6 (standard, exide, ei17-16)
+  * parameters[34] = filter 6 (extended 15-0)
+  * parameters[35] = filter 7 (standard, exide, ei17-16)
+  * parameters[36] = filter 7 (extended 15-0)
+  * parameters[37] = filter 8 (standard, exide, ei17-16)
+  * parameters[38] = filter 8 (extended 15-0)
+  * parameters[39] = filter 9 (standard, exide, ei17-16)
+  * parameters[40] = filter 9 (extended 15-0)
+  * parameters[41] = filter 10 (standard, exide, ei17-16)
+  * parameters[42] = filter 10 (extended 15-0)
+  * parameters[43] = filter 11 (standard, exide, ei17-16)
+  * parameters[44] = filter 11 (extended 15-0)
+  * parameters[45] = filter 12 (standard, exide, ei17-16)
+  * parameters[46] = filter 12 (extended 15-0)
+  * parameters[47] = filter 13 (standard, exide, ei17-16)
+  * parameters[48] = filter 13 (extended 15-0)
+  * parameters[49] = filter 14 (standard, exide, ei17-16)
+  * parameters[50] = filter 14 (extended 15-0)
+  * parameters[51] = filter 15 (standard, exide, ei17-16)
+  * parameters[52] = filter 15 (extended 15-0)
   */
 void ecan1_init(uint16_t* parameters);
 

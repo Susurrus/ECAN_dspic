@@ -74,6 +74,30 @@ void ecan1_init(uint16_t* parameters) {
   C1RXF2EID = parameters[26];
   C1RXF3SID = parameters[27];
   C1RXF3EID = parameters[28];
+  C1RXF4SID = parameters[29];
+  C1RXF4EID = parameters[30];
+  C1RXF5SID = parameters[31];
+  C1RXF5EID = parameters[32];
+  C1RXF6SID = parameters[33];
+  C1RXF6EID = parameters[34];
+  C1RXF7SID = parameters[35];
+  C1RXF7EID = parameters[36];
+  C1RXF8SID = parameters[37];
+  C1RXF8EID = parameters[38];
+  C1RXF9SID = parameters[39];
+  C1RXF9EID = parameters[40];
+  C1RXF10SID = parameters[41];
+  C1RXF10EID = parameters[42];
+  C1RXF11SID = parameters[43];
+  C1RXF11EID = parameters[44];
+  C1RXF12SID = parameters[45];
+  C1RXF12EID = parameters[46];
+  C1RXF13SID = parameters[47];
+  C1RXF13EID = parameters[48];
+  C1RXF14SID = parameters[49];
+  C1RXF14EID = parameters[50];
+  C1RXF15SID = parameters[51];
+  C1RXF15EID = parameters[52];
    
   C1CTRL1bits.WIN=0;
   
