@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.404"
+    ComputedModelVersion    "1.410"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Feb 09 08:54:14 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:404>"
+  LastModifiedDate	  "Tue Feb 09 09:07:20 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:410>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -737,7 +737,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [436, 388, 1234, 829]
+    Location		    [222, 427, 1020, 868]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1138,9 +1138,27 @@ Model {
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
       MaskHideContents	      off
+      MaskType		      "ECAN 1 Reception Block"
+      MaskDescription	      "This block will receive CAN messages over the E"
+"CAN1 peripheral on the dsPIC33f.\nOutputs:\nidentifier - uint32 containing SI"
+"D and EID\ndata - Variable-sized array (between 0 and 8) of uint8s\nremote - "
+"boolean value specifying if this is a remote transmit request"
+      MaskPromptString	      "Sampling time"
+      MaskStyleString	      "edit"
+      MaskTunableValueString  "off"
+      MaskEnableString	      "on"
+      MaskVisibilityString    "on"
+      MaskToolTipString	      "on"
+      MaskVariables	      "ecan1_receive_sample_time=@1;"
+      MaskDisplay	      "disp('ECAN1 RX');"
+      MaskIconFrame	      on
+      MaskIconOpaque	      off
+      MaskIconRotate	      "none"
+      MaskIconUnits	      "autoscale"
+      MaskValueString	      "-1"
       System {
 	Name			"Receive ECAN1 Message"
-	Location		[460, 627, 1145, 849]
+	Location		[277, 590, 962, 812]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1180,7 +1198,7 @@ Model {
 	  INPUT3		  "--"
 	  OUTPUT_SIZE		  "4"
 	  OUTPUT1		  "uint32"
-	  SampleTime		  "-1"
+	  SampleTime		  "ecan1_receive_sample_time"
 	  InputType		  "[ ]"
 	  OutputType		  "[ 6 ]"
 	  FctDeclaration	  "extern void ecan1_receive_matlab(uint32_T* "
