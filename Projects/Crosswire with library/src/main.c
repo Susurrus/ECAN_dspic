@@ -96,13 +96,13 @@ int main(void)
    Configure DMA Channel 2 for ECAN1 Receive */
   
   //Initialize ECAN1
-  uint16_t parameters[28];
+  uint16_t parameters[53];
   parameters[0] = 0x0040; // Normal mode, standard frames, DMA0 for transmission, DMA2 for reception
   parameters[1] = 2500; // Bit rate to 250kbps (parameter is in hundreds of bps)
   parameters[2] = 40000; // Oscillator frequency 40000000 (parameter is in khz)
   parameters[3] = 0x0F67; // phase segment 1: 8, phase segment 2: 6, propagation: 5, sjw: 4, triple-sample:on
   parameters[4] = 0x0007; // Enable filters 0,1,2
-  parameters[5] = 0x0000; // Select filter mask 1 for filters 0,1,2
+  parameters[5] = 0x0000; // Select filter mask 0 for filters 0,1,2
   parameters[6] = 0x0000;
   parameters[7] = 0;
   parameters[8] = 0; // Set filter mask 1 to ignore all bits
