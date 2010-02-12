@@ -162,7 +162,7 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 	uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
 	
 	// Variables for setting correct TXREQ bit
-	uint8_t bit_to_set;
+	uint16_t bit_to_set;
 	uint16_t offset;
 	uint16_t* bufferCtrlRegAddr;
 	
