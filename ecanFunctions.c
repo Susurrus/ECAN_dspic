@@ -153,7 +153,10 @@ void ecan1_receive_matlab(uint32_t* output) {
 	output[0] = msg.id.ulData;
 	output[1] = *((uint32_t*)msg.payload);
 	output[2] = *((uint32_t*)&msg.payload[4]);
-	output[3] = (uint32_t)msg.validBytes & (((uint32_t)msg.validBytes) << 16);
+	output[3] = (((uint32_t)msg.validBytes) << 16);
+	if (msg.message_type == CAN_MSG_RTR) {
+		output[3] |= 1;
+	}
 }
 
 void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data){
@@ -195,10 +198,10 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 
 	ecan1msgBuf[buffer][1] = word1;
 	ecan1msgBuf[buffer][2] = ((word2 & 0xFFF0) + dataLength) ;
-	ecan1msgBuf[buffer][3] = ((uint16_t*)data)[0];
-	ecan1msgBuf[buffer][4] = ((uint16_t*)data)[1];
-	ecan1msgBuf[buffer][5] = ((uint16_t*)data)[2];
-	ecan1msgBuf[buffer][6] = ((uint16_t*)data)[3];
+	ecan1msgBuf[buffer][3] = ((uint16_t)data[1] | ((uint16_t)data[0] << 8));
+	ecan1msgBuf[buffer][4] = ((uint16_t)data[3] | ((uint16_t)data[2] << 8));
+	ecan1msgBuf[buffer][5] = ((uint16_t)data[5] | ((uint16_t)data[4] << 8));
+	ecan1msgBuf[buffer][6] = ((uint16_t)data[7] | ((uint16_t)data[6] << 8));
 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
     offset = buffer >> 1;
@@ -212,11 +215,11 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 
 void ecan1_transmit_matlab(uint16_t* parameters) {
 	ecan1_transmit((uint8_t)parameters[0], 
-	        ((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<8),
+	        ((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<16),
 			(uint8_t)parameters[3],
 			(uint8_t)(parameters[3]>>8),
 			(uint8_t)(parameters[0]>>8),
-			(uint8_t*)parameters[4]);
+			(uint8_t*)&parameters[4]);
 }
 
 void dma_init(uint16_t* parameters) {

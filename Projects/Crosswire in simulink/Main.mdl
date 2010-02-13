@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.503"
+    ComputedModelVersion    "1.540"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Feb 12 12:29:21 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:503>"
+  LastModifiedDate	  "Fri Feb 12 16:52:17 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:540>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -650,6 +650,9 @@ Model {
       ZeroCross		      on
     }
     Block {
+      BlockType		      Ground
+    }
+    Block {
       BlockType		      Inport
       Port		      "1"
       UseBusObject	      off
@@ -665,6 +668,17 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchByCopyingInsideSignal off
       Interpolate	      on
+    }
+    Block {
+      BlockType		      Logic
+      Operator		      "AND"
+      Inputs		      "2"
+      IconShape		      "rectangular"
+      AllPortsSameDT	      on
+      OutDataTypeMode	      "Logical (see Configuration Parameters: Optimiza"
+"tion)"
+      LogicDataType	      "uint(8)"
+      SampleTime	      "-1"
     }
     Block {
       BlockType		      Mux
@@ -704,10 +718,13 @@ Model {
       ProbeFrameDataType      "double"
     }
     Block {
-      BlockType		      Selector
-      NumberOfDimensions      "1"
-      IndexMode		      "One-based"
-      InputPortWidth	      "-1"
+      BlockType		      RelationalOperator
+      Operator		      ">="
+      InputSameDT	      on
+      LogicOutDataTypeMode    "Logical (see Configuration Parameters: Optimiza"
+"tion)"
+      LogicDataType	      "uint(8)"
+      ZeroCross		      on
       SampleTime	      "-1"
     }
     Block {
@@ -715,6 +732,16 @@ Model {
       FunctionName	      "system"
       SFunctionModules	      "''"
       PortCounts	      "[]"
+    }
+    Block {
+      BlockType		      SignalSpecification
+      Dimensions	      "-1"
+      SampleTime	      "-1"
+      DataType		      "auto"
+      OutDataType	      "sfix(16)"
+      OutScaling	      "2^0"
+      SignalType	      "auto"
+      SamplingMode	      "auto"
     }
     Block {
       BlockType		      SubSystem
@@ -758,7 +785,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [374, 267, 1172, 708]
+    Location		    [92, 613, 1093, 872]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1154,23 +1181,6 @@ Model {
       SourceType	      ""
     }
     Block {
-      BlockType		      Constant
-      Name		      "Constant1"
-      Position		      [135, 292, 185, 308]
-      ShowName		      off
-      Value		      "[hex2dec('12') hex2dec('34') hex2dec('56') hex2"
-"dec('78') hex2dec('12') hex2dec('34') hex2dec('56') hex2dec('78')]"
-      OutDataTypeMode	      "uint8"
-    }
-    Block {
-      BlockType		      Constant
-      Name		      "Constant2"
-      Position		      [145, 252, 185, 268]
-      ShowName		      off
-      Value		      "hex2dec('300')"
-      OutDataTypeMode	      "uint32"
-    }
-    Block {
       BlockType		      Reference
       Name		      "DocBlock"
       Ports		      []
@@ -1241,8 +1251,8 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "Receive ECAN1 Message"
-      Ports		      [0, 3]
-      Position		      [385, 137, 495, 213]
+      Ports		      [0, 4]
+      Position		      [220, 152, 330, 228]
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
       FunctionWithSeparateData off
@@ -1264,11 +1274,11 @@ Model {
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "-1"
+      MaskValueString	      "1"
       System {
 	Name			"Receive ECAN1 Message"
-	Location		[277, 590, 962, 812]
-	Open			off
+	Location		[63, 252, 723, 559]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1285,7 +1295,7 @@ Model {
 	  Name			  "C Function Call\n[ecanFunctions.c]"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [0, 1]
-	  Position		  [25, 65, 150, 105]
+	  Position		  [25, 85, 150, 125]
 	  List {
 	    ListType		    RTWdata
 	    FctDeclaration	    "extern void ecan1_receive_matlab(uint32_T"
@@ -1315,9 +1325,30 @@ Model {
 	  OrderingInOutPopup	  "None"
 	}
 	Block {
+	  BlockType		  Reference
+	  Name			  "Compare\nTo Zero"
+	  Ports			  [1, 1]
+	  Position		  [425, 165, 455, 195]
+	  ShowName		  off
+	  SourceBlock		  "simulink/Logic and Bit\nOperations/Compare"
+"\nTo Zero"
+	  SourceType		  "Compare To Zero"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
+	  FunctionWithSeparateData off
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  relop			  "=="
+	  LogicOutDataTypeMode	  "boolean"
+	  ZeroCross		  off
+	}
+	Block {
 	  BlockType		  DataTypeConversion
 	  Name			  "Data Type Conversion"
-	  Position		  [325, 122, 375, 138]
+	  Position		  [325, 142, 375, 158]
 	  ShowName		  off
 	  OutDataTypeMode	  "boolean"
 	  RndMeth		  "Floor"
@@ -1327,14 +1358,14 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "Decompose uint64"
 	  Ports			  [2, 1]
-	  Position		  [235, 46, 315, 104]
+	  Position		  [235, 66, 315, 124]
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
 	  MaskHideContents	  off
 	  System {
 	    Name		    "Decompose uint64"
-	    Location		    [447, 297, 920, 630]
+	    Location		    [79, 184, 943, 517]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1666,7 +1697,7 @@ Model {
 	  BlockType		  Demux
 	  Name			  "Demux"
 	  Ports			  [1, 4]
-	  Position		  [185, 25, 190, 145]
+	  Position		  [185, 45, 190, 165]
 	  BackgroundColor	  "black"
 	  ShowName		  off
 	  DisplayOption		  "bar"
@@ -1675,7 +1706,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "Extract Bits"
 	  Ports			  [1, 1]
-	  Position		  [220, 117, 300, 143]
+	  Position		  [220, 137, 300, 163]
 	  ShowName		  off
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract "
 "Bits"
@@ -1697,7 +1728,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "Extract Bits1"
 	  Ports			  [1, 1]
-	  Position		  [220, 147, 300, 173]
+	  Position		  [220, 167, 300, 193]
 	  ShowName		  off
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract "
 "Bits"
@@ -1716,28 +1747,36 @@ Model {
 	  outScalingMode	  "Treat bit field as an integer"
 	}
 	Block {
-	  BlockType		  Selector
-	  Name			  "Selector"
-	  Ports			  [2, 1]
-	  Position		  [470, 75, 570, 115]
+	  BlockType		  Logic
+	  Name			  "Logical\nOperator2"
+	  Ports			  [1, 1]
+	  Position		  [475, 166, 505, 194]
 	  ShowName		  off
-	  IndexMode		  "Zero-based"
-	  IndexOptions		  "Index vector (port)"
-	  Indices		  "[1 3]"
-	  OutputSizes		  "1"
-	  InputPortWidth	  "8"
+	  Operator		  "NOT"
+	  AllPortsSameDT	  off
+	  OutDataTypeMode	  "Boolean"
+	}
+	Block {
+	  BlockType		  Logic
+	  Name			  "Logical\nOperator3"
+	  Ports			  [2, 1]
+	  Position		  [540, 143, 560, 172]
+	  ShowName		  off
+	  Operator		  "OR"
+	  AllPortsSameDT	  off
+	  OutDataTypeMode	  "Boolean"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "identifier"
-	  Position		  [335, 33, 365, 47]
+	  Position		  [375, 53, 405, 67]
 	  IconDisplay		  "Port number"
 	  BusOutputAsStruct	  off
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "data"
-	  Position		  [605, 88, 635, 102]
+	  Position		  [375, 88, 405, 102]
 	  Port			  "2"
 	  IconDisplay		  "Port number"
 	  BusOutputAsStruct	  off
@@ -1745,8 +1784,16 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "remote"
-	  Position		  [395, 123, 425, 137]
+	  Position		  [405, 143, 435, 157]
 	  Port			  "3"
+	  IconDisplay		  "Port number"
+	  BusOutputAsStruct	  off
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "new"
+	  Position		  [595, 153, 625, 167]
+	  Port			  "4"
 	  IconDisplay		  "Port number"
 	  BusOutputAsStruct	  off
 	}
@@ -1786,8 +1833,16 @@ Model {
 	Line {
 	  SrcBlock		  "Data Type Conversion"
 	  SrcPort		  1
-	  DstBlock		  "remote"
-	  DstPort		  1
+	  Points		  [5, 0]
+	  Branch {
+	    DstBlock		    "remote"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -20; 140, 0]
+	    DstBlock		    "Logical\nOperator3"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  SrcBlock		  "Demux"
@@ -1803,32 +1858,43 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Selector"
+	  SrcBlock		  "Decompose uint64"
 	  SrcPort		  1
 	  DstBlock		  "data"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Decompose uint64"
+	  SrcBlock		  "Extract Bits1"
 	  SrcPort		  1
-	  Points		  [60, 0; 0, 10]
-	  DstBlock		  "Selector"
+	  DstBlock		  "Compare\nTo Zero"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Extract Bits1"
+	  SrcBlock		  "Compare\nTo Zero"
 	  SrcPort		  1
-	  Points		  [150, 0]
-	  DstBlock		  "Selector"
+	  DstBlock		  "Logical\nOperator2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Logical\nOperator2"
+	  SrcPort		  1
+	  Points		  [15, 0]
+	  DstBlock		  "Logical\nOperator3"
 	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Logical\nOperator3"
+	  SrcPort		  1
+	  DstBlock		  "new"
+	  DstPort		  1
 	}
       }
     }
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      Ports		      [2]
-      Position		      [210, 242, 330, 318]
+      Ports		      [3]
+      Position		      [420, 151, 545, 229]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -1867,7 +1933,7 @@ Model {
 ";\n    %set_param(c_func_blk,'SampleTime','c_func_sample_time');\n    replace"
 "_block([gcb '/trigger'],'Inport','Constant','noprompt');\n    %set_param([gcb"
 " '/trigger'],'Value','1');\nend\nset_param(gcb, 'MaskEnables', mEnables);"
-      MaskEnableString	      "on,off,on,on,on,off,on,on,on"
+      MaskEnableString	      "on,off,on,on,on,off,on,off,on"
       MaskVisibilityString    "on,on,on,on,on,on,on,on,on"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on"
       MaskVarAliasString      ",,,,,,,,"
@@ -1880,11 +1946,11 @@ Model {
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
       MaskValueString	      "0|hex2dec('401')|on|off|off|[hex2dec('11') hex2"
-"dec('12') hex2dec('13') hex2dec('14')]|on|1|off"
+"dec('12') hex2dec('13') hex2dec('14')]|on|1|on"
       MaskTabNameString	      ",,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[573, 202, 1216, 604]
+	Location		[249, 242, 892, 644]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1908,6 +1974,13 @@ Model {
 	  Name			  "data"
 	  Position		  [35, 227, 100, 243]
 	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "trigger"
+	  Position		  [400, 132, 465, 148]
+	  Port			  "3"
 	  IconDisplay		  "Port number"
 	}
 	Block {
@@ -2232,11 +2305,6 @@ Model {
 	      DstPort		      5
 	    }
 	  }
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "trigger"
-	  Position		  [400, 132, 465, 148]
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -2615,17 +2683,38 @@ Model {
 	}
       }
     }
-    Line {
-      SrcBlock		      "Constant1"
-      SrcPort		      1
-      DstBlock		      "Send ECAN1 Message"
-      DstPort		      2
+    Block {
+      BlockType		      Terminator
+      Name		      "Terminator"
+      Position		      [370, 190, 390, 210]
+      ShowName		      off
     }
     Line {
-      SrcBlock		      "Constant2"
+      SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      1
+      Points		      [70, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      3
+      DstBlock		      "Terminator"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      4
+      Points		      [70, 0]
+      DstBlock		      "Send ECAN1 Message"
+      DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      2
+      Points		      [70, 0]
+      DstBlock		      "Send ECAN1 Message"
+      DstPort		      2
     }
   }
 }
@@ -2724,7 +2813,7 @@ Stateflow {
 						"if length(u5) > 7\n"
 						"    y(8) = bitor(bitshift(y(8),8),u5(8));\n"
 						"end"
-			editorLayout             		"100 M4x1[342 306 720 640]"
+			editorLayout             		"100 M4x1[411 533 720 640]"
 			treatIntsAsFixpt         		0
 		}
 	}

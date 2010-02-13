@@ -107,7 +107,7 @@ void ecan1_receive_matlab(uint32_t* output);
  * @param ide Single bit specifying if the message uses an extended ID
  * @param remoteTransmit RTR bit specifying if this message requests a remote transmission
  * @param dataLength Number of bytes of data passed
- * @param data Data to transmit, between 0 and 8 bytes
+ * @param data Data to transmit, between 0 and 8 bytes.
  */
 void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data);
 
@@ -117,8 +117,8 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
  * @param parameters An array of uint16_ts with configuration options documented below.
  * parameters[0] = bits 0-7: ECAN buffer number
  *                 bits 8-15: data length (in bytes)
- * parameters[1] = CAN identifier
- * parameters[2] = CAN identifier (high-order bits)
+ * parameters[1] = CAN identifier bits 0-15
+ * parameters[2] = CAN identifier bits 16-29
  * parameters[3] = bits 0-7: ide bit
  *                 bits 8-15: remote transmit bit
  * parameters[4] = data bytes 0 and 1
