@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.585"
+    ComputedModelVersion    "1.586"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Mar 26 14:41:29 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:585>"
+  LastModifiedDate	  "Fri Mar 26 15:21:51 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:586>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -1154,8 +1154,8 @@ Model {
       MaskValueString	      "off|Normal|2|0|250000|8|5|6|4|20|on|6 buffers|["
 "1]|[0]|Highest|No|Highest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|N"
 "o|Lowest|No|0|Match std or ext|0|Match std or ext|0|Match std or ext|[0 1 2]|"
-"hex2dec('400')|0|Match only standard|1|hex2dec('401')|0|Match only standard|1"
-"|hex2dec('402')|0|Match only standard|1|0|0|Match only standard|0|0|0|Match o"
+"hex2dec('400')|0|Match only standard|1|hex2dec('401')|0|Match only standard|2"
+"|hex2dec('402')|0|Match only standard|3|0|0|Match only standard|0|0|0|Match o"
 "nly standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match "
 "only standard|0|0|0|Match only standard|0|0|<empty>|Match only standard|0|0|0"
 "|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|"

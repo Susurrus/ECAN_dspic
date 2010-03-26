@@ -298,10 +298,15 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 	// If the interrupt was fired because of a received message
 	// package it all up and store in the circular buffer.
 	if (C1INTFbits.RBIF) {
-		// read the message 
-		if (C1RXFUL1bits.RXFUL1 == 1) {
-			buffer = 1; // Set which buffer the message is in
-			C1RXFUL1bits.RXFUL1 = 0;
+		
+		// Obtain the buffer the message was stored into, checking that the value is valid to refer to a buffer
+		if (C1VECbits.ICODE < 32) {
+			buffer = C1VECbits.ICODE;
+		}
+		
+		// Clear the buffer full status bit so more messages can be received.
+		if (C1RXFUL1 & (1 << buffer)) {
+			C1RXFUL1 &= ~(1 << buffer);
 		}
 		
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
