@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.586"
+    ComputedModelVersion    "1.593"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Mar 26 15:21:51 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:586>"
+  LastModifiedDate	  "Fri Mar 26 16:24:36 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:593>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -692,19 +692,6 @@ Model {
       SamplingMode	      "auto"
       OutputWhenDisabled      "held"
       InitialOutput	      "[]"
-    }
-    Block {
-      BlockType		      Probe
-      ProbeWidth	      on
-      ProbeSampleTime	      on
-      ProbeComplexSignal      on
-      ProbeSignalDimensions   off
-      ProbeFramedSignal	      off
-      ProbeWidthDataType      "double"
-      ProbeSampleTimeDataType "double"
-      ProbeComplexityDataType "double"
-      ProbeDimensionsDataType "double"
-      ProbeFrameDataType      "double"
     }
     Block {
       BlockType		      RelationalOperator
@@ -1976,9 +1963,9 @@ Model {
 	  RTWMemSecDataConstants  "Inherit from model"
 	  RTWMemSecDataInternal	  "Inherit from model"
 	  RTWMemSecDataParameters "Inherit from model"
-	  bitsToExtract		  "Upper half"
+	  bitsToExtract		  "Range of bits"
 	  numBits		  "8"
-	  bitIdxRange		  "[0 7]"
+	  bitIdxRange		  "[16 23]"
 	  outScalingMode	  "Treat bit field as an integer"
 	}
 	Block {
@@ -2131,8 +2118,8 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      Ports		      [3]
-      Position		      [460, 143, 650, 227]
+      Ports		      [4]
+      Position		      [460, 156, 625, 244]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -2142,10 +2129,10 @@ Model {
       MaskDescription	      "This block allows for the transmission of a mes"
 "sage over the ECAN module."
       MaskPromptString	      "Buffer|Identifier|Identifier from input|Ide|Rem"
-"ote|Data|Data from input|Sample time|Trigger on input"
-      MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,check"
-"box,edit,checkbox"
-      MaskTunableValueString  "off,off,off,off,off,off,off,off,off"
+"ote|Data|Data length|Data from input|Sample time|Trigger on input"
+      MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,"
+"checkbox,edit,checkbox"
+      MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off"
       MaskCallbackString      "||mEnables = get_param(gcb,'MaskEnables');\nena"
 "bled = get_param(gcb, 'identifier_from_input');\nif strcmp(enabled,'on');\n  "
 "  replace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    mEn"
@@ -2155,41 +2142,47 @@ Model {
 "\nset_param(gcb, 'MaskEnables', mEnables);\n|||data = eval(get_param(gcb, 'da"
 "ta'));\ny = size(data,1);\nx = size(data,2);\nif y > 1 && x > 1\n    error('D"
 "ata must be a 1-dimensional vector')\nelse\n    if or(x > 8, y > 8)\n    erro"
-"r('Data cannot be larger than 8-bytes');\n    end\nend|mEnables = get_param(g"
-"cb,'MaskEnables');\nenabled = get_param(gcb, 'data_from_input');\nif strcmp(e"
-"nabled,'on');\n    replace_block([gcb '/data'],'Constant','Inport','noprompt'"
-");\n    mEnables{6} = 'off';\n    port = '1';\n    if ~isempty(find_system(gc"
-"b,'LookUnderMasks','all','Name','identifier'))\n        port = '2';\n    end"
-"\n    set_param([gcb '/data'],'Port',port);\nelse\n    replace_block([gcb '/d"
-"ata'],'Inport','Constant','noprompt');\n    mEnables{6} = 'on';\n    set_para"
-"m([gcb '/data'],'Value','data');\nend\nset_param(gcb, 'MaskEnables', mEnables"
-");\n||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb, 'tri"
-"gger_on_input');\nc_func_blk = find_system(gcb,'LookUnderMasks','all','Functi"
-"onName','dsPIC_C_function_Call');\nif strcmp(enabled,'on');\n    mEnables{8} "
-"= 'off';\n    %set_param(c_func_blk,'SampleTime','-1');\n    replace_block([g"
-"cb '/trigger'],'Constant','Inport','noprompt');\nelse\n    mEnables{8} = 'on'"
-";\n    %set_param(c_func_blk,'SampleTime','c_func_sample_time');\n    replace"
-"_block([gcb '/trigger'],'Inport','Constant','noprompt');\n    %set_param([gcb"
-" '/trigger'],'Value','1');\nend\nset_param(gcb, 'MaskEnables', mEnables);"
-      MaskEnableString	      "on,off,on,on,on,off,on,off,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on,on,on,on"
-      MaskVarAliasString      ",,,,,,,,"
+"r('Data cannot be larger than 8-bytes');\n    end\nend|data_length = eval(get"
+"_param(gcb, 'data_length'));\nif or(data_length < 0, data_length > 9)\n    er"
+"ror('Data cannot be more than 8 bytes or less than 0.')\nend|mEnables = get_p"
+"aram(gcb,'MaskEnables');\nenabled = get_param(gcb, 'data_from_input');\nif st"
+"rcmp(enabled,'on');\n    replace_block([gcb '/data'],'Constant','Inport','nop"
+"rompt');\n    replace_block([gcb '/data_length'],'Constant','Inport','nopromp"
+"t');\n    mEnables{6} = 'off';\n    mEnables{7} = 'off';\n    port = '1';\n  "
+"  if ~isempty(find_system(gcb,'LookUnderMasks','all','Name','identifier'))\n "
+"       port = '2';\n    end\n    set_param([gcb '/data'],'Port',port);\nelse"
+"\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    repla"
+"ce_block([gcb '/data_length'],'Inport','Constant','noprompt');\n    mEnables{"
+"6} = 'on';\n    mEnables{7} = 'on';\n    set_param([gcb '/data'],'Value','dat"
+"a');\n    set_param([gcb '/data_length'],'Value','data_length');\nend\nset_pa"
+"ram(gcb, 'MaskEnables', mEnables);\n||mEnables = get_param(gcb,'MaskEnables')"
+";\nenabled = get_param(gcb, 'trigger_on_input');\nc_func_blk = find_system(gc"
+"b,'LookUnderMasks','all','FunctionName','dsPIC_C_function_Call');\nif strcmp("
+"enabled,'on');\n    mEnables{8} = 'off';\n    %set_param(c_func_blk,'SampleTi"
+"me','-1');\n    replace_block([gcb '/trigger'],'Constant','Inport','noprompt'"
+");\nelse\n    mEnables{8} = 'on';\n    %set_param(c_func_blk,'SampleTime','c_"
+"func_sample_time');\n    replace_block([gcb '/trigger'],'Inport','Constant','"
+"noprompt');\n    %set_param([gcb '/trigger'],'Value','1');\nend\nset_param(gc"
+"b, 'MaskEnables', mEnables);"
+      MaskEnableString	      "on,off,on,on,on,off,off,off,off,on"
+      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
+      MaskVarAliasString      ",,,,,,,,,"
       MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&"
-"3;ide=@4;remote=@5;data=@6;data_from_input=&7;c_func_sample_time=@8;trigger_o"
-"n_input=@9;"
+"3;ide=@4;remote=@5;data=@6;data_length=@7;data_from_input=&8;c_func_sample_ti"
+"me=@9;trigger_on_input=@10;"
       MaskDisplay	      "disp('ECAN1 TX');"
       MaskIconFrame	      on
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
       MaskValueString	      "0|hex2dec('401')|on|off|off|[hex2dec('11') hex2"
-"dec('12') hex2dec('13') hex2dec('14')]|on|1|on"
-      MaskTabNameString	      ",,,,,,,,"
+"dec('12') hex2dec('13') hex2dec('14')]|0|on|1|on"
+      MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[517, 442, 1160, 844]
-	Open			off
+	Location		[602, 145, 1245, 547]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2219,6 +2212,13 @@ Model {
 	  Name			  "trigger"
 	  Position		  [400, 132, 465, 148]
 	  Port			  "3"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "data_length"
+	  Position		  [30, 42, 95, 58]
+	  Port			  "4"
 	  IconDisplay		  "Port number"
 	}
 	Block {
@@ -2325,15 +2325,6 @@ Model {
 	  OutDataTypeMode	  "uint8"
 	}
 	Block {
-	  BlockType		  DataTypeConversion
-	  Name			  "Data Type Conversion1"
-	  Position		  [220, 229, 270, 241]
-	  ShowName		  off
-	  OutDataTypeMode	  "uint16"
-	  RndMeth		  "Floor"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits"
 	  Ports			  [1, 1]
@@ -2376,15 +2367,6 @@ Model {
 	  numBits		  "8"
 	  bitIdxRange		  "[0 7]"
 	  outScalingMode	  "Preserve fixed-point scaling"
-	}
-	Block {
-	  BlockType		  Probe
-	  Name			  "length"
-	  Ports			  [1, 1]
-	  Position		  [145, 37, 190, 53]
-	  ProbeSampleTime	  off
-	  ProbeComplexSignal	  off
-	  ProbeWidthDataType	  "Same as input"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -2556,7 +2538,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "uint8 combiner1"
-	    Location		    [460, 142, 1171, 232]
+	    Location		    [154, 422, 865, 512]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2693,7 +2675,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "uint8 combiner2"
-	    Location		    [460, 142, 1171, 232]
+	    Location		    [262, 392, 973, 505]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2846,8 +2828,9 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "length"
+	  SrcBlock		  "data_length"
 	  SrcPort		  1
+	  Points		  [95, 0; 0, -5]
 	  DstBlock		  "uint8 combiner2"
 	  DstPort		  2
 	}
@@ -2902,20 +2885,7 @@ Model {
 	Line {
 	  SrcBlock		  "data"
 	  SrcPort		  1
-	  Points		  [25, 0]
-	  Branch {
-	    DstBlock		    "length"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Data Type Conversion1"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  SrcBlock		  "Data Type Conversion1"
-	  SrcPort		  1
-	  Points		  [80, 0]
+	  Points		  [250, 0]
 	  DstBlock		  "myMux"
 	  DstPort		  5
 	}
@@ -2930,7 +2900,6 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      1
-      Points		      [35, 0; 0, -15]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      1
     }
@@ -2943,6 +2912,7 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      2
+      Points		      [110, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      2
     }
@@ -2985,8 +2955,15 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      4
+      Points		      [110, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      5
+      DstBlock		      "Send ECAN1 Message"
+      DstPort		      4
     }
   }
 }
@@ -3058,34 +3035,35 @@ Stateflow {
 		eml {
 			isEML                    		1
 			script                   		"function y = myMux(u1, u2, u3, u4, u5)\n"
-						"\n"
+						"u5_u16 = uint16(u5);\n"
 						"y = uint16([u1(1); u2(1); u3(1); u4(1); 0; 0; 0; 0;]);\n"
 						"\n"
-						"if length(u5) > 0\n"
-						"    y(5) = u5(1);\n"
+						"len = length(u5);\n"
+						"if len > 0\n"
+						"    y(5) = u5_u16(1);\n"
 						"end\n"
-						"if length(u5) > 1\n"
-						"    y(5) = bitor(bitshift(y(5),8),u5(2));\n"
+						"if len > 1\n"
+						"    y(5) = bitor(bitshift(y(5),8),u5_u16(2));\n"
 						"end\n"
-						"if length(u5) > 2\n"
-						"    y(6) = u5(3);\n"
+						"if len > 2\n"
+						"    y(6) = u5_u16(3);\n"
 						"end\n"
-						"if length(u5) > 3\n"
-						"    y(6) = bitor(bitshift(y(6),8),u5(4));\n"
+						"if len > 3\n"
+						"    y(6) = bitor(bitshift(y(6),8),u5_u16(4));\n"
 						"end\n"
-						"if length(u5) > 4\n"
-						"    y(7) = u5(5);\n"
+						"if len > 4\n"
+						"    y(7) = u5_u16(5);\n"
 						"end\n"
-						"if length(u5) > 5\n"
-						"    y(7) = bitor(bitshift(y(7),8),u5(6));\n"
+						"if len > 5\n"
+						"    y(7) = bitor(bitshift(y(7),8),u5_u16(6));\n"
 						"end\n"
-						"if length(u5) > 6\n"
-						"    y(8) = u5(7);\n"
+						"if len > 6\n"
+						"    y(8) = u5_u16(7);\n"
 						"end\n"
-						"if length(u5) > 7\n"
-						"    y(8) = bitor(bitshift(y(8),8),u5(8));\n"
+						"if len > 7\n"
+						"    y(8) = bitor(bitshift(y(8),8),u5_u16(8));\n"
 						"end"
-			editorLayout             		"100 M4x1[411 533 720 640]"
+			editorLayout             		"100 M4x1[44 259 545 643]"
 			treatIntsAsFixpt         		0
 		}
 	}
