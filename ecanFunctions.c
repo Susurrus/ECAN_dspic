@@ -148,14 +148,22 @@ tCanMessage ecan1_receive() {
 void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
-	msg = readFront(ecanBuffer);
-
-	output[0] = msg.id.ulData;
-	output[1] = *((uint32_t*)msg.payload);
-	output[2] = *((uint32_t*)&msg.payload[4]);
-	output[3] = (((uint32_t)msg.validBytes) << 16);
-	if (msg.message_type == CAN_MSG_RTR) {
-		output[3] |= 1;
+	if (getLength(ecanBuffer) > 0) {
+		msg = readFront(ecanBuffer);
+	
+		output[0] = msg.id.ulData;
+		output[1] = *((uint32_t*)msg.payload);
+		output[2] = *((uint32_t*)&msg.payload[4]);
+		output[3] = (((uint32_t)msg.validBytes) << 16);
+		if (msg.message_type == CAN_MSG_RTR) {
+			output[3] |= 1;
+		}
+	}
+	else {
+		output[0] = 0;
+		output[1] = 0;
+		output[2] = 0;
+		output[3] = 0;
 	}
 }
 
@@ -220,6 +228,28 @@ void ecan1_transmit_matlab(uint16_t* parameters) {
 			(uint8_t)(parameters[3]>>8),
 			(uint8_t)(parameters[0]>>8),
 			(uint8_t*)&parameters[4]);
+}
+
+void ecan1_error_status_matlab(uint8_t* errors) {
+	
+	// Set transmission errors in first array element.
+	if (C1INTFbits.TXBO) {
+		errors[0] = 3;
+	}
+	else if (C1INTFbits.TXBP) {
+		errors[0] = 2;
+	}
+	else if (C1INTFbits.TXWAR) {
+		errors[0] = 1;
+	}
+	
+	// Set reception errors in second array element.
+	if (C1INTFbits.RXBP) {
+		errors[1] = 2;
+	}
+	else if (C1INTFbits.RXWAR) {
+		errors[1] = 1;
+	}
 }
 
 void dma_init(uint16_t* parameters) {

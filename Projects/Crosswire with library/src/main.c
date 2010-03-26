@@ -110,7 +110,7 @@ int main(void)
   parameters[10] = 0;
   parameters[11] = 0;
   parameters[12] = 0;
-  parameters[13] = 0x0383; // Buffer 0/1 highest priority and 0 set to transmit, 1 set to receive
+  parameters[13] = 0x0383; // Buffer 0 highest priority and set to transmit, 1 set to receive
   parameters[14] = 0;
   parameters[15] = 0;
   parameters[16] = 0;

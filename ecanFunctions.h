@@ -129,6 +129,17 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
 void ecan1_transmit_matlab(uint16_t* parameters);
 
 /**
+ * Returns the error status of the ECAN1 peripheral.
+ * Returns a tuple with element 0->transmission error state,
+ * and element 1->reception error state.
+ *  0 => no error
+ *  1 => warning (error count E(96,128]
+ *  2 => passive (error count E(128,256] 
+ *  3 => off (error count > 256, only for TX)
+ */
+void ecan1_error_status_matlab(uint8_t* errors);
+
+/**
  * This function provides a general way to initialize the DMA peripheral.
  *
  * parameters[0] = IRQ address & squeezed version of DMAxCON minus CHEN bit
