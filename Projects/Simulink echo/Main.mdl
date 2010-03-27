@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.593"
+    ComputedModelVersion    "1.610"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Mar 26 16:24:36 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:593>"
+  LastModifiedDate	  "Fri Mar 26 17:34:59 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:610>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -2119,7 +2119,7 @@ Model {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
       Ports		      [4]
-      Position		      [460, 156, 625, 244]
+      Position		      [475, 142, 640, 258]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -2141,31 +2141,34 @@ Model {
 "les{2} = 'on';\n    set_param([gcb '/identifier'],'Value','identifier');\nend"
 "\nset_param(gcb, 'MaskEnables', mEnables);\n|||data = eval(get_param(gcb, 'da"
 "ta'));\ny = size(data,1);\nx = size(data,2);\nif y > 1 && x > 1\n    error('D"
-"ata must be a 1-dimensional vector')\nelse\n    if or(x > 8, y > 8)\n    erro"
-"r('Data cannot be larger than 8-bytes');\n    end\nend|data_length = eval(get"
-"_param(gcb, 'data_length'));\nif or(data_length < 0, data_length > 9)\n    er"
-"ror('Data cannot be more than 8 bytes or less than 0.')\nend|mEnables = get_p"
-"aram(gcb,'MaskEnables');\nenabled = get_param(gcb, 'data_from_input');\nif st"
-"rcmp(enabled,'on');\n    replace_block([gcb '/data'],'Constant','Inport','nop"
-"rompt');\n    replace_block([gcb '/data_length'],'Constant','Inport','nopromp"
-"t');\n    mEnables{6} = 'off';\n    mEnables{7} = 'off';\n    port = '1';\n  "
-"  if ~isempty(find_system(gcb,'LookUnderMasks','all','Name','identifier'))\n "
-"       port = '2';\n    end\n    set_param([gcb '/data'],'Port',port);\nelse"
-"\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    repla"
-"ce_block([gcb '/data_length'],'Inport','Constant','noprompt');\n    mEnables{"
-"6} = 'on';\n    mEnables{7} = 'on';\n    set_param([gcb '/data'],'Value','dat"
-"a');\n    set_param([gcb '/data_length'],'Value','data_length');\nend\nset_pa"
-"ram(gcb, 'MaskEnables', mEnables);\n||mEnables = get_param(gcb,'MaskEnables')"
-";\nenabled = get_param(gcb, 'trigger_on_input');\nc_func_blk = find_system(gc"
-"b,'LookUnderMasks','all','FunctionName','dsPIC_C_function_Call');\nif strcmp("
-"enabled,'on');\n    mEnables{8} = 'off';\n    %set_param(c_func_blk,'SampleTi"
-"me','-1');\n    replace_block([gcb '/trigger'],'Constant','Inport','noprompt'"
-");\nelse\n    mEnables{8} = 'on';\n    %set_param(c_func_blk,'SampleTime','c_"
-"func_sample_time');\n    replace_block([gcb '/trigger'],'Inport','Constant','"
-"noprompt');\n    %set_param([gcb '/trigger'],'Value','1');\nend\nset_param(gc"
-"b, 'MaskEnables', mEnables);"
-      MaskEnableString	      "on,off,on,on,on,off,off,off,off,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on"
+"ata must be a 1-dimensional vector')\nelse\n    if or(x > 8, y > 8)\n        "
+"error('Data cannot be larger than 8-bytes');\n    end\nend\n\nset_param(gcb, "
+"'data_length', num2str(length(data)));|data_length = eval(get_param(gcb, 'dat"
+"a_length'));\nif or(data_length < 0, data_length > 9)\n    error('Data cannot"
+" be more than 8 bytes or less than 0.')\nend|mEnables = get_param(gcb,'MaskEn"
+"ables');\nenabled = get_param(gcb, 'data_from_input');\nif strcmp(enabled,'on"
+"');\n    replace_block([gcb '/data'],'Constant','Inport','noprompt');\n    re"
+"place_block([gcb '/data_length'],'Constant','Inport','noprompt');\n    mEnabl"
+"es{6} = 'off';\n    mEnables{7} = 'off';\n    port = 1;\n    if ~isempty(find"
+"_system(gcb,'LookUnderMasks','all','Name','identifier'))\n        port = 2;\n"
+"    end\n    set_param([gcb '/data'],'Port',num2str(port));\n    set_param([g"
+"cb '/data_length'],'Port',num2str(port+1));\nelse\n    replace_block([gcb '/d"
+"ata'],'Inport','Constant','noprompt');\n    replace_block([gcb '/data_length'"
+"],'Inport','Constant','noprompt');\n    mEnables{6} = 'on';\n    mEnables{7} "
+"= 'on';\n    set_param([gcb '/data'],'Value','data');\n    set_param([gcb '/d"
+"ata'],'OutDataTypeMode','uint8');\n    set_param([gcb '/data_length'],'Value'"
+",'data_length');\n    set_param([gcb '/data_length'],'OutDataTypeMode','uint8"
+"');\nend\nset_param(gcb, 'MaskEnables', mEnables);\n||mEnables = get_param(gc"
+"b,'MaskEnables');\nenabled = get_param(gcb, 'trigger_on_input');\nc_func_blk "
+"= find_system(gcb,'LookUnderMasks','all','FunctionName','dsPIC_C_function_Cal"
+"l');\nif strcmp(enabled,'on');\n    mEnables{9} = 'off';\n    %set_param(c_fu"
+"nc_blk,'SampleTime','-1');\n    replace_block([gcb '/trigger'],'Constant','In"
+"port','noprompt');\nelse\n    mEnables{9} = 'on';\n    %set_param(c_func_blk,"
+"'SampleTime','c_func_sample_time');\n    replace_block([gcb '/trigger'],'Inpo"
+"rt','Constant','noprompt');\n    %set_param([gcb '/trigger'],'Value','1');\ne"
+"nd\nset_param(gcb, 'MaskEnables', mEnables);"
+      MaskEnableString	      "on,off,on,on,on,off,off,on,off,on"
+      MaskVisibilityString    "on,on,on,on,on,on,off,on,on,on"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
       MaskVarAliasString      ",,,,,,,,,"
       MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&"
@@ -2177,12 +2180,12 @@ Model {
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
       MaskValueString	      "0|hex2dec('401')|on|off|off|[hex2dec('11') hex2"
-"dec('12') hex2dec('13') hex2dec('14')]|0|on|1|on"
+"dec('12') hex2dec('13') hex2dec('14')]|4|on|1|on"
       MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[602, 145, 1245, 547]
-	Open			on
+	Location		[593, 397, 1236, 799]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2209,15 +2212,15 @@ Model {
 	}
 	Block {
 	  BlockType		  Inport
-	  Name			  "trigger"
-	  Position		  [400, 132, 465, 148]
+	  Name			  "data_length"
+	  Position		  [30, 42, 95, 58]
 	  Port			  "3"
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Inport
-	  Name			  "data_length"
-	  Position		  [30, 42, 95, 58]
+	  Name			  "trigger"
+	  Position		  [400, 132, 465, 148]
 	  Port			  "4"
 	  IconDisplay		  "Port number"
 	}
@@ -2900,6 +2903,7 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      1
+      Points		      [125, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      1
     }
@@ -2912,7 +2916,7 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      2
-      Points		      [110, 0]
+      Points		      [110, 0; 0, 5; 15, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      2
     }
@@ -2955,15 +2959,16 @@ Model {
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      4
-      Points		      [110, 0]
+      Points		      [65, 0; 0, 30]
       DstBlock		      "Send ECAN1 Message"
-      DstPort		      3
+      DstPort		      4
     }
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      5
+      Points		      [105, 0; 0, -15]
       DstBlock		      "Send ECAN1 Message"
-      DstPort		      4
+      DstPort		      3
     }
   }
 }
@@ -3039,31 +3044,27 @@ Stateflow {
 						"y = uint16([u1(1); u2(1); u3(1); u4(1); 0; 0; 0; 0;]);\n"
 						"\n"
 						"len = length(u5);\n"
-						"if len > 0\n"
+						"if len > 1\n"
+						"    y(5) = bitor(bitshift(u5_u16(1),8),u5_u16(2));\n"
+						"elseif len > 0\n"
 						"    y(5) = u5_u16(1);\n"
 						"end\n"
-						"if len > 1\n"
-						"    y(5) = bitor(bitshift(y(5),8),u5_u16(2));\n"
-						"end\n"
-						"if len > 2\n"
+						"if len > 3\n"
+						"    y(6) = bitor(bitshift(u5_u16(3),8),u5_u16(4));\n"
+						"elseif len > 2\n"
 						"    y(6) = u5_u16(3);\n"
 						"end\n"
-						"if len > 3\n"
-						"    y(6) = bitor(bitshift(y(6),8),u5_u16(4));\n"
-						"end\n"
-						"if len > 4\n"
+						"if len > 5\n"
+						"    y(7) = bitor(bitshift(u5_u16(5),8),u5_u16(6));\n"
+						"elseif len > 4\n"
 						"    y(7) = u5_u16(5);\n"
 						"end\n"
-						"if len > 5\n"
-						"    y(7) = bitor(bitshift(y(7),8),u5_u16(6));\n"
-						"end\n"
-						"if len > 6\n"
-						"    y(8) = u5_u16(7);\n"
-						"end\n"
 						"if len > 7\n"
-						"    y(8) = bitor(bitshift(y(8),8),u5_u16(8));\n"
+						"    y(8) = bitor(bitshift(u5_u16(7),8),u5_u16(8));\n"
+						"elseif len > 6\n"
+						"    y(8) = u5_u16(7);\n"
 						"end"
-			editorLayout             		"100 M4x1[44 259 545 643]"
+			editorLayout             		"100 M4x1[30 228 545 643]"
 			treatIntsAsFixpt         		0
 		}
 	}
