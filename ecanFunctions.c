@@ -4,9 +4,7 @@
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffer for receiving CAN messages
-struct CircBuffer testBuffer;
-
-CBRef ecanBuffer; // A pointer to our circular buffer
+struct CircBuffer ecan_rx_buffer;
 
 void ecan1_init(uint16_t* parameters) {
 
@@ -17,8 +15,7 @@ void ecan1_init(uint16_t* parameters) {
   while(C1CTRL1bits.OPMODE != 4);
 
   // Initialize our circular buffers.
-  ecanBuffer = (struct CircBuffer* )&testBuffer;
-  newCircBuffer(ecanBuffer);
+  newCircBuffer(&ecan_rx_buffer);
  
   // Initialize our time quanta
   uint16_t a = parameters[3] & 0x0007;
@@ -142,14 +139,14 @@ void ecan1_init(uint16_t* parameters) {
 }
 
 tCanMessage ecan1_receive() {
-	return readFront(ecanBuffer);
+	return readFront(&ecan_rx_buffer);
 }
 
 void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
-	if (getLength(ecanBuffer) > 0) {
-		msg = readFront(ecanBuffer);
+	if (getLength(&ecan_rx_buffer) > 0) {
+		msg = readFront(&ecan_rx_buffer);
 	
 		output[0] = msg.id.ulData;
 		output[1] = *((uint32_t*)msg.payload);
@@ -356,7 +353,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		}
 		
 		// Send off the message
-		writeBack(ecanBuffer, message);
+		writeBack(&ecan_rx_buffer, message);
 
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
