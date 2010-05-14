@@ -150,16 +150,33 @@ int main(void)
 	while(C2TR01CONbits.TXREQ0 == 1);
  
 	/**
-	 * Send second message from ECAN1
+	 * Send several messages from ECAN1
 	 */
-	uint16_t payload[4];
+	tCanMessage message;
+	message.buffer = 0;
+	message.id.ulData = 0x300;
+	message.frame_type = CAN_FRAME_STD;
+	message.message_type = CAN_MSG_DATA;
 	
-	payload[0] = 0x1234;
-	payload[1] = 0x5678;
-	payload[2] = 0x1234;
-	payload[3] = 0x5678;
+	message.payload[0] = 0x34;
+	message.payload[1] = 0x12;
+	message.payload[2] = 0x78;
+	message.payload[3] = 0x56;
+	message.payload[4] = 0x34;
+	message.payload[5] = 0x12;
+	message.payload[6] = 0x78;
+	message.payload[7] = 0x56;
+	message.validBytes = 8;
 	
-	ecan1_transmit(0,0x300,0,0,8,(uint8_t*)payload);
+	ecan1_buffered_transmit(message);
+
+	message.payload[0] = 0;
+	message.id.ulData = 0x301;
+	ecan1_buffered_transmit(message);
+
+	message.payload[0] = 1;
+	message.id.ulData = 0x302;
+	ecan1_buffered_transmit(message);
 
 	/**
 	 * Send third message from ECAN2
@@ -177,7 +194,7 @@ int main(void)
 	 * ecanBuffer.buffer[0-1] full with CAN data.
 	 * ecanBuffer.head = 0 and ecanBuffer.tail = 2
 	 */
-	while(1);
+ 	while(1);
 }
 
 /******************************************************************************

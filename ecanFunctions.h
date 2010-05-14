@@ -101,18 +101,22 @@ void ecan1_receive_matlab(uint32_t* output);
 
 /**
  * This function transmits a CAN message on the ECAN1 CAN bus.
- * NOTE: This function blocks until message is sent.
- * @param buf Transmission buffer ID
- * @param txIdentifier CAN message identifier (either 11 or 29 bits)
- * @param ide Single bit specifying if the message uses an extended ID
- * @param remoteTransmit RTR bit specifying if this message requests a remote transmission
- * @param dataLength Number of bytes of data passed
- * @param data Data to transmit, between 0 and 8 bytes.
+ * This function shouldn't be used directly, use buffered_transmit
+ * instead.
  */
-void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t remoteTransmit, uint8_t dataLength, uint8_t* data);
+void ecan1_transmit(tCanMessage message);
 
 /**
- * Transmits an ECAN message by calling txECAN1.
+ * Transmits a CAN message via a circular buffer interface
+ * similar to that used by CAN message reception.
+ */
+void ecan1_buffered_transmit(tCanMessage message);
+
+/**
+ * Transmits an ECAN message by calling ecan1_buffered_transmit().
+ * This function therefore uses the circular buffer for transmission.
+ * If there is no circular buffer, this function works similarly to
+ * ecan1_transmit.
  * Parameters designed to interface with MATLAB C-function block.
  * @param parameters An array of uint16_ts with configuration options documented below.
  * parameters[0] = bits 0-7: ECAN buffer number
@@ -124,9 +128,9 @@ void ecan1_transmit(uint8_t buffer, uint32_t txIdentifier, uint8_t ide, uint8_t 
  * parameters[4] = data bytes 0 and 1
  * parameters[5] = data bytes 2 and 3
  * parameters[6] = data bytes 4 and 5
- * parameters[7] = data bytes 6 and 7
+ * parameters[7] = data bytes 6 and 74
  */
-void ecan1_transmit_matlab(uint16_t* parameters);
+void ecan1_buffered_transmit_matlab(uint16_t* parameters);
 
 /**
  * Returns the error status of the ECAN1 peripheral.

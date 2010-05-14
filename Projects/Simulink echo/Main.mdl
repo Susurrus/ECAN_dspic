@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.610"
+    ComputedModelVersion    "1.620"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Mar 26 17:34:59 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:610>"
+  LastModifiedDate	  "Fri May 14 14:37:27 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:620>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -540,22 +540,22 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"LDPICTYPE"
-		Value			"-T C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\"
-"support\\dsPIC33F\\gld\\p33fJ256GP710.gld"
+		Value			"  -T C:\\PROGRA~1\\MICROC~1\\MPLABC~1"
+"\\support\\dsPIC33F\\gld\\p33fJ256GP710.gld"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"LDLIBPIC"
-		Value			"C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib"
-"\\libpic30-coff.a  C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\dsPIC33F\\libp33fJ2"
-"56GP710-coff.a C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\libc-coff.a C:\\PROGRA~"
-"1\\MICROC~1\\MPLABC~1\\lib\\libm-coff.a"
+		Value			"  C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\l"
+"ib\\libpic30-coff.a C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\dsPIC33F\\libp33fJ"
+"256GP710-coff.a C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\lib\\libc-coff.a C:\\PROGRA"
+"~1\\MICROC~1\\MPLABC~1\\lib\\libm-coff.a"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"PIC_INCLUDES"
-		Value			"-I C:\\PROGRA~1\\MICROC~1\\MPLABC~1\\"
-"include"
+		Value			"  -I C:\\PROGRA~1\\MICROC~1\\MPLABC~1"
+"\\include"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -588,7 +588,7 @@ Model {
 	PropName		"Components"
       }
       Name		      "Configuration"
-      CurrentDlgPage	      "Optimization"
+      CurrentDlgPage	      "Real-Time Workshop/DsPIC options"
     }
     PropName		    "ConfigurationSets"
   }
@@ -831,7 +831,7 @@ Model {
       BlockType		      SubSystem
       Name		      "Configure ECAN 1"
       Ports		      []
-      Position		      [30, 149, 145, 201]
+      Position		      [30, 159, 145, 211]
       BackgroundColor	      "lightBlue"
       DropShadow	      on
       MinAlgLoopOccurrences   off
@@ -975,174 +975,174 @@ Model {
 "ameters(1) = bitor(parameters(1), bitshift(dma_tx_chan, 8));\n\n%% Generate p"
 "arameter 2\nparameters(2) = baud / 100;\n\n%% Generate parameter 3\nh = find_"
 "system(bdroot(gcb),'FollowLinks','on','LookUnderMasks','all','Tag','dsPIC_MAS"
-"TER');\nfcy = 0;\nif ~isempty(h)\n    OverrideFcy = strcmp(get_param(h{1},'Ov"
-"errideFcy'),'on');\n    if (OverrideFcy == 1)\n        fcy = str2num(get_para"
-"m(h{1},'NewFcy'));     %% overridded fcy\n    else\n        fcy = str2num(get"
-"_param(h{1},'fcy'));\n    end \nend\nparameters(3) = fcy / 1000;\n\n%% Genera"
-"te parameter 4\nparameters(4) = ps1 - 1;\nparameters(4) = bitor(parameters(4)"
-", bitshift(pd - 1, 3));\nparameters(4) = bitor(parameters(4), bitshift(ps2 - "
-"1, 6));\nparameters(4) = bitor(parameters(4), bitshift(sjw - 1, 9));\nif trip"
-"le_sample == 1\n    parameters(4) = bitset(parameters(4),12);\nend\n\n%% Gene"
-"rate parameter 5\nfor k = 1:length(filters)\n    parameters(5) = bitset(param"
-"eters(5),filters(k)+1);\nend;\n\n% Map filter mask values into proper values"
-"\nfilter_masks = [filter_0_mask; filter_1_mask; filter_2_mask; filter_3_mask;"
-" filter_4_mask; filter_5_mask; filter_6_mask; filter_7_mask; filter_8_mask; f"
-"ilter_9_mask; filter_10_mask; filter_11_mask; filter_12_mask; filter_13_mask;"
-" filter_14_mask; filter_15_mask;];\nfilter_masks = filter_masks - 2;\nfilter_"
-"masks(filter_masks == -1) = 3;\n\n%% Generate parameters 6 and 7\nfor k = 1:l"
-"ength(filters);\n    filter = filters(k) + 1;\n    if filter < 9\n        par"
-"ameters(6) = bitor(parameters(6), bitshift(filter_masks(filter),2*(filter-1))"
-");\n    else\n        parameters(7) = bitor(parameters(7), bitshift(filter_ma"
-"sks(filter),2*(filter-9)));\n    end\nend\n\n% Generate parameters 8 and 9\np"
-"arameters(8) = bitshift(bitand(mask_0,hex2dec('18000000')),-27); % EID17-16\n"
-"parameters(8) = bitor(parameters(8), bitshift(bitand(mask_0,hex2dec('7FF')), "
-"5)); % SID\nparameters(8) = bitor(parameters(8), bitshift(mask_0_mide - 1, 3)"
-"); % MIDE\nparameters(9) = bitshift(bitand(mask_0,hex2dec('7FFF800')),-11); %"
-" EID15-0\n\n%% Generate parameters 10 and 11\nparameters(10) = bitshift(bitan"
-"d(mask_1,hex2dec('18000000')),-27); % EID17-16\nparameters(10) = bitor(parame"
-"ters(10), bitshift(bitand(mask_1,hex2dec('7FF')), 5)); % SID\nparameters(10) "
-"= bitor(parameters(10), bitshift(mask_1_mide - 1, 3)); % MIDE\nparameters(11)"
-" = bitshift(bitand(mask_1,hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate "
-"parameters 12 and 13\nparameters(12) = bitshift(bitand(mask_2,hex2dec('180000"
-"00')),-27); % EID17-16\nparameters(12) = bitor(parameters(12), bitshift(bitan"
-"d(mask_2,hex2dec('7FF')), 5)); % SID\nparameters(12) = bitor(parameters(12), "
-"bitshift(mask_2_mide - 1, 3)); % MIDE\nparameters(13) = bitshift(bitand(mask_"
-"2,hex2dec('7FFF800')),-11); % EID15-0\n\n% Generate parameters 14-17\nbuf_pri"
-"orities = [buf_0_tx_pri;buf_1_tx_pri;buf_2_tx_pri;buf_3_tx_pri;buf_4_tx_pri;b"
-"uf_5_tx_pri;buf_6_tx_pri;buf_7_tx_pri] - 1;\nbuf_rtes = [buf_0_rte;buf_1_rte;"
-"buf_2_rte;buf_3_rte;buf_4_rte;buf_5_rte;buf_6_rte;buf_7_rte] - 1;\n\n% Create"
-" a vector of chars to modify\nregs = uint16(zeros(8,1));\n\n% Go through all "
-"enabled transmission buffers setting appropriate bits\nfor b = 1:size(tx_bufs"
-",1)\n    \n    index = tx_bufs(b) + 1;\n    \n    % Set transmission bit\n   "
-" regs(index) = bitset(regs(index),8);\n\n    % Set priority bits\n    regs(in"
-"dex) = bitor(regs(index), buf_priorities(index));\n\n    % Set remote transmi"
-"t enable bits\n    if buf_rtes(index) == 1\n        regs(index) = bitset(regs"
-"(index),3);\n    end\nend\n\nfor b = 1:size(rx_bufs,1)\n    \n    index = rx_"
-"bufs(b) + 1;\n\n    % Set priority bits\n    regs(index) = bitor(regs(index),"
-" buf_priorities(index));\n\n    % Set remote transmit enable bits\n    if buf"
-"_rtes(index) == 1\n        regs(index) = bitset(regs(index),3);\n    end\nend"
-"\n\n% Map our matrix into registers\nparameters(14) = bitor(bitshift(regs(2),"
-"8), regs(1));\nparameters(15) = bitor(bitshift(regs(4),8), regs(3));\nparamet"
-"ers(16) = bitor(bitshift(regs(6),8), regs(5));\nparameters(17) = bitor(bitshi"
-"ft(regs(8),8), regs(7));\n\n% Map the filter buffer values to corresponding b"
-"it values\nfilter_buffers = [filter_0_buf; filter_1_buf; filter_2_buf; filter"
-"_3_buf; filter_4_buf; filter_5_buf; filter_6_buf; filter_7_buf; filter_8_buf;"
-" filter_9_buf; filter_10_buf; filter_11_buf; filter_12_buf; filter_13_buf; fi"
-"lter_14_buf; filter_15_buf;];\nfilter_buffers = filter_buffers - 1;\n\n%% Gen"
-"erate parameter 18\nif bitget(parameters(5),1) == 1\n    parameters(18) = fil"
-"ter_buffers(1);\nend\nif bitget(parameters(5),2) == 1\n    parameters(18) = b"
-"itor(parameters(18), bitshift(filter_buffers(2), 4));\nend\nif bitget(paramet"
-"ers(5),3) == 1\n    parameters(18) = bitor(parameters(18), bitshift(filter_bu"
-"ffers(3), 8));\nend\nif bitget(parameters(5),4) == 1\n    parameters(18) = bi"
-"tor(parameters(18), bitshift(filter_buffers(4), 12));\nend\n\n%% Generate par"
-"ameter 19\nif bitget(parameters(5),5) == 1\n    parameters(19) = filter_buffe"
-"rs(5);\nend\nif bitget(parameters(5),6) == 1\n    parameters(19) = bitor(para"
-"meters(19), bitshift(filter_buffers(6), 4));\nend\nif bitget(parameters(5),7)"
-" == 1\n    parameters(19) = bitor(parameters(19), bitshift(filter_buffers(7),"
-" 8));\nend\nif bitget(parameters(5),8) == 1\n    parameters(19) = bitor(param"
-"eters(19), bitshift(filter_buffers(8), 12));\nend\n\n%% Generate parameter 20"
-"\nif bitget(parameters(5),9) == 1\n    parameters(20) = filter_buffers(9);\ne"
-"nd\nif bitget(parameters(5),10) == 1\n    parameters(20) = bitor(parameters(2"
-"0), bitshift(filter_buffers(10), 4));\nend\nif bitget(parameters(5),11) == 1"
-"\n    parameters(20) = bitor(parameters(20), bitshift(filter_buffers(11), 8))"
-";\nend\nif bitget(parameters(5),12) == 1\n    parameters(20) = bitor(paramete"
-"rs(20), bitshift(filter_buffers(12), 12));\nend\n\n%% Generate parameter 21\n"
-"if bitget(parameters(5),13) == 1\n    parameters(21) = filter_buffers(13);\ne"
-"nd\nif bitget(parameters(5),14) == 1\n    parameters(21) = bitor(parameters(2"
-"1), bitshift(filter_buffers(14), 4));\nend\nif bitget(parameters(5),15) == 1"
-"\n    parameters(21) = bitor(parameters(21), bitshift(filter_buffers(15), 8))"
-";\nend\nif bitget(parameters(5),16) == 1\n    parameters(21) = bitor(paramete"
-"rs(21), bitshift(filter_buffers(16), 12));\nend\n\n% Generate parameters 22 a"
-"nd 23\nparameters(22) = bitshift(bitand(filter_0,hex2dec('18000000')),-27); %"
-" EID17-16\nparameters(22) = bitor(parameters(22), bitshift(bitand(filter_0,he"
-"x2dec('7FF')), 5)); % SID\nparameters(22) = bitor(parameters(22), bitshift(fi"
-"lter_0_exide - 1, 3)); % EXIDE\nparameters(23) = bitshift(bitand(uint32(filte"
-"r_0),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 24 and 25"
-"\nparameters(24) = bitshift(bitand(filter_1,hex2dec('18000000')),-27); % EID1"
-"7-16\nparameters(24) = bitor(parameters(24), bitshift(bitand(filter_1,hex2dec"
-"('7FF')), 5)); % SID\nparameters(24) = bitor(parameters(24), bitshift(filter_"
-"1_exide - 1, 3)); % EXIDE\nparameters(25) = bitshift(bitand(uint32(filter_1),"
-"hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 26 and 27\npara"
-"meters(26) = bitshift(bitand(filter_2,hex2dec('18000000')),-27); % EID17-16\n"
-"parameters(26) = bitor(parameters(26), bitshift(bitand(filter_2,hex2dec('7FF'"
-")), 5)); % SID\nparameters(26) = bitor(parameters(26), bitshift(filter_2_exid"
-"e - 1, 3)); % EXIDE\nparameters(27) = bitshift(bitand(uint32(filter_2),hex2de"
-"c('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 28 and 29\nparameters"
-"(28) = bitshift(bitand(filter_3,hex2dec('18000000')),-27); % EID17-16\nparame"
-"ters(28) = bitor(parameters(28), bitshift(bitand(filter_3,hex2dec('7FF')), 5)"
-"); % SID\nparameters(28) = bitor(parameters(28), bitshift(filter_3_exide - 1,"
-" 3)); % EXIDE\nparameters(29) = bitshift(bitand(uint32(filter_3),hex2dec('7FF"
-"F800')),-11); % EID15-0\n\n%% Generate parameters 30 and 31\nparameters(30) ="
-" bitshift(bitand(filter_4,hex2dec('18000000')),-27); % EID17-16\nparameters(3"
-"0) = bitor(parameters(30), bitshift(bitand(filter_4,hex2dec('7FF')), 5)); % S"
-"ID\nparameters(30) = bitor(parameters(30), bitshift(filter_4_exide - 1, 3)); "
-"% EXIDE\nparameters(31) = bitshift(bitand(uint32(filter_4),hex2dec('7FFF800')"
-"),-11); % EID15-0\n\n%% Generate parameters 32 and 33\nparameters(32) = bitsh"
-"ift(bitand(filter_5,hex2dec('18000000')),-27); % EID17-16\nparameters(32) = b"
-"itor(parameters(32), bitshift(bitand(filter_5,hex2dec('7FF')), 5)); % SID\npa"
-"rameters(32) = bitor(parameters(32), bitshift(filter_5_exide - 1, 3)); % EXID"
-"E\nparameters(33) = bitshift(bitand(uint32(filter_5),hex2dec('7FFF800')),-11)"
-"; % EID15-0\n\n%% Generate parameters 34 and 35\nparameters(34) = bitshift(bi"
-"tand(filter_6,hex2dec('18000000')),-27); % EID17-16\nparameters(34) = bitor(p"
-"arameters(34), bitshift(bitand(filter_6,hex2dec('7FF')), 5)); % SID\nparamete"
-"rs(34) = bitor(parameters(34), bitshift(filter_6_exide - 1, 3)); % EXIDE\npar"
-"ameters(35) = bitshift(bitand(uint32(filter_6),hex2dec('7FFF800')),-11); % EI"
-"D15-0\n\n%% Generate parameters 36 and 37\nparameters(36) = bitshift(bitand(f"
-"ilter_7,hex2dec('18000000')),-27); % EID17-16\nparameters(36) = bitor(paramet"
-"ers(36), bitshift(bitand(filter_7,hex2dec('7FF')), 5)); % SID\nparameters(36)"
-" = bitor(parameters(36), bitshift(filter_7_exide - 1, 3)); % EXIDE\nparameter"
-"s(37) = bitshift(bitand(uint32(filter_7),hex2dec('7FFF800')),-11); % EID15-0"
-"\n\n%% Generate parameters 38 and 39\nparameters(38) = bitshift(bitand(filter"
-"_8,hex2dec('18000000')),-27); % EID17-16\nparameters(38) = bitor(parameters(3"
-"8), bitshift(bitand(filter_8,hex2dec('7FF')), 5)); % SID\nparameters(38) = bi"
-"tor(parameters(38), bitshift(filter_8_exide - 1, 3)); % EXIDE\nparameters(39)"
-" = bitshift(bitand(uint32(filter_8),hex2dec('7FFF800')),-11); % EID15-0\n\n%%"
-" Generate parameters 40 and 41\nparameters(40) = bitshift(bitand(filter_9,hex"
-"2dec('18000000')),-27); % EID17-16\nparameters(40) = bitor(parameters(40), bi"
-"tshift(bitand(filter_9,hex2dec('7FF')), 5)); % SID\nparameters(40) = bitor(pa"
-"rameters(40), bitshift(filter_9_exide - 1, 3)); % EXIDE\nparameters(41) = bit"
-"shift(bitand(uint32(filter_9),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Gener"
-"ate parameters 42 and 43\nparameters(42) = bitshift(bitand(filter_10,hex2dec("
-"'18000000')),-27); % EID17-16\nparameters(42) = bitor(parameters(42), bitshif"
-"t(bitand(filter_10,hex2dec('7FF')), 5)); % SID\nparameters(42) = bitor(parame"
-"ters(42), bitshift(filter_10_exide - 1, 3)); % EXIDE\nparameters(43) = bitshi"
-"ft(bitand(uint32(filter_10),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generat"
-"e parameters 44 and 45\nparameters(44) = bitshift(bitand(filter_11,hex2dec('1"
-"8000000')),-27); % EID17-16\nparameters(44) = bitor(parameters(44), bitshift("
-"bitand(filter_11,hex2dec('7FF')), 5)); % SID\nparameters(44) = bitor(paramete"
-"rs(44), bitshift(filter_11_exide - 1, 3)); % EXIDE\nparameters(45) = bitshift"
-"(bitand(uint32(filter_11),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate "
-"parameters 46 and 47\nparameters(46) = bitshift(bitand(filter_12,hex2dec('180"
-"00000')),-27); % EID17-16\nparameters(46) = bitor(parameters(46), bitshift(bi"
-"tand(filter_12,hex2dec('7FF')), 5)); % SID\nparameters(46) = bitor(parameters"
-"(46), bitshift(filter_12_exide - 1, 3)); % EXIDE\nparameters(47) = bitshift(b"
-"itand(uint32(filter_12),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate pa"
-"rameters 48 and 49\nparameters(48) = bitshift(bitand(filter_13,hex2dec('18000"
-"000')),-27); % EID17-16\nparameters(48) = bitor(parameters(48), bitshift(bita"
-"nd(filter_13,hex2dec('7FF')), 5)); % SID\nparameters(48) = bitor(parameters(4"
-"8), bitshift(filter_13_exide - 1, 3)); % EXIDE\nparameters(49) = bitshift(bit"
-"and(uint32(filter_13),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate para"
-"meters 50 and 51\nparameters(50) = bitshift(bitand(filter_14,hex2dec('1800000"
-"0')),-27); % EID17-16\nparameters(50) = bitor(parameters(50), bitshift(bitand"
-"(filter_14,hex2dec('7FF')), 5)); % SID\nparameters(50) = bitor(parameters(50)"
-", bitshift(filter_14_exide - 1, 3)); % EXIDE\nparameters(51) = bitshift(bitan"
-"d(uint32(filter_14),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parame"
-"ters 52 and 53\nparameters(52) = bitshift(bitand(filter_15,hex2dec('18000000'"
-")),-27); % EID17-16\nparameters(52) = bitor(parameters(52), bitshift(bitand(f"
-"ilter_15,hex2dec('7FF')), 5)); % SID\nparameters(52) = bitor(parameters(52), "
-"bitshift(filter_15_exide - 1, 3)); % EXIDE\nparameters(53) = bitshift(bitand("
-"uint32(filter_15),hex2dec('7FFF800')),-11); % EID15-0"
+"TER');\nfcy = 0;\nif ~isempty(h)\n    %OverrideFcy = strcmp(get_param(h{1},'O"
+"verrideFcy'),'on');\n    %if (OverrideFcy == 1)\n    %    fcy = str2num(get_p"
+"aram(h{1},'NewFcy'));     %% overridded fcy\n    %else\n        fcy = str2num"
+"(get_param(h{1},'fcy'));\n    %end \nend\nparameters(3) = fcy / 1000;\n\n%% G"
+"enerate parameter 4\nparameters(4) = ps1 - 1;\nparameters(4) = bitor(paramete"
+"rs(4), bitshift(pd - 1, 3));\nparameters(4) = bitor(parameters(4), bitshift(p"
+"s2 - 1, 6));\nparameters(4) = bitor(parameters(4), bitshift(sjw - 1, 9));\nif"
+" triple_sample == 1\n    parameters(4) = bitset(parameters(4),12);\nend\n\n%%"
+" Generate parameter 5\nfor k = 1:length(filters)\n    parameters(5) = bitset("
+"parameters(5),filters(k)+1);\nend;\n\n% Map filter mask values into proper va"
+"lues\nfilter_masks = [filter_0_mask; filter_1_mask; filter_2_mask; filter_3_m"
+"ask; filter_4_mask; filter_5_mask; filter_6_mask; filter_7_mask; filter_8_mas"
+"k; filter_9_mask; filter_10_mask; filter_11_mask; filter_12_mask; filter_13_m"
+"ask; filter_14_mask; filter_15_mask;];\nfilter_masks = filter_masks - 2;\nfil"
+"ter_masks(filter_masks == -1) = 3;\n\n%% Generate parameters 6 and 7\nfor k ="
+" 1:length(filters);\n    filter = filters(k) + 1;\n    if filter < 9\n       "
+" parameters(6) = bitor(parameters(6), bitshift(filter_masks(filter),2*(filter"
+"-1)));\n    else\n        parameters(7) = bitor(parameters(7), bitshift(filte"
+"r_masks(filter),2*(filter-9)));\n    end\nend\n\n% Generate parameters 8 and "
+"9\nparameters(8) = bitshift(bitand(mask_0,hex2dec('18000000')),-27); % EID17-"
+"16\nparameters(8) = bitor(parameters(8), bitshift(bitand(mask_0,hex2dec('7FF'"
+")), 5)); % SID\nparameters(8) = bitor(parameters(8), bitshift(mask_0_mide - 1"
+", 3)); % MIDE\nparameters(9) = bitshift(bitand(mask_0,hex2dec('7FFF800')),-11"
+"); % EID15-0\n\n%% Generate parameters 10 and 11\nparameters(10) = bitshift(b"
+"itand(mask_1,hex2dec('18000000')),-27); % EID17-16\nparameters(10) = bitor(pa"
+"rameters(10), bitshift(bitand(mask_1,hex2dec('7FF')), 5)); % SID\nparameters("
+"10) = bitor(parameters(10), bitshift(mask_1_mide - 1, 3)); % MIDE\nparameters"
+"(11) = bitshift(bitand(mask_1,hex2dec('7FFF800')),-11); % EID15-0\n\n%% Gener"
+"ate parameters 12 and 13\nparameters(12) = bitshift(bitand(mask_2,hex2dec('18"
+"000000')),-27); % EID17-16\nparameters(12) = bitor(parameters(12), bitshift(b"
+"itand(mask_2,hex2dec('7FF')), 5)); % SID\nparameters(12) = bitor(parameters(1"
+"2), bitshift(mask_2_mide - 1, 3)); % MIDE\nparameters(13) = bitshift(bitand(m"
+"ask_2,hex2dec('7FFF800')),-11); % EID15-0\n\n% Generate parameters 14-17\nbuf"
+"_priorities = [buf_0_tx_pri;buf_1_tx_pri;buf_2_tx_pri;buf_3_tx_pri;buf_4_tx_p"
+"ri;buf_5_tx_pri;buf_6_tx_pri;buf_7_tx_pri] - 1;\nbuf_rtes = [buf_0_rte;buf_1_"
+"rte;buf_2_rte;buf_3_rte;buf_4_rte;buf_5_rte;buf_6_rte;buf_7_rte] - 1;\n\n% Cr"
+"eate a vector of chars to modify\nregs = uint16(zeros(8,1));\n\n% Go through "
+"all enabled transmission buffers setting appropriate bits\nfor b = 1:size(tx_"
+"bufs,1)\n    \n    index = tx_bufs(b) + 1;\n    \n    % Set transmission bit"
+"\n    regs(index) = bitset(regs(index),8);\n\n    % Set priority bits\n    re"
+"gs(index) = bitor(regs(index), buf_priorities(index));\n\n    % Set remote tr"
+"ansmit enable bits\n    if buf_rtes(index) == 1\n        regs(index) = bitset"
+"(regs(index),3);\n    end\nend\n\nfor b = 1:size(rx_bufs,1)\n    \n    index "
+"= rx_bufs(b) + 1;\n\n    % Set priority bits\n    regs(index) = bitor(regs(in"
+"dex), buf_priorities(index));\n\n    % Set remote transmit enable bits\n    i"
+"f buf_rtes(index) == 1\n        regs(index) = bitset(regs(index),3);\n    end"
+"\nend\n\n% Map our matrix into registers\nparameters(14) = bitor(bitshift(reg"
+"s(2),8), regs(1));\nparameters(15) = bitor(bitshift(regs(4),8), regs(3));\npa"
+"rameters(16) = bitor(bitshift(regs(6),8), regs(5));\nparameters(17) = bitor(b"
+"itshift(regs(8),8), regs(7));\n\n% Map the filter buffer values to correspond"
+"ing bit values\nfilter_buffers = [filter_0_buf; filter_1_buf; filter_2_buf; f"
+"ilter_3_buf; filter_4_buf; filter_5_buf; filter_6_buf; filter_7_buf; filter_8"
+"_buf; filter_9_buf; filter_10_buf; filter_11_buf; filter_12_buf; filter_13_bu"
+"f; filter_14_buf; filter_15_buf;];\nfilter_buffers = filter_buffers - 1;\n\n%"
+"% Generate parameter 18\nif bitget(parameters(5),1) == 1\n    parameters(18) "
+"= filter_buffers(1);\nend\nif bitget(parameters(5),2) == 1\n    parameters(18"
+") = bitor(parameters(18), bitshift(filter_buffers(2), 4));\nend\nif bitget(pa"
+"rameters(5),3) == 1\n    parameters(18) = bitor(parameters(18), bitshift(filt"
+"er_buffers(3), 8));\nend\nif bitget(parameters(5),4) == 1\n    parameters(18)"
+" = bitor(parameters(18), bitshift(filter_buffers(4), 12));\nend\n\n%% Generat"
+"e parameter 19\nif bitget(parameters(5),5) == 1\n    parameters(19) = filter_"
+"buffers(5);\nend\nif bitget(parameters(5),6) == 1\n    parameters(19) = bitor"
+"(parameters(19), bitshift(filter_buffers(6), 4));\nend\nif bitget(parameters("
+"5),7) == 1\n    parameters(19) = bitor(parameters(19), bitshift(filter_buffer"
+"s(7), 8));\nend\nif bitget(parameters(5),8) == 1\n    parameters(19) = bitor("
+"parameters(19), bitshift(filter_buffers(8), 12));\nend\n\n%% Generate paramet"
+"er 20\nif bitget(parameters(5),9) == 1\n    parameters(20) = filter_buffers(9"
+");\nend\nif bitget(parameters(5),10) == 1\n    parameters(20) = bitor(paramet"
+"ers(20), bitshift(filter_buffers(10), 4));\nend\nif bitget(parameters(5),11) "
+"== 1\n    parameters(20) = bitor(parameters(20), bitshift(filter_buffers(11),"
+" 8));\nend\nif bitget(parameters(5),12) == 1\n    parameters(20) = bitor(para"
+"meters(20), bitshift(filter_buffers(12), 12));\nend\n\n%% Generate parameter "
+"21\nif bitget(parameters(5),13) == 1\n    parameters(21) = filter_buffers(13)"
+";\nend\nif bitget(parameters(5),14) == 1\n    parameters(21) = bitor(paramete"
+"rs(21), bitshift(filter_buffers(14), 4));\nend\nif bitget(parameters(5),15) ="
+"= 1\n    parameters(21) = bitor(parameters(21), bitshift(filter_buffers(15), "
+"8));\nend\nif bitget(parameters(5),16) == 1\n    parameters(21) = bitor(param"
+"eters(21), bitshift(filter_buffers(16), 12));\nend\n\n% Generate parameters 2"
+"2 and 23\nparameters(22) = bitshift(bitand(filter_0,hex2dec('18000000')),-27)"
+"; % EID17-16\nparameters(22) = bitor(parameters(22), bitshift(bitand(filter_0"
+",hex2dec('7FF')), 5)); % SID\nparameters(22) = bitor(parameters(22), bitshift"
+"(filter_0_exide - 1, 3)); % EXIDE\nparameters(23) = bitshift(bitand(uint32(fi"
+"lter_0),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 24 and "
+"25\nparameters(24) = bitshift(bitand(filter_1,hex2dec('18000000')),-27); % EI"
+"D17-16\nparameters(24) = bitor(parameters(24), bitshift(bitand(filter_1,hex2d"
+"ec('7FF')), 5)); % SID\nparameters(24) = bitor(parameters(24), bitshift(filte"
+"r_1_exide - 1, 3)); % EXIDE\nparameters(25) = bitshift(bitand(uint32(filter_1"
+"),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 26 and 27\npa"
+"rameters(26) = bitshift(bitand(filter_2,hex2dec('18000000')),-27); % EID17-16"
+"\nparameters(26) = bitor(parameters(26), bitshift(bitand(filter_2,hex2dec('7F"
+"F')), 5)); % SID\nparameters(26) = bitor(parameters(26), bitshift(filter_2_ex"
+"ide - 1, 3)); % EXIDE\nparameters(27) = bitshift(bitand(uint32(filter_2),hex2"
+"dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 28 and 29\nparamete"
+"rs(28) = bitshift(bitand(filter_3,hex2dec('18000000')),-27); % EID17-16\npara"
+"meters(28) = bitor(parameters(28), bitshift(bitand(filter_3,hex2dec('7FF')), "
+"5)); % SID\nparameters(28) = bitor(parameters(28), bitshift(filter_3_exide - "
+"1, 3)); % EXIDE\nparameters(29) = bitshift(bitand(uint32(filter_3),hex2dec('7"
+"FFF800')),-11); % EID15-0\n\n%% Generate parameters 30 and 31\nparameters(30)"
+" = bitshift(bitand(filter_4,hex2dec('18000000')),-27); % EID17-16\nparameters"
+"(30) = bitor(parameters(30), bitshift(bitand(filter_4,hex2dec('7FF')), 5)); %"
+" SID\nparameters(30) = bitor(parameters(30), bitshift(filter_4_exide - 1, 3))"
+"; % EXIDE\nparameters(31) = bitshift(bitand(uint32(filter_4),hex2dec('7FFF800"
+"')),-11); % EID15-0\n\n%% Generate parameters 32 and 33\nparameters(32) = bit"
+"shift(bitand(filter_5,hex2dec('18000000')),-27); % EID17-16\nparameters(32) ="
+" bitor(parameters(32), bitshift(bitand(filter_5,hex2dec('7FF')), 5)); % SID\n"
+"parameters(32) = bitor(parameters(32), bitshift(filter_5_exide - 1, 3)); % EX"
+"IDE\nparameters(33) = bitshift(bitand(uint32(filter_5),hex2dec('7FFF800')),-1"
+"1); % EID15-0\n\n%% Generate parameters 34 and 35\nparameters(34) = bitshift("
+"bitand(filter_6,hex2dec('18000000')),-27); % EID17-16\nparameters(34) = bitor"
+"(parameters(34), bitshift(bitand(filter_6,hex2dec('7FF')), 5)); % SID\nparame"
+"ters(34) = bitor(parameters(34), bitshift(filter_6_exide - 1, 3)); % EXIDE\np"
+"arameters(35) = bitshift(bitand(uint32(filter_6),hex2dec('7FFF800')),-11); % "
+"EID15-0\n\n%% Generate parameters 36 and 37\nparameters(36) = bitshift(bitand"
+"(filter_7,hex2dec('18000000')),-27); % EID17-16\nparameters(36) = bitor(param"
+"eters(36), bitshift(bitand(filter_7,hex2dec('7FF')), 5)); % SID\nparameters(3"
+"6) = bitor(parameters(36), bitshift(filter_7_exide - 1, 3)); % EXIDE\nparamet"
+"ers(37) = bitshift(bitand(uint32(filter_7),hex2dec('7FFF800')),-11); % EID15-"
+"0\n\n%% Generate parameters 38 and 39\nparameters(38) = bitshift(bitand(filte"
+"r_8,hex2dec('18000000')),-27); % EID17-16\nparameters(38) = bitor(parameters("
+"38), bitshift(bitand(filter_8,hex2dec('7FF')), 5)); % SID\nparameters(38) = b"
+"itor(parameters(38), bitshift(filter_8_exide - 1, 3)); % EXIDE\nparameters(39"
+") = bitshift(bitand(uint32(filter_8),hex2dec('7FFF800')),-11); % EID15-0\n\n%"
+"% Generate parameters 40 and 41\nparameters(40) = bitshift(bitand(filter_9,he"
+"x2dec('18000000')),-27); % EID17-16\nparameters(40) = bitor(parameters(40), b"
+"itshift(bitand(filter_9,hex2dec('7FF')), 5)); % SID\nparameters(40) = bitor(p"
+"arameters(40), bitshift(filter_9_exide - 1, 3)); % EXIDE\nparameters(41) = bi"
+"tshift(bitand(uint32(filter_9),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Gene"
+"rate parameters 42 and 43\nparameters(42) = bitshift(bitand(filter_10,hex2dec"
+"('18000000')),-27); % EID17-16\nparameters(42) = bitor(parameters(42), bitshi"
+"ft(bitand(filter_10,hex2dec('7FF')), 5)); % SID\nparameters(42) = bitor(param"
+"eters(42), bitshift(filter_10_exide - 1, 3)); % EXIDE\nparameters(43) = bitsh"
+"ift(bitand(uint32(filter_10),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Genera"
+"te parameters 44 and 45\nparameters(44) = bitshift(bitand(filter_11,hex2dec('"
+"18000000')),-27); % EID17-16\nparameters(44) = bitor(parameters(44), bitshift"
+"(bitand(filter_11,hex2dec('7FF')), 5)); % SID\nparameters(44) = bitor(paramet"
+"ers(44), bitshift(filter_11_exide - 1, 3)); % EXIDE\nparameters(45) = bitshif"
+"t(bitand(uint32(filter_11),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate"
+" parameters 46 and 47\nparameters(46) = bitshift(bitand(filter_12,hex2dec('18"
+"000000')),-27); % EID17-16\nparameters(46) = bitor(parameters(46), bitshift(b"
+"itand(filter_12,hex2dec('7FF')), 5)); % SID\nparameters(46) = bitor(parameter"
+"s(46), bitshift(filter_12_exide - 1, 3)); % EXIDE\nparameters(47) = bitshift("
+"bitand(uint32(filter_12),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate p"
+"arameters 48 and 49\nparameters(48) = bitshift(bitand(filter_13,hex2dec('1800"
+"0000')),-27); % EID17-16\nparameters(48) = bitor(parameters(48), bitshift(bit"
+"and(filter_13,hex2dec('7FF')), 5)); % SID\nparameters(48) = bitor(parameters("
+"48), bitshift(filter_13_exide - 1, 3)); % EXIDE\nparameters(49) = bitshift(bi"
+"tand(uint32(filter_13),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate par"
+"ameters 50 and 51\nparameters(50) = bitshift(bitand(filter_14,hex2dec('180000"
+"00')),-27); % EID17-16\nparameters(50) = bitor(parameters(50), bitshift(bitan"
+"d(filter_14,hex2dec('7FF')), 5)); % SID\nparameters(50) = bitor(parameters(50"
+"), bitshift(filter_14_exide - 1, 3)); % EXIDE\nparameters(51) = bitshift(bita"
+"nd(uint32(filter_14),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate param"
+"eters 52 and 53\nparameters(52) = bitshift(bitand(filter_15,hex2dec('18000000"
+"')),-27); % EID17-16\nparameters(52) = bitor(parameters(52), bitshift(bitand("
+"filter_15,hex2dec('7FF')), 5)); % SID\nparameters(52) = bitor(parameters(52),"
+" bitshift(filter_15_exide - 1, 3)); % EXIDE\nparameters(53) = bitshift(bitand"
+"(uint32(filter_15),hex2dec('7FFF800')),-11); % EID15-0"
       MaskDisplay	      "text(0.5,0.5,'Configure ECAN1','horizontalAlign"
 "ment','center','verticalAlignment','middle');\n"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskIconUnits	      "normalized"
-      MaskValueString	      "off|Normal|2|0|250000|8|5|6|4|20|on|6 buffers|["
+      MaskValueString	      "off|Normal|2|0|250000|8|5|6|4|20|on|4 buffers|["
 "1]|[0]|Highest|No|Highest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|Lowest|N"
 "o|Lowest|No|0|Match std or ext|0|Match std or ext|0|Match std or ext|[0 1 2]|"
-"hex2dec('400')|0|Match only standard|1|hex2dec('401')|0|Match only standard|2"
-"|hex2dec('402')|0|Match only standard|3|0|0|Match only standard|0|0|0|Match o"
+"hex2dec('400')|0|Match only standard|1|hex2dec('401')|0|Match only standard|1"
+"|hex2dec('402')|0|Match only standard|1|0|0|Match only standard|0|0|0|Match o"
 "nly standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match "
 "only standard|0|0|0|Match only standard|0|0|<empty>|Match only standard|0|0|0"
 "|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|"
@@ -1239,7 +1239,7 @@ Model {
       RTWMemSecDataInternal   "Inherit from model"
       RTWMemSecDataParameters "Inherit from model"
       uplimit		      "1"
-      tsamp		      "1"
+      tsamp		      ".1"
     }
     Block {
       BlockType		      DataTypeConversion
@@ -1325,7 +1325,7 @@ Model {
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "1"
+      MaskValueString	      ".1"
       System {
 	Name			"ECAN1 Error Status"
 	Location		[479, 513, 1139, 820]
@@ -1459,16 +1459,11 @@ Model {
       MasterBusyPort	      "None"
       MasterOverloadPort      "None"
       FOSC		      "Quartz (XT - HS)"
-      ClockSwitchMonitor      "Both disabled"
       TempProtection_33f      "TEMP_ON"
       FPBOR		      "<empty>"
       PWRT		      "disable"
       MCLR		      "<empty>"
       PowerSave		      off
-      OverrideFcy	      off
-      NewFcy		      "1e6"
-      PR2345		      "[65535  65535  65535  65535  65535  65535  6553"
-"5  65535]"
     }
     Block {
       BlockType		      SubSystem
@@ -1496,7 +1491,7 @@ Model {
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "1"
+      MaskValueString	      ".01"
       System {
 	Name			"Receive ECAN1 Message"
 	Location		[167, 615, 827, 922]
@@ -2119,7 +2114,7 @@ Model {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
       Ports		      [4]
-      Position		      [475, 142, 640, 258]
+      Position		      [480, 142, 645, 258]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
       RTWSystemCode	      "Auto"
@@ -2180,11 +2175,11 @@ Model {
       MaskIconRotate	      "none"
       MaskIconUnits	      "autoscale"
       MaskValueString	      "0|hex2dec('401')|on|off|off|[hex2dec('11') hex2"
-"dec('12') hex2dec('13') hex2dec('14')]|4|on|1|on"
+"dec('12') hex2dec('13') hex2dec('14')]|4|on|.01|on"
       MaskTabNameString	      ",,,,,,,,,"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[593, 397, 1236, 799]
+	Location		[502, 447, 1145, 849]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2220,7 +2215,7 @@ Model {
 	Block {
 	  BlockType		  Inport
 	  Name			  "trigger"
-	  Position		  [400, 132, 465, 148]
+	  Position		  [400, 107, 465, 123]
 	  Port			  "4"
 	  IconDisplay		  "Port number"
 	}
@@ -2228,7 +2223,7 @@ Model {
 	  BlockType		  SubSystem
 	  Name			  "C-function Call"
 	  Ports			  [1, 0, 1]
-	  Position		  [485, 159, 560, 201]
+	  Position		  [485, 134, 560, 176]
 	  MinAlgLoopOccurrences	  off
 	  RTWSystemCode		  "Auto"
 	  FunctionWithSeparateData off
@@ -2269,10 +2264,10 @@ Model {
 	      BackgroundColor	      "orange"
 	      List {
 		ListType		RTWdata
-		FctDeclaration		"extern void ecan1_transmit_matlab(uin"
-"t16_T* u1);"
-		FctCall			"ecan1_transmit_matlab(*%u1);"
-		fctName			"ecan1_transmit_matlab"
+		FctDeclaration		"extern void ecan1_buffered_transmit_m"
+"atlab(uint16_T* u1);"
+		FctCall			"ecan1_buffered_transmit_matlab(*%u1);"
+		fctName			"ecan1_buffered_transmit_matlab"
 		INPUT_SIZE		"8"
 		OUTPUT_SIZE		"1"
 		NBR_INPUT		"1"
@@ -2280,7 +2275,7 @@ Model {
 	      }
 	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
 	      SourceType	      "C Function Call"
-	      fctName		      "'ecan1_transmit_matlab'"
+	      fctName		      "'ecan1_buffered_transmit_matlab'"
 	      INPUT_SIZE	      "8"
 	      INPUT1		      "uint16"
 	      INPUT2		      "--"
@@ -2290,9 +2285,9 @@ Model {
 	      SampleTime	      "c_func_sample_time"
 	      InputType		      "[ 4 ]"
 	      OutputType	      "[ ]"
-	      FctDeclaration	      "extern void ecan1_transmit_matlab(uint1"
-"6_T* u1);"
-	      FctCall		      "ecan1_transmit_matlab(*%u1);"
+	      FctDeclaration	      "extern void ecan1_buffered_transmit_mat"
+"lab(uint16_T* u1);"
+	      FctCall		      "ecan1_buffered_transmit_matlab(*%u1);"
 	      OrderingInOutPopup      "None"
 	    }
 	    Line {
@@ -2813,7 +2808,6 @@ Model {
 	Line {
 	  SrcBlock		  "myMux"
 	  SrcPort		  1
-	  Points		  [0, 25]
 	  DstBlock		  "C-function Call"
 	  DstPort		  1
 	}
@@ -2902,23 +2896,9 @@ Model {
     }
     Line {
       SrcBlock		      "Receive ECAN1 Message"
-      SrcPort		      1
-      Points		      [125, 0]
-      DstBlock		      "Send ECAN1 Message"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      3
       DstBlock		      "Terminator"
       DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Receive ECAN1 Message"
-      SrcPort		      2
-      Points		      [110, 0; 0, 5; 15, 0]
-      DstBlock		      "Send ECAN1 Message"
-      DstPort		      2
     }
     Line {
       SrcBlock		      "ECAN1 Error Status"
@@ -2958,17 +2938,30 @@ Model {
     }
     Line {
       SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      2
+      DstBlock		      "Send ECAN1 Message"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      4
-      Points		      [65, 0; 0, 30]
+      Points		      [130, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      4
     }
     Line {
       SrcBlock		      "Receive ECAN1 Message"
       SrcPort		      5
-      Points		      [105, 0; 0, -15]
+      Points		      [130, 0]
       DstBlock		      "Send ECAN1 Message"
       DstPort		      3
+    }
+    Line {
+      SrcBlock		      "Receive ECAN1 Message"
+      SrcPort		      1
+      Points		      [130, 0]
+      DstBlock		      "Send ECAN1 Message"
+      DstPort		      1
     }
   }
 }

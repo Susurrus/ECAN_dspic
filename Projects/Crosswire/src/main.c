@@ -106,9 +106,9 @@ int main(void)
 
 /* Enable ECAN1 Interrupt */ 				
     	
-	//IEC2bits.C1IE = 1;
+	IEC2bits.C1IE = 1;
 	C1INTEbits.TBIE = 1;	
-	//C1INTEbits.RBIE = 1;
+	C1INTEbits.RBIE = 1;
 
 /* ECAN2 Initialisation 		
    Configure DMA Channel 1 for ECAN2 Transmit
@@ -119,8 +119,8 @@ int main(void)
 
 /* Enable ECAN2 Interrupt */ 
 	
-	//IEC3bits.C2IE = 1;
-	//C2INTEbits.TBIE = 1;	
+	IEC3bits.C2IE = 1;
+	C2INTEbits.TBIE = 1;
 	C2INTEbits.RBIE = 1;
 
  
@@ -133,8 +133,8 @@ int main(void)
 
 /* Write a Message in ECAN2 Transmit Buffer
    Request Message Transmission			*/
-	//ecan2WriteMessage();
-	//C2TR01CONbits.TXREQ0=1;
+	ecan2WriteMessage();
+	C2TR01CONbits.TXREQ0=1;
 	
 
 /* Loop infinitely */

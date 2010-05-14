@@ -111,7 +111,7 @@ tCanMessage peek(CBRef cB){
 
 // Manipulation Procedures
 // ======================
-// returns the front of the circular buffer and marks the byte as read
+// returns the front of the circular buffer and marks it read
 tCanMessage readFront (CBRef cB){
 	// if the circular buffer is not null
 	tCanMessage retVal;

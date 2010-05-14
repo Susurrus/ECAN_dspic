@@ -54,11 +54,12 @@ typedef union{
 
 // Data structures
 typedef struct tCanMessage{
-	tUnsignedLongToChar 				id;
-	uint8_t						message_type;
-	uint8_t						frame_type;
-	uint8_t						payload [8];
-	uint8_t 						validBytes;
+	tUnsignedLongToChar id;
+	uint8_t             buffer;
+	uint8_t             message_type;
+	uint8_t             frame_type;
+	uint8_t             payload [8];
+	uint8_t             validBytes;
 }tCanMessage;
 
 
