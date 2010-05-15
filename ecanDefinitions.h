@@ -21,40 +21,9 @@ typedef unsigned int uint16_t;
 typedef char int8_t;
 typedef unsigned char uint8_t;
 
-// Union definitions used to manipulate bytes for data
-// sending and receiving but interpreting them as 
-// signed/unsigned integers and/or floats
-
-typedef union{
-	uint8_t  chData[2];
-	uint16_t usData;
-} tUnsignedShortToChar; 
-
-typedef union{
-	uint8_t chData[2];
- 	int16_t shData;
-} tShortToChar; 
-
-typedef union{
-	uint8_t  chData[4];
- 	uint32_t ulData;
-} tUnsignedLongToChar; 
-
-typedef union{
-	uint8_t	chData[4];
- 	int32_t loData;
-} tLongToChar; 
-
-typedef union{
-	uint8_t  chData[4];
- 	float    flData;
-	uint16_t shData[2];
-} tFloatToChar; 
-
-
 // Data structures
 typedef struct tCanMessage{
-	tUnsignedLongToChar id;
+	uint32_t id;
 	uint8_t             buffer;
 	uint8_t             message_type;
 	uint8_t             frame_type;

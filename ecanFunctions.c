@@ -150,7 +150,7 @@ void ecan1_receive_matlab(uint32_t* output) {
 	if (getLength(&ecan1_rx_buffer) > 0) {
 		msg = readFront(&ecan1_rx_buffer);
 	
-		output[0] = msg.id.ulData;
+		output[0] = msg.id;
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
 		output[1] |= ((uint32_t)msg.payload[2]) << 16;
 		output[1] |= ((uint32_t)msg.payload[1]) << 8;
@@ -186,14 +186,14 @@ void ecan1_transmit(tCanMessage message) {
 	// Divide the identifier into bit-chunks for storage
 	// into the registers.
 	if (message.frame_type == CAN_FRAME_EXT) {
-		eid5_0  = (message.id.ulData & 0x3F);
-		eid17_6 = (message.id.ulData>>6) & 0xFFF;
-		sid10_0 = (message.id.ulData>>18) & 0x7FF;
+		eid5_0  = (message.id & 0x3F);
+		eid17_6 = (message.id>>6) & 0xFFF;
+		sid10_0 = (message.id>>18) & 0x7FF;
 		word0 = 1;
 		word1 = eid17_6;
 	}
 	else {
-		sid10_0 = (message.id.ulData & 0x7FF);
+		sid10_0 = (message.id & 0x7FF);
 	}
 
 	word0 |= (sid10_0 << 2);
@@ -249,7 +249,7 @@ void ecan1_buffered_transmit_matlab(uint16_t* parameters) {
 
 	tCanMessage message;
 	
-	message.id = (tUnsignedLongToChar)(((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<16));
+	message.id = ((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<16);
 	message.buffer = (uint8_t)parameters[0];
 	
 	// Set remote transmit bits
@@ -389,17 +389,17 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		if (ide == 0) {		
 			message.frame_type = CAN_FRAME_STD;
 			
-			message.id = (tUnsignedLongToChar)(uint32_t)((ecan_msg_buf_ptr[0] & 0x1FFC) >> 2);
+			message.id = (uint32_t)((ecan_msg_buf_ptr[0] & 0x1FFC) >> 2);
 		}
 		else {
 			message.frame_type = CAN_FRAME_EXT;
 			
 			id = ecan_msg_buf_ptr[0] & 0x1FFC;		
-			message.id.ulData = (id << 16);
+			message.id = (id << 16);
 			id = ecan_msg_buf_ptr[1] & 0x0FFF;
-			message.id.ulData = (message.id.ulData + (id << 6));
+			message.id = (message.id + (id << 6));
 			id = (ecan_msg_buf_ptr[2] & 0xFC00) >> 10;
-			message.id.ulData = (message.id.ulData + id);
+			message.id = (message.id + id);
 		}
 		
 		/* If message is a remote transmit request, mark it as such.
