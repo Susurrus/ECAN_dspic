@@ -79,7 +79,7 @@
   * parameters[51] = filter 15 (standard, exide, eid17-16)
   * parameters[52] = filter 15 (extended 15-0)
   */
-void ecan1_init(uint16_t* parameters);
+void ecan1_init(const uint16_t* const parameters);
 
 /**
  * Pops the top message from the ECAN1 reception buffer.

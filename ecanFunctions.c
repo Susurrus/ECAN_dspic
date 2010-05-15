@@ -7,7 +7,7 @@ uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 struct CircBuffer ecan1_rx_buffer;
 struct CircBuffer ecan1_tx_buffer;
 
-void ecan1_init(uint16_t* parameters) {
+void ecan1_init(const uint16_t* const parameters) {
 
   // Make sure the ECAN module is in configuration mode.
   // It should be this way after a hardware reset, but
