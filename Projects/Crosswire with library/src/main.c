@@ -154,7 +154,7 @@ int main(void)
 	 */
 	tCanMessage message;
 	message.buffer = 0;
-	message.id.ulData = 0x300;
+	message.id = 0x300;
 	message.frame_type = CAN_FRAME_STD;
 	message.message_type = CAN_MSG_DATA;
 	
@@ -171,11 +171,11 @@ int main(void)
 	ecan1_buffered_transmit(message);
 
 	message.payload[0] = 0;
-	message.id.ulData = 0x301;
+	message.id = 0x301;
 	ecan1_buffered_transmit(message);
 
 	message.payload[0] = 1;
-	message.id.ulData = 0x302;
+	message.id = 0x302;
 	ecan1_buffered_transmit(message);
 
 	/**
