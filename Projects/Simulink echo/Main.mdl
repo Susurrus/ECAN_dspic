@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.620"
+    ComputedModelVersion    "1.622"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -45,8 +45,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "bwmairs"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri May 14 14:37:27 2010"
-  ModelVersionFormat	  "1.%<AutoIncrement:620>"
+  LastModifiedDate	  "Fri May 14 16:23:46 2010"
+  ModelVersionFormat	  "1.%<AutoIncrement:622>"
   ConfigurationManager	  "None"
   SimulationMode	  "normal"
   LinearizationMsg	  "none"
@@ -464,7 +464,7 @@ Model {
 		  ExtModeStaticAlloc	  off
 		  ExtModeStaticAllocSize  1000000
 		  ExtModeTesting	  off
-		  ExtModeMexFile	  "noextcomm"
+		  ExtModeMexFile	  "ext_comm"
 		  ExtModeIntrfLevel	  "Level1"
 		  InlinedParameterPlacement "NonHierarchical"
 		  TargetOS		  "BareBoardExample"
@@ -522,8 +522,8 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"GMAKE_PLACE"
-		Value			"C:\\PROGRA~1\\MATLAB\\R2007a\\rtw\\bi"
-"n\\win32\\gmake"
+		Value			"C:\\PROGRA~1\\MATLAB\\R2007a\\bin\\wi"
+"n32\\gmake"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -565,8 +565,7 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"GCCPATH"
-		Value			"'C:\\\\PROGRA~1\\\\MICROC~1\\\\MPLABC"
-"~1\\\\bin\\\\'"
+		Value			"''"
 	      }
 	    }
 	    PropName		    "Components"
@@ -794,7 +793,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [2, 82, 1270, 978]
+    Location		    [2, 78, 1278, 974]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1459,11 +1458,18 @@ Model {
       MasterBusyPort	      "None"
       MasterOverloadPort      "None"
       FOSC		      "Quartz (XT - HS)"
+      ClockSwitchMonitor      "Both disabled"
       TempProtection_33f      "TEMP_ON"
       FPBOR		      "<empty>"
       PWRT		      "disable"
       MCLR		      "<empty>"
+      ICD		      "ICS_NONE"
+      JTAGEN		      "JTAGEN_OFF"
       PowerSave		      off
+      OverrideFcy	      off
+      NewFcy		      "1e6"
+      PR2345		      "[65535  65535  65535  65535  65535  65535  6553"
+"5  65535]"
     }
     Block {
       BlockType		      SubSystem
