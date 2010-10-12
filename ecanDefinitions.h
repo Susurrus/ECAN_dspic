@@ -22,15 +22,19 @@ typedef char int8_t;
 typedef unsigned char uint8_t;
 
 // Data structures
-typedef struct tCanMessage{
+typedef struct {
 	uint32_t id;
 	uint8_t             buffer;
 	uint8_t             message_type;
 	uint8_t             frame_type;
 	uint8_t             payload [8];
 	uint8_t             validBytes;
-}tCanMessage;
+} tCanMessage;
 
+typedef union {
+	tCanMessage 		message;
+	uint8_t				bytes [sizeof(tCanMessage)];
+} CanUnion;
 
 #ifdef __cplusplus
        }

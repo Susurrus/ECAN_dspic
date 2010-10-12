@@ -172,14 +172,18 @@ int main(void)
 
 	message.payload[0] = 0;
 	message.id = 0x301;
+	message.payload[6] = 0x11;
+	message.payload[7] = 0x22;
 	ecan1_buffered_transmit(message);
 
 	message.payload[0] = 1;
 	message.id = 0x302;
+	message.payload[6] = 0x55;
+	message.payload[7] = 0x17;
 	ecan1_buffered_transmit(message);
 
 	/**
-	 * Send third message from ECAN2
+	 * Send second message from ECAN2
 	 */
 	ecan2WriteTxMsgBufId(0,0x402,0,0);
 	ecan2WriteTxMsgBufData(0,6,0x3344,0x7788,0x9911,0);
@@ -191,8 +195,9 @@ int main(void)
 	
 	/* This code should result in the following:
 	 * ecan1msgbuf[0-1] and ecan2msgbuf[0-1] filled with data
-	 * ecanBuffer.buffer[0-1] full with CAN data.
-	 * ecanBuffer.head = 0 and ecanBuffer.tail = 2
+	 * ecan1_rx_buffer.buffer[0..32] full with CAN data.
+	 * ecan1_rx_buffer.head = 0 and ecan1_rx_buffer.tail = 32.
+     * ecan1_tx_buffer should have head = tail.
 	 */
  	while(1);
 }

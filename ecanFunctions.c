@@ -1,11 +1,12 @@
 #include "ecanFunctions.h"
+#include "circBuffer.h"
 
 // Declare space for our message buffer in DMA
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffers for transreceiving CAN messages
-struct CircBuffer ecan1_rx_buffer;
-struct CircBuffer ecan1_tx_buffer;
+CircBuffer ecan1_rx_buffer;
+CircBuffer ecan1_tx_buffer;
 
 void ecan1_init(const uint16_t* const parameters) {
 
@@ -140,15 +141,38 @@ void ecan1_init(const uint16_t* const parameters) {
   dma_init(dmaParameters);
 }
 
-tCanMessage ecan1_receive() {
-	return readFront(&ecan1_rx_buffer);
+tCanMessage ecan1_receive() {	
+	return getMessageFromBuffer(&ecan1_rx_buffer);
+}
+
+tCanMessage getMessageFromBuffer(CircBuffer* buffer) {
+	CanUnion bottle;
+	unsigned char i;
+	
+	if (getLength(buffer) >= sizeof(tCanMessage)) {
+		for (i=0;i < sizeof(tCanMessage);i++) {
+			bottle.bytes[i] = readFront(buffer);
+		}
+	}
+	
+	return bottle.message;
+}
+
+void putMessageInBuffer(CircBuffer* buffer, tCanMessage message) {
+	CanUnion bottle;
+	unsigned char i;
+	
+	bottle.message = message;
+	for (i=0;i < sizeof(tCanMessage);i++) {
+		writeBack(buffer, bottle.bytes[i]);
+	}
 }
 
 void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
-	if (getLength(&ecan1_rx_buffer) > 0) {
-		msg = readFront(&ecan1_rx_buffer);
+	if (getLength(&ecan1_rx_buffer) >= sizeof(tCanMessage)) {
+		msg = getMessageFromBuffer(&ecan1_rx_buffer);
 	
 		output[0] = msg.id;
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
@@ -232,11 +256,11 @@ void ecan1_buffered_transmit(tCanMessage msg) {
 	// Message are only removed upon successful transmission.
 	// They will be overwritten by newer message overflowing
 	// the circular buffer however.
-	writeBack(&ecan1_tx_buffer, msg);
+	putMessageInBuffer(&ecan1_tx_buffer, msg);
 
 	// If this is the only message in the queue, attempt to 
 	// transmit it.
-	if (getLength(&ecan1_tx_buffer) == 1) {
+	if (getLength(&ecan1_tx_buffer) == sizeof(tCanMessage)) {
 		ecan1_transmit(msg);
 	}
 }
@@ -339,6 +363,8 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 	uint8_t srr = 0;
 	uint32_t id = 0;
 	uint16_t* ecan_msg_buf_ptr;
+			
+	CanUnion bottle; //TODO: Move back into hey>=sizeof block
 	
 	// If the interrupt was set because of a transmit, check to
 	// see if more messages are in the circular buffer and start
@@ -347,15 +373,16 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 	
 		// After a successfully sent message, there should be at least
 		// one message in the queue, so pop it off.
-		readFront(&ecan1_tx_buffer);
+		getMessageFromBuffer(&ecan1_tx_buffer);
 
 		// Now if there's still a message left in the buffer,
 		// try to transmit it.
-		if (getLength(&ecan1_tx_buffer) > 0) {
+		int hey = getLength(&ecan1_tx_buffer);
+		if (hey >= sizeof(tCanMessage)) {
 			
-			message = peek(&ecan1_tx_buffer);
+			deepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), &bottle.bytes);
 		
-			ecan1_transmit(message);
+			ecan1_transmit(bottle.message);
 		}
 		
 		C1INTFbits.TBIF = 0;
@@ -424,7 +451,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		}
 		
 		// Send off the message
-		writeBack(&ecan1_rx_buffer, message);
+		putMessageInBuffer(&ecan1_rx_buffer, message);
 
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;

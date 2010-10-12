@@ -1,56 +1,68 @@
+/*
+The MIT License
+
+Copyright (c) 2009 UCSC Autonomous Systems Lab
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*/
+
 // ==============================================================
-// circBuffer.c
-// This is the implementation file for the circular buffer. T
-// Convemtion Notes
+// circBuffer.h
+// This is the header file for the circular buffer. This library
+// implements a circular buffer to be used in the serial readers
+// for the GPS, IPC and telemetry decoders of the UCSC AutoPilot. 
 //
-// The HEAD, as in any queue points to the next available byte to be READ
-// The TAIL, points to the next available position to be written
-// 
+// Comment the DEBUG define prior to compile for dsPIC
+//
 // Code by: Mariano I. Lizarraga
 // First Revision: Aug 16 2008 @ 00:36
 // Second Revision: Dec 2 2008 @ 12:11
-// Third Revision: July 29 2009 @ 21:19
-// Fourth Revision: August 6 2009 @ 21:57
 // ==============================================================
 #ifndef _CIRCBUFFER_H_
 #define _CIRCBUFFER_H_
 
-#include "ecanDefinitions.h"
-#include <stdlib.h>
-#include <string.h>
-
-//#define DEBUG 1
-
-// This defines the size of the circular buffers
-#define BSIZE  40
-
-#ifdef DEBUG
-	#include <stdio.h>
+#define BSIZE 64
+#ifndef NULL
+	#define NULL 0
 #endif
 
 #ifdef __cplusplus
        extern "C"{
 #endif
 
-typedef struct CircBuffer{
-	tCanMessage buffer[BSIZE];
-	uint16_t head;
-	uint16_t tail;
-	uint16_t size;
-	uint8_t overflowCount;
+typedef struct{
+	unsigned char buffer[BSIZE];
+	int head;
+	int tail;
+	unsigned int size;
+	unsigned char overflowCount;
 }CircBuffer;
-	
 
 // Exported Types
 // ==============
-typedef struct CircBuffer* CBRef;
+typedef CircBuffer* CBRef;
 	
 // Constructors - Destructors
 // ==========================
-// this Function returns a pointer to a new Circular Buffer of 
-// size pm_size 
+// this Function returns a pointer to a new Circular Buffer of size pm_size 
 void newCircBuffer (CBRef cB);
-
 
 // this function frees the Circular Buffer CB Ref
 void freeCircBuffer (CBRef* cB);
@@ -60,41 +72,36 @@ void freeCircBuffer (CBRef* cB);
 // ===============
 
 // returns the amount of unread bytes in the circular buffer
-uint16_t getLength (CBRef cB);
+unsigned int getLength (CBRef cB);
 
 // returns the actual index of the head
-uint16_t readHead (CBRef cB);
+int readHead (CBRef cB);
 
 // returns the actual index of the tail
-uint16_t readTail (CBRef cB);
+int readTail (CBRef cB);
 
-// returns the struct (actual value) that the head points to. this
-// does not mark the struct as read, so succesive calls to peak will
+// returns the byte (actual value) that the head points to. this
+// does not mark the byte as read, so succesive calls to peek will
 // always return the same value
-tCanMessage peek(CBRef cB);
+unsigned char peek(CBRef cB);
 
+// Fills RV with the specified number of bytes in cB. These bytes
+// aren't considered read after this operation.
+void deepPeek(CBRef cB, unsigned char bytes, unsigned char* rv);
 
 // Manipulation Procedures
 // ======================
-// returns the front of the circular buffer and marks the tCanMessage as read
-tCanMessage readFront (CBRef cB);
+// returns the front of the circular buffer and marks the byte as read
+unsigned char readFront (CBRef cB);
 
-// writes one tCanMessage at the end of the circular buffer.
-void writeBack (CBRef cB, tCanMessage data);
+// writes one byte at the end of the circular buffer, returns 1 if overflow occured
+unsigned char writeBack (CBRef cB, unsigned char data);
 
 // empties the circular buffer. It does not change the size. use with caution!!
 void makeEmpty (CBRef cB);
 
 // returns the amount of times the CB has overflown;
-uint8_t getOverflow(CBRef cB);
-
-
-#ifdef DEBUG
-	// Other Functions
-	// ===============
-	// prints the circular buffer, used for debug
-	void printCircBuf(CBRef cB);
-#endif /* DEBUG */
+unsigned char getOverflow(CBRef cB);
 
 #ifdef __cplusplus
        }

@@ -88,6 +88,19 @@ void ecan1_init(const uint16_t* const parameters);
 tCanMessage ecan1_receive();
 
 /**
+ * This function pulls enough bytes to make a CAN message
+ * from our circular buffer and returns them in a tCanMessage
+ * struct.
+ */
+tCanMessage getMessageFromBuffer(CircBuffer* buffer);
+
+/**
+ * This function loads an entire can message into our byte-based
+ * circular buffer.
+ */
+void putMessageInBuffer(CircBuffer* buffer, tCanMessage message);
+
+/**
  * Pop the top message from the ECAN1 reception buffer.
  * Parameters designed to interface with MATLAB C-function block.
  * @param output A pointer to a 4-element uint32 array.
