@@ -17,3 +17,4 @@
 * Add a README.md file to the Examples directory to document the various examples in there.
 * After all of these changes, tag it as a Version 1 release.
     * Push this back up to Lubin for incorporation into his blockset.
+* ECAN1 RX block should output a 32-bit int for the identifier
