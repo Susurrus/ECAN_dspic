@@ -8,6 +8,9 @@ uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 CircBuffer ecan1_rx_buffer;
 CircBuffer ecan1_tx_buffer;
 
+// Track whether or not we're currently transmitting
+char currentlyTransmitting = 0;
+
 void ecan1_init(const uint16_t* const parameters) {
 
   // Make sure the ECAN module is in configuration mode.
@@ -196,6 +199,8 @@ void ecan1_receive_matlab(uint32_t* output) {
 	}
 }
 
+// NOTE: We do not block for message transmission to complete. Message queuing 
+// is handled by the transmission circular buffer.
 void ecan1_transmit(tCanMessage message) {
 
 	uint32_t word0 = 0, word1 = 0, word2 = 0;
@@ -238,13 +243,13 @@ void ecan1_transmit(tCanMessage message) {
 	ecan_msg_buf_ptr[6] = ((uint16_t)message.payload[7] | ((uint16_t)message.payload[6] << 8));
 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
-    offset = message.buffer >> 1;
+    	offset = message.buffer >> 1;
 	bufferCtrlRegAddr = (uint16_t *)(&C1TR01CON + offset);
 	bit_to_set = 1 << (3 | ((message.buffer & 1) << 3));
 	*bufferCtrlRegAddr |= bit_to_set;
-	
-	// NOTE: We do not block for message transmission to complete. Message queuing 
-	// is handled by the transmission circular buffer.
+
+	// Keep track of whether we're in a transmission train or not.
+	currentlyTransmitting = 1;
 }
 
 /**
@@ -260,7 +265,7 @@ void ecan1_buffered_transmit(tCanMessage msg) {
 
 	// If this is the only message in the queue, attempt to 
 	// transmit it.
-	if (getLength(&ecan1_tx_buffer) == sizeof(tCanMessage)) {
+	if (!currentlyTransmitting) {
 		ecan1_transmit(msg);
 	}
 }
@@ -375,6 +380,11 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		// one message in the queue, so pop it off.
 		getMessageFromBuffer(&ecan1_tx_buffer);
 
+		// Check for a buffer overflow. Then clear the entire buffer if there was.
+		if (getOverflow(&ecan1_tx_buffer)) {
+			makeEmpty(&ecan1_tx_buffer);
+		}
+
 		// Now if there's still a message left in the buffer,
 		// try to transmit it.
 		int hey = getLength(&ecan1_tx_buffer);
@@ -383,6 +393,8 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 			deepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), bottle.bytes);
 		
 			ecan1_transmit(bottle.message);
+		} else {
+			currentlyTransmitting = 0;
 		}
 		
 		C1INTFbits.TBIF = 0;
