@@ -9,9 +9,10 @@ CircBuffer ecan1_rx_buffer;
 CircBuffer ecan1_tx_buffer;
 
 // Track whether or not we're currently transmitting
-char currentlyTransmitting = 0;
+unsigned char currentlyTransmitting = 0;
+unsigned char receivedMessagesPending = 0;
 
-void ecan1_init(const uint16_t* const parameters) {
+void ecan1_init(const uint16_t* parameters) {
 
   // Make sure the ECAN module is in configuration mode.
   // It should be this way after a hardware reset, but
@@ -153,7 +154,7 @@ tCanMessage getMessageFromBuffer(CircBuffer* buffer) {
 	unsigned char i;
 	
 	if (getLength(buffer) >= sizeof(tCanMessage)) {
-		for (i=0;i < sizeof(tCanMessage);i++) {
+		for (i = 0; i < sizeof(tCanMessage); i++) {
 			bottle.bytes[i] = readFront(buffer);
 		}
 	}
@@ -166,7 +167,7 @@ void putMessageInBuffer(CircBuffer* buffer, tCanMessage message) {
 	unsigned char i;
 	
 	bottle.message = message;
-	for (i=0;i < sizeof(tCanMessage);i++) {
+	for (i = 0; i < sizeof(tCanMessage); i++) {
 		writeBack(buffer, bottle.bytes[i]);
 	}
 }
@@ -174,7 +175,7 @@ void putMessageInBuffer(CircBuffer* buffer, tCanMessage message) {
 void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
-	if (getLength(&ecan1_rx_buffer) >= sizeof(tCanMessage)) {
+	if (receivedMessagesPending > 0) {
 		msg = getMessageFromBuffer(&ecan1_rx_buffer);
 	
 		output[0] = msg.id;
@@ -186,10 +187,11 @@ void ecan1_receive_matlab(uint32_t* output) {
 		output[2] |= ((uint32_t)msg.payload[6]) << 16;
 		output[2] |= ((uint32_t)msg.payload[5]) << 8;
 		output[2] |= (uint32_t)msg.payload[4];
-		output[3] = (((uint32_t)msg.validBytes) << 16);
+		output[3] = (uint32_t)msg.validBytes;
 		if (msg.message_type == CAN_MSG_RTR) {
-			output[3] |= 1;
+			output[3] |= 0x00000100;
 		}
+		output[3] |= ((uint32_t)receivedMessagesPending--) << 16;
 	}
 	else {
 		output[0] = 0;
@@ -462,9 +464,12 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 			message.payload[7] = (uint8_t)((ecan_msg_buf_ptr[6] & 0xFF00) >> 8);
 		}
 		
-		// Send off the message
+		// Store the message in the buffer
 		putMessageInBuffer(&ecan1_rx_buffer, message);
 
+		// Increase the number of messages stored in the buffer
+		++receivedMessagesPending;
+		
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
 	}

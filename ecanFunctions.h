@@ -79,7 +79,7 @@
   * parameters[51] = filter 15 (standard, exide, eid17-16)
   * parameters[52] = filter 15 (extended 15-0)
   */
-void ecan1_init(const uint16_t* const parameters);
+void ecan1_init(const uint16_t* parameters);
 
 /**
  * Pops the top message from the ECAN1 reception buffer.
@@ -109,6 +109,7 @@ void putMessageInBuffer(CircBuffer* buffer, tCanMessage message);
  * output[2] = CAN data, high-order bits
  * output[3] = bits 0-7: number of valid data bytes
  *             bits 8-15: remote transmit bit
+ *             bits 16-23: number of messages left in the buffer
  */
 void ecan1_receive_matlab(uint32_t* output);
 
