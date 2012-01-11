@@ -1,9 +1,9 @@
-#include "circBuffer.h"
+#include "CircularBuffer.h"
 #include "uart2.h"
 #include <p33Fxxxx.h>
 
-CircBuffer uart2RxBuffer;
-CircBuffer uart2TxBuffer;
+CircularBuffer uart2RxBuffer;
+CircularBuffer uart2TxBuffer;
 
 /*
  * Private functions.
@@ -18,11 +18,10 @@ void startUart2Transmission();
  * for transmission and reception.
  */
 void initUart2(unsigned int brgRegister) {
-	int i;
 
 	// First initialize the necessary circular buffers.
-	newCircBuffer(&uart2RxBuffer);
-	newCircBuffer(&uart2TxBuffer);
+	InitCircularBuffer(&uart2RxBuffer);
+	InitCircularBuffer(&uart2TxBuffer);
 
 	// Configure and open the port;
 	// U2MODE Register
@@ -84,8 +83,11 @@ void changeUart2BaudRate(unsigned short brgRegister) {
  * it has room for new data before attempting to transmit.
  */
 void startUart2Transmission() {
-	if (getLength(&uart2TxBuffer) > 0 && !U2STAbits.UTXBF) {
-		U2TXREG = readFront(&uart2TxBuffer);
+	if (GetLength(&uart2TxBuffer) > 0 && !U2STAbits.UTXBF) {
+		// A temporary variable is used here because writing directly into U2TXREG causes some weird issues.
+		unsigned char c;
+		Read(&uart2TxBuffer, &c);
+		U2TXREG = c;
 	}
 }
 
@@ -94,7 +96,7 @@ void startUart2Transmission() {
  * providing an interface that only enqueues a single byte.
  */
 void uart2EnqueueByte(unsigned char datum) {
-	writeBack(&uart2TxBuffer, datum);
+	Write(&uart2TxBuffer, datum);
 	startUart2Transmission();
 }
 
@@ -106,7 +108,7 @@ void uart2EnqueueData(unsigned char *data, unsigned char length) {
 	unsigned char g;
 
 	for (g = 0; g < length; g++) {
-		writeBack(&uart2TxBuffer,*(data+g));
+		Write(&uart2TxBuffer,data[g]);
 	}
 
 	startUart2Transmission();
@@ -116,7 +118,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _U2RXInterrupt(void) {
 
 	// Keep receiving new bytes while the buffer has data.
 	while (U2STAbits.URXDA == 1) {
-		writeBack(&uart2RxBuffer, (unsigned char)U2RXREG);
+		Write(&uart2RxBuffer, (unsigned char)U2RXREG);
 	}
 
 	// Clear buffer overflow bit if triggered

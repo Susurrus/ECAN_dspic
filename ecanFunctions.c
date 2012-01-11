@@ -1,12 +1,15 @@
 #include "ecanFunctions.h"
-#include "circBuffer.h"
+#include "CircularBuffer.h"
+
+#define TRUE 1
+#define FALSE 0
 
 // Declare space for our message buffer in DMA
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffers for transreceiving CAN messages
-CircBuffer ecan1_rx_buffer;
-CircBuffer ecan1_tx_buffer;
+CircularBuffer ecan1_rx_buffer;
+CircularBuffer ecan1_tx_buffer;
 
 // Track whether or not we're currently transmitting
 unsigned char currentlyTransmitting = 0;
@@ -21,8 +24,8 @@ void ecan1_init(const uint16_t* parameters) {
   while(C1CTRL1bits.OPMODE != 4);
 
   // Initialize our circular buffers.
-  newCircBuffer(&ecan1_rx_buffer);
-  newCircBuffer(&ecan1_tx_buffer);
+  InitCircularBuffer(&ecan1_rx_buffer);
+  InitCircularBuffer(&ecan1_tx_buffer);
  
   // Initialize our time quanta
   uint16_t a = parameters[3] & 0x0007;
@@ -145,30 +148,43 @@ void ecan1_init(const uint16_t* parameters) {
   dma_init(dmaParameters);
 }
 
-tCanMessage ecan1_receive() {	
-	return getMessageFromBuffer(&ecan1_rx_buffer);
-}
+int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft) {	
+	int foundOne = getMessageFromBuffer(msg, &ecan1_rx_buffer);
 
-tCanMessage getMessageFromBuffer(CircBuffer* buffer) {
-	CanUnion bottle;
-	unsigned char i;
-	
-	if (getLength(buffer) >= sizeof(tCanMessage)) {
-		for (i = 0; i < sizeof(tCanMessage); i++) {
-			bottle.bytes[i] = readFront(buffer);
+	if (messagesLeft) {
+		if (foundOne) {
+			*messagesLeft = --receivedMessagesPending;
+		} else {
+			*messagesLeft = 0;
 		}
 	}
 	
-	return bottle.message;
+	return foundOne;
 }
 
-void putMessageInBuffer(CircBuffer* buffer, tCanMessage message) {
+int getMessageFromBuffer(tCanMessage *msg, CircularBuffer* buffer) {
+	CanUnion *bottle = (CanUnion *)msg;
+	unsigned char i;
+	
+	if (GetLength(buffer) >= sizeof(tCanMessage)) {
+		for (i = 0; i < sizeof(tCanMessage); i++) {
+			Read(buffer, &bottle->bytes[i]);
+		}
+		return TRUE;
+	} else {
+		// Make sure that if no message was returned that the ID is blank to signify this.
+		msg->id = 0;
+		return FALSE;
+	}
+}
+
+void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message) {
 	CanUnion bottle;
 	unsigned char i;
 	
 	bottle.message = message;
 	for (i = 0; i < sizeof(tCanMessage); i++) {
-		writeBack(buffer, bottle.bytes[i]);
+		Write(buffer, bottle.bytes[i]);
 	}
 }
 
@@ -176,9 +192,11 @@ void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
 	if (receivedMessagesPending > 0) {
-		msg = getMessageFromBuffer(&ecan1_rx_buffer);
+		getMessageFromBuffer(&msg, &ecan1_rx_buffer);
 	
-		output[0] = msg.id;
+		if (msg.id == 0x0DF50B01) {
+			output[0] = msg.id;
+		}
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
 		output[1] |= ((uint32_t)msg.payload[2]) << 16;
 		output[1] |= ((uint32_t)msg.payload[1]) << 8;
@@ -380,19 +398,19 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 	
 		// After a successfully sent message, there should be at least
 		// one message in the queue, so pop it off.
-		getMessageFromBuffer(&ecan1_tx_buffer);
+		getMessageFromBuffer(&message, &ecan1_tx_buffer);
 
 		// Check for a buffer overflow. Then clear the entire buffer if there was.
-		if (getOverflow(&ecan1_tx_buffer)) {
-			makeEmpty(&ecan1_tx_buffer);
+		if (GetOverflow(&ecan1_tx_buffer)) {
+			InitCircularBuffer(&ecan1_tx_buffer);
 		}
 
 		// Now if there's still a message left in the buffer,
 		// try to transmit it.
-		int hey = getLength(&ecan1_tx_buffer);
+		int hey = GetLength(&ecan1_tx_buffer);
 		if (hey >= sizeof(tCanMessage)) {
 			
-			deepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), bottle.bytes);
+			DeepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), bottle.bytes);
 		
 			ecan1_transmit(bottle.message);
 		} else {

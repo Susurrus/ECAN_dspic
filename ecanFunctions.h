@@ -11,7 +11,7 @@
 // Only include dsPIC33f header if not simulating
 #include <p33Fxxxx.h>
 #include "ecanDefinitions.h"
-#include "circBuffer.h"
+#include "CircularBuffer.h"
 
  /**
   * This function initializes the first ECAN module. It takes a parameters array
@@ -85,20 +85,20 @@ void ecan1_init(const uint16_t* parameters);
  * Pops the top message from the ECAN1 reception buffer.
  * @return A tCanMessage struct with the older message data.
  */
-tCanMessage ecan1_receive();
+int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft);
 
 /**
  * This function pulls enough bytes to make a CAN message
  * from our circular buffer and returns them in a tCanMessage
  * struct.
  */
-tCanMessage getMessageFromBuffer(CircBuffer* buffer);
+int getMessageFromBuffer(tCanMessage *msg, CircularBuffer* buffer);
 
 /**
  * This function loads an entire can message into our byte-based
  * circular buffer.
  */
-void putMessageInBuffer(CircBuffer* buffer, tCanMessage message);
+void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message);
 
 /**
  * Pop the top message from the ECAN1 reception buffer.

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.14"
+    ComputedModelVersion    "1.16"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Bryant"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Nov 02 15:05:04 2011"
-  RTWModifiedTimeStamp	  242147103
-  ModelVersionFormat	  "1.%<AutoIncrement:14>"
+  LastModifiedDate	  "Wed Jan 11 09:51:57 2012"
+  RTWModifiedTimeStamp	  248176312
+  ModelVersionFormat	  "1.%<AutoIncrement:16>"
   ConfigurationManager	  "None"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -379,7 +379,7 @@ Model {
 	  ConfigAtBuild		  off
 	  RTWUseLocalCustomCode	  off
 	  RTWUseSimCustomCode	  off
-	  CustomSource		  "../../circBuffer.c\n../../ecanFunctions.c\nuart2.c\nextra.c"
+	  CustomSource		  "../../CircularBuffer.c\n../../ecanFunctions.c\nuart2.c\nextra.c"
 	  IncludeHyperlinkInReport off
 	  LaunchReport		  off
 	  TargetLang		  "C"
@@ -748,12 +748,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      Demux
-      Outputs		      "4"
-      DisplayOption	      "none"
-      BusSelectionMode	      off
-    }
-    Block {
       BlockType		      If
       NumInputs		      "1"
       IfExpression	      "u1 > 0"
@@ -782,14 +776,6 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchInputForFeedbackSignals off
       Interpolate	      on
-    }
-    Block {
-      BlockType		      Mux
-      Inputs		      "4"
-      DisplayOption	      "none"
-      UseBusObject	      off
-      BusObject		      "BusObject"
-      NonVirtualBus	      off
     }
     Block {
       BlockType		      Outport
@@ -860,7 +846,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    214
+    SIDHighWatermark	    219
     Block {
       BlockType		      Bias
       Name		      "Bias"
@@ -954,7 +940,7 @@ Model {
 	  Ports			  [1]
 	  Position		  [240, 28, 345, 62]
 	  Priority		  "5"
-	  LibraryVersion	  "3.75"
+	  LibraryVersion	  "3.79"
 	  SourceBlock		  "dsPICdrivers/Digital I//O/Digital Output Write"
 	  SourceType		  ""
 	  PORT			  "A"
@@ -977,321 +963,125 @@ Model {
       }
     }
     Block {
-      BlockType		      SubSystem
+      BlockType		      Reference
       Name		      "Configure ECAN 1"
-      SID		      5
+      SID		      218
       Ports		      []
-      Position		      [145, 114, 260, 166]
+      Position		      [150, 114, 265, 166]
       BackgroundColor	      "lightBlue"
       DropShadow	      on
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
+      LibraryVersion	      "1.3"
+      SourceBlock	      "ecan_dspic/Configure ECAN 1"
+      SourceType	      "Initialize ECAN 1"
+      ShowPortLabels	      "FromPortIcon"
+      SystemSampleTime	      "-1"
       FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      MaskType		      "Initialize ECAN 1"
-      MaskDescription	      "Initializes the ECAN 1 module on the dsPIC33f. Allows for configuration of almost all ECA"
-      "N options to produce a usable system."
-      MaskPromptString	      "Extended Frames (Standard if unchecked)|Mode|DMA Reception Channel|DMA Transmission Chan"
-      "nel|Baud Rate (bps)|Phase Segment 1|Propagation Delay|Phase Segment 2|Sync Jump Width|Time Quanta|Triple-sample|"
-      "DMA Buffer Size|Reception Buffers|Transmission Buffers|Buffer 0 Transmission Priority|Buffer 0 Remote Transmit E"
-      "nable|Buffer 1 Transmission Priority|Buffer 1 Remote Transmit Enable|Buffer 2 Transmission Priority|Buffer 2 Rem"
-      "ote Transmit Enable|Buffer 3 Transmission Priority|Buffer 3 Remote Transmit Enable|Buffer 4 Transmission Priorit"
-      "y|Buffer 4 Remote Transmit Enable|Buffer 5 Transmission Priority|Buffer 5 Remote Transmit Enable|Buffer 6 Transm"
-      "ission Priority|Buffer 6 Remote Transmit Enable|Buffer 7 Transmission Priority|Buffer 7 Remote Transmit Enable|M"
-      "ask 0|Mask 0 Receive Mode|Mask 1|Mask 1 Receive Mode|Mask 2|Mask 2 Receive Mode|Filters|Filter 0|Filter 0 Mask|F"
-      "ilter 0 Mode|Filter 0 Buffer|Filter 1|Filter 1 Mask|Filter 1 Mode|Filter 1 Buffer|Filter 2|Filter 2 Mask|Filter "
-      "2 Mode|Filter 2 Buffer|Filter 3|Filter 3 Mask|Filter 3 Mode|Filter 3 Buffer|Filter 4|Filter 4 Mask|Filter 4 Mode"
-      "|Filter 4 Buffer|Filter 5|Filter 5 Mask|Filter 5 Mode|Filter 5 Buffer|Filter 6|Filter 6 Mask|Filter 6 Mode|Filte"
-      "r 6 Buffer|Filter 7|Filter 7 Mask|Filter 7 Mode|Filter 7 Buffer|Filter 8|Filter 8 Mask|Filter 8 Mode|Filter 8 Bu"
-      "ffer|Filter 9|Filter 9 Mask|Filter 9 Mode|Filter 9 Buffer|Filter 10|Filter 10 Mask|Filter 10 Mode|Filter 10 Buff"
-      "er|Filter 11|Filter 11 Mask|Filter 11 Mode|Filter 11 Buffer|Filter 12|Filter 12 Mask|Filter 12 Mode|Filter 12 Bu"
-      "ffer|Filter 13|Filter 13 Mask|Filter 13 Mode|Filter 13 Buffer|Filter 14|Filter 14 Mask|Filter 14 Mode|Filter 14 "
-      "Buffer|Filter 15|Filter 15 Mask|Filter 15 Mode|Filter 15 Buffer"
-      MaskStyleString	      "checkbox,popup(Disabled|Listen all|Listen only|Loopback|Normal),edit,edit,edit,edit,edit,"
-      "edit,popup(1|2|3|4),edit,checkbox,popup(4 buffers|6 buffers|8 buffers|12 buffers|16 buffers|24 buffers|32 buffer"
-      "s),edit,edit,popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Low"
-      "est|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),"
-      "popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lowest|Low|High|Highest),popup(No|Yes),popup(Lo"
-      "west|Low|High|Highest),popup(No|Yes),edit,popup(Match std or ext|Obey filter mode),edit,popup(Match std or ext|O"
-      "bey filter mode),edit,popup(Match std or ext|Obey filter mode),edit,edit,popup(--|0|1|2),popup(Match only standa"
-      "rd|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup(Match only sta"
-      "ndard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup(Match only "
-      "standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup(Match on"
-      "ly standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup(Match"
-      " only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup(Ma"
-      "tch only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),popup"
-      "(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2),po"
-      "pup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0|1|2)"
-      ",popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(<empty"
-      ">),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(--|0"
-      "|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popup(-"
-      "-|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,popu"
-      "p(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edit,p"
-      "opup(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),edi"
-      "t,popup(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),"
-      "edit,popup(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIF"
-      "O)"
-      MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
-      ",off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
-      ",off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
-      ",off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
-      MaskCallbackString      "|||||tq = 1 + str2num(get_param(gcb, 'ps1')) + str2num(get_param(gcb, 'pd')) + str2num("
-      "get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));|tq = 1 + str2num(get_param(gcb, 'ps1')) + str2num(ge"
-      "t_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2str(tq));|tq = 1 + str2num(get_p"
-      "aram(gcb, 'ps1')) + str2num(get_param(gcb, 'pd')) + str2num(get_param(gcb, 'ps2'));\nset_param(gcb, 'tq', int2st"
-      "r(tq));||||||filters = eval(get_param(gcb,'tx_bufs'));\nmVisibilities = get_param(gcb,'MaskVisibilities');\nmNam"
-      "es = get_param(gcb,'MaskNames');\nfor i = 1:size(mNames);\n	n = mNames{i};\n    if size(n,2) > 4 && strcmp(n(1:4"
-      "), 'buf_') == 1\n        filterNumber = sscanf(n, 'buf_%d');\n        if isempty(find(filters == filterNumber, 1"
-      ")) == 0\n             mVisibilities{i} = 'on';\n        else\n             mVisibilities{i} = 'off';\n        en"
-      "d\n    end\nend\nset_param(gcb, 'MaskVisibilities', mVisibilities);|||||||||||||||||||||||filters = eval(get_par"
-      "am(gcb,'filters'));\nmVisibilities = get_param(gcb,'MaskVisibilities');\nmNames = get_param(gcb,'MaskNames');\nf"
-      "or i = 1:size(mNames);\n	n = mNames{i};\n    if size(n,2) > 7 && strcmp(n(1:7), 'filter_') == 1\n        filterN"
-      "umber = sscanf(n, 'filter_%d');\n        if isempty(find(filters == filterNumber, 1)) == 0\n             mVisibi"
-      "lities{i} = 'on';\n        else\n             mVisibilities{i} = 'off';\n        end\n    end\nend\nset_param(gc"
-      "b, 'MaskVisibilities', mVisibilities);||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-      MaskEnableString	      "on,on,on,on,on,on,on,on,on,off,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,"
-      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,o"
-      "n,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,off,off,off,off,off,off,off,off,off,off"
-      ",off,off,off,off,on,on,on,on,on,on,on,on,on,on,on,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,of"
-      "f,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,of"
-      "f,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
-      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,"
-      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,o"
-      "n,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVariables	      "frame_setting=@1;mode=&2;dma_rx_chan=@3;dma_tx_chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;sjw=@9;t"
-      "q=&10;triple_sample=@11;dma_buf_size=@12;rx_bufs=@13;tx_bufs=@14;buf_0_tx_pri=@15;buf_0_rte=@16;buf_1_tx_pri=@17"
-      ";buf_1_rte=@18;buf_2_tx_pri=@19;buf_2_rte=@20;buf_3_tx_pri=@21;buf_3_rte=@22;buf_4_tx_pri=@23;buf_4_rte=@24;buf_"
-      "5_tx_pri=@25;buf_5_rte=@26;buf_6_tx_pri=@27;buf_6_rte=@28;buf_7_tx_pri=@29;buf_7_rte=@30;mask_0=@31;mask_0_mide="
-      "@32;mask_1=@33;mask_1_mide=@34;mask_2=@35;mask_2_mide=@36;filters=@37;filter_0=@38;filter_0_mask=@39;filter_0_ex"
-      "ide=@40;filter_0_buf=@41;filter_1=@42;filter_1_mask=@43;filter_1_exide=@44;filter_1_buf=@45;filter_2=@46;filter_"
-      "2_mask=@47;filter_2_exide=@48;filter_2_buf=@49;filter_3=@50;filter_3_mask=@51;filter_3_exide=@52;filter_3_buf=@5"
-      "3;filter_4=@54;filter_4_mask=@55;filter_4_exide=@56;filter_4_buf=@57;filter_5=@58;filter_5_mask=@59;filter_5_exi"
-      "de=@60;filter_5_buf=@61;filter_6=@62;filter_6_mask=@63;filter_6_exide=@64;filter_6_buf=@65;filter_7=@66;filter_7"
-      "_mask=@67;filter_7_exide=@68;filter_7_buf=@69;filter_8=@70;filter_8_mask=@71;filter_8_exide=@72;filter_8_buf=@73"
-      ";filter_9=@74;filter_9_mask=@75;filter_9_exide=@76;filter_9_buf=@77;filter_10=@78;filter_10_mask=@79;filter_10_e"
-      "xide=@80;filter_10_buf=@81;filter_11=@82;filter_11_mask=@83;filter_11_exide=@84;filter_11_buf=@85;filter_12=@86;"
-      "filter_12_mask=@87;filter_12_exide=@88;filter_12_buf=@89;filter_13=@90;filter_13_mask=@91;filter_13_exide=@92;fi"
-      "lter_13_buf=@93;filter_14=@94;filter_14_mask=@95;filter_14_exide=@96;filter_14_buf=@97;filter_15=@98;filter_15_m"
-      "ask=@99;filter_15_exide=@100;filter_15_buf=@101;"
-      MaskInitialization      "parameters = uint16(zeros(53,1));\n\n%% Generate parameter 1\nparameters(1) = frame_set"
-      "ting;\nmode_id = 0;\nswitch mode\n    case 'Disabled'\n        mode_id = 1;\n    case 'Loopback'\n        mode_i"
-      "d = 2;\n    case 'Listen only'\n        mode_id = 3;\n    case 'Listen all'\n        mode_id = 7;\nend\nparamete"
-      "rs(1) = bitor(parameters(1), bitshift(mode_id, 2));\nparameters(1) = bitor(parameters(1), bitshift(dma_rx_chan, "
-      "5));\nparameters(1) = bitor(parameters(1), bitshift(dma_tx_chan, 8));\n\n%% Generate parameter 2\nparameters(2) "
-      "= baud / 100;\n\n%% Generate parameter 3\nh = find_system(bdroot(gcb),'FollowLinks','on','LookUnderMasks','all',"
-      "'Tag','dsPIC_MASTER');\nfcy = 0;\nif ~isempty(h)\n    %OverrideFcy = strcmp(get_param(h{1},'OverrideFcy'),'on');"
-      "\n    %if (OverrideFcy == 1)\n    %    fcy = str2num(get_param(h{1},'NewFcy'));     %% overridded fcy\n    %else"
-      "\n        fcy = str2num(get_param(h{1},'fcy'));\n    %end \nend\nparameters(3) = fcy / 1000;\n\n%% Generate para"
-      "meter 4\nparameters(4) = ps1 - 1;\nparameters(4) = bitor(parameters(4), bitshift(pd - 1, 3));\nparameters(4) = b"
-      "itor(parameters(4), bitshift(ps2 - 1, 6));\nparameters(4) = bitor(parameters(4), bitshift(sjw - 1, 9));\nif trip"
-      "le_sample == 1\n    parameters(4) = bitset(parameters(4),12);\nend\n\n%% Generate parameter 5\nfor k = 1:length("
-      "filters)\n    parameters(5) = bitset(parameters(5),filters(k)+1);\nend;\n\n% Map filter mask values into proper "
-      "values\nfilter_masks = [filter_0_mask; filter_1_mask; filter_2_mask; filter_3_mask; filter_4_mask; filter_5_mask"
-      "; filter_6_mask; filter_7_mask; filter_8_mask; filter_9_mask; filter_10_mask; filter_11_mask; filter_12_mask; fi"
-      "lter_13_mask; filter_14_mask; filter_15_mask;];\nfilter_masks = filter_masks - 2;\nfilter_masks(filter_masks == "
-      "-1) = 3;\n\n%% Generate parameters 6 and 7\nfor k = 1:length(filters);\n    filter = filters(k) + 1;\n    if fil"
-      "ter < 9\n        parameters(6) = bitor(parameters(6), bitshift(filter_masks(filter),2*(filter-1)));\n    else\n "
-      "       parameters(7) = bitor(parameters(7), bitshift(filter_masks(filter),2*(filter-9)));\n    end\nend\n\n% Gen"
-      "erate parameters 8 and 9\nparameters(8) = bitshift(bitand(mask_0,hex2dec('18000000')),-27); % EID17-16\nparamete"
-      "rs(8) = bitor(parameters(8), bitshift(bitand(mask_0,hex2dec('7FF')), 5)); % SID\nparameters(8) = bitor(parameter"
-      "s(8), bitshift(mask_0_mide - 1, 3)); % MIDE\nparameters(9) = bitshift(bitand(mask_0,hex2dec('7FFF800')),-11); % "
-      "EID15-0\n\n%% Generate parameters 10 and 11\nparameters(10) = bitshift(bitand(mask_1,hex2dec('18000000')),-27); "
-      "% EID17-16\nparameters(10) = bitor(parameters(10), bitshift(bitand(mask_1,hex2dec('7FF')), 5)); % SID\nparameter"
-      "s(10) = bitor(parameters(10), bitshift(mask_1_mide - 1, 3)); % MIDE\nparameters(11) = bitshift(bitand(mask_1,hex"
-      "2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 12 and 13\nparameters(12) = bitshift(bitand(mask_2,he"
-      "x2dec('18000000')),-27); % EID17-16\nparameters(12) = bitor(parameters(12), bitshift(bitand(mask_2,hex2dec('7FF'"
-      ")), 5)); % SID\nparameters(12) = bitor(parameters(12), bitshift(mask_2_mide - 1, 3)); % MIDE\nparameters(13) = b"
-      "itshift(bitand(mask_2,hex2dec('7FFF800')),-11); % EID15-0\n\n% Generate parameters 14-17\nbuf_priorities = [buf_"
-      "0_tx_pri;buf_1_tx_pri;buf_2_tx_pri;buf_3_tx_pri;buf_4_tx_pri;buf_5_tx_pri;buf_6_tx_pri;buf_7_tx_pri] - 1;\nbuf_r"
-      "tes = [buf_0_rte;buf_1_rte;buf_2_rte;buf_3_rte;buf_4_rte;buf_5_rte;buf_6_rte;buf_7_rte] - 1;\n\n% Create a vecto"
-      "r of chars to modify\nregs = uint16(zeros(8,1));\n\n% Go through all enabled transmission buffers setting approp"
-      "riate bits\nfor b = 1:size(tx_bufs,1)\n    \n    index = tx_bufs(b) + 1;\n    \n    % Set transmission bit\n    "
-      "regs(index) = bitset(regs(index),8);\n\n    % Set priority bits\n    regs(index) = bitor(regs(index), buf_priori"
-      "ties(index));\n\n    % Set remote transmit enable bits\n    if buf_rtes(index) == 1\n        regs(index) = bitse"
-      "t(regs(index),3);\n    end\nend\n\nfor b = 1:size(rx_bufs,1)\n    \n    index = rx_bufs(b) + 1;\n\n    % Set pri"
-      "ority bits\n    regs(index) = bitor(regs(index), buf_priorities(index));\n\n    % Set remote transmit enable bit"
-      "s\n    if buf_rtes(index) == 1\n        regs(index) = bitset(regs(index),3);\n    end\nend\n\n% Map our matrix i"
-      "nto registers\nparameters(14) = bitor(bitshift(regs(2),8), regs(1));\nparameters(15) = bitor(bitshift(regs(4),8)"
-      ", regs(3));\nparameters(16) = bitor(bitshift(regs(6),8), regs(5));\nparameters(17) = bitor(bitshift(regs(8),8), "
-      "regs(7));\n\n% Map the filter buffer values to corresponding bit values\nfilter_buffers = [filter_0_buf; filter_"
-      "1_buf; filter_2_buf; filter_3_buf; filter_4_buf; filter_5_buf; filter_6_buf; filter_7_buf; filter_8_buf; filter_"
-      "9_buf; filter_10_buf; filter_11_buf; filter_12_buf; filter_13_buf; filter_14_buf; filter_15_buf;];\nfilter_buffe"
-      "rs = filter_buffers - 1;\n\n%% Generate parameter 18\nif bitget(parameters(5),1) == 1\n    parameters(18) = filt"
-      "er_buffers(1);\nend\nif bitget(parameters(5),2) == 1\n    parameters(18) = bitor(parameters(18), bitshift(filter"
-      "_buffers(2), 4));\nend\nif bitget(parameters(5),3) == 1\n    parameters(18) = bitor(parameters(18), bitshift(fil"
-      "ter_buffers(3), 8));\nend\nif bitget(parameters(5),4) == 1\n    parameters(18) = bitor(parameters(18), bitshift("
-      "filter_buffers(4), 12));\nend\n\n%% Generate parameter 19\nif bitget(parameters(5),5) == 1\n    parameters(19) ="
-      " filter_buffers(5);\nend\nif bitget(parameters(5),6) == 1\n    parameters(19) = bitor(parameters(19), bitshift(f"
-      "ilter_buffers(6), 4));\nend\nif bitget(parameters(5),7) == 1\n    parameters(19) = bitor(parameters(19), bitshif"
-      "t(filter_buffers(7), 8));\nend\nif bitget(parameters(5),8) == 1\n    parameters(19) = bitor(parameters(19), bits"
-      "hift(filter_buffers(8), 12));\nend\n\n%% Generate parameter 20\nif bitget(parameters(5),9) == 1\n    parameters("
-      "20) = filter_buffers(9);\nend\nif bitget(parameters(5),10) == 1\n    parameters(20) = bitor(parameters(20), bits"
-      "hift(filter_buffers(10), 4));\nend\nif bitget(parameters(5),11) == 1\n    parameters(20) = bitor(parameters(20),"
-      " bitshift(filter_buffers(11), 8));\nend\nif bitget(parameters(5),12) == 1\n    parameters(20) = bitor(parameters"
-      "(20), bitshift(filter_buffers(12), 12));\nend\n\n%% Generate parameter 21\nif bitget(parameters(5),13) == 1\n   "
-      " parameters(21) = filter_buffers(13);\nend\nif bitget(parameters(5),14) == 1\n    parameters(21) = bitor(paramet"
-      "ers(21), bitshift(filter_buffers(14), 4));\nend\nif bitget(parameters(5),15) == 1\n    parameters(21) = bitor(pa"
-      "rameters(21), bitshift(filter_buffers(15), 8));\nend\nif bitget(parameters(5),16) == 1\n    parameters(21) = bit"
-      "or(parameters(21), bitshift(filter_buffers(16), 12));\nend\n\n% Generate parameters 22 and 23\nparameters(22) = "
-      "bitshift(bitand(filter_0,hex2dec('18000000')),-27); % EID17-16\nparameters(22) = bitor(parameters(22), bitshift("
-      "bitand(filter_0,hex2dec('7FF')), 5)); % SID\nparameters(22) = bitor(parameters(22), bitshift(filter_0_exide - 1,"
-      " 3)); % EXIDE\nparameters(23) = bitshift(bitand(uint32(filter_0),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Gener"
-      "ate parameters 24 and 25\nparameters(24) = bitshift(bitand(filter_1,hex2dec('18000000')),-27); % EID17-16\nparam"
-      "eters(24) = bitor(parameters(24), bitshift(bitand(filter_1,hex2dec('7FF')), 5)); % SID\nparameters(24) = bitor(p"
-      "arameters(24), bitshift(filter_1_exide - 1, 3)); % EXIDE\nparameters(25) = bitshift(bitand(uint32(filter_1),hex2"
-      "dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 26 and 27\nparameters(26) = bitshift(bitand(filter_2,h"
-      "ex2dec('18000000')),-27); % EID17-16\nparameters(26) = bitor(parameters(26), bitshift(bitand(filter_2,hex2dec('7"
-      "FF')), 5)); % SID\nparameters(26) = bitor(parameters(26), bitshift(filter_2_exide - 1, 3)); % EXIDE\nparameters("
-      "27) = bitshift(bitand(uint32(filter_2),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 28 and 29\n"
-      "parameters(28) = bitshift(bitand(filter_3,hex2dec('18000000')),-27); % EID17-16\nparameters(28) = bitor(paramete"
-      "rs(28), bitshift(bitand(filter_3,hex2dec('7FF')), 5)); % SID\nparameters(28) = bitor(parameters(28), bitshift(fi"
-      "lter_3_exide - 1, 3)); % EXIDE\nparameters(29) = bitshift(bitand(uint32(filter_3),hex2dec('7FFF800')),-11); % EI"
-      "D15-0\n\n%% Generate parameters 30 and 31\nparameters(30) = bitshift(bitand(filter_4,hex2dec('18000000')),-27); "
-      "% EID17-16\nparameters(30) = bitor(parameters(30), bitshift(bitand(filter_4,hex2dec('7FF')), 5)); % SID\nparamet"
-      "ers(30) = bitor(parameters(30), bitshift(filter_4_exide - 1, 3)); % EXIDE\nparameters(31) = bitshift(bitand(uint"
-      "32(filter_4),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 32 and 33\nparameters(32) = bitshift("
-      "bitand(filter_5,hex2dec('18000000')),-27); % EID17-16\nparameters(32) = bitor(parameters(32), bitshift(bitand(fi"
-      "lter_5,hex2dec('7FF')), 5)); % SID\nparameters(32) = bitor(parameters(32), bitshift(filter_5_exide - 1, 3)); % E"
-      "XIDE\nparameters(33) = bitshift(bitand(uint32(filter_5),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate param"
-      "eters 34 and 35\nparameters(34) = bitshift(bitand(filter_6,hex2dec('18000000')),-27); % EID17-16\nparameters(34)"
-      " = bitor(parameters(34), bitshift(bitand(filter_6,hex2dec('7FF')), 5)); % SID\nparameters(34) = bitor(parameters"
-      "(34), bitshift(filter_6_exide - 1, 3)); % EXIDE\nparameters(35) = bitshift(bitand(uint32(filter_6),hex2dec('7FFF"
-      "800')),-11); % EID15-0\n\n%% Generate parameters 36 and 37\nparameters(36) = bitshift(bitand(filter_7,hex2dec('1"
-      "8000000')),-27); % EID17-16\nparameters(36) = bitor(parameters(36), bitshift(bitand(filter_7,hex2dec('7FF')), 5)"
-      "); % SID\nparameters(36) = bitor(parameters(36), bitshift(filter_7_exide - 1, 3)); % EXIDE\nparameters(37) = bit"
-      "shift(bitand(uint32(filter_7),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 38 and 39\nparameter"
-      "s(38) = bitshift(bitand(filter_8,hex2dec('18000000')),-27); % EID17-16\nparameters(38) = bitor(parameters(38), b"
-      "itshift(bitand(filter_8,hex2dec('7FF')), 5)); % SID\nparameters(38) = bitor(parameters(38), bitshift(filter_8_ex"
-      "ide - 1, 3)); % EXIDE\nparameters(39) = bitshift(bitand(uint32(filter_8),hex2dec('7FFF800')),-11); % EID15-0\n\n"
-      "%% Generate parameters 40 and 41\nparameters(40) = bitshift(bitand(filter_9,hex2dec('18000000')),-27); % EID17-1"
-      "6\nparameters(40) = bitor(parameters(40), bitshift(bitand(filter_9,hex2dec('7FF')), 5)); % SID\nparameters(40) ="
-      " bitor(parameters(40), bitshift(filter_9_exide - 1, 3)); % EXIDE\nparameters(41) = bitshift(bitand(uint32(filter"
-      "_9),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 42 and 43\nparameters(42) = bitshift(bitand(fi"
-      "lter_10,hex2dec('18000000')),-27); % EID17-16\nparameters(42) = bitor(parameters(42), bitshift(bitand(filter_10,"
-      "hex2dec('7FF')), 5)); % SID\nparameters(42) = bitor(parameters(42), bitshift(filter_10_exide - 1, 3)); % EXIDE\n"
-      "parameters(43) = bitshift(bitand(uint32(filter_10),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters"
-      " 44 and 45\nparameters(44) = bitshift(bitand(filter_11,hex2dec('18000000')),-27); % EID17-16\nparameters(44) = b"
-      "itor(parameters(44), bitshift(bitand(filter_11,hex2dec('7FF')), 5)); % SID\nparameters(44) = bitor(parameters(44"
-      "), bitshift(filter_11_exide - 1, 3)); % EXIDE\nparameters(45) = bitshift(bitand(uint32(filter_11),hex2dec('7FFF8"
-      "00')),-11); % EID15-0\n\n%% Generate parameters 46 and 47\nparameters(46) = bitshift(bitand(filter_12,hex2dec('1"
-      "8000000')),-27); % EID17-16\nparameters(46) = bitor(parameters(46), bitshift(bitand(filter_12,hex2dec('7FF')), 5"
-      ")); % SID\nparameters(46) = bitor(parameters(46), bitshift(filter_12_exide - 1, 3)); % EXIDE\nparameters(47) = b"
-      "itshift(bitand(uint32(filter_12),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 48 and 49\nparame"
-      "ters(48) = bitshift(bitand(filter_13,hex2dec('18000000')),-27); % EID17-16\nparameters(48) = bitor(parameters(48"
-      "), bitshift(bitand(filter_13,hex2dec('7FF')), 5)); % SID\nparameters(48) = bitor(parameters(48), bitshift(filter"
-      "_13_exide - 1, 3)); % EXIDE\nparameters(49) = bitshift(bitand(uint32(filter_13),hex2dec('7FFF800')),-11); % EID1"
-      "5-0\n\n%% Generate parameters 50 and 51\nparameters(50) = bitshift(bitand(filter_14,hex2dec('18000000')),-27); %"
-      " EID17-16\nparameters(50) = bitor(parameters(50), bitshift(bitand(filter_14,hex2dec('7FF')), 5)); % SID\nparamet"
-      "ers(50) = bitor(parameters(50), bitshift(filter_14_exide - 1, 3)); % EXIDE\nparameters(51) = bitshift(bitand(uin"
-      "t32(filter_14),hex2dec('7FFF800')),-11); % EID15-0\n\n%% Generate parameters 52 and 53\nparameters(52) = bitshif"
-      "t(bitand(filter_15,hex2dec('18000000')),-27); % EID17-16\nparameters(52) = bitor(parameters(52), bitshift(bitand"
-      "(filter_15,hex2dec('7FF')), 5)); % SID\nparameters(52) = bitor(parameters(52), bitshift(filter_15_exide - 1, 3))"
-      "; % EXIDE\nparameters(53) = bitshift(bitand(uint32(filter_15),hex2dec('7FFF800')),-11); % EID15-0"
-      MaskDisplay	      "text(0.5,0.5,'Configure ECAN1','horizontalAlignment','center','verticalAlignment','middle');\n"
-      MaskIconFrame	      on
-      MaskIconOpaque	      on
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "normalized"
-      MaskValueString	      "on|Normal|2|0|250000|8|5|6|4|20|on|4 buffers|[1]|[0]|Highest|No|Highest|No|Lowest|No|Lowe"
-      "st|No|Lowest|No|Lowest|No|Lowest|No|Lowest|No|0|Match std or ext|0|Match std or ext|0|Match std or ext|[0]|0|0|M"
-      "atch only extended|1|hex2dec('401')|0|Match only standard|2|hex2dec('402')|0|Match only standard|3|0|0|Match onl"
-      "y standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match only standa"
-      "rd|0|0|0|Match only standard|0|0|<empty>|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard"
-      "|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard|0|0|0|Match only standard|0"
-      System {
-	Name			"Configure ECAN 1"
-	Location		[41, 188, 446, 336]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Reference
-	  Name			  "C Function Call\n[ecanFunctions.c]"
-	  SID			  6
-	  Tag			  "dsPIC_dsPIC_CFunctionCall"
-	  Ports			  [1]
-	  Position		  [145, 40, 270, 80]
-	  LibraryVersion	  "3.75"
-	  List {
-	    ListType		    RTWdata
-	    isFctUpdate		    "1"
-	    FctDeclaration	    "extern void ecan1_init(uint16_T* u1);"
-	    FctCall		    "ecan1_init(*%u1);"
-	    fctName		    "ecan1_init"
-	    INPUT_SIZE		    "53"
-	    OUTPUT_SIZE		    "1"
-	    NBR_INPUT		    "1"
-	    NBR_OUTPUT		    "0"
-	    isFctStart		    "0"
-	    FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	    FctStart_Call	    "Init_onlyOnce();"
-	    FctStart_Name	    "Init_onlyOnce"
-	    isFctInit		    "0"
-	    FctInit_Declaration	    "inline extern void Init_Reset();"
-	    FctInit_Call	    "Init_Reset();"
-	    FctInit_Name	    "Init_Reset"
-	  }
-	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
-	  SourceType		  "C Function Call"
-	  FctUpdate		  "Output Function"
-	  fctName		  "ecan1_init"
-	  INPUT_SIZE		  "53"
-	  INPUT1		  "uint16"
-	  INPUT2		  "--"
-	  INPUT3		  "--"
-	  OUTPUT_SIZE		  "1"
-	  OUTPUT1		  "--"
-	  SampleTime		  "Inf"
-	  InputType		  "[ 4 ]"
-	  OutputType		  "[ ]"
-	  FctDeclaration	  "extern void ecan1_init(uint16_T* u1);"
-	  FctCall		  "ecan1_init(*%u1);"
-	  OrderingInOutPopup	  "None"
-	  FctStart		  "None"
-	  FctStart_Name		  "Init_onlyOnce"
-	  FctStart_Declaration	  "inline extern void Init_onlyOnce();"
-	  FctStart_Call		  "Init_onlyOnce();"
-	  FctInit		  "None"
-	  FctInit_Name		  "Init_Reset"
-	  FctInit_Declaration	  "inline extern void Init_Reset();"
-	  FctInit_Call		  "Init_Reset();"
-	  PinDigitalInput	  "[]"
-	  PinDigitalOutput	  "[]"
-	  AnalogueInput		  "[]"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  7
-	  Position		  [45, 53, 125, 67]
-	  ShowName		  off
-	  Value			  "parameters"
-	  OutDataTypeMode	  "uint16"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
-	  OutDataTypeStr	  "uint16"
-	}
-	Line {
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  DstBlock		  "C Function Call\n[ecanFunctions.c]"
-	  DstPort		  1
-	}
-      }
+      RTWMemSecFuncInitTerm   "Inherit from model"
+      RTWMemSecFuncExecute    "Inherit from model"
+      RTWMemSecDataConstants  "Inherit from model"
+      RTWMemSecDataInternal   "Inherit from model"
+      RTWMemSecDataParameters "Inherit from model"
+      frame_setting	      on
+      mode		      "Normal"
+      dma_rx_chan	      "2"
+      dma_tx_chan	      "0"
+      baud		      "250000"
+      ps1		      "8"
+      pd		      "5"
+      ps2		      "6"
+      sjw		      "4"
+      tq		      "20"
+      triple_sample	      on
+      dma_buf_size	      "4 buffers"
+      rx_bufs		      "[1]"
+      tx_bufs		      "[0]"
+      buf_0_tx_pri	      "Highest"
+      buf_0_rte		      "No"
+      buf_1_tx_pri	      "Highest"
+      buf_1_rte		      "No"
+      buf_2_tx_pri	      "Lowest"
+      buf_2_rte		      "No"
+      buf_3_tx_pri	      "Lowest"
+      buf_3_rte		      "No"
+      buf_4_tx_pri	      "Lowest"
+      buf_4_rte		      "No"
+      buf_5_tx_pri	      "Lowest"
+      buf_5_rte		      "No"
+      buf_6_tx_pri	      "Lowest"
+      buf_6_rte		      "No"
+      buf_7_tx_pri	      "Lowest"
+      buf_7_rte		      "No"
+      mask_0		      "0"
+      mask_0_mide	      "Match std or ext"
+      mask_1		      "0"
+      mask_1_mide	      "Match std or ext"
+      mask_2		      "0"
+      mask_2_mide	      "Match std or ext"
+      filters		      "[0]"
+      filter_0		      "0"
+      filter_0_mask	      "0"
+      filter_0_exide	      "Match only extended"
+      filter_0_buf	      "1"
+      filter_1		      "hex2dec('401')"
+      filter_1_mask	      "0"
+      filter_1_exide	      "Match only standard"
+      filter_1_buf	      "2"
+      filter_2		      "hex2dec('402')"
+      filter_2_mask	      "0"
+      filter_2_exide	      "Match only standard"
+      filter_2_buf	      "3"
+      filter_3		      "0"
+      filter_3_mask	      "0"
+      filter_3_exide	      "Match only standard"
+      filter_3_buf	      "0"
+      filter_4		      "0"
+      filter_4_mask	      "0"
+      filter_4_exide	      "Match only standard"
+      filter_4_buf	      "0"
+      filter_5		      "0"
+      filter_5_mask	      "0"
+      filter_5_exide	      "Match only standard"
+      filter_5_buf	      "0"
+      filter_6		      "0"
+      filter_6_mask	      "0"
+      filter_6_exide	      "Match only standard"
+      filter_6_buf	      "0"
+      filter_7		      "0"
+      filter_7_mask	      "0"
+      filter_7_exide	      "Match only standard"
+      filter_7_buf	      "0"
+      filter_8		      "0"
+      filter_8_mask	      "0"
+      filter_8_exide	      "Match only standard"
+      filter_8_buf	      "0"
+      filter_9		      "0"
+      filter_9_mask	      "<empty>"
+      filter_9_exide	      "Match only standard"
+      filter_9_buf	      "0"
+      filter_10		      "0"
+      filter_10_mask	      "0"
+      filter_10_exide	      "Match only standard"
+      filter_10_buf	      "0"
+      filter_11		      "0"
+      filter_11_mask	      "0"
+      filter_11_exide	      "Match only standard"
+      filter_11_buf	      "0"
+      filter_12		      "0"
+      filter_12_mask	      "0"
+      filter_12_exide	      "Match only standard"
+      filter_12_buf	      "0"
+      filter_13		      "0"
+      filter_13_mask	      "0"
+      filter_13_exide	      "Match only standard"
+      filter_13_buf	      "0"
+      filter_14		      "0"
+      filter_14_mask	      "0"
+      filter_14_exide	      "Match only standard"
+      filter_14_buf	      "0"
+      filter_15		      "0"
+      filter_15_mask	      "0"
+      filter_15_exide	      "Match only standard"
+      filter_15_buf	      "0"
     }
     Block {
       BlockType		      Reference
@@ -1302,7 +1092,7 @@ Model {
       ForegroundColor	      "blue"
       BackgroundColor	      "yellow"
       ShowName		      off
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       SourceBlock	      "dsPICdrivers/Simulink Configuration/Configure Model \nfor dsPIC"
       SourceType	      ""
     }
@@ -1311,6 +1101,8 @@ Model {
       Name		      "Constant"
       SID		      192
       Position		      [140, 390, 170, 420]
+      BackgroundColor	      "gray"
+      ShowName		      off
       OutDataType	      "fixdt(1, 16)"
       OutScaling	      "2^0"
       SampleTime	      ".01"
@@ -1369,7 +1161,7 @@ Model {
 	  Ports			  [1]
 	  Position		  [140, 90, 265, 130]
 	  BackgroundColor	  "orange"
-	  LibraryVersion	  "3.75"
+	  LibraryVersion	  "3.79"
 	  List {
 	    ListType		    RTWdata
 	    isFctUpdate		    "1"
@@ -1443,7 +1235,7 @@ Model {
       Ports		      []
       Position		      [300, 125, 425, 165]
       BackgroundColor	      "orange"
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       List {
 	ListType		RTWdata
 	isFctUpdate		"0"
@@ -1502,7 +1294,7 @@ Model {
       DropShadow	      on
       ShowName		      off
       Priority		      "1"
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       List {
 	ListType		RTWdata
 	NumBusyPort		"-1"
@@ -1578,6 +1370,7 @@ Model {
 	  Name			  "In1"
 	  SID			  193
 	  Position		  [75, 83, 105, 97]
+	  BackgroundColor	  "darkGreen"
 	  IconDisplay		  "Port number"
 	  OutDataType		  "fixdt(1, 16)"
 	  OutScaling		  "2^0"
@@ -1587,7 +1380,7 @@ Model {
 	  Name			  "Display message\nID via UART2"
 	  SID			  200
 	  Ports			  [1, 0, 0, 0, 0, 0, 0, 1]
-	  Position		  [540, 162, 610, 198]
+	  Position		  [540, 177, 610, 213]
 	  LibraryVersion	  "1.216"
 	  TreatAsAtomicUnit	  on
 	  MinAlgLoopOccurrences	  off
@@ -1617,6 +1410,7 @@ Model {
 	      Name		      "In1"
 	      SID		      205
 	      Position		      [65, 103, 95, 117]
+	      BackgroundColor	      "darkGreen"
 	      IconDisplay	      "Port number"
 	      OutDataType	      "fixdt(1, 16)"
 	      OutScaling	      "2^0"
@@ -1636,7 +1430,7 @@ Model {
 	      Ports		      [1]
 	      Position		      [135, 90, 260, 130]
 	      BackgroundColor	      "orange"
-	      LibraryVersion	      "3.75"
+	      LibraryVersion	      "3.79"
 	      List {
 		ListType		RTWdata
 		isFctUpdate		"1"
@@ -1697,744 +1491,29 @@ Model {
 	  Name			  "If"
 	  SID			  199
 	  Ports			  [1, 1]
-	  Position		  [370, 121, 470, 159]
+	  Position		  [370, 136, 470, 174]
 	  ShowName		  off
 	  IfExpression		  "u1 ~= 0"
 	  ShowElse		  off
 	}
 	Block {
-	  BlockType		  SubSystem
+	  BlockType		  Reference
 	  Name			  "Receive ECAN1 Message"
-	  SID			  156
+	  SID			  219
 	  Ports			  [0, 6]
 	  Position		  [85, 180, 205, 285]
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
+	  LibraryVersion	  "1.3"
+	  SourceBlock		  "ecan_dspic/Receive ECAN1 Message"
+	  SourceType		  "ECAN 1 Reception Block"
+	  ShowPortLabels	  "FromPortIcon"
+	  SystemSampleTime	  "-1"
 	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  MaskType		  "ECAN 1 Reception Block"
-	  MaskDescription	  "This block will receive CAN messages over the ECAN1 peripheral on the dsPIC33f.\nOutputs:\nident"
-	  "ifier - uint32 containing SID and EID\ndata - Variable-sized array (between 0 and 8) of uint8s\nremote - boolean va"
-	  "lue specifying if this is a remote transmit request"
-	  MaskPromptString	  "Sampling time"
-	  MaskStyleString	  "edit"
-	  MaskTunableValueString  "off"
-	  MaskEnableString	  "on"
-	  MaskVisibilityString	  "on"
-	  MaskToolTipString	  "on"
-	  MaskVariables		  "ecan1_receive_sample_time=@1;"
-	  MaskDisplay		  "disp('ECAN1 RX');"
-	  MaskIconFrame		  on
-	  MaskIconOpaque	  off
-	  MaskIconRotate	  "none"
-	  MaskPortRotate	  "default"
-	  MaskIconUnits		  "autoscale"
-	  MaskValueString	  "-1"
-	  System {
-	    Name		    "Receive ECAN1 Message"
-	    Location		    [689, 487, 1529, 794]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    Block {
-	      BlockType		      Reference
-	      Name		      "C Function Call\n[ecanFunctions.c]"
-	      SID		      157
-	      Tag		      "dsPIC_dsPIC_CFunctionCall"
-	      Ports		      [0, 1]
-	      Position		      [25, 85, 150, 125]
-	      BackgroundColor	      "orange"
-	      LibraryVersion	      "3.75"
-	      List {
-		ListType		RTWdata
-		isFctUpdate		"1"
-		FctDeclaration		"extern void ecan1_receive_matlab(uint32_T* y1);"
-		FctCall			"ecan1_receive_matlab(*%y1);"
-		fctName			"ecan1_receive_matlab"
-		INPUT_SIZE		"1"
-		OUTPUT_SIZE		"4"
-		NBR_INPUT		"0"
-		NBR_OUTPUT		"1"
-		isFctStart		"0"
-		FctStart_Declaration	"inline extern void Init_onlyOnce();"
-		FctStart_Call		"Init_onlyOnce();"
-		FctStart_Name		"Init_onlyOnce"
-		isFctInit		"0"
-		FctInit_Declaration	"inline extern void Init_Reset();"
-		FctInit_Call		"Init_Reset();"
-		FctInit_Name		"Init_Reset"
-	      }
-	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
-	      SourceType	      "C Function Call"
-	      FctUpdate		      "Output Function"
-	      fctName		      "'ecan1_receive_matlab'"
-	      INPUT_SIZE	      "1"
-	      INPUT1		      "--"
-	      INPUT2		      "--"
-	      INPUT3		      "--"
-	      OUTPUT_SIZE	      "4"
-	      OUTPUT1		      "uint32"
-	      SampleTime	      "ecan1_receive_sample_time"
-	      InputType		      "[ ]"
-	      OutputType	      "[ 6 ]"
-	      FctDeclaration	      "extern void ecan1_receive_matlab(uint32_T* y1);"
-	      FctCall		      "ecan1_receive_matlab(*%y1);"
-	      OrderingInOutPopup      "None"
-	      FctStart		      "None"
-	      FctStart_Name	      "Init_onlyOnce"
-	      FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	      FctStart_Call	      "Init_onlyOnce();"
-	      FctInit		      "None"
-	      FctInit_Name	      "Init_Reset"
-	      FctInit_Declaration     "inline extern void Init_Reset();"
-	      FctInit_Call	      "Init_Reset();"
-	      PinDigitalInput	      "[]"
-	      PinDigitalOutput	      "[]"
-	      AnalogueInput	      "[]"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Compare\nTo Zero"
-	      SID		      158
-	      Ports		      [1, 1]
-	      Position		      [250, 15, 280, 45]
-	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Compare\nTo Zero"
-	      SourceType	      "Compare To Zero"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      relop		      "~="
-	      LogicOutDataTypeMode    "boolean"
-	      ZeroCross		      off
-	    }
-	    Block {
-	      BlockType		      DataTypeConversion
-	      Name		      "Data Type Conversion"
-	      SID		      159
-	      Position		      [335, 177, 385, 193]
-	      ShowName		      off
-	      OutDataTypeMode	      "boolean"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	      OutDataTypeStr	      "boolean"
-	      RndMeth		      "Floor"
-	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      SubSystem
-	      Name		      "Decompose uint64"
-	      SID		      161
-	      Ports		      [2, 1]
-	      Position		      [235, 66, 315, 124]
-	      MinAlgLoopOccurrences   off
-	      PropExecContextOutsideSubsystem off
-	      RTWSystemCode	      "Auto"
-	      FunctionWithSeparateData off
-	      Opaque		      off
-	      RequestExecContextInheritance off
-	      MaskHideContents	      off
-	      System {
-		Name			"Decompose uint64"
-		Location		[79, 184, 943, 517]
-		Open			off
-		ModelBrowserVisibility	off
-		ModelBrowserWidth	200
-		ScreenColor		"white"
-		PaperOrientation	"landscape"
-		PaperPositionMode	"auto"
-		PaperType		"usletter"
-		PaperUnits		"inches"
-		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-		TiledPageScale		1
-		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		Block {
-		  BlockType		  Inport
-		  Name			  "low-order\nuint32"
-		  SID			  162
-		  Position		  [35, 58, 65, 72]
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Inport
-		  Name			  "high-order\nuint1"
-		  SID			  163
-		  Position		  [35, 178, 65, 192]
-		  Port			  "2"
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits"
-		  SID			  164
-		  Ports			  [1, 1]
-		  Position		  [90, 52, 170, 78]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[0 7]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits1"
-		  SID			  165
-		  Ports			  [1, 1]
-		  Position		  [90, 82, 170, 108]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[8 15]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits2"
-		  SID			  166
-		  Ports			  [1, 1]
-		  Position		  [90, 112, 170, 138]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[16 23]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits3"
-		  SID			  167
-		  Ports			  [1, 1]
-		  Position		  [90, 142, 170, 168]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[24 31]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits4"
-		  SID			  168
-		  Ports			  [1, 1]
-		  Position		  [90, 172, 170, 198]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[0 7]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits5"
-		  SID			  169
-		  Ports			  [1, 1]
-		  Position		  [90, 202, 170, 228]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[8 15]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits6"
-		  SID			  170
-		  Ports			  [1, 1]
-		  Position		  [90, 232, 170, 258]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[16 23]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Reference
-		  Name			  "Extract Bits7"
-		  SID			  171
-		  Ports			  [1, 1]
-		  Position		  [90, 262, 170, 288]
-		  ShowName		  off
-		  LibraryVersion	  "1.216"
-		  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
-		  SourceType		  "Extract Bits"
-		  ShowPortLabels	  "FromPortIcon"
-		  SystemSampleTime	  "-1"
-		  FunctionWithSeparateData off
-		  RTWMemSecFuncInitTerm	  "Inherit from model"
-		  RTWMemSecFuncExecute	  "Inherit from model"
-		  RTWMemSecDataConstants  "Inherit from model"
-		  RTWMemSecDataInternal	  "Inherit from model"
-		  RTWMemSecDataParameters "Inherit from model"
-		  bitsToExtract		  "Range of bits"
-		  numBits		  "8"
-		  bitIdxRange		  "[24 31]"
-		  outScalingMode	  "Treat bit field as an integer"
-		}
-		Block {
-		  BlockType		  Mux
-		  Name			  "Mux"
-		  SID			  172
-		  Ports			  [8, 1]
-		  Position		  [290, 55, 295, 285]
-		  ShowName		  off
-		  Inputs		  "8"
-		  DisplayOption		  "bar"
-		}
-		Block {
-		  BlockType		  Outport
-		  Name			  "uint8 array"
-		  SID			  173
-		  Position		  [350, 163, 380, 177]
-		  IconDisplay		  "Port number"
-		  OutDataType		  "sfix(16)"
-		  OutScaling		  "2^0"
-		}
-		Line {
-		  SrcBlock		  "low-order\nuint32"
-		  SrcPort		  1
-		  Points		  [5, 0]
-		  Branch {
-		    DstBlock		    "Extract Bits"
-		    DstPort		    1
-		  }
-		  Branch {
-		    Points		    [0, 30]
-		    Branch {
-		    DstBlock		    "Extract Bits1"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 30]
-		    Branch {
-		    DstBlock		    "Extract Bits2"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "Extract Bits3"
-		    DstPort		    1
-		    }
-		    }
-		  }
-		}
-		Line {
-		  SrcBlock		  "Mux"
-		  SrcPort		  1
-		  DstBlock		  "uint8 array"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "high-order\nuint1"
-		  SrcPort		  1
-		  Points		  [5, 0]
-		  Branch {
-		    DstBlock		    "Extract Bits4"
-		    DstPort		    1
-		  }
-		  Branch {
-		    Points		    [0, 30]
-		    Branch {
-		    DstBlock		    "Extract Bits5"
-		    DstPort		    1
-		    }
-		    Branch {
-		    Points		    [0, 30]
-		    Branch {
-		    DstBlock		    "Extract Bits6"
-		    DstPort		    1
-		    }
-		    Branch {
-		    DstBlock		    "Extract Bits7"
-		    DstPort		    1
-		    }
-		    }
-		  }
-		}
-		Line {
-		  SrcBlock		  "Extract Bits"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Extract Bits7"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  8
-		}
-		Line {
-		  SrcBlock		  "Extract Bits1"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "Extract Bits2"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  3
-		}
-		Line {
-		  SrcBlock		  "Extract Bits3"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  4
-		}
-		Line {
-		  SrcBlock		  "Extract Bits4"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  5
-		}
-		Line {
-		  SrcBlock		  "Extract Bits5"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  6
-		}
-		Line {
-		  SrcBlock		  "Extract Bits6"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  7
-		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      "Demux"
-	      SID		      174
-	      Ports		      [1, 4]
-	      Position		      [185, 45, 190, 165]
-	      BackgroundColor	      "black"
-	      ShowName		      off
-	      DisplayOption	      "bar"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Extract Bits1"
-	      SID		      175
-	      Ports		      [1, 1]
-	      Position		      [220, 142, 300, 168]
-	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
-	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      bitsToExtract	      "Range of bits"
-	      numBits		      "8"
-	      bitIdxRange	      "[0 7]"
-	      outScalingMode	      "Treat bit field as an integer"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Extract Bits3"
-	      SID		      177
-	      Ports		      [1, 1]
-	      Position		      [220, 172, 300, 198]
-	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
-	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      bitsToExtract	      "Range of bits"
-	      numBits		      "8"
-	      bitIdxRange	      "[8 15]"
-	      outScalingMode	      "Treat bit field as an integer"
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "Extract Bits4"
-	      SID		      178
-	      Ports		      [1, 1]
-	      Position		      [220, 202, 300, 228]
-	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
-	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      bitsToExtract	      "Range of bits"
-	      numBits		      "8"
-	      bitIdxRange	      "[16 23]"
-	      outScalingMode	      "Treat bit field as an integer"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "identifier"
-	      SID		      179
-	      Position		      [515, 53, 545, 67]
-	      BackgroundColor	      "darkGreen"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "data"
-	      SID		      180
-	      Position		      [515, 88, 545, 102]
-	      BackgroundColor	      "darkGreen"
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "remote"
-	      SID		      181
-	      Position		      [515, 178, 545, 192]
-	      BackgroundColor	      "darkGreen"
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "new"
-	      SID		      182
-	      Position		      [515, 23, 545, 37]
-	      BackgroundColor	      "darkGreen"
-	      Port		      "4"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "size"
-	      SID		      183
-	      Position		      [515, 148, 545, 162]
-	      BackgroundColor	      "darkGreen"
-	      Port		      "5"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "messagesLeft"
-	      SID		      184
-	      Position		      [515, 208, 545, 222]
-	      BackgroundColor	      "darkGreen"
-	      Port		      "6"
-	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Line {
-	      SrcBlock		      "C Function Call\n[ecanFunctions.c]"
-	      SrcPort		      1
-	      DstBlock		      "Demux"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Demux"
-	      SrcPort		      1
-	      Points		      [35, 0]
-	      Branch {
-		Points			[0, -30]
-		DstBlock		"Compare\nTo Zero"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"identifier"
-		DstPort			1
-	      }
-	    }
-	    Line {
-	      SrcBlock		      "Demux"
-	      SrcPort		      3
-	      Points		      [25, 0]
-	      DstBlock		      "Decompose uint64"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "Data Type Conversion"
-	      SrcPort		      1
-	      DstBlock		      "remote"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Demux"
-	      SrcPort		      2
-	      Points		      [25, 0]
-	      DstBlock		      "Decompose uint64"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Extract Bits3"
-	      SrcPort		      1
-	      DstBlock		      "Data Type Conversion"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Decompose uint64"
-	      SrcPort		      1
-	      DstBlock		      "data"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Compare\nTo Zero"
-	      SrcPort		      1
-	      DstBlock		      "new"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Extract Bits1"
-	      SrcPort		      1
-	      DstBlock		      "size"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Extract Bits4"
-	      SrcPort		      1
-	      DstBlock		      "messagesLeft"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Demux"
-	      SrcPort		      4
-	      Points		      [5, 0; 0, 5]
-	      Branch {
-		DstBlock		"Extract Bits1"
-		DstPort			1
-	      }
-	      Branch {
-		Points			[0, 30]
-		Branch {
-		  DstBlock		  "Extract Bits3"
-		  DstPort		  1
-		}
-		Branch {
-		  Points		  [0, 30]
-		  DstBlock		  "Extract Bits4"
-		  DstPort		  1
-		}
-	      }
-	    }
-	  }
+	  RTWMemSecFuncInitTerm	  "Inherit from model"
+	  RTWMemSecFuncExecute	  "Inherit from model"
+	  RTWMemSecDataConstants  "Inherit from model"
+	  RTWMemSecDataInternal	  "Inherit from model"
+	  RTWMemSecDataParameters "Inherit from model"
+	  ecan1_receive_sample_time "-1"
 	}
 	Block {
 	  BlockType		  Terminator
@@ -2488,7 +1567,7 @@ Model {
 	  Name			  "Count"
 	  SID			  189
 	  Position		  [460, 233, 490, 247]
-	  BackgroundColor	  "darkGreen"
+	  BackgroundColor	  "yellow"
 	  IconDisplay		  "Port number"
 	  OutDataType		  "fixdt(1, 16)"
 	  OutScaling		  "2^0"
@@ -2502,7 +1581,7 @@ Model {
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -100]
+	    Points		    [0, -85]
 	    DstBlock		    "If"
 	    DstPort		    1
 	  }
@@ -2546,7 +1625,6 @@ Model {
 	Line {
 	  SrcBlock		  "Receive ECAN1 Message"
 	  SrcPort		  1
-	  Points		  [5, 0; 0, -15]
 	  DstBlock		  "Display message\nID via UART2"
 	  DstPort		  1
 	}

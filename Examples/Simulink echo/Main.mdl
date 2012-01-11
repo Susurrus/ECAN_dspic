@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.629"
+    ComputedModelVersion    "1.630"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -26,9 +26,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Bryant"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Nov 02 15:54:56 2011"
-  RTWModifiedTimeStamp	  242149971
-  ModelVersionFormat	  "1.%<AutoIncrement:629>"
+  LastModifiedDate	  "Wed Jan 11 09:52:22 2012"
+  RTWModifiedTimeStamp	  248176340
+  ModelVersionFormat	  "1.%<AutoIncrement:630>"
   ConfigurationManager	  "None"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -380,7 +380,7 @@ Model {
 	  ConfigAtBuild		  off
 	  RTWUseLocalCustomCode	  off
 	  RTWUseSimCustomCode	  off
-	  CustomSource		  "../../circBuffer.c\n../../ecanFunctions.c"
+	  CustomSource		  "../../CircularBuffer.c\n../../ecanFunctions.c"
 	  IncludeHyperlinkInReport off
 	  LaunchReport		  off
 	  TargetLang		  "C"
@@ -671,8 +671,8 @@ Model {
       }
       Name		      "Configuration"
       ExtraOptions	      "-aGenerateTraceInfo=0 -aIgnoreTestpoints=0 "
-      CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition    " [ 352, 100, 1249, 738 ] "
+      CurrentDlgPage	      "Real-Time Workshop/Custom Code"
+      ConfigPrmDlgPosition    " [ 352, 100, 1249, 816 ] "
     }
     PropName		    "ConfigurationSets"
   }
@@ -885,7 +885,7 @@ Model {
       Position		      [35, 14, 147, 70]
       BackgroundColor	      "yellow"
       DropShadow	      on
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       SourceBlock	      "dsPICdrivers/Simulink Configuration/Configure Model \nfor dsPIC"
       SourceType	      ""
     }
@@ -950,7 +950,7 @@ Model {
       Ports		      [3]
       Position		      [510, 289, 590, 411]
       Priority		      "5"
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       SourceBlock	      "dsPICdrivers/Digital I//O/Digital Output Write"
       SourceType	      ""
       PORT		      "A"
@@ -987,7 +987,7 @@ Model {
       BackgroundColor	      "lightBlue"
       DropShadow	      on
       Priority		      "1"
-      LibraryVersion	      "3.75"
+      LibraryVersion	      "3.79"
       List {
 	ListType		RTWdata
 	NumBusyPort		"-1"
