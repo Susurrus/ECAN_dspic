@@ -121,6 +121,7 @@ void ecan1_init(const uint16_t* parameters) {
   IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
   C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
   C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
+  C1INTEbits.RBOVIE = 1; // Enable RX buffer full interrupt
   
   // Configure buffer settings.
   // Must be done after mode setting for some reason
@@ -188,6 +189,7 @@ void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message) {
 	}
 }
 
+// TODO: Remove the clearing of the output array and set a return type for success/failure.
 void ecan1_receive_matlab(uint32_t* output) {
 	tCanMessage msg;
 
@@ -257,10 +259,10 @@ void ecan1_transmit(tCanMessage message) {
 	ecan_msg_buf_ptr[0] = word0;
 	ecan_msg_buf_ptr[1] = word1;
 	ecan_msg_buf_ptr[2] = ((word2 & 0xFFF0) + message.validBytes) ;
-	ecan_msg_buf_ptr[3] = ((uint16_t)message.payload[1] | ((uint16_t)message.payload[0] << 8));
-	ecan_msg_buf_ptr[4] = ((uint16_t)message.payload[3] | ((uint16_t)message.payload[2] << 8));
-	ecan_msg_buf_ptr[5] = ((uint16_t)message.payload[5] | ((uint16_t)message.payload[4] << 8));
-	ecan_msg_buf_ptr[6] = ((uint16_t)message.payload[7] | ((uint16_t)message.payload[6] << 8));
+	ecan_msg_buf_ptr[3] = ((uint16_t)message.payload[1] << 8 | ((uint16_t)message.payload[0]));
+	ecan_msg_buf_ptr[4] = ((uint16_t)message.payload[3] << 8 | ((uint16_t)message.payload[2]));
+	ecan_msg_buf_ptr[5] = ((uint16_t)message.payload[5] << 8 | ((uint16_t)message.payload[4]));
+	ecan_msg_buf_ptr[6] = ((uint16_t)message.payload[7] << 8 | ((uint16_t)message.payload[6]));
 
 	// Set the correct transfer intialization bit (TXREQ) based on message buffer.
     	offset = message.buffer >> 1;
@@ -438,9 +440,9 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
 				
-		// read word 0 to see the message type 
-		ide = ecan_msg_buf_ptr[0] & 0x0001;	
-		srr = ecan_msg_buf_ptr[0] & 0x0002;	
+		// Read the first word to see the message type
+		ide = ecan_msg_buf_ptr[0] & 0x0001;
+		srr = ecan_msg_buf_ptr[0] & 0x0002;
 		
 		/* Format the message properly according to whether it
 		 * uses an extended identifier or not.
@@ -491,6 +493,19 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
 	}
+
+//	if (C1INTFbits.RBOVIF) {
+		
+		// Clear all of the full/overflow registers so that we can attempt to restart
+		// reception of messages.
+		C1RXFUL1 = C1RXFUL2 = 0;
+		C1RXOVF1 = C1RXOVF2 = 0;
+
+		// Clear the interrupt flag so this interrupt can trigger again.
+		C1INTFbits.RBOVIF = 0;
+//	}
 	
+	// Clear the general ECAN1 interrupt flag.
 	IFS2bits.C1IF = 0;
+
 }

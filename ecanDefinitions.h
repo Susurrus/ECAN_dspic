@@ -7,19 +7,19 @@
        extern "C"{
 #endif
 
-// Message Types
-#define CAN_MSG_DATA	0x01 // message type 
-#define CAN_MSG_RTR		0x02 // data or RTR
-#define CAN_FRAME_EXT	0x03 // Frame type
-#define CAN_FRAME_STD	0x04 // extended or standard
+#include "inttypes.h"
 
-// Specify some primitive types for convenience
-typedef long int int32_t;
-typedef unsigned long int uint32_t;
-typedef int int16_t;
-typedef unsigned int uint16_t;
-typedef char int8_t;
-typedef unsigned char uint8_t;
+// Message Types either a data message or a remote transmit request
+enum {
+	CAN_MSG_DATA,
+	CAN_MSG_RTR
+};
+
+// CAN frame type: either extended or standard
+enum {
+	CAN_FRAME_EXT,
+	CAN_FRAME_STD
+};
 
 // Data structures
 typedef struct {

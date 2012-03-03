@@ -1,6 +1,6 @@
 Library {
   Name			  "ecan_dspic"
-  Version		  7.5
+  Version		  7.8
   MdlSubVersion		  0
   SavedCharacterEncoding  "windows-1252"
   LibraryType		  "BlockLibrary"
@@ -8,6 +8,7 @@ Library {
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
   DisableAllScopes	  off
+  FPTRunName		  "Run 1"
   MaxMDLFileLineLength	  120
   Created		  "Wed Nov 02 15:42:32 2011"
   Creator		  "Bryant"
@@ -15,9 +16,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Bryant"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Nov 02 15:46:03 2011"
-  RTWModifiedTimeStamp	  242149561
-  ModelVersionFormat	  "1.%<AutoIncrement:3>"
+  LastModifiedDate	  "Thu Feb 02 10:35:48 2012"
+  RTWModifiedTimeStamp	  250079641
+  ModelVersionFormat	  "1.%<AutoIncrement:5>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -25,6 +26,7 @@ Library {
   WideLines		  off
   ShowLineDimensions	  off
   ShowPortDataTypes	  off
+  ShowDesignRanges	  off
   ShowLoopsOnError	  on
   IgnoreBidirectionalLines off
   ShowStorageClass	  off
@@ -85,13 +87,13 @@ Library {
     Dimension		    1
     Simulink.ConfigSet {
       $ObjectID		      1
-      Version		      "1.10.0"
+      Version		      "1.11.1"
       Array {
 	Type			"Handle"
 	Dimension		8
 	Simulink.SolverCC {
 	  $ObjectID		  2
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  StartTime		  "0.0"
 	  StopTime		  "10.0"
 	  AbsTol		  "auto"
@@ -109,6 +111,7 @@ Library {
 	  MaxConsecutiveMinStep	  "1"
 	  RelTol		  "1e-3"
 	  SolverMode		  "Auto"
+	  ConcurrentTasks	  off
 	  Solver		  "ode45"
 	  SolverName		  "ode45"
 	  SolverJacobianMethodControl "auto"
@@ -124,7 +127,7 @@ Library {
 	}
 	Simulink.DataIOCC {
 	  $ObjectID		  3
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
 	  FinalStateName	  "xFinal"
@@ -136,6 +139,7 @@ Library {
 	  SaveFinalState	  off
 	  SaveCompleteFinalSimState off
 	  SaveFormat		  "Array"
+	  SignalLoggingSaveFormat "ModelDataLogs"
 	  SaveOutput		  on
 	  SaveState		  off
 	  SignalLogging		  on
@@ -155,7 +159,7 @@ Library {
 	}
 	Simulink.OptimizationCC {
 	  $ObjectID		  4
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    7
@@ -173,12 +177,13 @@ Library {
 	  ConditionallyExecuteInputs on
 	  InlineParams		  off
 	  UseIntDivNetSlope	  off
+	  UseFloatMulNetSlope	  off
+	  UseSpecifiedMinMax	  off
 	  InlineInvariantSignals  off
 	  OptimizeBlockIOStorage  on
 	  BufferReuse		  on
 	  EnhancedBackFolding	  off
 	  StrengthReduction	  off
-	  EnforceIntegerDowncast  on
 	  ExpressionFolding	  on
 	  BooleansAsBitfields	  off
 	  BitfieldContainerType	  "uint_T"
@@ -205,10 +210,11 @@ Library {
 	  BufferReusableBoundary  on
 	  SimCompilerOptimization "Off"
 	  AccelVerboseBuild	  off
+	  AccelParallelForEachSubsystem	on
 	}
 	Simulink.DebuggingCC {
 	  $ObjectID		  5
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
 	  ArrayBoundsChecking	  "none"
@@ -231,6 +237,8 @@ Library {
 	  MinStepSizeMsg	  "warning"
 	  TimeAdjustmentMsg	  "none"
 	  MaxConsecutiveZCsMsg	  "error"
+	  MaskedZcDiagnostic	  "warning"
+	  IgnoredZcDiagnostic	  "warning"
 	  SolverPrmCheckMsg	  "warning"
 	  InheritedTsInSrcMsg	  "warning"
 	  DiscreteInheritContinuousMsg "warning"
@@ -261,12 +269,14 @@ Library {
 	  UnconnectedOutputMsg	  "warning"
 	  UnconnectedLineMsg	  "warning"
 	  SFcnCompatibilityMsg	  "none"
+	  FrameProcessingCompatibilityMsg "warning"
 	  UniqueDataStoreMsg	  "none"
 	  BusObjectLabelMismatch  "warning"
 	  RootOutportRequireBusObject "warning"
 	  AssertControl		  "UseLocalSettings"
 	  EnableOverflowDetection off
 	  ModelReferenceIOMsg	  "none"
+	  ModelReferenceMultiInstanceNormalModeStructChecksumCheck "error"
 	  ModelReferenceVersionMismatchMessage "none"
 	  ModelReferenceIOMismatchMessage "none"
 	  ModelReferenceCSMismatchMessage "none"
@@ -276,19 +286,32 @@ Library {
 	  ModelReferenceExtraNoncontSigs "error"
 	  StateNameClashWarn	  "warning"
 	  SimStateInterfaceChecksumMismatchMsg "warning"
+	  SimStateOlderReleaseMsg "error"
+	  InitInArrayFormatMsg	  "warning"
 	  StrictBusMsg		  "ErrorLevel1"
 	  BusNameAdapt		  "WarnAndRepair"
 	  NonBusSignalsTreatedAsBus "none"
 	  LoggingUnavailableSignals "error"
 	  BlockIODiagnostic	  "none"
+	  SFUnusedDataAndEventsDiag "warning"
+	  SFUnexpectedBacktrackingDiag "warning"
+	  SFInvalidInputDataAccessInChartInitDiag "warning"
+	  SFNoUnconditionalDefaultTransitionDiag "warning"
+	  SFTransitionOutsideNaturalParentDiag "warning"
+	  SFUnconditionalTransitionShadowingDiag "warning"
 	}
 	Simulink.HardwareCC {
 	  $ObjectID		  6
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  ProdBitPerChar	  8
 	  ProdBitPerShort	  16
 	  ProdBitPerInt		  32
 	  ProdBitPerLong	  32
+	  ProdBitPerFloat	  32
+	  ProdBitPerDouble	  64
+	  ProdBitPerPointer	  32
+	  ProdLargestAtomicInteger "Char"
+	  ProdLargestAtomicFloat  "None"
 	  ProdIntDivRoundTo	  "Undefined"
 	  ProdEndianess		  "Unspecified"
 	  ProdWordSize		  32
@@ -298,6 +321,11 @@ Library {
 	  TargetBitPerShort	  16
 	  TargetBitPerInt	  32
 	  TargetBitPerLong	  32
+	  TargetBitPerFloat	  32
+	  TargetBitPerDouble	  64
+	  TargetBitPerPointer	  32
+	  TargetLargestAtomicInteger "Char"
+	  TargetLargestAtomicFloat "None"
 	  TargetShiftRightIntArith on
 	  TargetIntDivRoundTo	  "Undefined"
 	  TargetEndianess	  "Unspecified"
@@ -311,10 +339,11 @@ Library {
 	}
 	Simulink.ModelReferenceCC {
 	  $ObjectID		  7
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
 	  EnableParallelModelReferenceBuilds off
+	  ParallelModelReferenceErrorOnInvalidPool on
 	  ParallelModelReferenceMATLABWorkerInit "None"
 	  ModelReferenceNumInstancesAllowed "Multi"
 	  PropagateVarSize	  "Infer from blocks in model"
@@ -325,7 +354,7 @@ Library {
 	}
 	Simulink.SFSimCC {
 	  $ObjectID		  8
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  SFSimEnableDebug	  on
 	  SFSimOverflowDetection  on
 	  SFSimEcho		  on
@@ -334,12 +363,13 @@ Library {
 	  SimExtrinsic		  on
 	  SimIntegrity		  on
 	  SimUseLocalCustomCode	  off
+	  SimParseCustomCode	  on
 	  SimBuildMode		  "sf_incremental_build"
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
 	  $ObjectID		  9
-	  Version		  "1.10.0"
+	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    6
@@ -380,6 +410,8 @@ Library {
 	  GenerateTraceReportSf	  off
 	  GenerateTraceReportEml  off
 	  GenerateCodeInfo	  off
+	  GenerateSLWebview	  off
+	  GenerateCodeMetricsReport off
 	  RTWCompilerOptimization "Off"
 	  CheckMdlBeforeBuild	  "Off"
 	  CustomRebuildMode	  "OnUpdate"
@@ -388,7 +420,7 @@ Library {
 	    Dimension		    2
 	    Simulink.CodeAppCC {
 	      $ObjectID		      10
-	      Version		      "1.10.0"
+	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
 		Dimension		19
@@ -425,6 +457,7 @@ Library {
 	      IncAutoGenComments      off
 	      SimulinkDataObjDesc     off
 	      SFDataObjDesc	      off
+	      MATLABFcnDesc	      off
 	      IncDataTypeInIds	      off
 	      MangleLength	      1
 	      CustomSymbolStrGlobalVar "$R$N$M"
@@ -439,7 +472,9 @@ Library {
 	      ParamNamingRule	      "None"
 	      SignalNamingRule	      "None"
 	      InsertBlockDesc	      off
+	      InsertPolySpaceComments off
 	      SimulinkBlockComments   on
+	      MATLABSourceComments    off
 	      EnableCustomComments    off
 	      InlinedPrmAccess	      "Literals"
 	      ReqsInCode	      off
@@ -448,10 +483,10 @@ Library {
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
 	      $ObjectID		      11
-	      Version		      "1.10.0"
+	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
-		Dimension		17
+		Dimension		16
 		Cell			"GeneratePreprocessorConditionals"
 		Cell			"IncludeMdlTerminateFcn"
 		Cell			"CombineOutputUpdateFcns"
@@ -463,12 +498,11 @@ Library {
 		Cell			"CPPClassGenCompliant"
 		Cell			"MultiInstanceERTCode"
 		Cell			"PurelyIntegerCode"
-		Cell			"SupportNonFinite"
+		Cell			"PortableWordSizes"
 		Cell			"SupportComplex"
 		Cell			"SupportAbsoluteTime"
 		Cell			"SupportContinuousTime"
 		Cell			"SupportNonInlinedSFcns"
-		Cell			"PortableWordSizes"
 		PropName		"DisabledProps"
 	      }
 	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
@@ -477,7 +511,7 @@ Library {
 	      TargetFunctionLibrary   "ANSI_C"
 	      UtilityFuncGeneration   "Auto"
 	      ERTMultiwordTypeDef     "System defined"
-	      ERTCodeCoverageTool     "None"
+	      CodeExecutionProfiling  off
 	      ERTMultiwordLength      256
 	      MultiwordLength	      2048
 	      GenerateFullHeader      on
@@ -487,9 +521,11 @@ Library {
 	      ModelReferenceCompliant on
 	      ParMdlRefBuildCompliant on
 	      CompOptLevelCompliant   on
+	      ConcurrentExecutionCompliant on
 	      IncludeMdlTerminateFcn  on
 	      GeneratePreprocessorConditionals "Disable all"
 	      CombineOutputUpdateFcns off
+	      CombineSignalStateStructs	off
 	      SuppressErrorStatus     off
 	      ERTFirstTimeCompliant   off
 	      IncludeFileDelimiter    "Auto"
@@ -521,6 +557,7 @@ Library {
 	      RTWCAPISignals	      off
 	      RTWCAPIParams	      off
 	      RTWCAPIStates	      off
+	      RTWCAPIRootIO	      off
 	      GenerateASAP2	      off
 	    }
 	    PropName		    "Components"
@@ -530,7 +567,7 @@ Library {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition    " [ 360, 135, 1240, 765 ] "
+      ConfigPrmDlgPosition     [ 360, 135, 1240, 765 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -567,16 +604,21 @@ Library {
   }
   BlockParameterDefaults {
     Block {
+      BlockType		      ArithShift
+      BitShiftNumberSource    "Dialog"
+      BitShiftNumber	      "0"
+      BinPtShiftNumber	      "0"
+      BitShiftDirection	      "Bidirectional"
+      DiagnosticForOORShift   "None"
+      CheckOORBitShift	      off
+    }
+    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
       SamplingMode	      "Sample based"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Inherit from 'Constant value'"
-      OutDataType	      "fixdt(1,16,0)"
-      ConRadixGroup	      "Use specified scaling"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Inherit from 'Constant value'"
       LockScale		      off
       SampleTime	      "inf"
@@ -587,9 +629,6 @@ Library {
       BlockType		      DataTypeConversion
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Inherit via back propagation"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Inherit via back propagation"
       LockScale		      off
       ConvertRealWorld	      "Real World Value (RWV)"
@@ -609,23 +648,25 @@ Library {
       PropagateVarSize	      "Only when enabling"
       ShowOutputPort	      off
       ZeroCross		      on
+      PortDimensions	      "1"
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "double"
+      Interpolate	      on
     }
     Block {
       BlockType		      Inport
       Port		      "1"
-      UseBusObject	      off
-      BusObject		      "BusObject"
+      OutputFunctionCall      off
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
       BusOutputAsStruct	      off
       PortDimensions	      "-1"
       VarSizeSig	      "Inherit"
       SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      DataType		      "auto"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
-      OutDataTypeStr	      "Inherit: auto"
-      LockScale		      off
       SignalType	      "auto"
       SamplingMode	      "auto"
       LatchByDelayingOutsideSignal off
@@ -643,19 +684,14 @@ Library {
     Block {
       BlockType		      Outport
       Port		      "1"
-      UseBusObject	      off
-      BusObject		      "BusObject"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
       BusOutputAsStruct	      off
       PortDimensions	      "-1"
       VarSizeSig	      "Inherit"
       SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      DataType		      "auto"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
-      OutDataTypeStr	      "Inherit: auto"
-      LockScale		      off
       SignalType	      "auto"
       SamplingMode	      "auto"
       SourceOfInitialOutputValue "Dialog"
@@ -663,7 +699,7 @@ Library {
       InitialOutput	      "[]"
     }
     Block {
-      BlockType		      "S-Function"
+      BlockType		      S-Function
       FunctionName	      "system"
       SFunctionModules	      "''"
       PortCounts	      "[]"
@@ -686,7 +722,11 @@ Library {
       RTWMemSecDataParameters "Inherit from model"
       SimViewingDevice	      off
       DataTypeOverride	      "UseLocalSettings"
+      DataTypeOverrideAppliesTo	"AllNumericTypes"
       MinMaxOverflowLogging   "UseLocalSettings"
+      SFBlockType	      "NONE"
+      Variant		      off
+      GeneratePreprocessorConditionals off
     }
     Block {
       BlockType		      Terminator
@@ -694,7 +734,7 @@ Library {
   }
   System {
     Name		    "ecan_dspic"
-    Location		    [283, 249, 873, 679]
+    Location		    [925, 141, 1515, 571]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -708,11 +748,11 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    66
+    SIDHighWatermark	    "66"
     Block {
       BlockType		      SubSystem
       Name		      "Configure ECAN 1"
-      SID		      1
+      SID		      "1"
       Ports		      []
       Position		      [210, 14, 325, 66]
       BackgroundColor	      "lightBlue"
@@ -768,6 +808,21 @@ Library {
       "t,popup(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIFO),"
       "edit,popup(--|0|1|2),popup(Match only standard|Match only extended),popup(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|FIF"
       "O)"
+      MaskVariables	      "frame_setting=@1;mode=&2;dma_rx_chan=@3;dma_tx_chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;sjw=@9;t"
+      "q=&10;triple_sample=@11;dma_buf_size=@12;rx_bufs=@13;tx_bufs=@14;buf_0_tx_pri=@15;buf_0_rte=@16;buf_1_tx_pri=@17"
+      ";buf_1_rte=@18;buf_2_tx_pri=@19;buf_2_rte=@20;buf_3_tx_pri=@21;buf_3_rte=@22;buf_4_tx_pri=@23;buf_4_rte=@24;buf_"
+      "5_tx_pri=@25;buf_5_rte=@26;buf_6_tx_pri=@27;buf_6_rte=@28;buf_7_tx_pri=@29;buf_7_rte=@30;mask_0=@31;mask_0_mide="
+      "@32;mask_1=@33;mask_1_mide=@34;mask_2=@35;mask_2_mide=@36;filters=@37;filter_0=@38;filter_0_mask=@39;filter_0_ex"
+      "ide=@40;filter_0_buf=@41;filter_1=@42;filter_1_mask=@43;filter_1_exide=@44;filter_1_buf=@45;filter_2=@46;filter_"
+      "2_mask=@47;filter_2_exide=@48;filter_2_buf=@49;filter_3=@50;filter_3_mask=@51;filter_3_exide=@52;filter_3_buf=@5"
+      "3;filter_4=@54;filter_4_mask=@55;filter_4_exide=@56;filter_4_buf=@57;filter_5=@58;filter_5_mask=@59;filter_5_exi"
+      "de=@60;filter_5_buf=@61;filter_6=@62;filter_6_mask=@63;filter_6_exide=@64;filter_6_buf=@65;filter_7=@66;filter_7"
+      "_mask=@67;filter_7_exide=@68;filter_7_buf=@69;filter_8=@70;filter_8_mask=@71;filter_8_exide=@72;filter_8_buf=@73"
+      ";filter_9=@74;filter_9_mask=@75;filter_9_exide=@76;filter_9_buf=@77;filter_10=@78;filter_10_mask=@79;filter_10_e"
+      "xide=@80;filter_10_buf=@81;filter_11=@82;filter_11_mask=@83;filter_11_exide=@84;filter_11_buf=@85;filter_12=@86;"
+      "filter_12_mask=@87;filter_12_exide=@88;filter_12_buf=@89;filter_13=@90;filter_13_mask=@91;filter_13_exide=@92;fi"
+      "lter_13_buf=@93;filter_14=@94;filter_14_mask=@95;filter_14_exide=@96;filter_14_buf=@97;filter_15=@98;filter_15_m"
+      "ask=@99;filter_15_exide=@100;filter_15_buf=@101;"
       MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
       ",off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
       ",off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off,off"
@@ -796,21 +851,6 @@ Library {
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,"
       "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,o"
       "n,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVariables	      "frame_setting=@1;mode=&2;dma_rx_chan=@3;dma_tx_chan=@4;baud=@5;ps1=@6;pd=@7;ps2=@8;sjw=@9;t"
-      "q=&10;triple_sample=@11;dma_buf_size=@12;rx_bufs=@13;tx_bufs=@14;buf_0_tx_pri=@15;buf_0_rte=@16;buf_1_tx_pri=@17"
-      ";buf_1_rte=@18;buf_2_tx_pri=@19;buf_2_rte=@20;buf_3_tx_pri=@21;buf_3_rte=@22;buf_4_tx_pri=@23;buf_4_rte=@24;buf_"
-      "5_tx_pri=@25;buf_5_rte=@26;buf_6_tx_pri=@27;buf_6_rte=@28;buf_7_tx_pri=@29;buf_7_rte=@30;mask_0=@31;mask_0_mide="
-      "@32;mask_1=@33;mask_1_mide=@34;mask_2=@35;mask_2_mide=@36;filters=@37;filter_0=@38;filter_0_mask=@39;filter_0_ex"
-      "ide=@40;filter_0_buf=@41;filter_1=@42;filter_1_mask=@43;filter_1_exide=@44;filter_1_buf=@45;filter_2=@46;filter_"
-      "2_mask=@47;filter_2_exide=@48;filter_2_buf=@49;filter_3=@50;filter_3_mask=@51;filter_3_exide=@52;filter_3_buf=@5"
-      "3;filter_4=@54;filter_4_mask=@55;filter_4_exide=@56;filter_4_buf=@57;filter_5=@58;filter_5_mask=@59;filter_5_exi"
-      "de=@60;filter_5_buf=@61;filter_6=@62;filter_6_mask=@63;filter_6_exide=@64;filter_6_buf=@65;filter_7=@66;filter_7"
-      "_mask=@67;filter_7_exide=@68;filter_7_buf=@69;filter_8=@70;filter_8_mask=@71;filter_8_exide=@72;filter_8_buf=@73"
-      ";filter_9=@74;filter_9_mask=@75;filter_9_exide=@76;filter_9_buf=@77;filter_10=@78;filter_10_mask=@79;filter_10_e"
-      "xide=@80;filter_10_buf=@81;filter_11=@82;filter_11_mask=@83;filter_11_exide=@84;filter_11_buf=@85;filter_12=@86;"
-      "filter_12_mask=@87;filter_12_exide=@88;filter_12_buf=@89;filter_13=@90;filter_13_mask=@91;filter_13_exide=@92;fi"
-      "lter_13_buf=@93;filter_14=@94;filter_14_mask=@95;filter_14_exide=@96;filter_14_buf=@97;filter_15=@98;filter_15_m"
-      "ask=@99;filter_15_exide=@100;filter_15_buf=@101;"
       MaskInitialization      "parameters = uint16(zeros(53,1));\n\n%% Generate parameter 1\nparameters(1) = frame_set"
       "ting;\nmode_id = 0;\nswitch mode\n    case 'Disabled'\n        mode_id = 1;\n    case 'Loopback'\n        mode_i"
       "d = 2;\n    case 'Listen only'\n        mode_id = 3;\n    case 'Listen all'\n        mode_id = 7;\nend\nparamete"
@@ -955,31 +995,12 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "C Function Call\n[ecanFunctions.c]"
-	  SID			  2
+	  SID			  "2"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [1]
 	  Position		  [145, 40, 270, 80]
 	  BackgroundColor	  "orange"
-	  LibraryVersion	  "3.75"
-	  List {
-	    ListType		    RTWdata
-	    isFctUpdate		    "1"
-	    FctDeclaration	    "extern void ecan1_init(uint16_T* u1);"
-	    FctCall		    "ecan1_init(*%u1);"
-	    fctName		    "ecan1_init"
-	    INPUT_SIZE		    "53"
-	    OUTPUT_SIZE		    "1"
-	    NBR_INPUT		    "1"
-	    NBR_OUTPUT		    "0"
-	    isFctStart		    "0"
-	    FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	    FctStart_Call	    "Init_onlyOnce();"
-	    FctStart_Name	    "Init_onlyOnce"
-	    isFctInit		    "0"
-	    FctInit_Declaration	    "inline extern void Init_Reset();"
-	    FctInit_Call	    "Init_Reset();"
-	    FctInit_Name	    "Init_Reset"
-	  }
+	  LibraryVersion	  "3.79"
 	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
 	  SourceType		  "C Function Call"
 	  FctUpdate		  "Output Function"
@@ -1011,14 +1032,11 @@ Library {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
-	  SID			  3
+	  SID			  "3"
 	  Position		  [45, 53, 125, 67]
 	  BackgroundColor	  "gray"
 	  ShowName		  off
 	  Value			  "parameters"
-	  OutDataTypeMode	  "uint16"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "uint16"
 	}
 	Line {
@@ -1032,7 +1050,7 @@ Library {
     Block {
       BlockType		      SubSystem
       Name		      "ECAN1 Error Status"
-      SID		      4
+      SID		      "4"
       Ports		      [0, 2]
       Position		      [25, 292, 135, 368]
       Permissions	      "ReadOnly"
@@ -1049,11 +1067,11 @@ Library {
       "boolean value specifying if this is a remote transmit request"
       MaskPromptString	      "Sampling time"
       MaskStyleString	      "edit"
+      MaskVariables	      "ecan1_error_sample_time=@1;"
       MaskTunableValueString  "off"
       MaskEnableString	      "on"
       MaskVisibilityString    "on"
       MaskToolTipString	      "on"
-      MaskVariables	      "ecan1_error_sample_time=@1;"
       MaskDisplay	      "disp('ECAN1 ERR');"
       MaskIconFrame	      on
       MaskIconOpaque	      off
@@ -1079,7 +1097,7 @@ Library {
 	Block {
 	  BlockType		  Demux
 	  Name			  "Demux"
-	  SID			  5
+	  SID			  "5"
 	  Ports			  [1, 2]
 	  Position		  [255, 75, 260, 135]
 	  BackgroundColor	  "black"
@@ -1090,31 +1108,12 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "[ecanFunctions.c]"
-	  SID			  6
+	  SID			  "6"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [0, 1]
 	  Position		  [25, 86, 215, 124]
 	  BackgroundColor	  "orange"
-	  LibraryVersion	  "3.75"
-	  List {
-	    ListType		    RTWdata
-	    isFctUpdate		    "1"
-	    FctDeclaration	    "extern void ecan1_error_status_matlab(uint8_T* y1);"
-	    FctCall		    "ecan1_error_status_matlab(*%y1);"
-	    fctName		    "ecan1_error_status_matlab"
-	    INPUT_SIZE		    "1"
-	    OUTPUT_SIZE		    "2"
-	    NBR_INPUT		    "0"
-	    NBR_OUTPUT		    "1"
-	    isFctStart		    "0"
-	    FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	    FctStart_Call	    "Init_onlyOnce();"
-	    FctStart_Name	    "Init_onlyOnce"
-	    isFctInit		    "0"
-	    FctInit_Declaration	    "inline extern void Init_Reset();"
-	    FctInit_Call	    "Init_Reset();"
-	    FctInit_Name	    "Init_Reset"
-	  }
+	  LibraryVersion	  "3.79"
 	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
 	  SourceType		  "C Function Call"
 	  FctUpdate		  "Output Function"
@@ -1146,23 +1145,19 @@ Library {
 	Block {
 	  BlockType		  Outport
 	  Name			  "tx_err"
-	  SID			  7
+	  SID			  "7"
 	  Position		  [320, 83, 350, 97]
 	  BackgroundColor	  "yellow"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "rx_err"
-	  SID			  8
+	  SID			  "8"
 	  Position		  [320, 113, 350, 127]
 	  BackgroundColor	  "yellow"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Line {
 	  SrcBlock		  "Demux"
@@ -1187,7 +1182,7 @@ Library {
     Block {
       BlockType		      SubSystem
       Name		      "Receive ECAN1 Message"
-      SID		      9
+      SID		      "9"
       Ports		      [0, 6]
       Position		      [20, 155, 140, 260]
       Permissions	      "ReadOnly"
@@ -1204,11 +1199,11 @@ Library {
       "boolean value specifying if this is a remote transmit request"
       MaskPromptString	      "Sampling time"
       MaskStyleString	      "edit"
+      MaskVariables	      "ecan1_receive_sample_time=@1;"
       MaskTunableValueString  "off"
       MaskEnableString	      "on"
       MaskVisibilityString    "on"
       MaskToolTipString	      "on"
-      MaskVariables	      "ecan1_receive_sample_time=@1;"
       MaskDisplay	      "disp('ECAN1 RX');"
       MaskIconFrame	      on
       MaskIconOpaque	      off
@@ -1234,31 +1229,12 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "C Function Call\n[ecanFunctions.c]"
-	  SID			  10
+	  SID			  "10"
 	  Tag			  "dsPIC_dsPIC_CFunctionCall"
 	  Ports			  [0, 1]
 	  Position		  [25, 85, 150, 125]
 	  BackgroundColor	  "orange"
-	  LibraryVersion	  "3.75"
-	  List {
-	    ListType		    RTWdata
-	    isFctUpdate		    "1"
-	    FctDeclaration	    "extern void ecan1_receive_matlab(uint32_T* y1);"
-	    FctCall		    "ecan1_receive_matlab(*%y1);"
-	    fctName		    "ecan1_receive_matlab"
-	    INPUT_SIZE		    "1"
-	    OUTPUT_SIZE		    "4"
-	    NBR_INPUT		    "0"
-	    NBR_OUTPUT		    "1"
-	    isFctStart		    "0"
-	    FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	    FctStart_Call	    "Init_onlyOnce();"
-	    FctStart_Name	    "Init_onlyOnce"
-	    isFctInit		    "0"
-	    FctInit_Declaration	    "inline extern void Init_Reset();"
-	    FctInit_Call	    "Init_Reset();"
-	    FctInit_Name	    "Init_Reset"
-	  }
+	  LibraryVersion	  "3.79"
 	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
 	  SourceType		  "C Function Call"
 	  FctUpdate		  "Output Function"
@@ -1290,34 +1266,23 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Compare\nTo Zero"
-	  SID			  11
+	  SID			  "11"
 	  Ports			  [1, 1]
 	  Position		  [250, 15, 280, 45]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Compare\nTo Zero"
 	  SourceType		  "Compare To Zero"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  relop			  "~="
-	  LogicOutDataTypeMode	  "boolean"
+	  OutDataTypeStr	  "boolean"
 	  ZeroCross		  off
 	}
 	Block {
 	  BlockType		  DataTypeConversion
 	  Name			  "Data Type Conversion"
-	  SID			  12
+	  SID			  "12"
 	  Position		  [335, 177, 385, 193]
 	  ShowName		  off
-	  OutDataTypeMode	  "boolean"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "boolean"
 	  RndMeth		  "Floor"
 	  SaturateOnIntegerOverflow off
@@ -1325,7 +1290,7 @@ Library {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "Decompose uint64"
-	  SID			  13
+	  SID			  "13"
 	  Ports			  [2, 1]
 	  Position		  [235, 66, 315, 124]
 	  MinAlgLoopOccurrences	  off
@@ -1353,42 +1318,30 @@ Library {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "low-order\nuint32"
-	      SID		      14
+	      SID		      "14"
 	      Position		      [35, 58, 65, 72]
 	      BackgroundColor	      "darkGreen"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "high-order\nuint1"
-	      SID		      15
+	      SID		      "15"
 	      Position		      [35, 178, 65, 192]
 	      BackgroundColor	      "darkGreen"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits"
-	      SID		      16
+	      SID		      "16"
 	      Ports		      [1, 1]
 	      Position		      [90, 52, 170, 78]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[0 7]"
@@ -1397,21 +1350,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits1"
-	      SID		      17
+	      SID		      "17"
 	      Ports		      [1, 1]
 	      Position		      [90, 82, 170, 108]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[8 15]"
@@ -1420,21 +1365,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits2"
-	      SID		      18
+	      SID		      "18"
 	      Ports		      [1, 1]
 	      Position		      [90, 112, 170, 138]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[16 23]"
@@ -1443,21 +1380,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits3"
-	      SID		      19
+	      SID		      "19"
 	      Ports		      [1, 1]
 	      Position		      [90, 142, 170, 168]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[24 31]"
@@ -1466,21 +1395,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits4"
-	      SID		      20
+	      SID		      "20"
 	      Ports		      [1, 1]
 	      Position		      [90, 172, 170, 198]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[0 7]"
@@ -1489,21 +1410,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits5"
-	      SID		      21
+	      SID		      "21"
 	      Ports		      [1, 1]
 	      Position		      [90, 202, 170, 228]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[8 15]"
@@ -1512,21 +1425,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits6"
-	      SID		      22
+	      SID		      "22"
 	      Ports		      [1, 1]
 	      Position		      [90, 232, 170, 258]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[16 23]"
@@ -1535,21 +1440,13 @@ Library {
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Extract Bits7"
-	      SID		      23
+	      SID		      "23"
 	      Ports		      [1, 1]
 	      Position		      [90, 262, 170, 288]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Extract Bits"
 	      SourceType	      "Extract Bits"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
 	      bitsToExtract	      "Range of bits"
 	      numBits		      "8"
 	      bitIdxRange	      "[24 31]"
@@ -1558,7 +1455,7 @@ Library {
 	    Block {
 	      BlockType		      Mux
 	      Name		      "Mux"
-	      SID		      24
+	      SID		      "24"
 	      Ports		      [8, 1]
 	      Position		      [290, 55, 295, 285]
 	      ShowName		      off
@@ -1568,12 +1465,10 @@ Library {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "uint8 array"
-	      SID		      25
+	      SID		      "25"
 	      Position		      [350, 163, 380, 177]
 	      BackgroundColor	      "yellow"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Line {
 	      SrcBlock		      "low-order\nuint32"
@@ -1688,7 +1583,7 @@ Library {
 	Block {
 	  BlockType		  Demux
 	  Name			  "Demux"
-	  SID			  26
+	  SID			  "26"
 	  Ports			  [1, 4]
 	  Position		  [185, 45, 190, 165]
 	  BackgroundColor	  "black"
@@ -1698,21 +1593,13 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits1"
-	  SID			  27
+	  SID			  "27"
 	  Ports			  [1, 1]
 	  Position		  [220, 142, 300, 168]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
 	  SourceType		  "Extract Bits"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  bitsToExtract		  "Range of bits"
 	  numBits		  "8"
 	  bitIdxRange		  "[0 7]"
@@ -1721,21 +1608,13 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits3"
-	  SID			  28
+	  SID			  "28"
 	  Ports			  [1, 1]
 	  Position		  [220, 172, 300, 198]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
 	  SourceType		  "Extract Bits"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  bitsToExtract		  "Range of bits"
 	  numBits		  "8"
 	  bitIdxRange		  "[8 15]"
@@ -1744,21 +1623,13 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits4"
-	  SID			  29
+	  SID			  "29"
 	  Ports			  [1, 1]
 	  Position		  [220, 202, 300, 228]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
 	  SourceType		  "Extract Bits"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  bitsToExtract		  "Range of bits"
 	  numBits		  "8"
 	  bitIdxRange		  "[16 23]"
@@ -1767,67 +1638,55 @@ Library {
 	Block {
 	  BlockType		  Outport
 	  Name			  "identifier"
-	  SID			  30
+	  SID			  "30"
 	  Position		  [515, 53, 545, 67]
 	  BackgroundColor	  "yellow"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "data"
-	  SID			  31
+	  SID			  "31"
 	  Position		  [515, 88, 545, 102]
 	  BackgroundColor	  "yellow"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "remote"
-	  SID			  32
+	  SID			  "32"
 	  Position		  [515, 178, 545, 192]
 	  BackgroundColor	  "yellow"
 	  Port			  "3"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "new"
-	  SID			  33
+	  SID			  "33"
 	  Position		  [515, 23, 545, 37]
 	  BackgroundColor	  "yellow"
 	  Port			  "4"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "size"
-	  SID			  34
+	  SID			  "34"
 	  Position		  [515, 148, 545, 162]
 	  BackgroundColor	  "yellow"
 	  Port			  "5"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "messagesLeft"
-	  SID			  35
+	  SID			  "35"
 	  Position		  [515, 208, 545, 222]
 	  BackgroundColor	  "yellow"
 	  Port			  "6"
 	  IconDisplay		  "Port number"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	}
 	Line {
 	  SrcBlock		  "C Function Call\n[ecanFunctions.c]"
@@ -1925,11 +1784,10 @@ Library {
     Block {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
-      SID		      36
+      SID		      "36"
       Ports		      [4]
       Position		      [395, 202, 560, 318]
       ShowPortLabels	      "SignalName"
-      Permissions	      "ReadOnly"
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1942,6 +1800,8 @@ Library {
       MaskPromptString	      "Buffer|Identifier|Identifier from input|Ide|Remote|Data|Data length|Data from input|Samp"
       "le time|Trigger on input"
       MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,checkbox,edit,checkbox"
+      MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&3;ide=@4;remote=@5;data=@6;data_length=@7;da"
+      "ta_from_input=&8;c_func_sample_time=@9;trigger_on_input=@10;"
       MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off"
       MaskCallbackString      "||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb, 'identifier_from_i"
       "nput');\nif strcmp(enabled,'on');\n    replace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    m"
@@ -1970,15 +1830,14 @@ Library {
       MaskEnableString	      "on,off,on,on,on,off,off,on,off,on"
       MaskVisibilityString    "on,on,on,on,on,on,off,on,on,on"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
-      MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&3;ide=@4;remote=@5;data=@6;data_length=@7;da"
-      "ta_from_input=&8;c_func_sample_time=@9;trigger_on_input=@10;"
+      MaskSelfModifiable      on
       MaskDisplay	      "disp('ECAN1 TX');"
       MaskIconFrame	      on
       MaskIconOpaque	      off
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "0||on|off|off|[]|0|on|-1|on"
+      MaskValueString	      "0|[]|on|off|off|[]|0|on|-1|on"
       System {
 	Name			"Send ECAN1 Message"
 	Location		[835, 321, 1478, 714]
@@ -1994,10 +1853,11 @@ Library {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
+	SIDHighWatermark	"66"
 	Block {
 	  BlockType		  Inport
 	  Name			  "identifier"
-	  SID			  37
+	  SID			  "36:37"
 	  Position		  [60, 93, 90, 107]
 	  BackgroundColor	  "darkGreen"
 	  IconDisplay		  "Port number"
@@ -2005,7 +1865,7 @@ Library {
 	Block {
 	  BlockType		  Inport
 	  Name			  "data"
-	  SID			  38
+	  SID			  "36:38"
 	  Position		  [60, 203, 90, 217]
 	  BackgroundColor	  "darkGreen"
 	  Port			  "2"
@@ -2014,7 +1874,7 @@ Library {
 	Block {
 	  BlockType		  Inport
 	  Name			  "data_length"
-	  SID			  39
+	  SID			  "36:39"
 	  Position		  [60, 62, 95, 78]
 	  BackgroundColor	  "darkGreen"
 	  Port			  "3"
@@ -2023,7 +1883,7 @@ Library {
 	Block {
 	  BlockType		  Inport
 	  Name			  "trigger"
-	  SID			  40
+	  SID			  "36:40"
 	  Position		  [420, 72, 455, 88]
 	  Port			  "4"
 	  IconDisplay		  "Port number"
@@ -2031,7 +1891,7 @@ Library {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "C-function Call"
-	  SID			  41
+	  SID			  "36:41"
 	  Ports			  [1, 0, 1]
 	  Position		  [485, 109, 560, 151]
 	  MinAlgLoopOccurrences	  off
@@ -2059,48 +1919,27 @@ Library {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "parameters"
-	      SID		      42
+	      SID		      "36:42"
 	      Position		      [25, 78, 55, 92]
 	      BackgroundColor	      "darkGreen"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      EnablePort
 	      Name		      "Enable"
-	      SID		      43
+	      SID		      "36:43"
 	      Ports		      []
 	      Position		      [125, 15, 145, 35]
 	    }
 	    Block {
 	      BlockType		      Reference
 	      Name		      "ECAN1 Transmit\n[ecanFunctions.c]"
-	      SID		      44
+	      SID		      "36:44"
 	      Tag		      "dsPIC_dsPIC_CFunctionCall"
 	      Ports		      [1]
 	      Position		      [80, 63, 295, 107]
 	      BackgroundColor	      "orange"
-	      LibraryVersion	      "3.75"
-	      List {
-		ListType		RTWdata
-		isFctUpdate		"1"
-		FctDeclaration		"extern void ecan1_buffered_transmit_matlab(uint16_T* u1);"
-		FctCall			"ecan1_buffered_transmit_matlab(*%u1);"
-		fctName			"ecan1_buffered_transmit_matlab"
-		INPUT_SIZE		"8"
-		OUTPUT_SIZE		"1"
-		NBR_INPUT		"1"
-		NBR_OUTPUT		"0"
-		isFctStart		"0"
-		FctStart_Declaration	"inline extern void Init_onlyOnce();"
-		FctStart_Call		"Init_onlyOnce();"
-		FctStart_Name		"Init_onlyOnce"
-		isFctInit		"0"
-		FctInit_Declaration	"inline extern void Init_Reset();"
-		FctInit_Call		"Init_Reset();"
-		FctInit_Name		"Init_Reset"
-	      }
+	      LibraryVersion	      "3.79"
 	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
 	      SourceType	      "C Function Call"
 	      FctUpdate		      "Output Function"
@@ -2140,60 +1979,43 @@ Library {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant"
-	  SID			  45
+	  SID			  "36:45"
 	  Position		  [60, 17, 100, 33]
 	  BackgroundColor	  "gray"
 	  ShowName		  off
 	  Value			  "buffer"
-	  OutDataTypeMode	  "uint8"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "uint8"
 	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant2"
-	  SID			  46
+	  SID			  "36:46"
 	  Position		  [60, 152, 100, 168]
 	  BackgroundColor	  "gray"
 	  ShowName		  off
 	  Value			  "ide"
-	  OutDataTypeMode	  "uint8"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "uint8"
 	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant3"
-	  SID			  47
+	  SID			  "36:47"
 	  Position		  [60, 172, 100, 188]
 	  BackgroundColor	  "gray"
 	  ShowName		  off
 	  Value			  "remote"
-	  OutDataTypeMode	  "uint8"
-	  OutDataType		  "sfix(16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "uint8"
 	}
 	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits"
-	  SID			  48
+	  SID			  "36:48"
 	  Ports			  [1, 1]
 	  Position		  [220, 107, 295, 143]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
 	  SourceType		  "Extract Bits"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  bitsToExtract		  "Upper half"
 	  numBits		  "8"
 	  bitIdxRange		  "[0 7]"
@@ -2202,21 +2024,13 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Extract Bits1"
-	  SID			  49
+	  SID			  "36:49"
 	  Ports			  [1, 1]
 	  Position		  [220, 63, 295, 97]
 	  ShowName		  off
-	  LibraryVersion	  "1.216"
+	  LibraryVersion	  "1.256"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Extract Bits"
 	  SourceType		  "Extract Bits"
-	  ShowPortLabels	  "FromPortIcon"
-	  SystemSampleTime	  "-1"
-	  FunctionWithSeparateData off
-	  RTWMemSecFuncInitTerm	  "Inherit from model"
-	  RTWMemSecFuncExecute	  "Inherit from model"
-	  RTWMemSecDataConstants  "Inherit from model"
-	  RTWMemSecDataInternal	  "Inherit from model"
-	  RTWMemSecDataParameters "Inherit from model"
 	  bitsToExtract		  "Lower half"
 	  numBits		  "8"
 	  bitIdxRange		  "[0 7]"
@@ -2225,11 +2039,12 @@ Library {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "myMux"
-	  SID			  50
+	  SID			  "36:50"
 	  Ports			  [5, 1]
 	  Position		  [370, 31, 375, 229]
 	  BackgroundColor	  "black"
 	  ShowName		  off
+	  ErrorFcn		  "Stateflow.Translate.translate"
 	  PermitHierarchicalResolution "ExplicitOnly"
 	  TreatAsAtomicUnit	  on
 	  MinAlgLoopOccurrences	  off
@@ -2239,15 +2054,17 @@ Library {
 	  Opaque		  off
 	  RequestExecContextInheritance	off
 	  MaskHideContents	  off
+	  SFBlockType		  "MATLAB Function"
 	  MaskType		  "Stateflow"
 	  MaskDescription	  "Embedded MATLAB block"
-	  MaskDisplay		  "disp('myMux');"
 	  MaskSelfModifiable	  on
+	  MaskDisplay		  "bgColor = Simulink.Root.ColorString2Rgb(get_param(gcbh, 'BackgroundColor')); image(imread('private/"
+	  "eml_membrane_16.png','png','BackgroundColor',bgColor(1:3)),'center'); disp([10 10 'myMux']);"
 	  MaskIconFrame		  on
 	  MaskIconOpaque	  off
 	  MaskIconRotate	  "none"
 	  MaskPortRotate	  "default"
-	  MaskIconUnits		  "autoscale"
+	  MaskIconUnits		  "normalized"
 	  System {
 	    Name		    "myMux"
 	    Location		    [257, 457, 812, 717]
@@ -2263,74 +2080,64 @@ Library {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    13
+	    SIDHighWatermark	    "17"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u1"
-	      SID		      1
+	      SID		      "36:50::1"
 	      Position		      [20, 101, 40, 119]
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u2"
-	      SID		      2
+	      SID		      "36:50::2"
 	      Position		      [20, 136, 40, 154]
 	      Port		      "2"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u3"
-	      SID		      3
+	      SID		      "36:50::3"
 	      Position		      [20, 171, 40, 189]
 	      Port		      "3"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u4"
-	      SID		      4
+	      SID		      "36:50::4"
 	      Position		      [20, 206, 40, 224]
 	      Port		      "4"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "u5"
-	      SID		      5
+	      SID		      "36:50::5"
 	      Position		      [20, 246, 40, 264]
 	      Port		      "5"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Demux
 	      Name		      " Demux "
-	      SID		      11
+	      SID		      "36:50::15"
 	      Ports		      [1, 1]
 	      Position		      [270, 220, 320, 260]
 	      Outputs		      "1"
 	    }
 	    Block {
-	      BlockType		      "S-Function"
+	      BlockType		      S-Function
 	      Name		      " SFunction "
-	      SID		      10
+	      SID		      "36:50::14"
 	      Tag		      "Stateflow S-Function ecan_dspic 8"
 	      Ports		      [5, 2]
 	      Position		      [180, 100, 230, 220]
 	      FunctionName	      "sf_sfun"
 	      PortCounts	      "[5 2]"
-	      EnableBusSupport	      on
+	      EnableBusSupport	      off
 	      Port {
 		PortNumber		2
 		Name			"y"
@@ -2341,23 +2148,15 @@ Library {
 	    Block {
 	      BlockType		      Terminator
 	      Name		      " Terminator "
-	      SID		      13
+	      SID		      "36:50::17"
 	      Position		      [460, 231, 480, 249]
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "y"
-	      SID		      9
+	      SID		      "36:50::9"
 	      Position		      [460, 101, 480, 119]
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "u1"
@@ -2403,12 +2202,18 @@ Library {
 	      DstBlock		      " Terminator "
 	      DstPort		      1
 	    }
+	    Line {
+	      SrcBlock		      " SFunction "
+	      SrcPort		      1
+	      DstBlock		      " Demux "
+	      DstPort		      1
+	    }
 	  }
 	}
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "uint8 combiner1"
-	  SID			  51
+	  SID			  "36:51"
 	  Ports			  [2, 1]
 	  Position		  [220, 150, 295, 190]
 	  ShowName		  off
@@ -2437,32 +2242,28 @@ Library {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "high-order"
-	      SID		      52
+	      SID		      "36:52"
 	      Position		      [25, 13, 55, 27]
 	      BackgroundColor	      "darkGreen"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "low-order"
-	      SID		      53
+	      SID		      "36:53"
 	      Position		      [25, 48, 55, 62]
 	      BackgroundColor	      "darkGreen"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Bitwise\nOperator"
-	      SID		      54
+	      SID		      "36:54"
 	      Ports		      [2, 1]
 	      Position		      [305, 26, 345, 64]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitwise\nOperator"
 	      SourceType	      "Bitwise Operator"
 	      logicop		      "OR"
@@ -2474,12 +2275,9 @@ Library {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      SID		      55
+	      SID		      "36:55"
 	      Position		      [85, 49, 135, 61]
 	      ShowName		      off
-	      OutDataTypeMode	      "uint16"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	      OutDataTypeStr	      "uint16"
 	      RndMeth		      "Floor"
 	      SaturateOnIntegerOverflow	off
@@ -2487,46 +2285,30 @@ Library {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion1"
-	      SID		      56
+	      SID		      "36:56"
 	      Position		      [85, 14, 135, 26]
 	      ShowName		      off
-	      OutDataTypeMode	      "uint16"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	      OutDataTypeStr	      "uint16"
 	      RndMeth		      "Floor"
 	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
-	      BlockType		      Reference
+	      BlockType		      ArithShift
 	      Name		      "Shift\nArithmetic"
-	      SID		      57
+	      SID		      "36:57"
 	      Ports		      [1, 1]
 	      Position		      [185, 46, 265, 64]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shift\nArithmetic"
-	      SourceType	      "Shift Arithmetic"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      nBitShiftRight	      "-8"
-	      nBinPtShiftRight	      "0"
+	      InputPortMap	      "u0"
+	      BitShiftNumber	      "-8"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "combined"
-	      SID		      58
+	      SID		      "36:58"
 	      Position		      [370, 38, 400, 52]
 	      BackgroundColor	      "yellow"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Line {
 	      SrcBlock		      "low-order"
@@ -2570,7 +2352,7 @@ Library {
 	Block {
 	  BlockType		  SubSystem
 	  Name			  "uint8 combiner2"
-	  SID			  59
+	  SID			  "36:59"
 	  Ports			  [2, 1]
 	  Position		  [220, 15, 295, 55]
 	  ShowName		  off
@@ -2599,32 +2381,28 @@ Library {
 	    Block {
 	      BlockType		      Inport
 	      Name		      "high-order"
-	      SID		      60
+	      SID		      "36:60"
 	      Position		      [25, 13, 55, 27]
 	      BackgroundColor	      "darkGreen"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Inport
 	      Name		      "low-order"
-	      SID		      61
+	      SID		      "36:61"
 	      Position		      [25, 48, 55, 62]
 	      BackgroundColor	      "darkGreen"
 	      Port		      "2"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Block {
 	      BlockType		      Reference
 	      Name		      "Bitwise\nOperator"
-	      SID		      62
+	      SID		      "36:62"
 	      Ports		      [2, 1]
 	      Position		      [305, 26, 345, 64]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
+	      LibraryVersion	      "1.256"
 	      SourceBlock	      "simulink/Logic and Bit\nOperations/Bitwise\nOperator"
 	      SourceType	      "Bitwise Operator"
 	      logicop		      "OR"
@@ -2636,12 +2414,9 @@ Library {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion"
-	      SID		      63
+	      SID		      "36:63"
 	      Position		      [85, 49, 135, 61]
 	      ShowName		      off
-	      OutDataTypeMode	      "uint16"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	      OutDataTypeStr	      "uint16"
 	      RndMeth		      "Floor"
 	      SaturateOnIntegerOverflow	off
@@ -2649,46 +2424,30 @@ Library {
 	    Block {
 	      BlockType		      DataTypeConversion
 	      Name		      "Data Type Conversion1"
-	      SID		      64
+	      SID		      "36:64"
 	      Position		      [85, 14, 135, 26]
 	      ShowName		      off
-	      OutDataTypeMode	      "uint16"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	      OutDataTypeStr	      "uint16"
 	      RndMeth		      "Floor"
 	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
-	      BlockType		      Reference
+	      BlockType		      ArithShift
 	      Name		      "Shift\nArithmetic"
-	      SID		      65
+	      SID		      "36:65"
 	      Ports		      [1, 1]
 	      Position		      [185, 46, 265, 64]
 	      ShowName		      off
-	      LibraryVersion	      "1.216"
-	      SourceBlock	      "simulink/Logic and Bit\nOperations/Shift\nArithmetic"
-	      SourceType	      "Shift Arithmetic"
-	      ShowPortLabels	      "FromPortIcon"
-	      SystemSampleTime	      "-1"
-	      FunctionWithSeparateData off
-	      RTWMemSecFuncInitTerm   "Inherit from model"
-	      RTWMemSecFuncExecute    "Inherit from model"
-	      RTWMemSecDataConstants  "Inherit from model"
-	      RTWMemSecDataInternal   "Inherit from model"
-	      RTWMemSecDataParameters "Inherit from model"
-	      nBitShiftRight	      "-8"
-	      nBinPtShiftRight	      "0"
+	      InputPortMap	      "u0"
+	      BitShiftNumber	      "-8"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "combined"
-	      SID		      66
+	      SID		      "36:66"
 	      Position		      [370, 38, 400, 52]
 	      BackgroundColor	      "yellow"
 	      IconDisplay	      "Port number"
-	      OutDataType	      "sfix(16)"
-	      OutScaling	      "2^0"
 	    }
 	    Line {
 	      SrcBlock		      "Data Type Conversion1"
@@ -2821,7 +2580,7 @@ Library {
 }
 # Finite State Machines
 #
-#    Stateflow Version 7.5 (R2010a) dated Jan 19 2010, 18:40:00
+#    Stateflow Version 7.6 (R2011b) dated Aug  6 2011, 13:17:15
 #
 #
 
@@ -2833,7 +2592,7 @@ Stateflow {
     created		    "02-Nov-2011 15:42:36"
     isLibrary		    1
     firstTarget		    13
-    sfVersion		    75014000
+    sfVersion		    76014001.0002
   }
   chart {
     id			    2
@@ -2846,7 +2605,6 @@ Stateflow {
     firstJunction	    4
     viewObj		    2
     machine		    1
-    locked		    1
     ssIdHighWaterMark	    9
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -2855,8 +2613,8 @@ Stateflow {
     disableImplicitCasting  1
     eml {
       name		      "myMux"
-      noDebugging	      1
     }
+    noDebugging		    1
     supportVariableSizing   0
   }
   state {
