@@ -1,9 +1,7 @@
 # Tasks left
 
 * Fix mask for ECAN ERR block to document that block.
-* Never disable the sample time input for the ECAN TX block.
 * Move supporting C code into a clib directory.
-* Add a README.md file.
 * Fix display of the 'data' input label on the mask.
 * Modify the Configure ECAN1 block to use the 'Start' function mode of the C-function block instead of the current 'Update' mode.
 * Extract the data length and remove it as an input to the ECAN1 TX block.
@@ -15,3 +13,4 @@
 * After all of these changes, tag it as a Version 1 release.
     * Push this back up to Lubin for incorporation into his blockset.
 * The ECAN ERR block should output two booleans.
+* Go through and revamp all of the example code so that it's tested and works correctly.

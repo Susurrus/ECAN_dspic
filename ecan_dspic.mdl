@@ -16,9 +16,9 @@ Library {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Bryant"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Feb 02 10:35:48 2012"
-  RTWModifiedTimeStamp	  250079641
-  ModelVersionFormat	  "1.%<AutoIncrement:5>"
+  LastModifiedDate	  "Sat Mar 03 14:23:11 2012"
+  RTWModifiedTimeStamp	  252612918
+  ModelVersionFormat	  "1.%<AutoIncrement:9>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -643,19 +643,6 @@ Library {
       BusSelectionMode	      off
     }
     Block {
-      BlockType		      EnablePort
-      StatesWhenEnabling      "held"
-      PropagateVarSize	      "Only when enabling"
-      ShowOutputPort	      off
-      ZeroCross		      on
-      PortDimensions	      "1"
-      SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeStr	      "double"
-      Interpolate	      on
-    }
-    Block {
       BlockType		      Inport
       Port		      "1"
       OutputFunctionCall      off
@@ -734,7 +721,7 @@ Library {
   }
   System {
     Name		    "ecan_dspic"
-    Location		    [925, 141, 1515, 571]
+    Location		    [493, 300, 1083, 730]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -748,7 +735,7 @@ Library {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "66"
+    SIDHighWatermark	    "122"
     Block {
       BlockType		      SubSystem
       Name		      "Configure ECAN 1"
@@ -1785,7 +1772,7 @@ Library {
       BlockType		      SubSystem
       Name		      "Send ECAN1 Message"
       SID		      "36"
-      Ports		      [4]
+      Ports		      [3]
       Position		      [395, 202, 560, 318]
       ShowPortLabels	      "SignalName"
       MinAlgLoopOccurrences   off
@@ -1797,39 +1784,32 @@ Library {
       MaskHideContents	      off
       MaskType		      "Send ECAN Message"
       MaskDescription	      "This block allows for the transmission of a message over the ECAN module."
-      MaskPromptString	      "Buffer|Identifier|Identifier from input|Ide|Remote|Data|Data length|Data from input|Samp"
-      "le time|Trigger on input"
-      MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,checkbox,edit,checkbox"
+      MaskPromptString	      "Buffer|Identifier|Identifier from input|Ide|Remote|Data|Data length|Data from input"
+      MaskStyleString	      "edit,edit,checkbox,checkbox,checkbox,edit,edit,checkbox"
       MaskVariables	      "buffer=@1;identifier=@2;identifier_from_input=&3;ide=@4;remote=@5;data=@6;data_length=@7;da"
-      "ta_from_input=&8;c_func_sample_time=@9;trigger_on_input=@10;"
-      MaskTunableValueString  "off,off,off,off,off,off,off,off,off,off"
-      MaskCallbackString      "||mEnables = get_param(gcb,'MaskEnables');\nenabled = get_param(gcb, 'identifier_from_i"
-      "nput');\nif strcmp(enabled,'on');\n    replace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    m"
-      "Enables{2} = 'off';\n    set_param([gcb '/identifier'],'Port','1');\nelse\n    replace_block([gcb '/identifier']"
-      ",'Inport','Constant','noprompt');\n    mEnables{2} = 'on';\n    set_param([gcb '/identifier'],'Value','identifie"
-      "r');\nend\nset_param(gcb, 'MaskEnables', mEnables);\n|||data = eval(get_param(gcb, 'data'));\ny = size(data,1);\n"
-      "x = size(data,2);\nif y > 1 && x > 1\n    error('Data must be a 1-dimensional vector')\nelse\n    if or(x > 8, y"
-      " > 8)\n        error('Data cannot be larger than 8-bytes');\n    end\nend\n\nset_param(gcb, 'data_length', num2s"
-      "tr(length(data)));|data_length = eval(get_param(gcb, 'data_length'));\nif or(data_length < 0, data_length > 9)\n"
-      "    error('Data cannot be more than 8 bytes or less than 0.')\nend|mEnables = get_param(gcb,'MaskEnables');\nena"
-      "bled = get_param(gcb, 'data_from_input');\nif strcmp(enabled,'on');\n    replace_block([gcb '/data'],'Constant',"
-      "'Inport','noprompt');\n    replace_block([gcb '/data_length'],'Constant','Inport','noprompt');\n    mEnables{6} "
-      "= 'off';\n    mEnables{7} = 'off';\n    port = 1;\n    if ~isempty(find_system(gcb,'LookUnderMasks','all','Name'"
-      ",'identifier'))\n        port = 2;\n    end\n    set_param([gcb '/data'],'Port',num2str(port));\n    set_param(["
-      "gcb '/data_length'],'Port',num2str(port+1));\nelse\n    replace_block([gcb '/data'],'Inport','Constant','nopromp"
-      "t');\n    replace_block([gcb '/data_length'],'Inport','Constant','noprompt');\n    mEnables{6} = 'on';\n    mEna"
-      "bles{7} = 'on';\n    set_param([gcb '/data'],'Value','data');\n    set_param([gcb '/data'],'OutDataTypeMode','ui"
-      "nt8');\n    set_param([gcb '/data_length'],'Value','data_length');\n    set_param([gcb '/data_length'],'OutDataT"
-      "ypeMode','uint8');\nend\nset_param(gcb, 'MaskEnables', mEnables);\n||mEnables = get_param(gcb,'MaskEnables');\ne"
-      "nabled = get_param(gcb, 'trigger_on_input');\nc_func_blk = find_system(gcb,'LookUnderMasks','all','FunctionName'"
-      ",'dsPIC_C_function_Call');\nif strcmp(enabled,'on');\n    mEnables{9} = 'off';\n    %set_param(c_func_blk,'Sampl"
-      "eTime','-1');\n    replace_block([gcb '/trigger'],'Constant','Inport','noprompt');\nelse\n    mEnables{9} = 'on'"
-      ";\n    %set_param(c_func_blk,'SampleTime','c_func_sample_time');\n    replace_block([gcb '/trigger'],'Inport','C"
-      "onstant','noprompt');\n    %set_param([gcb '/trigger'],'Value','1');\nend\nset_param(gcb, 'MaskEnables', mEnable"
-      "s);"
-      MaskEnableString	      "on,off,on,on,on,off,off,on,off,on"
-      MaskVisibilityString    "on,on,on,on,on,on,off,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on"
+      "ta_from_input=&8;"
+      MaskTunableValueString  "off,off,off,off,off,off,off,off"
+      MaskCallbackString      "|||||data = eval(get_param(gcb, 'data'));\ny = size(data,1);\nx = size(data,2);\nif y >"
+      " 1 && x > 1\n    error('Data must be a 1-dimensional vector')\nelse\n    if or(x > 8, y > 8)\n        error('Dat"
+      "a cannot be larger than 8-bytes');\n    end\nend\n\nset_param(gcb, 'data_length', num2str(length(data)));|data_l"
+      "ength = eval(get_param(gcb, 'data_length'));\nif or(data_length < 0, data_length > 9)\n    error('Data cannot be"
+      " more than 8 bytes or less than 0.')\nend|"
+      MaskEnableString	      "on,off,on,on,on,off,off,on"
+      MaskVisibilityString    "on,on,on,on,on,on,off,on"
+      MaskToolTipString	      "on,on,on,on,on,on,on,on"
+      MaskInitialization      "mEnables = get_param(gcb,'MaskEnables');\nif strcmp(identifier_from_input,'on');\n    r"
+      "eplace_block([gcb '/identifier'],'Constant','Inport','noprompt');\n    mEnables{2} = 'off';\nelse\n    replace_b"
+      "lock([gcb '/identifier'],'Inport','Constant','noprompt');\n    mEnables{2} = 'on';\n    set_param([gcb '/identif"
+      "ier'],'Value','identifier');\nend\nif strcmp(data_from_input,'on');\n    replace_block([gcb '/data'],'Constant',"
+      "'Inport','noprompt');\n    mEnables{6} = 'off';\n    replace_block([gcb '/data_length'],'Constant','Inport','nop"
+      "rompt');\n    mEnables{7} = 'off';\nelse\n    replace_block([gcb '/data'],'Inport','Constant','noprompt');\n    "
+      "set_param([gcb '/data'],'Value','data');\n    set_param([gcb '/data'],'OutDataTypeStr','uint8');\n    mEnables{6"
+      "} = 'on';\n    replace_block([gcb '/data_length'],'Inport','Constant','noprompt');\n    set_param([gcb '/data_le"
+      "ngth'],'Value','data_length');\n    set_param([gcb '/data_length'],'OutDataTypeStr','uint8');\n    mEnables{7} ="
+      " 'on';\nend\nif strcmp(get_param([gcb '/identifier'], 'BlockType'), 'Inport')\n    set_param([gcb '/identifier']"
+      ",'Port','1');\nend\nif strcmp(get_param([gcb '/data'], 'BlockType'), 'Inport')\n    set_param([gcb '/data'],'Por"
+      "t','2');\nend\nif strcmp(get_param([gcb '/data_length'], 'BlockType'), 'Inport')\n    set_param([gcb '/data_leng"
+      "th'],'Port','3');\nend\nset_param(gcb, 'MaskEnables', mEnables);\n"
       MaskSelfModifiable      on
       MaskDisplay	      "disp('ECAN1 TX');"
       MaskIconFrame	      on
@@ -1837,10 +1817,10 @@ Library {
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "autoscale"
-      MaskValueString	      "0|[]|on|off|off|[]|0|on|-1|on"
+      MaskValueString	      "0|[]|on|off|off|[]|0|on"
       System {
 	Name			"Send ECAN1 Message"
-	Location		[835, 321, 1478, 714]
+	Location		[712, 258, 1406, 651]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1858,7 +1838,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "identifier"
 	  SID			  "36:37"
-	  Position		  [60, 93, 90, 107]
+	  Position		  [65, 93, 95, 107]
 	  BackgroundColor	  "darkGreen"
 	  IconDisplay		  "Port number"
 	}
@@ -1866,7 +1846,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "data"
 	  SID			  "36:38"
-	  Position		  [60, 203, 90, 217]
+	  Position		  [65, 203, 95, 217]
 	  BackgroundColor	  "darkGreen"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
@@ -1875,106 +1855,10 @@ Library {
 	  BlockType		  Inport
 	  Name			  "data_length"
 	  SID			  "36:39"
-	  Position		  [60, 62, 95, 78]
+	  Position		  [65, 63, 95, 77]
 	  BackgroundColor	  "darkGreen"
 	  Port			  "3"
 	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Inport
-	  Name			  "trigger"
-	  SID			  "36:40"
-	  Position		  [420, 72, 455, 88]
-	  Port			  "4"
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "C-function Call"
-	  SID			  "36:41"
-	  Ports			  [1, 0, 1]
-	  Position		  [485, 109, 560, 151]
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  System {
-	    Name		    "C-function Call"
-	    Location		    [742, 195, 1106, 379]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "parameters"
-	      SID		      "36:42"
-	      Position		      [25, 78, 55, 92]
-	      BackgroundColor	      "darkGreen"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      EnablePort
-	      Name		      "Enable"
-	      SID		      "36:43"
-	      Ports		      []
-	      Position		      [125, 15, 145, 35]
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "ECAN1 Transmit\n[ecanFunctions.c]"
-	      SID		      "36:44"
-	      Tag		      "dsPIC_dsPIC_CFunctionCall"
-	      Ports		      [1]
-	      Position		      [80, 63, 295, 107]
-	      BackgroundColor	      "orange"
-	      LibraryVersion	      "3.79"
-	      SourceBlock	      "dsPICdrivers/OTHERS/C Function Call"
-	      SourceType	      "C Function Call"
-	      FctUpdate		      "Output Function"
-	      fctName		      "'ecan1_buffered_transmit_matlab'"
-	      INPUT_SIZE	      "8"
-	      INPUT1		      "uint16"
-	      INPUT2		      "--"
-	      INPUT3		      "--"
-	      OUTPUT_SIZE	      "1"
-	      OUTPUT1		      "--"
-	      SampleTime	      "c_func_sample_time"
-	      InputType		      "[ 4 ]"
-	      OutputType	      "[ ]"
-	      FctDeclaration	      "extern void ecan1_buffered_transmit_matlab(uint16_T* u1);"
-	      FctCall		      "ecan1_buffered_transmit_matlab(*%u1);"
-	      OrderingInOutPopup      "None"
-	      FctStart		      "None"
-	      FctStart_Name	      "Init_onlyOnce"
-	      FctStart_Declaration    "inline extern void Init_onlyOnce();"
-	      FctStart_Call	      "Init_onlyOnce();"
-	      FctInit		      "None"
-	      FctInit_Name	      "Init_Reset"
-	      FctInit_Declaration     "inline extern void Init_Reset();"
-	      FctInit_Call	      "Init_Reset();"
-	      PinDigitalInput	      "[]"
-	      PinDigitalOutput	      "[]"
-	      AnalogueInput	      "[]"
-	    }
-	    Line {
-	      SrcBlock		      "parameters"
-	      SrcPort		      1
-	      DstBlock		      "ECAN1 Transmit\n[ecanFunctions.c]"
-	      DstPort		      1
-	    }
-	  }
 	}
 	Block {
 	  BlockType		  Constant
@@ -2005,6 +1889,43 @@ Library {
 	  ShowName		  off
 	  Value			  "remote"
 	  OutDataTypeStr	  "uint8"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "ECAN1 Transmit\n[ecanFunctions.c]"
+	  SID			  "36:44"
+	  Tag			  "dsPIC_dsPIC_CFunctionCall"
+	  Ports			  [1]
+	  Position		  [420, 108, 635, 152]
+	  BackgroundColor	  "orange"
+	  LibraryVersion	  "3.79"
+	  SourceBlock		  "dsPICdrivers/OTHERS/C Function Call"
+	  SourceType		  "C Function Call"
+	  FctUpdate		  "Output Function"
+	  fctName		  "'ecan1_buffered_transmit_matlab'"
+	  INPUT_SIZE		  "8"
+	  INPUT1		  "uint16"
+	  INPUT2		  "--"
+	  INPUT3		  "--"
+	  OUTPUT_SIZE		  "1"
+	  OUTPUT1		  "--"
+	  SampleTime		  "-1"
+	  InputType		  "[ 4 ]"
+	  OutputType		  "[ ]"
+	  FctDeclaration	  "extern void ecan1_buffered_transmit_matlab(uint16_T* u1);"
+	  FctCall		  "ecan1_buffered_transmit_matlab(*%u1);"
+	  OrderingInOutPopup	  "None"
+	  FctStart		  "None"
+	  FctStart_Name		  "Init_onlyOnce"
+	  FctStart_Declaration	  "inline extern void Init_onlyOnce();"
+	  FctStart_Call		  "Init_onlyOnce();"
+	  FctInit		  "None"
+	  FctInit_Name		  "Init_Reset"
+	  FctInit_Declaration	  "inline extern void Init_Reset();"
+	  FctInit_Call		  "Init_Reset();"
+	  PinDigitalInput	  "[]"
+	  PinDigitalOutput	  "[]"
+	  AnalogueInput		  "[]"
 	}
 	Block {
 	  BlockType		  Reference
@@ -2489,16 +2410,9 @@ Library {
 	  }
 	}
 	Line {
-	  SrcBlock		  "trigger"
-	  SrcPort		  1
-	  Points		  [60, 0]
-	  DstBlock		  "C-function Call"
-	  DstPort		  enable
-	}
-	Line {
 	  SrcBlock		  "myMux"
 	  SrcPort		  1
-	  DstBlock		  "C-function Call"
+	  DstBlock		  "ECAN1 Transmit\n[ecanFunctions.c]"
 	  DstPort		  1
 	}
 	Line {
@@ -2538,7 +2452,7 @@ Library {
 	Line {
 	  SrcBlock		  "identifier"
 	  SrcPort		  1
-	  Points		  [95, 0]
+	  Points		  [90, 0]
 	  Branch {
 	    Points		    [0, -20]
 	    DstBlock		    "Extract Bits1"
@@ -2605,6 +2519,7 @@ Stateflow {
     firstJunction	    4
     viewObj		    2
     machine		    1
+    toolbarMode		    LIBRARY_TOOLBAR
     ssIdHighWaterMark	    9
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -2632,12 +2547,12 @@ Stateflow {
     eml {
       isEML		      1
       script		      "function y = myMux(u1, u2, u3, u4, u5)\nu5_u16 = uint16(u5);\ny = uint16([u1(1); u2(1); u3(1); u4"
-      "(1); 0; 0; 0; 0;]);\n\nlen = length(u5);\nif len > 1\n    y(5) = bitor(bitshift(u5_u16(1),8),u5_u16(2));\nelseif"
-      " len > 0\n    y(5) = u5_u16(1);\nend\nif len > 3\n    y(6) = bitor(bitshift(u5_u16(3),8),u5_u16(4));\nelseif len"
-      " > 2\n    y(6) = u5_u16(3);\nend\nif len > 5\n    y(7) = bitor(bitshift(u5_u16(5),8),u5_u16(6));\nelseif len > 4"
-      "\n    y(7) = u5_u16(5);\nend\nif len > 7\n    y(8) = bitor(bitshift(u5_u16(7),8),u5_u16(8));\nelseif len > 6\n  "
+      "(1); 0; 0; 0; 0;]);\n\nlen = length(u5);\nif len > 1\n    y(5) = bitor(bitshift(u5_u16(2),8),u5_u16(1));\nelseif"
+      " len > 0\n    y(5) = u5_u16(1);\nend\nif len > 3\n    y(6) = bitor(bitshift(u5_u16(4),8),u5_u16(3));\nelseif len"
+      " > 2\n    y(6) = u5_u16(3);\nend\nif len > 5\n    y(7) = bitor(bitshift(u5_u16(6),8),u5_u16(5));\nelseif len > 4"
+      "\n    y(7) = u5_u16(5);\nend\nif len > 7\n    y(8) = bitor(bitshift(u5_u16(8),8),u5_u16(7));\nelseif len > 6\n  "
       "  y(8) = u5_u16(7);\nend"
-      editorLayout	      "100 M4x1[30 228 545 643]"
+      editorLayout	      "100 M4x1[63 141 545 643]"
       fimathString	      "fimath(...\n'RoundMode', 'floor',...\n'OverflowMode', 'wrap',...\n'ProductMode', 'KeepLSB', "
       "'ProductWordLength', 32,...\n'SumMode', 'KeepLSB', 'SumWordLength', 32,...\n'CastBeforeSum', true)"
       fimathForFiConstructors FimathMatlabFactoryDefault
@@ -2812,6 +2727,12 @@ Stateflow {
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
-    linkNode		    [1 0 0]
+    linkNode		    [1 0 14]
+  }
+  target {
+    id			    14
+    name		    "rtw"
+    machine		    1
+    linkNode		    [1 13 0]
   }
 }
