@@ -15,7 +15,7 @@ CircularBuffer ecan1_tx_buffer;
 unsigned char currentlyTransmitting = 0;
 unsigned char receivedMessagesPending = 0;
 
-void ecan1_init(const uint16_t* parameters) {
+void ecan1_init(const uint16_t *parameters) {
 
   // Make sure the ECAN module is in configuration mode.
   // It should be this way after a hardware reset, but
@@ -196,9 +196,7 @@ void ecan1_receive_matlab(uint32_t* output) {
 	if (receivedMessagesPending > 0) {
 		getMessageFromBuffer(&msg, &ecan1_rx_buffer);
 	
-		if (msg.id == 0x0DF50B01) {
-			output[0] = msg.id;
-		}
+		output[0] = msg.id;
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
 		output[1] |= ((uint32_t)msg.payload[2]) << 16;
 		output[1] |= ((uint32_t)msg.payload[1]) << 8;
@@ -456,11 +454,11 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 			message.frame_type = CAN_FRAME_EXT;
 			
 			id = ecan_msg_buf_ptr[0] & 0x1FFC;		
-			message.id = (id << 16);
+			message.id = id << 18;
 			id = ecan_msg_buf_ptr[1] & 0x0FFF;
-			message.id = (message.id + (id << 6));
-			id = (ecan_msg_buf_ptr[2] & 0xFC00) >> 10;
-			message.id = (message.id + id);
+			message.id |= id << 6;
+			id = ecan_msg_buf_ptr[2] & 0xFC00;
+			message.id |= id >> 10;
 		}
 		
 		/* If message is a remote transmit request, mark it as such.
@@ -494,7 +492,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		C1INTFbits.RBIF = 0;
 	}
 
-//	if (C1INTFbits.RBOVIF) {
+	if (C1INTFbits.RBOVIF) {
 		
 		// Clear all of the full/overflow registers so that we can attempt to restart
 		// reception of messages.
@@ -503,7 +501,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 
 		// Clear the interrupt flag so this interrupt can trigger again.
 		C1INTFbits.RBOVIF = 0;
-//	}
+	}
 	
 	// Clear the general ECAN1 interrupt flag.
 	IFS2bits.C1IF = 0;

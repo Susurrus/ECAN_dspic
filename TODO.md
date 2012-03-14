@@ -14,3 +14,4 @@
     * Push this back up to Lubin for incorporation into his blockset.
 * The ECAN ERR block should output two booleans.
 * Go through and revamp all of the example code so that it's tested and works correctly.
+* Extended ID messages are not handled properly for transmission using the Simulink block. It looks like that the block will truncate the ID and only send a standard transmission packet.
