@@ -11,13 +11,13 @@
 
 // Message Types either a data message or a remote transmit request
 enum {
-	CAN_MSG_DATA,
+	CAN_MSG_DATA = 0,
 	CAN_MSG_RTR
 };
 
 // CAN frame type: either extended or standard
 enum {
-	CAN_FRAME_EXT,
+	CAN_FRAME_EXT = 0,
 	CAN_FRAME_STD
 };
 

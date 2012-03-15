@@ -121,7 +121,6 @@ void ecan1_init(const uint16_t *parameters) {
   IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
   C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
   C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
-  C1INTEbits.RBOVIE = 1; // Enable RX buffer full interrupt
   
   // Configure buffer settings.
   // Must be done after mode setting for some reason
@@ -454,7 +453,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 			message.frame_type = CAN_FRAME_EXT;
 			
 			id = ecan_msg_buf_ptr[0] & 0x1FFC;		
-			message.id = id << 18;
+			message.id = id << 16;
 			id = ecan_msg_buf_ptr[1] & 0x0FFF;
 			message.id |= id << 6;
 			id = ecan_msg_buf_ptr[2] & 0xFC00;
@@ -490,17 +489,6 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
-	}
-
-	if (C1INTFbits.RBOVIF) {
-		
-		// Clear all of the full/overflow registers so that we can attempt to restart
-		// reception of messages.
-		C1RXFUL1 = C1RXFUL2 = 0;
-		C1RXOVF1 = C1RXOVF2 = 0;
-
-		// Clear the interrupt flag so this interrupt can trigger again.
-		C1INTFbits.RBOVIF = 0;
 	}
 	
 	// Clear the general ECAN1 interrupt flag.
