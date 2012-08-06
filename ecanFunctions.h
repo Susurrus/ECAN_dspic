@@ -79,7 +79,7 @@
   * parameters[51] = filter 15 (standard, exide, eid17-16)
   * parameters[52] = filter 15 (extended 15-0)
   */
-void ecan1_init(const uint16_t* parameters);
+void ecan1_init(const uint16_t *parameters);
 
 /**
  * Pops the top message from the ECAN1 reception buffer.
@@ -92,13 +92,13 @@ int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft);
  * from our circular buffer and returns them in a tCanMessage
  * struct.
  */
-int getMessageFromBuffer(tCanMessage *msg, CircularBuffer* buffer);
+int getMessageFromBuffer(tCanMessage *msg, CircularBuffer *buffer);
 
 /**
  * This function loads an entire can message into our byte-based
  * circular buffer.
  */
-void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message);
+void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message);
 
 /**
  * Pop the top message from the ECAN1 reception buffer.
@@ -111,7 +111,7 @@ void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message);
  *             bits 8-15: remote transmit bit
  *             bits 16-23: number of messages left in the buffer
  */
-void ecan1_receive_matlab(uint32_t* output);
+void ecan1_receive_matlab(uint32_t *output);
 
 /**
  * This function transmits a CAN message on the ECAN1 CAN bus.
@@ -144,7 +144,7 @@ void ecan1_buffered_transmit(tCanMessage message);
  * parameters[6] = data bytes 4 and 5
  * parameters[7] = data bytes 6 and 74
  */
-void ecan1_buffered_transmit_matlab(uint16_t* parameters);
+void ecan1_buffered_transmit_matlab(uint16_t *parameters);
 
 /**
  * Returns the error status of the ECAN1 peripheral.
@@ -155,7 +155,7 @@ void ecan1_buffered_transmit_matlab(uint16_t* parameters);
  *  2 => passive (error count E(128,256] 
  *  3 => off (error count > 256, only for TX)
  */
-void ecan1_error_status_matlab(uint8_t* errors);
+void ecan1_error_status_matlab(uint8_t *errors);
 
 /**
  * This function provides a general way to initialize the DMA peripheral.
@@ -167,7 +167,7 @@ void ecan1_error_status_matlab(uint8_t* errors);
  * parameters[4] = Which DMA channel to configure
  * parameters[5] = Secondary DPSRAM start address offset bits (DMAxSTB)
  */
-void dma_init(uint16_t* parameters);
+void dma_init(uint16_t *parameters);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 

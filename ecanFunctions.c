@@ -20,18 +20,18 @@ void ecan1_init(const uint16_t *parameters) {
   // Make sure the ECAN module is in configuration mode.
   // It should be this way after a hardware reset, but
   // we make sure anyways.
-  C1CTRL1bits.REQOP=4;
-  while(C1CTRL1bits.OPMODE != 4);
+  C1CTRL1bits.REQOP = 4;
+  while (C1CTRL1bits.OPMODE != 4);
 
   // Initialize our circular buffers.
   InitCircularBuffer(&ecan1_rx_buffer);
   InitCircularBuffer(&ecan1_tx_buffer);
- 
+
   // Initialize our time quanta
   uint16_t a = parameters[3] & 0x0007;
   uint16_t b = (parameters[3] & 0x0038) >> 3;
   uint16_t c = (parameters[3] & 0x01C0) >> 6;
-  
+
   uint32_t ftq = parameters[2]/parameters[1]*10;
   ftq = ftq / (2 * (a+b+c+4)); // Divide by the 2*number of time quanta (4 is because of the 1-offset for a/b/c and the sync segment)
   C1CFG1bits.BRP = ftq - 1;
@@ -41,16 +41,16 @@ void ecan1_init(const uint16_t *parameters) {
   C1CFG2bits.SEG2PHTS = 0x1; // Keep segment 2 time programmable
   C1CFG2bits.SEG2PH = c; // Set phase segment 2 time
   C1CFG2bits.SAM = (parameters[3] & 0x0800) >> 11; // Triple-sample for majority rules at bit sample point
-  
+
   // Setup our frequencies for time quanta calculations.
   // FCAN is selected to be FCY: FCAN = FCY = 40MHz. This is actually a don't care bit in dsPIC33f
   C1CTRL1bits.CANCKS = 1;
 
   C1FCTRLbits.DMABS = 0; // Use 4 buffers in DMA RAM
-  
+
   // Setup message filters and masks.
   C1CTRL1bits.WIN = 1; // Allow configuration of masks and filters
-  
+
   // Set our filter mask parameters
   C1RXM0SIDbits.SID = parameters[7] >> 5; // Set filter 0
   C1RXM0SIDbits.MIDE = (parameters[7] & 0x0008) >> 3;
@@ -71,7 +71,7 @@ void ecan1_init(const uint16_t *parameters) {
   C1BUFPNT2 = parameters[18]; // Buffer pointer for filters 4-7
   C1BUFPNT3 = parameters[19]; // Buffer pointer for filters 8-11
   C1BUFPNT4 = parameters[20]; // Buffer pointer for filters 12-15x
-  
+
   // Set our filter parameters
   C1RXF0SID = parameters[21];
   C1RXF0EID = parameters[22];
@@ -105,23 +105,23 @@ void ecan1_init(const uint16_t *parameters) {
   C1RXF14EID = parameters[50];
   C1RXF15SID = parameters[51];
   C1RXF15EID = parameters[52];
-   
+
   C1CTRL1bits.WIN=0;
-  
+
   // Return the modules to specified operating mode.
   // 0 normal, 1 disable, 2 loopback, 3 listen-only, 4 configuration, 7 listen all messages
   uint8_t desired_mode = (parameters[0] & 0x001C) >> 2;
   C1CTRL1bits.REQOP = desired_mode;
   while(C1CTRL1bits.OPMODE != desired_mode);
-  
+
   // Clear all interrupt bits
   C1RXFUL1=C1RXFUL2=C1RXOVF1=C1RXOVF2=0x0000;
-  
+
   // Enable interrupts for ECAN1
   IEC2bits.C1IE = 1; // Enable interrupts for ECAN1 peripheral
   C1INTEbits.TBIE = 1; // Enable TX buffer interrupt
   C1INTEbits.RBIE = 1; // Enable RX buffer interrupt
-  
+
   // Configure buffer settings.
   // Must be done after mode setting for some reason
   // (can't find documentation on it)
@@ -129,7 +129,7 @@ void ecan1_init(const uint16_t *parameters) {
   C1TR23CON = parameters[14];
   C1TR45CON = parameters[15];
   C1TR67CON = parameters[16];
-  
+
   // Setup necessary DMA channels for transmission and reception
   // Transmission DMA
   uint16_t dmaParameters[6];
@@ -140,7 +140,7 @@ void ecan1_init(const uint16_t *parameters) {
   dmaParameters[4] = ((parameters[0] >> 5) & 7);
   dmaParameters[5] = 0;
   dma_init(dmaParameters);
-  
+
   // Reception DMA
   dmaParameters[0] = 0x2208;
   dmaParameters[1] = (uint16_t)&C1RXD;
@@ -148,7 +148,7 @@ void ecan1_init(const uint16_t *parameters) {
   dma_init(dmaParameters);
 }
 
-int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft) {	
+int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft) {
 	int foundOne = getMessageFromBuffer(msg, &ecan1_rx_buffer);
 
 	if (messagesLeft) {
@@ -158,14 +158,14 @@ int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft) {
 			*messagesLeft = 0;
 		}
 	}
-	
+
 	return foundOne;
 }
 
-int getMessageFromBuffer(tCanMessage *msg, CircularBuffer* buffer) {
+int getMessageFromBuffer(tCanMessage *msg, CircularBuffer *buffer) {
 	CanUnion *bottle = (CanUnion *)msg;
 	unsigned char i;
-	
+
 	if (GetLength(buffer) >= sizeof(tCanMessage)) {
 		for (i = 0; i < sizeof(tCanMessage); i++) {
 			Read(buffer, &bottle->bytes[i]);
@@ -178,10 +178,10 @@ int getMessageFromBuffer(tCanMessage *msg, CircularBuffer* buffer) {
 	}
 }
 
-void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message) {
+void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message) {
 	CanUnion bottle;
 	unsigned char i;
-	
+
 	bottle.message = message;
 	for (i = 0; i < sizeof(tCanMessage); i++) {
 		Write(buffer, bottle.bytes[i]);
@@ -189,12 +189,12 @@ void putMessageInBuffer(CircularBuffer* buffer, tCanMessage message) {
 }
 
 // TODO: Remove the clearing of the output array and set a return type for success/failure.
-void ecan1_receive_matlab(uint32_t* output) {
+void ecan1_receive_matlab(uint32_t *output) {
 	tCanMessage msg;
 
 	if (receivedMessagesPending > 0) {
 		getMessageFromBuffer(&msg, &ecan1_rx_buffer);
-	
+
 		output[0] = msg.id;
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
 		output[1] |= ((uint32_t)msg.payload[2]) << 16;
@@ -218,19 +218,19 @@ void ecan1_receive_matlab(uint32_t* output) {
 	}
 }
 
-// NOTE: We do not block for message transmission to complete. Message queuing 
+// NOTE: We do not block for message transmission to complete. Message queuing
 // is handled by the transmission circular buffer.
 void ecan1_transmit(tCanMessage message) {
 
 	uint32_t word0 = 0, word1 = 0, word2 = 0;
 	uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
-	uint16_t* ecan_msg_buf_ptr = ecan1msgBuf[message.buffer];
-	
+	uint16_t *ecan_msg_buf_ptr = ecan1msgBuf[message.buffer];
+
 	// Variables for setting correct TXREQ bit
 	uint16_t bit_to_set;
 	uint16_t offset;
-	uint16_t* bufferCtrlRegAddr;
-	
+	uint16_t *bufferCtrlRegAddr;
+
 	// Divide the identifier into bit-chunks for storage
 	// into the registers.
 	if (message.frame_type == CAN_FRAME_EXT) {
@@ -246,7 +246,7 @@ void ecan1_transmit(tCanMessage message) {
 
 	word0 |= (sid10_0 << 2);
 	word2 |= (eid5_0 << 10);
-	
+
 	// Set remote transmit bits
 	if (message.message_type == CAN_MSG_RTR) {
 		word0 |= 0x2;
@@ -282,7 +282,7 @@ void ecan1_buffered_transmit(tCanMessage msg) {
 	// the circular buffer however.
 	putMessageInBuffer(&ecan1_tx_buffer, msg);
 
-	// If this is the only message in the queue, attempt to 
+	// If this is the only message in the queue, attempt to
 	// transmit it.
 	if (!currentlyTransmitting) {
 		ecan1_transmit(msg);
@@ -293,27 +293,27 @@ void ecan1_buffered_transmit(tCanMessage msg) {
  * Merely preprocesses data from the MATLAB array format
  * into a tCanMessage to be passed to ecan1_buffered_transmit()
  */
-void ecan1_buffered_transmit_matlab(uint16_t* parameters) {
+void ecan1_buffered_transmit_matlab(uint16_t *parameters) {
 
 	tCanMessage message;
-	
+
 	message.id = ((uint32_t)parameters[1])|(((uint32_t)parameters[2])<<16);
 	message.buffer = (uint8_t)parameters[0];
-	
+
 	// Set remote transmit bits
 	if ((parameters[3] & 0xFF00) == 0) {
 		message.message_type = CAN_MSG_DATA;
 	} else {
 		message.message_type = CAN_MSG_RTR;
 	}
-	
+
 	// Set extended frame bits
 	if ((parameters[3] & 0xFF) == 0) {
 		message.frame_type = CAN_FRAME_STD;
 	} else {
 		message.frame_type = CAN_FRAME_EXT;
 	}
-	
+
 	// Set data and data length bits
 	message.payload[0] = (uint8_t)parameters[4];
 	message.payload[1] = (uint8_t)((parameters[4] & 0xFF00) >> 8);
@@ -329,8 +329,8 @@ void ecan1_buffered_transmit_matlab(uint16_t* parameters) {
 	ecan1_buffered_transmit(message);
 }
 
-void ecan1_error_status_matlab(uint8_t* errors) {
-	
+void ecan1_error_status_matlab(uint8_t *errors) {
+
 	// Set transmission errors in first array element.
 	if (C1INTFbits.TXBO) {
 		errors[0] = 3;
@@ -341,7 +341,7 @@ void ecan1_error_status_matlab(uint8_t* errors) {
 	else if (C1INTFbits.TXWAR) {
 		errors[0] = 1;
 	}
-	
+
 	// Set reception errors in second array element.
 	if (C1INTFbits.RXBP) {
 		errors[1] = 2;
@@ -351,16 +351,16 @@ void ecan1_error_status_matlab(uint8_t* errors) {
 	}
 }
 
-void dma_init(uint16_t* parameters) {
+void dma_init(uint16_t *parameters) {
 
 	// Determine the correct addresses for all needed registers
 	uint16_t offset = (parameters[4]*6);
-	uint16_t* chanCtrlRegAddr = (uint16_t *)(&DMA0CON + offset);
-	uint16_t* irqSelRegAddr = (uint16_t *)(&DMA0REQ + offset);
-	uint16_t* addrOffsetRegAddr = (uint16_t *)(&DMA0STA + offset);
-	uint16_t* secAddrOffsetRegAddr = (uint16_t *)(&DMA0STB + offset);
-	uint16_t* periAddrRegAddr = (uint16_t *)(&DMA0PAD + offset);
-	uint16_t* transCountRegAddr = (uint16_t *)(&DMA0CNT + offset);
+	uint16_t *chanCtrlRegAddr = (uint16_t *)(&DMA0CON + offset);
+	uint16_t *irqSelRegAddr = (uint16_t *)(&DMA0REQ + offset);
+	uint16_t *addrOffsetRegAddr = (uint16_t *)(&DMA0STA + offset);
+	uint16_t *secAddrOffsetRegAddr = (uint16_t *)(&DMA0STB + offset);
+	uint16_t *periAddrRegAddr = (uint16_t *)(&DMA0PAD + offset);
+	uint16_t *transCountRegAddr = (uint16_t *)(&DMA0CNT + offset);
 
 	DMACS0 = 0; // Clear the status register
 
@@ -369,9 +369,9 @@ void dma_init(uint16_t* parameters) {
 	*irqSelRegAddr = (uint16_t)(parameters[0] >> 8);	// Set the IRQ priority for the DMA transfer
 	*addrOffsetRegAddr = (uint16_t)parameters[3]; // Set primary DPSRAM start address bits
 	*secAddrOffsetRegAddr = (uint16_t)parameters[5]; // Set secondary DPSRAM start address bits
-	
+
 	// Setup the configuration register & enable DMA
-	*chanCtrlRegAddr = (uint16_t)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));  
+	*chanCtrlRegAddr = (uint16_t)(0x8000 | ((parameters[0] & 0x00F0) << 7) | ((parameters[0] & 0x000C) << 2));
 }
 
 /**
@@ -379,22 +379,22 @@ void dma_init(uint16_t* parameters) {
  * It clears interrupt bits and pushes received message into
  * the circular buffer.
  */
-void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {    
+void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 
 	// Give us a CAN message struct to populate and use
 	tCanMessage message;
 	uint8_t ide = 0;
 	uint8_t srr = 0;
 	uint32_t id = 0;
-	uint16_t* ecan_msg_buf_ptr;
-			
+	uint16_t *ecan_msg_buf_ptr;
+
 	CanUnion bottle; //TODO: Move back into hey>=sizeof block
-	
+
 	// If the interrupt was set because of a transmit, check to
 	// see if more messages are in the circular buffer and start
 	// transmitting them.
 	if (C1INTFbits.TBIF) {
-	
+
 		// After a successfully sent message, there should be at least
 		// one message in the queue, so pop it off.
 		getMessageFromBuffer(&message, &ecan1_tx_buffer);
@@ -408,68 +408,68 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		// try to transmit it.
 		int hey = GetLength(&ecan1_tx_buffer);
 		if (hey >= sizeof(tCanMessage)) {
-			
+
 			DeepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), bottle.bytes);
-		
+
 			ecan1_transmit(bottle.message);
 		} else {
 			currentlyTransmitting = 0;
 		}
-		
+
 		C1INTFbits.TBIF = 0;
 	}
 
 	// If the interrupt was fired because of a received message
 	// package it all up and store in the circular buffer.
 	if (C1INTFbits.RBIF) {
-		
+
 		// Obtain the buffer the message was stored into, checking that the value is valid to refer to a buffer
 		if (C1VECbits.ICODE < 32) {
 			message.buffer = C1VECbits.ICODE;
 		}
-			
+
 		ecan_msg_buf_ptr = ecan1msgBuf[message.buffer];
-		
+
 		// Clear the buffer full status bit so more messages can be received.
 		if (C1RXFUL1 & (1 << message.buffer)) {
 			C1RXFUL1 &= ~(1 << message.buffer);
 		}
-		
+
 		//  Move the message from the DMA buffer to a data structure and then push it into our circular buffer.
-				
+
 		// Read the first word to see the message type
 		ide = ecan_msg_buf_ptr[0] & 0x0001;
 		srr = ecan_msg_buf_ptr[0] & 0x0002;
-		
+
 		/* Format the message properly according to whether it
 		 * uses an extended identifier or not.
 		 */
-		if (ide == 0) {		
+		if (ide == 0) {
 			message.frame_type = CAN_FRAME_STD;
-			
+
 			message.id = (uint32_t)((ecan_msg_buf_ptr[0] & 0x1FFC) >> 2);
 		}
 		else {
 			message.frame_type = CAN_FRAME_EXT;
-			
-			id = ecan_msg_buf_ptr[0] & 0x1FFC;		
+
+			id = ecan_msg_buf_ptr[0] & 0x1FFC;
 			message.id = id << 16;
 			id = ecan_msg_buf_ptr[1] & 0x0FFF;
 			message.id |= id << 6;
 			id = ecan_msg_buf_ptr[2] & 0xFC00;
 			message.id |= id >> 10;
 		}
-		
+
 		/* If message is a remote transmit request, mark it as such.
 		 * Otherwise it will be a regular transmission so fill its
 		 * payload with the relevant data.
 		 */
 		if (srr == 1) {
-			message.message_type = CAN_MSG_RTR;	
+			message.message_type = CAN_MSG_RTR;
 		}
 		else {
 			message.message_type = CAN_MSG_DATA;
-			
+
 			message.validBytes = (uint8_t)(ecan_msg_buf_ptr[2] & 0x000F);
 			message.payload[0] = (uint8_t)ecan_msg_buf_ptr[3];
 			message.payload[1] = (uint8_t)((ecan_msg_buf_ptr[3] & 0xFF00) >> 8);
@@ -480,17 +480,17 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 			message.payload[6] = (uint8_t)ecan_msg_buf_ptr[6];
 			message.payload[7] = (uint8_t)((ecan_msg_buf_ptr[6] & 0xFF00) >> 8);
 		}
-		
+
 		// Store the message in the buffer
 		putMessageInBuffer(&ecan1_rx_buffer, message);
 
 		// Increase the number of messages stored in the buffer
 		++receivedMessagesPending;
-		
+
 		// Be sure to clear the interrupt flag.
 		C1INTFbits.RBIF = 0;
 	}
-	
+
 	// Clear the general ECAN1 interrupt flag.
 	IFS2bits.C1IF = 0;
 
