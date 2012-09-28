@@ -4,12 +4,21 @@
 #define TRUE 1
 #define FALSE 0
 
+#define ARRAYSIZE 8 * 12
+
+
 // Declare space for our message buffer in DMA
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
-// Initialize our circular buffers for transreceiving CAN messages
-CircularBuffer ecan1_rx_buffer;
-CircularBuffer ecan1_tx_buffer;
+// Initialize our circular buffers and data arrays for transreceiving CAN messages
+
+//Number of 8-byte CAN messages buffer supports
+//const uint8_t ARRAYSIZE = 8 * 12;
+
+CircularBuffer *ecan1_rx_buffer;
+uint8_t rx_data_array[ARRAYSIZE];
+CircularBuffer *ecan1_tx_buffer;
+uint8_t tx_data_array[ARRAYSIZE];
 
 // Track whether or not we're currently transmitting
 unsigned char currentlyTransmitting = 0;
@@ -24,8 +33,8 @@ void ecan1_init(const uint16_t *parameters) {
   while (C1CTRL1bits.OPMODE != 4);
 
   // Initialize our circular buffers.
-  InitCircularBuffer(&ecan1_rx_buffer);
-  InitCircularBuffer(&ecan1_tx_buffer);
+  CB_Init(ecan1_tx_buffer, rx_data_array, ARRAYSIZE);
+  CB_Init(ecan1_rx_buffer, rx_data_array, ARRAYSIZE);
 
   // Initialize our time quanta
   uint16_t a = parameters[3] & 0x0007;
@@ -149,7 +158,7 @@ void ecan1_init(const uint16_t *parameters) {
 }
 
 int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft) {
-	int foundOne = getMessageFromBuffer(msg, &ecan1_rx_buffer);
+	int foundOne = getMessageFromBuffer(msg, ecan1_rx_buffer);
 
 	if (messagesLeft) {
 		if (foundOne) {
@@ -166,9 +175,9 @@ int getMessageFromBuffer(tCanMessage *msg, CircularBuffer *buffer) {
 	CanUnion *bottle = (CanUnion *)msg;
 	unsigned char i;
 
-	if (GetLength(buffer) >= sizeof(tCanMessage)) {
+	if (buffer->dataSize >= sizeof(tCanMessage)) {
 		for (i = 0; i < sizeof(tCanMessage); i++) {
-			Read(buffer, &bottle->bytes[i]);
+			CB_ReadByte(buffer, &bottle->bytes[i]);
 		}
 		return TRUE;
 	} else {
@@ -184,7 +193,7 @@ void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message) {
 
 	bottle.message = message;
 	for (i = 0; i < sizeof(tCanMessage); i++) {
-		Write(buffer, bottle.bytes[i]);
+		CB_WriteByte(buffer, bottle.bytes[i]);
 	}
 }
 
@@ -193,7 +202,7 @@ void ecan1_receive_matlab(uint32_t *output) {
 	tCanMessage msg;
 
 	if (receivedMessagesPending > 0) {
-		getMessageFromBuffer(&msg, &ecan1_rx_buffer);
+		getMessageFromBuffer(&msg, ecan1_rx_buffer);
 
 		output[0] = msg.id;
 		output[1] = ((uint32_t)msg.payload[3]) << 24;
@@ -280,7 +289,7 @@ void ecan1_buffered_transmit(tCanMessage msg) {
 	// Message are only removed upon successful transmission.
 	// They will be overwritten by newer message overflowing
 	// the circular buffer however.
-	putMessageInBuffer(&ecan1_tx_buffer, msg);
+	putMessageInBuffer(ecan1_tx_buffer, msg);
 
 	// If this is the only message in the queue, attempt to
 	// transmit it.
@@ -397,19 +406,18 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 
 		// After a successfully sent message, there should be at least
 		// one message in the queue, so pop it off.
-		getMessageFromBuffer(&message, &ecan1_tx_buffer);
+		getMessageFromBuffer(&message, ecan1_tx_buffer);
 
 		// Check for a buffer overflow. Then clear the entire buffer if there was.
-		if (GetOverflow(&ecan1_tx_buffer)) {
-			InitCircularBuffer(&ecan1_tx_buffer);
+		if (ecan1_tx_buffer->overflowCount) {
+			CB_Init(ecan1_tx_buffer, tx_data_array, ARRAYSIZE);
 		}
 
 		// Now if there's still a message left in the buffer,
 		// try to transmit it.
-		int hey = GetLength(&ecan1_tx_buffer);
-		if (hey >= sizeof(tCanMessage)) {
+		if (ecan1_tx_buffer->dataSize >= sizeof(tCanMessage)) {
 
-			DeepPeek(&ecan1_tx_buffer, sizeof(tCanMessage), bottle.bytes);
+			CB_PeekMany(ecan1_tx_buffer, bottle.bytes, sizeof(tCanMessage));
 
 			ecan1_transmit(bottle.message);
 		} else {
@@ -482,7 +490,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void) {
 		}
 
 		// Store the message in the buffer
-		putMessageInBuffer(&ecan1_rx_buffer, message);
+		putMessageInBuffer(ecan1_rx_buffer, message);
 
 		// Increase the number of messages stored in the buffer
 		++receivedMessagesPending;
