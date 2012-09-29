@@ -6,7 +6,7 @@
  * @author Bryant Mairs
  * @author Pavlo Manovi
  * @date   September 28th, 202
- * @brief  Provides C functions for ECAN on dsPICs
+ * @brief  Provides C functions for ECAN blocks
  */
 
 #define TRUE 1
@@ -20,7 +20,6 @@
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffers and data arrays for transreceiving CAN messages
-
 CircularBuffer ecan1_rx_buffer;
 uint8_t rx_data_array[ARRAYSIZE];
 CircularBuffer ecan1_tx_buffer;
@@ -32,7 +31,6 @@ unsigned char receivedMessagesPending = 0;
 
 void ecan1_init(const uint16_t *parameters)
 {
-
     // Make sure the ECAN module is in configuration mode.
     // It should be this way after a hardware reset, but
     // we make sure anyways.
@@ -206,14 +204,13 @@ void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message)
     unsigned char i;
 
     bottle.message = message;
+
     for (i = 0; i < sizeof (tCanMessage); i++) {
         CB_WriteByte(buffer, bottle.bytes[i]);
     }
 }
 
-// TODO: Remove the clearing of the output array and set a return type for success/failure.
-
-void ecan1_receive_matlab(uint32_t *output)
+int ecan1_receive_matlab(uint32_t *output)
 {
     tCanMessage msg;
 
@@ -230,15 +227,20 @@ void ecan1_receive_matlab(uint32_t *output)
         output[2] |= ((uint32_t) msg.payload[5]) << 8;
         output[2] |= (uint32_t) msg.payload[4];
         output[3] = (uint32_t) msg.validBytes;
+
         if (msg.message_type == CAN_MSG_RTR) {
             output[3] |= 0x00000100;
         }
+
         output[3] |= ((uint32_t) receivedMessagesPending--) << 16;
+
+        return TRUE;
     } else {
         output[0] = 0;
         output[1] = 0;
         output[2] = 0;
         output[3] = 0;
+        return FALSE;
     }
 }
 
@@ -247,7 +249,6 @@ void ecan1_receive_matlab(uint32_t *output)
 
 void ecan1_transmit(tCanMessage message)
 {
-
     uint32_t word0 = 0, word1 = 0, word2 = 0;
     uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
     uint16_t *ecan_msg_buf_ptr = ecan1msgBuf[message.buffer];
@@ -320,7 +321,6 @@ void ecan1_buffered_transmit(tCanMessage msg)
  */
 void ecan1_buffered_transmit_matlab(uint16_t *parameters)
 {
-
     tCanMessage message;
 
     message.id = ((uint32_t) parameters[1]) | (((uint32_t) parameters[2]) << 16);
@@ -357,7 +357,6 @@ void ecan1_buffered_transmit_matlab(uint16_t *parameters)
 
 void ecan1_error_status_matlab(uint8_t *errors)
 {
-
     // Set transmission errors in first array element.
     if (C1INTFbits.TXBO) {
         errors[0] = 3;
@@ -377,7 +376,6 @@ void ecan1_error_status_matlab(uint8_t *errors)
 
 void dma_init(uint16_t *parameters)
 {
-
     // Determine the correct addresses for all needed registers
     uint16_t offset = (parameters[4]*6);
     uint16_t *chanCtrlRegAddr = (uint16_t *) (&DMA0CON + offset);
@@ -406,15 +404,12 @@ void dma_init(uint16_t *parameters)
  */
 void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 {
-
     // Give us a CAN message struct to populate and use
     tCanMessage message;
     uint8_t ide = 0;
     uint8_t srr = 0;
     uint32_t id = 0;
     uint16_t *ecan_msg_buf_ptr;
-
-    CanUnion bottle; //TODO: Move back into hey>=sizeof block
 
     // If the interrupt was set because of a transmit, check to
     // see if more messages are in the circular buffer and start
@@ -433,9 +428,8 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
         // Now if there's still a message left in the buffer,
         // try to transmit it.
         if (ecan1_tx_buffer.dataSize >= sizeof (tCanMessage)) {
-
+            CanUnion bottle;
             CB_PeekMany(&ecan1_tx_buffer, bottle.bytes, sizeof (tCanMessage));
-
             ecan1_transmit(bottle.message);
         } else {
             currentlyTransmitting = 0;
