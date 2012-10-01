@@ -8,8 +8,8 @@ All user-created code within this project is licensed under the standard two-cla
 ## File Organization
 /Documentation/AN1249.pdf - Microchip documentation for Crosswire code example.
 /Examples/ - Projects directory including examples.
-/Examples/Multireceive - A Simulink-based project demonstrating reception of multiple messages per timestep
-/Examples/Simulink Echo - A Simulink-based project that echoes any received messages.
+/Examples/Multireceive - A Simulink-based project demonstrating reception of multiple messages per timestep. (configured for dspic33fj28MC802)
+/Examples/Simulink Echo - A Simulink-based project that echoes any received messages. (configured for dspic33fj28MC802)
 /ecan_dspic.mdl - The Simulink library model.
 /CircularBuffer.{h,c} - A circular buffer implementation supporting CAN message structs.
 /ecanDefinitions.h - A file defining common strucuts, unions, and constants used by other code.

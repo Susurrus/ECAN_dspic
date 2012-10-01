@@ -236,10 +236,10 @@ int ecan1_receive_matlab(uint32_t *output)
 
         return TRUE;
     } else {
-        output[0] = 0;
-        output[1] = 0;
-        output[2] = 0;
-        output[3] = 0;
+        int i;
+        for(i = 0; i < 4; i++) {
+        output[i] = 0;
+        }
         return FALSE;
     }
 }

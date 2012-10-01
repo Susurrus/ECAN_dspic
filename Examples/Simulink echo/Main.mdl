@@ -6,11 +6,22 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.631"
+    ComputedModelVersion    "1.632"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
   SavedCharacterEncoding  "windows-1252"
+  slprops.hdlmdlprops {
+    $PropName		    "HDLParams"
+    $ObjectID		    1
+    Array {
+      Type		      "Cell"
+      Dimension		      2
+      Cell		      "HDLSubsystem"
+      Cell		      "Main"
+      PropName		      "mdlProps"
+    }
+  }
   SaveDefaultBlockParams  on
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
@@ -28,9 +39,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Marx"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Sep 28 14:38:06 2012"
-  RTWModifiedTimeStamp	  270743748
-  ModelVersionFormat	  "1.%<AutoIncrement:631>"
+  LastModifiedDate	  "Sat Sep 29 16:01:50 2012"
+  RTWModifiedTimeStamp	  270754456
+  ModelVersionFormat	  "1.%<AutoIncrement:632>"
   ConfigurationManager	  "None"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -105,13 +116,13 @@ Model {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      1
+      $ObjectID		      2
       Version		      "1.11.1"
       Array {
 	Type			"Handle"
 	Dimension		9
 	Simulink.SolverCC {
-	  $ObjectID		  2
+	  $ObjectID		  3
 	  Version		  "1.11.1"
 	  StartTime		  "0.0"
 	  StopTime		  "Inf"
@@ -145,7 +156,7 @@ Model {
 	  InsertRTBMode		  "Whenever possible"
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  3
+	  $ObjectID		  4
 	  Version		  "1.11.1"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
@@ -177,7 +188,7 @@ Model {
 	  Refine		  "1"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  4
+	  $ObjectID		  5
 	  Version		  "1.11.1"
 	  BlockReduction	  on
 	  BooleanDataType	  on
@@ -220,7 +231,7 @@ Model {
 	  AccelParallelForEachSubsystem	on
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  5
+	  $ObjectID		  6
 	  Version		  "1.11.1"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
@@ -308,7 +319,7 @@ Model {
 	  SFUnconditionalTransitionShadowingDiag "warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  6
+	  $ObjectID		  7
 	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
@@ -352,7 +363,7 @@ Model {
 	  ProdEqTarget		  on
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  7
+	  $ObjectID		  8
 	  Version		  "1.11.1"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
@@ -367,7 +378,7 @@ Model {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  8
+	  $ObjectID		  9
 	  Version		  "1.11.1"
 	  SFSimEnableDebug	  on
 	  SFSimOverflowDetection  on
@@ -382,7 +393,7 @@ Model {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  9
+	  $ObjectID		  10
 	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
@@ -411,7 +422,7 @@ Model {
 	  ConfigAtBuild		  off
 	  RTWUseLocalCustomCode	  off
 	  RTWUseSimCustomCode	  off
-	  CustomSource		  "../../CircularBuffer.c\n../../ecanFunctions.c"
+	  CustomSource		  "../../CircularBuffer.h\n../../ecanFunctions.c"
 	  IncludeHyperlinkInReport off
 	  LaunchReport		  off
 	  TargetLang		  "C"
@@ -432,7 +443,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      10
+	      $ObjectID		      11
 	      Version		      "1.11.1"
 	      ForceParamTrailComments off
 	      GenerateComments	      on
@@ -471,7 +482,7 @@ Model {
 	    }
 	    Simulink.STFCustomTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      11
+	      $ObjectID		      12
 	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
@@ -532,7 +543,7 @@ Model {
 		Dimension		1
 		Simulink.ERTTargetCC {
 		  $BackupClass		  "Simulink.TargetCC"
-		  $ObjectID		  12
+		  $ObjectID		  13
 		  Version		  "1.11.1"
 		  Array {
 		    Type		    "Cell"
@@ -709,7 +720,7 @@ Model {
 	  }
 	}
 	hdlcoderui.hdlcc {
-	  $ObjectID		  13
+	  $ObjectID		  14
 	  Version		  "1.11.1"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
@@ -726,13 +737,13 @@ Model {
       Name		      "Configuration"
       ExtraOptions	      "-aGenerateTraceInfo=0 -aIgnoreTestpoints=0 "
       CurrentDlgPage	      "Code Generation/Custom Code"
-      ConfigPrmDlgPosition     [ 360, 100, 1241, 816 ] 
+      ConfigPrmDlgPosition     [ 282, 0, 1195, 792 ] 
     }
     PropName		    "ConfigurationSets"
   }
   Simulink.ConfigSet {
     $PropName		    "ActiveConfigurationSet"
-    $ObjectID		    1
+    $ObjectID		    2
   }
   BlockDefaults {
     ForegroundColor	    "black"
@@ -837,7 +848,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [146, 113, 1414, 1009]
+    Location		    [243, 64, 1515, 1013]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -851,7 +862,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "130"
+    SIDHighWatermark	    "131"
     Block {
       BlockType		      Reference
       Name		      "Configure ECAN 1"
@@ -1175,7 +1186,7 @@ Model {
       FPBOR		      "<empty>"
       PWRT		      "disable"
       MCLR		      "<empty>"
-      ICD		      "ICS_PGD3"
+      ICD		      "ICS_PGD2"
       JTAGEN		      "JTAGEN_OFF"
       PowerSave		      off
       OverrideFcy	      off
@@ -1267,6 +1278,13 @@ Model {
       Position		      [350, 235, 370, 255]
       ShowName		      off
     }
+    Block {
+      BlockType		      Terminator
+      Name		      "Terminator2"
+      SID		      "131"
+      Position		      [350, 475, 370, 495]
+      ShowName		      off
+    }
     Line {
       SrcBlock		      "Receive ECAN1 Message1"
       SrcPort		      3
@@ -1332,6 +1350,12 @@ Model {
       Points		      [205, 0; 0, 15]
       DstBlock		      "Enabled\nSubsystem1"
       DstPort		      2
+    }
+    Line {
+      SrcBlock		      "ECAN1 Error Status"
+      SrcPort		      2
+      DstBlock		      "Terminator2"
+      DstPort		      1
     }
     Annotation {
       Name		      "This model is provides a simple test of the ECAN1 code included within this library.\nIt will echo "
