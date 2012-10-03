@@ -1,5 +1,5 @@
 # Project Description
-This project is being actively developed by Mariano and Bryant with the goal of developing ECAN blocks for Simulink for compiling for the dsPIC33f with the Real Time Workshop. It is currently in the early stages of development.
+This project is being actively developed by Mariano, Bryant, and Pavlo with the goal of developing ECAN blocks for Simulink for compiling for the dsPIC33f with the Real Time Workshop.
 
 ## Licensing
 
@@ -10,9 +10,9 @@ All user-created code within this project is licensed under the standard two-cla
 
 **/Examples/** - Projects directory including examples.
 
-**/Examples/Multireceive** - A Simulink-based project demonstrating reception of multiple messages per timestep
+**/Examples/Multireceive** - A Simulink-based project demonstrating reception of multiple messages per timestep. (configured for dspic33fj28MC802)
 
-**/Examples/Simulink Echo** - A Simulink-based project that echoes any received messages.
+**/Examples/Simulink Echo** - A Simulink-based project that echoes any received messages. (configured for dspic33fj28MC802)
 
 **/ecan_dspic.mdl** - The Simulink library model.
 
@@ -20,4 +20,4 @@ All user-created code within this project is licensed under the standard two-cla
 
 **/ecanDefinitions.h** - A file defining common strucuts, unions, and constants used by other code.
 
-**/ecanFunctions.{h,c}** - The actual ECAN functions called from the dsPIC blocks.
+**/ecanFunctions.{h,c}** - The actual ECAN functions called from the dsPIC blocks.  ECAN message data array size is pound defined here.
