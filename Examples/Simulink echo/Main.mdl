@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.632"
+    ComputedModelVersion    "1.633"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -39,9 +39,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Marx"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Sep 29 16:01:50 2012"
-  RTWModifiedTimeStamp	  270754456
-  ModelVersionFormat	  "1.%<AutoIncrement:632>"
+  LastModifiedDate	  "Tue Oct 02 16:05:14 2012"
+  RTWModifiedTimeStamp	  271094673
+  ModelVersionFormat	  "1.%<AutoIncrement:633>"
   ConfigurationManager	  "None"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -848,7 +848,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [243, 64, 1515, 1013]
+    Location		    [87, 97, 1359, 1046]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -975,6 +975,7 @@ Model {
       filter_15_mask	      "0"
       filter_15_exide	      "Match only standard"
       filter_15_buf	      "0"
+      data_array_size	      "[10]"
     }
     Block {
       BlockType		      Reference

@@ -13,7 +13,7 @@
 #define FALSE 0
 
 //Number of 8-byte CAN messages buffer supports
-#define ARRAYSIZE 8 * 12
+#define ARRAYSIZE 8 * 24
 
 
 // Declare space for our message buffer in DMA
