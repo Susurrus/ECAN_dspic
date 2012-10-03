@@ -6,11 +6,22 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.630"
+    ComputedModelVersion    "1.633"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
   SavedCharacterEncoding  "windows-1252"
+  slprops.hdlmdlprops {
+    $PropName		    "HDLParams"
+    $ObjectID		    1
+    Array {
+      Type		      "Cell"
+      Dimension		      2
+      Cell		      "HDLSubsystem"
+      Cell		      "Main"
+      PropName		      "mdlProps"
+    }
+  }
   SaveDefaultBlockParams  on
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
@@ -26,11 +37,11 @@ Model {
   Creator		  "bwmairs"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "Bryant"
+  LastModifiedBy	  "Marx"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Mar 14 10:25:36 2012"
-  RTWModifiedTimeStamp	  253620519
-  ModelVersionFormat	  "1.%<AutoIncrement:630>"
+  LastModifiedDate	  "Tue Oct 02 16:05:14 2012"
+  RTWModifiedTimeStamp	  271094673
+  ModelVersionFormat	  "1.%<AutoIncrement:633>"
   ConfigurationManager	  "None"
   SampleTimeColors	  on
   SampleTimeAnnotations	  off
@@ -105,13 +116,13 @@ Model {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      1
+      $ObjectID		      2
       Version		      "1.11.1"
       Array {
 	Type			"Handle"
 	Dimension		9
 	Simulink.SolverCC {
-	  $ObjectID		  2
+	  $ObjectID		  3
 	  Version		  "1.11.1"
 	  StartTime		  "0.0"
 	  StopTime		  "Inf"
@@ -145,7 +156,7 @@ Model {
 	  InsertRTBMode		  "Whenever possible"
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  3
+	  $ObjectID		  4
 	  Version		  "1.11.1"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
@@ -177,7 +188,7 @@ Model {
 	  Refine		  "1"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  4
+	  $ObjectID		  5
 	  Version		  "1.11.1"
 	  BlockReduction	  on
 	  BooleanDataType	  on
@@ -220,7 +231,7 @@ Model {
 	  AccelParallelForEachSubsystem	on
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  5
+	  $ObjectID		  6
 	  Version		  "1.11.1"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
@@ -308,7 +319,7 @@ Model {
 	  SFUnconditionalTransitionShadowingDiag "warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  6
+	  $ObjectID		  7
 	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
@@ -352,7 +363,7 @@ Model {
 	  ProdEqTarget		  on
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  7
+	  $ObjectID		  8
 	  Version		  "1.11.1"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
@@ -367,7 +378,7 @@ Model {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  8
+	  $ObjectID		  9
 	  Version		  "1.11.1"
 	  SFSimEnableDebug	  on
 	  SFSimOverflowDetection  on
@@ -382,7 +393,7 @@ Model {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  9
+	  $ObjectID		  10
 	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
@@ -411,7 +422,7 @@ Model {
 	  ConfigAtBuild		  off
 	  RTWUseLocalCustomCode	  off
 	  RTWUseSimCustomCode	  off
-	  CustomSource		  "../../CircularBuffer.c\n../../ecanFunctions.c"
+	  CustomSource		  "../../CircularBuffer.h\n../../ecanFunctions.c"
 	  IncludeHyperlinkInReport off
 	  LaunchReport		  off
 	  TargetLang		  "C"
@@ -432,7 +443,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      10
+	      $ObjectID		      11
 	      Version		      "1.11.1"
 	      ForceParamTrailComments off
 	      GenerateComments	      on
@@ -471,7 +482,7 @@ Model {
 	    }
 	    Simulink.STFCustomTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      11
+	      $ObjectID		      12
 	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
@@ -532,7 +543,7 @@ Model {
 		Dimension		1
 		Simulink.ERTTargetCC {
 		  $BackupClass		  "Simulink.TargetCC"
-		  $ObjectID		  12
+		  $ObjectID		  13
 		  Version		  "1.11.1"
 		  Array {
 		    Type		    "Cell"
@@ -670,7 +681,7 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"OPTIM_GCC"
-		Value			"-mcpu=33fJ256GP710A -O3 -fschedule-insns -fschedule-insns2"
+		Value			"-mcpu=33fj128MC802 -O3 -fschedule-insns -fschedule-insns2"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -680,24 +691,24 @@ Model {
 	      CustomProperty {
 		DataType		"string"
 		Name			"LDPICTYPE"
-		Value			" -Xlinker --script=C:\\PROGRA~2\\MICROC~1\\mplabc30\\v3.30c\\support\\dsPIC33F\\gld\\p33fJ256GP710A.gld"
+		Value			" -Xlinker --script=C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\support\\dsPIC33F\\gld\\p33fj128MC802.gld"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"LDLIBPIC"
-		Value			" C:\\PROGRA~2\\MICROC~1\\mplabc30\\v3.30c\\lib\\libpic30-coff.a C:\\PROGRA~2\\MICROC~1\\mplabc30\\v3.30c\\l"
-		"ib\\dsPIC33F\\libp33fJ256GP710A-coff.a C:\\PROGRA~2\\MICROC~1\\mplabc30\\v3.30c\\lib\\libc-coff.a C:\\PROGRA~2\\MICR"
-		"OC~1\\mplabc30\\v3.30c\\lib\\libm-coff.a"
+		Value			" C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\lib\\libpic30-coff.a C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\lib\\dsPIC33F\\li"
+		"bp33fj128MC802-coff.a C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\lib\\libc-coff.a C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\lib\\libm"
+		"-coff.a"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"PIC_INCLUDES"
-		Value			" -I C:\\PROGRA~2\\MICROC~1\\mplabc30\\v3.30c\\include"
+		Value			" -I C:\\PROGRA~2\\MICROC~1\\MPLABC~1\\include"
 	      }
 	      CustomProperty {
 		DataType		"string"
 		Name			"PIC_REF"
-		Value			"33fJ256GP710A"
+		Value			"33fj128MC802"
 	      }
 	      CustomProperty {
 		DataType		"string"
@@ -709,23 +720,30 @@ Model {
 	  }
 	}
 	hdlcoderui.hdlcc {
-	  $ObjectID		  13
+	  $ObjectID		  14
 	  Version		  "1.11.1"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    1
+	    Cell		    ""
+	    PropName		    "HDLConfigFile"
+	  }
+	  HDLCActiveTab		  "0"
 	}
 	PropName		"Components"
       }
       Name		      "Configuration"
       ExtraOptions	      "-aGenerateTraceInfo=0 -aIgnoreTestpoints=0 "
       CurrentDlgPage	      "Code Generation/Custom Code"
-      ConfigPrmDlgPosition     [ 360, 100, 1241, 816 ] 
+      ConfigPrmDlgPosition     [ 282, 0, 1195, 792 ] 
     }
     PropName		    "ConfigurationSets"
   }
   Simulink.ConfigSet {
     $PropName		    "ActiveConfigurationSet"
-    $ObjectID		    1
+    $ObjectID		    2
   }
   BlockDefaults {
     ForegroundColor	    "black"
@@ -830,7 +848,7 @@ Model {
   }
   System {
     Name		    "Main"
-    Location		    [2, 82, 1270, 978]
+    Location		    [87, 97, 1359, 1046]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -844,7 +862,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "126"
+    SIDHighWatermark	    "131"
     Block {
       BlockType		      Reference
       Name		      "Configure ECAN 1"
@@ -957,6 +975,7 @@ Model {
       filter_15_mask	      "0"
       filter_15_exide	      "Match only standard"
       filter_15_buf	      "0"
+      data_array_size	      "[10]"
     }
     Block {
       BlockType		      Reference
@@ -984,15 +1003,6 @@ Model {
     }
     Block {
       BlockType		      DataTypeConversion
-      Name		      "Data Type Conversion"
-      SID		      "7"
-      Position		      [375, 476, 440, 494]
-      ShowName		      off
-      RndMeth		      "Floor"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      DataTypeConversion
       Name		      "Data Type Conversion1"
       SID		      "8"
       Position		      [375, 436, 440, 454]
@@ -1014,14 +1024,14 @@ Model {
       Name		      "Digital Output Write"
       SID		      "10"
       Tag		      "dsPIC_Digital_Output"
-      Ports		      [3]
+      Ports		      [2]
       Position		      [500, 424, 580, 546]
       Priority		      "5"
       LibraryVersion	      "3.79"
       SourceBlock	      "dsPICdrivers/Digital I//O/Digital Output Write"
       SourceType	      ""
       PORT		      "A"
-      Pin		      "[0 1 7]"
+      Pin		      "[3 4]"
       Simultaneous	      off
       OrderingInOutPopup      "None"
     }
@@ -1141,7 +1151,7 @@ Model {
     Block {
       BlockType		      Reference
       Name		      "Master"
-      SID		      "17"
+      SID		      "129"
       Tag		      "dsPIC_MASTER"
       Ports		      []
       Position		      [169, 20, 269, 70]
@@ -1152,37 +1162,97 @@ Model {
       SourceBlock	      "dsPICdrivers/Master"
       SourceType	      "Master"
       TimeStepType	      "Timer1"
-      picType		      "33fJ256GP710A"
-      fcy		      "40000000"
-      Quartz_33f	      "8e6"
+      picType		      "33fj128MC802"
+      fcy		      "40008571.4286"
+      Quartz_33f	      "5e6"
       PLLActive_33f	      on
       fcyDesired_33f	      "40000000"
-      tmr1		      "[1  39999  0]"
-      tmr1Info		      "Time Step : 0.001  ;   Error : 0%  PR1=39999"
-      tmr2345		      "[0  0  0  0  0  0  0  0]"
-      tmr2345cfg	      "[-1 -1 -1 -1 -1 -1 -1 -1]"
+      tmr1		      "[1  40008  -0.0010712]"
+      tmr1Info		      "Time Step : 0.001  ;   Error : -0.0010712%  PR1=40008"
+      tmr2345		      "[0  0  0  0]"
+      tmr2345cfg	      "[-1 -1 -1 -1]"
       IOautoConf	      on
-      typePort		      "[ 10  10   0   0   0   0   0  10   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   "
-      "0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   "
-      "0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   "
-      "0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   "
-      "0   0   0   0   0 ]"
-      TRIS		      "[ 65404  65535  65535  65535  65535  65535  65535 ]"
-      ADPCFG		      "8388608"
+      typePort		      "[ 0   0   0  10  10   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  22  23"
+      "   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0"
+      "   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0"
+      "   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0"
+      "   0   0   0   0 ]"
+      TRIS		      "[ 65511  65407  65535  65535  65535  65535  65535 ]"
+      ADPCFG		      "0"
       MasterBusyPort	      "None"
       MasterOverloadPort      "None"
-      FOSC		      "Quartz (XT - HS)"
+      FOSC		      "Internal Fast RC 7.37Mhz"
       ClockSwitchMonitor      "Both disabled"
       TempProtection_33f      "TEMP_ON"
       FPBOR		      "<empty>"
       PWRT		      "disable"
       MCLR		      "<empty>"
-      ICD		      "ICS_PGD1"
+      ICD		      "ICS_PGD2"
       JTAGEN		      "JTAGEN_OFF"
       PowerSave		      off
       OverrideFcy	      off
       NewFcy		      "1e6"
-      PR2345		      "[65535  65535  65535  65535  65535  65535  65535  65535]"
+      PR2345		      "[65535  65535  65535  65535]"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "PIN Mapping"
+      SID		      "130"
+      Tag		      "dsPIC_PIN_Mapping"
+      Ports		      []
+      Position		      [900, 20, 1000, 70]
+      LibraryVersion	      "3.79"
+      SourceBlock	      "dsPICdrivers/Peripheral MAPPING/PIN Mapping"
+      SourceType	      "Peripheral PIN Mapping"
+      in_INT1		      "Not tied (VSS)"
+      in_INT2		      "Not tied (VSS)"
+      in_T2CK		      "Not tied (VSS)"
+      in_T3CK		      "Not tied (VSS)"
+      in_T4CK		      "Not tied (VSS)"
+      in_T5CK		      "Not tied (VSS)"
+      in_IC1		      "Not tied (VSS)"
+      in_IC2		      "Not tied (VSS)"
+      in_IC7		      "Not tied (VSS)"
+      in_IC8		      "Not tied (VSS)"
+      out_OC1		      "Not changed"
+      out_OC2		      "Not changed"
+      out_OC3		      "Not changed"
+      out_OC4		      "Not changed"
+      in_OCFA		      "Not tied (VSS)"
+      in_FLTA1		      "Not tied (VSS)"
+      in_FLTA2		      "Not tied (VSS)"
+      in_QEA1		      "Not tied (VSS)"
+      in_QEB1		      "Not tied (VSS)"
+      in_INDX1		      "Not tied (VSS)"
+      out_UPDN1		      "Not changed"
+      out_UPDN2		      "Not changed"
+      in_QEA2		      "Not tied (VSS)"
+      in_QEB2		      "Not tied (VSS)"
+      in_INDX2		      "Not tied (VSS)"
+      in_U1RX		      "Not tied (VSS)"
+      out_U1TX		      "Not changed"
+      in_U1CTS		      "Not tied (VSS)"
+      out_U1RTS		      "Not changed"
+      in_U2RX		      "Not tied (VSS)"
+      out_U2TX		      "Not changed"
+      in_U2CTS		      "Not tied (VSS)"
+      out_U2RTS		      "Not changed"
+      in_SDI1		      "Not tied (VSS)"
+      out_SDO1		      "Not changed"
+      in_SCK1		      "Not tied (VSS)"
+      out_SCK1OUT	      "Not changed"
+      in_SS1		      "Not tied (VSS)"
+      out_SS1OUT	      "Not changed"
+      in_SDI2		      "Not tied (VSS)"
+      out_SDO2		      "Not changed"
+      in_SCK2		      "Not tied (VSS)"
+      out_SCK2OUT	      "Not changed"
+      in_SS2		      "Not tied (VSS)"
+      out_SS2OUT	      "Not changed"
+      in_C1RX		      "tied to RP6"
+      out_C1TX		      "tied to RP7"
+      out_C1OUT		      "Not changed"
+      out_C2OUT		      "Not changed"
     }
     Block {
       BlockType		      Reference
@@ -1209,16 +1279,17 @@ Model {
       Position		      [350, 235, 370, 255]
       ShowName		      off
     }
+    Block {
+      BlockType		      Terminator
+      Name		      "Terminator2"
+      SID		      "131"
+      Position		      [350, 475, 370, 495]
+      ShowName		      off
+    }
     Line {
       SrcBlock		      "Receive ECAN1 Message1"
       SrcPort		      3
       DstBlock		      "Terminator"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "ECAN1 Error Status"
-      SrcPort		      2
-      DstBlock		      "Data Type Conversion"
       DstPort		      1
     }
     Line {
@@ -1236,20 +1307,16 @@ Model {
     Line {
       SrcBlock		      "Data Type Conversion1"
       SrcPort		      1
+      Points		      [40, 0]
       DstBlock		      "Digital Output Write"
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Data Type Conversion"
-      SrcPort		      1
-      DstBlock		      "Digital Output Write"
-      DstPort		      2
-    }
-    Line {
       SrcBlock		      "Data Type Conversion2"
       SrcPort		      1
+      Points		      [40, 0]
       DstBlock		      "Digital Output Write"
-      DstPort		      3
+      DstPort		      2
     }
     Line {
       SrcBlock		      "Receive ECAN1 Message1"
@@ -1284,6 +1351,12 @@ Model {
       Points		      [205, 0; 0, 15]
       DstBlock		      "Enabled\nSubsystem1"
       DstPort		      2
+    }
+    Line {
+      SrcBlock		      "ECAN1 Error Status"
+      SrcPort		      2
+      DstBlock		      "Terminator2"
+      DstPort		      1
     }
     Annotation {
       Name		      "This model is provides a simple test of the ECAN1 code included within this library.\nIt will echo "
