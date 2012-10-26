@@ -1,6 +1,8 @@
 #include "ecanFunctions.h"
 #include "CircularBuffer.h"
 
+#include <string.h>
+
 /**
  * @file   ecanFunctions.c
  * @author Bryant Mairs
@@ -166,9 +168,9 @@ void ecan1_init(const uint16_t *parameters)
     dma_init(dmaParameters);
 }
 
-int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft)
+int ecan1_receive(tCanMessage *msg, uint8_t *messagesLeft)
 {
-    int foundOne = getMessageFromBuffer(msg, &ecan1_rx_buffer);
+    int foundOne = CB_ReadMany(&ecan1_rx_buffer, msg, sizeof(tCanMessage));
 
     if (messagesLeft) {
         if (foundOne) {
@@ -181,41 +183,12 @@ int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft)
     return foundOne;
 }
 
-int getMessageFromBuffer(tCanMessage *msg, CircularBuffer *buffer)
-{
-    CanUnion *bottle = (CanUnion *) msg;
-    unsigned char i;
-
-    if (buffer->dataSize >= sizeof (tCanMessage)) {
-        for (i = 0; i < sizeof (tCanMessage); i++) {
-            CB_ReadByte(buffer, &bottle->bytes[i]);
-        }
-        return TRUE;
-    } else {
-        // Make sure that if no message was returned that the ID is blank to signify this.
-        msg->id = 0;
-        return FALSE;
-    }
-}
-
-void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message)
-{
-    CanUnion bottle;
-    unsigned char i;
-
-    bottle.message = message;
-
-    for (i = 0; i < sizeof (tCanMessage); i++) {
-        CB_WriteByte(buffer, bottle.bytes[i]);
-    }
-}
-
 int ecan1_receive_matlab(uint32_t *output)
 {
     tCanMessage msg;
 
     if (receivedMessagesPending > 0) {
-        getMessageFromBuffer(&msg, &ecan1_rx_buffer);
+        CB_ReadMany(&ecan1_rx_buffer, &msg, sizeof(tCanMessage));
 
         output[0] = msg.id;
         output[1] = ((uint32_t) msg.payload[3]) << 24;
@@ -247,11 +220,11 @@ int ecan1_receive_matlab(uint32_t *output)
 // NOTE: We do not block for message transmission to complete. Message queuing
 // is handled by the transmission circular buffer.
 
-void ecan1_transmit(tCanMessage message)
+void ecan1_transmit(const tCanMessage *message)
 {
     uint32_t word0 = 0, word1 = 0, word2 = 0;
     uint32_t sid10_0 = 0, eid5_0 = 0, eid17_6 = 0;
-    uint16_t *ecan_msg_buf_ptr = ecan1msgBuf[message.buffer];
+    uint16_t *ecan_msg_buf_ptr = ecan1msgBuf[message->buffer];
 
     // Variables for setting correct TXREQ bit
     uint16_t bit_to_set;
@@ -260,37 +233,37 @@ void ecan1_transmit(tCanMessage message)
 
     // Divide the identifier into bit-chunks for storage
     // into the registers.
-    if (message.frame_type == CAN_FRAME_EXT) {
-        eid5_0 = (message.id & 0x3F);
-        eid17_6 = (message.id >> 6) & 0xFFF;
-        sid10_0 = (message.id >> 18) & 0x7FF;
+    if (message->frame_type == CAN_FRAME_EXT) {
+        eid5_0 = (message->id & 0x3F);
+        eid17_6 = (message->id >> 6) & 0xFFF;
+        sid10_0 = (message->id >> 18) & 0x7FF;
         word0 = 1;
         word1 = eid17_6;
     } else {
-        sid10_0 = (message.id & 0x7FF);
+        sid10_0 = (message->id & 0x7FF);
     }
 
     word0 |= (sid10_0 << 2);
     word2 |= (eid5_0 << 10);
 
     // Set remote transmit bits
-    if (message.message_type == CAN_MSG_RTR) {
+    if (message->message_type == CAN_MSG_RTR) {
         word0 |= 0x2;
         word2 |= 0x0200;
     }
 
     ecan_msg_buf_ptr[0] = word0;
     ecan_msg_buf_ptr[1] = word1;
-    ecan_msg_buf_ptr[2] = ((word2 & 0xFFF0) + message.validBytes);
-    ecan_msg_buf_ptr[3] = ((uint16_t) message.payload[1] << 8 | ((uint16_t) message.payload[0]));
-    ecan_msg_buf_ptr[4] = ((uint16_t) message.payload[3] << 8 | ((uint16_t) message.payload[2]));
-    ecan_msg_buf_ptr[5] = ((uint16_t) message.payload[5] << 8 | ((uint16_t) message.payload[4]));
-    ecan_msg_buf_ptr[6] = ((uint16_t) message.payload[7] << 8 | ((uint16_t) message.payload[6]));
+    ecan_msg_buf_ptr[2] = ((word2 & 0xFFF0) + message->validBytes);
+    ecan_msg_buf_ptr[3] = ((uint16_t) message->payload[1] << 8 | ((uint16_t) message->payload[0]));
+    ecan_msg_buf_ptr[4] = ((uint16_t) message->payload[3] << 8 | ((uint16_t) message->payload[2]));
+    ecan_msg_buf_ptr[5] = ((uint16_t) message->payload[5] << 8 | ((uint16_t) message->payload[4]));
+    ecan_msg_buf_ptr[6] = ((uint16_t) message->payload[7] << 8 | ((uint16_t) message->payload[6]));
 
     // Set the correct transfer intialization bit (TXREQ) based on message buffer.
-    offset = message.buffer >> 1;
+    offset = message->buffer >> 1;
     bufferCtrlRegAddr = (uint16_t *) (&C1TR01CON + offset);
-    bit_to_set = 1 << (3 | ((message.buffer & 1) << 3));
+    bit_to_set = 1 << (3 | ((message->buffer & 1) << 3));
     *bufferCtrlRegAddr |= bit_to_set;
 
     // Keep track of whether we're in a transmission train or not.
@@ -300,13 +273,13 @@ void ecan1_transmit(tCanMessage message)
 /**
  * Transmits a tCanMessage using the transmission circular buffer.
  */
-void ecan1_buffered_transmit(tCanMessage msg)
+void ecan1_buffered_transmit(const tCanMessage *msg)
 {
     // Append the message to the queue.
     // Message are only removed upon successful transmission.
     // They will be overwritten by newer message overflowing
     // the circular buffer however.
-    putMessageInBuffer(&ecan1_tx_buffer, msg);
+    CB_WriteMany(&ecan1_tx_buffer, msg, sizeof(tCanMessage), true);
 
     // If this is the only message in the queue, attempt to
     // transmit it.
@@ -319,40 +292,40 @@ void ecan1_buffered_transmit(tCanMessage msg)
  * Merely preprocesses data from the MATLAB array format
  * into a tCanMessage to be passed to ecan1_buffered_transmit()
  */
-void ecan1_buffered_transmit_matlab(uint16_t *parameters)
+void ecan1_buffered_transmit_matlab(const uint16_t *data)
 {
     tCanMessage message;
 
-    message.id = ((uint32_t) parameters[1]) | (((uint32_t) parameters[2]) << 16);
-    message.buffer = (uint8_t) parameters[0];
+    message.id = ((uint32_t) data[1]) | (((uint32_t) data[2]) << 16);
+    message.buffer = (uint8_t) data[0];
 
     // Set remote transmit bits
-    if ((parameters[3] & 0xFF00) == 0) {
+    if ((data[3] & 0xFF00) == 0) {
         message.message_type = CAN_MSG_DATA;
     } else {
         message.message_type = CAN_MSG_RTR;
     }
 
     // Set extended frame bits
-    if ((parameters[3] & 0xFF) == 0) {
+    if ((data[3] & 0xFF) == 0) {
         message.frame_type = CAN_FRAME_STD;
     } else {
         message.frame_type = CAN_FRAME_EXT;
     }
 
     // Set data and data length bits
-    message.payload[0] = (uint8_t) parameters[4];
-    message.payload[1] = (uint8_t) ((parameters[4] & 0xFF00) >> 8);
-    message.payload[2] = (uint8_t) parameters[5];
-    message.payload[3] = (uint8_t) ((parameters[5] & 0xFF00) >> 8);
-    message.payload[4] = (uint8_t) parameters[6];
-    message.payload[5] = (uint8_t) ((parameters[6] & 0xFF00) >> 8);
-    message.payload[6] = (uint8_t) parameters[7];
-    message.payload[7] = (uint8_t) ((parameters[7] & 0xFF00) >> 8);
-    message.validBytes = (parameters[0] & 0xFF00) >> 8;
+    message.payload[0] = (uint8_t) data[4];
+    message.payload[1] = (uint8_t) ((data[4] & 0xFF00) >> 8);
+    message.payload[2] = (uint8_t) data[5];
+    message.payload[3] = (uint8_t) ((data[5] & 0xFF00) >> 8);
+    message.payload[4] = (uint8_t) data[6];
+    message.payload[5] = (uint8_t) ((data[6] & 0xFF00) >> 8);
+    message.payload[6] = (uint8_t) data[7];
+    message.payload[7] = (uint8_t) ((data[7] & 0xFF00) >> 8);
+    message.validBytes = (data[0] & 0xFF00) >> 8;
 
     // Transmit the message via the circular buffer
-    ecan1_buffered_transmit(message);
+    ecan1_buffered_transmit(&message);
 }
 
 void ecan1_error_status_matlab(uint8_t *errors)
@@ -374,7 +347,7 @@ void ecan1_error_status_matlab(uint8_t *errors)
     }
 }
 
-void dma_init(uint16_t *parameters)
+void dma_init(const uint16_t *parameters)
 {
     // Determine the correct addresses for all needed registers
     uint16_t offset = (parameters[4]*6);
@@ -418,7 +391,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 
         // After a successfully sent message, there should be at least
         // one message in the queue, so pop it off.
-        getMessageFromBuffer(&message, &ecan1_tx_buffer);
+        CB_ReadMany(&ecan1_tx_buffer, &message, sizeof(tCanMessage));
 
         // Check for a buffer overflow. Then clear the entire buffer if there was.
         if (ecan1_tx_buffer.overflowCount) {
@@ -427,10 +400,10 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 
         // Now if there's still a message left in the buffer,
         // try to transmit it.
-        if (ecan1_tx_buffer.dataSize >= sizeof (tCanMessage)) {
-            CanUnion bottle;
-            CB_PeekMany(&ecan1_tx_buffer, bottle.bytes, sizeof (tCanMessage));
-            ecan1_transmit(bottle.message);
+        if (ecan1_tx_buffer.dataSize >= sizeof(tCanMessage)) {
+            tCanMessage msg;
+            CB_PeekMany(&ecan1_tx_buffer, &msg, sizeof(tCanMessage));
+            ecan1_transmit(&msg);
         } else {
             currentlyTransmitting = 0;
         }
@@ -499,7 +472,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
         }
 
         // Store the message in the buffer
-        putMessageInBuffer(&ecan1_rx_buffer, message);
+        CB_WriteMany(&ecan1_rx_buffer, &message, sizeof(tCanMessage), true);
 
         // Increase the number of messages stored in the buffer
         ++receivedMessagesPending;

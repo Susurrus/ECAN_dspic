@@ -1,5 +1,5 @@
 /*
- * @file   ecanFunctions.c
+ * @file   ecanFunctions.h
  * @author Bryant Mairs
  * @author Pavlo Manovi
  * @date   September 28th, 202
@@ -90,20 +90,7 @@ void ecan1_init(const uint16_t *parameters);
  * Pops the top message from the ECAN1 reception buffer.
  * @return A tCanMessage struct with the older message data.
  */
-int ecan1_receive(tCanMessage *msg, unsigned char *messagesLeft);
-
-/**
- * This function pulls enough bytes to make a CAN message
- * from our circular buffer and returns them in a tCanMessage
- * struct.
- */
-int getMessageFromBuffer(tCanMessage *msg, CircularBuffer *buffer);
-
-/**
- * This function loads an entire can message into our byte-based
- * circular buffer.
- */
-void putMessageInBuffer(CircularBuffer *buffer, tCanMessage message);
+int ecan1_receive(tCanMessage *msg, uint8_t *messagesLeft);
 
 /**
  * Pop the top message from the ECAN1 reception buffer.
@@ -124,13 +111,13 @@ int ecan1_receive_matlab(uint32_t *output);
  * This function shouldn't be used directly, use buffered_transmit
  * instead.
  */
-void ecan1_transmit(tCanMessage message);
+void ecan1_transmit(const tCanMessage *message);
 
 /**
  * Transmits a CAN message via a circular buffer interface
  * similar to that used by CAN message reception.
  */
-void ecan1_buffered_transmit(tCanMessage message);
+void ecan1_buffered_transmit(const tCanMessage *message);
 
 /**
  * Transmits an ECAN message by calling ecan1_buffered_transmit().
@@ -138,19 +125,19 @@ void ecan1_buffered_transmit(tCanMessage message);
  * If there is no circular buffer, this function works similarly to
  * ecan1_transmit.
  * Parameters designed to interface with MATLAB C-function block.
- * @param parameters An array of uint16_ts with configuration options documented below.
- * parameters[0] = bits 0-7: ECAN buffer number
+ * @param data An array of uint16_ts with configuration options documented below.
+ * data[0] = bits 0-7: ECAN buffer number
  *                 bits 8-15: data length (in bytes)
- * parameters[1] = CAN identifier bits 0-15
- * parameters[2] = CAN identifier bits 16-29
- * parameters[3] = bits 0-7: ide bit
+ * data[1] = CAN identifier bits 0-15
+ * data[2] = CAN identifier bits 16-29
+ * data[3] = bits 0-7: ide bit
  *                 bits 8-15: remote transmit bit
- * parameters[4] = data bytes 0 and 1
- * parameters[5] = data bytes 2 and 3
- * parameters[6] = data bytes 4 and 5
- * parameters[7] = data bytes 6 and 74
+ * data[4] = data bytes 0 and 1
+ * data[5] = data bytes 2 and 3
+ * data[6] = data bytes 4 and 5
+ * data[7] = data bytes 6 and 74
  */
-void ecan1_buffered_transmit_matlab(uint16_t *parameters);
+void ecan1_buffered_transmit_matlab(const uint16_t *data);
 
 /**
  * Returns the error status of the ECAN1 peripheral.
@@ -173,7 +160,7 @@ void ecan1_error_status_matlab(uint8_t *errors);
  * parameters[4] = Which DMA channel to configure
  * parameters[5] = Secondary DPSRAM start address offset bits (DMAxSTB)
  */
-void dma_init(uint16_t *parameters);
+void dma_init(const uint16_t *parameters);
 
 extern unsigned int ecan1msgBuf[4][8] __attribute__((space(dma)));
 
