@@ -2,6 +2,7 @@
 #include "CircularBuffer.h"
 
 #include <string.h>
+#include <stdbool.h>
 
 /**
  * @file   ecanFunctions.c
@@ -11,21 +12,20 @@
  * @brief  Provides C functions for ECAN blocks
  */
 
-#define TRUE 1
-#define FALSE 0
-
-//Number of 8-byte CAN messages buffer supports
-#define ARRAYSIZE 8 * 24
-
+// Specify the number of 8-byte CAN messages buffer supports.
+// This can be overridden by user code.
+#ifndef ECAN1_ARRAYSIZE
+#define ECAN1_ARRAYSIZE 8 * 24
+#endif
 
 // Declare space for our message buffer in DMA
 uint16_t ecan1msgBuf[4][8] __attribute__((space(dma)));
 
 // Initialize our circular buffers and data arrays for transreceiving CAN messages
 CircularBuffer ecan1_rx_buffer;
-uint8_t rx_data_array[ARRAYSIZE];
+uint8_t rx_data_array[ECAN1_ARRAYSIZE];
 CircularBuffer ecan1_tx_buffer;
-uint8_t tx_data_array[ARRAYSIZE];
+uint8_t tx_data_array[ECAN1_ARRAYSIZE];
 
 // Track whether or not we're currently transmitting
 unsigned char currentlyTransmitting = 0;
@@ -40,10 +40,10 @@ void ecan1_init(const uint16_t *parameters)
     while (C1CTRL1bits.OPMODE != 4);
 
     // Initialize our circular buffers. If this fails, we crash and burn.
-    if (!CB_Init(&ecan1_tx_buffer, tx_data_array, ARRAYSIZE)) {
+    if (!CB_Init(&ecan1_tx_buffer, tx_data_array, ECAN1_ARRAYSIZE)) {
         while (1);
     }
-    if (!CB_Init(&ecan1_rx_buffer, rx_data_array, ARRAYSIZE)) {
+    if (!CB_Init(&ecan1_rx_buffer, rx_data_array, ECAN1_ARRAYSIZE)) {
         while (1);
     }
 
@@ -207,13 +207,13 @@ int ecan1_receive_matlab(uint32_t *output)
 
         output[3] |= ((uint32_t) receivedMessagesPending--) << 16;
 
-        return TRUE;
+        return true;
     } else {
         int i;
         for(i = 0; i < 4; i++) {
         output[i] = 0;
         }
-        return FALSE;
+        return false;
     }
 }
 
@@ -395,7 +395,7 @@ void __attribute__((interrupt, no_auto_psv))_C1Interrupt(void)
 
         // Check for a buffer overflow. Then clear the entire buffer if there was.
         if (ecan1_tx_buffer.overflowCount) {
-            CB_Init(&ecan1_tx_buffer, tx_data_array, ARRAYSIZE);
+            CB_Init(&ecan1_tx_buffer, tx_data_array, ECAN1_ARRAYSIZE);
         }
 
         // Now if there's still a message left in the buffer,

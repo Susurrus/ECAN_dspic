@@ -14,7 +14,7 @@
 #define _ECANFUNCTIONS_H_
 
 //If simulating, remove the include p33Fxxxx.h  Otherwise, leave it.
-#include <p33Fxxxx.h>
+#include <p33fxxxx.h>
 #include "ecanDefinitions.h"
 #include "CircularBuffer.h"
 
