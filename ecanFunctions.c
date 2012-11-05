@@ -40,7 +40,7 @@ void ecan1_init(const uint16_t *parameters)
     while (C1CTRL1bits.OPMODE != 4);
 
     // Initialize our circular buffers. If this fails, we crash and burn.
-    if (!CB_Init(&ecan1_tx_buffer, rx_data_array, ARRAYSIZE)) {
+    if (!CB_Init(&ecan1_tx_buffer, tx_data_array, ARRAYSIZE)) {
         while (1);
     }
     if (!CB_Init(&ecan1_rx_buffer, rx_data_array, ARRAYSIZE)) {
